@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>종합소득세 계산기</title>
+<style>
+:root{--p:#6E2CA8;--pd:#531F80;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F8F4FC;--lt:#E2D3F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:12px 0 7px}
+input[type=date],input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px}
+button.big:active{transform:scale(.98)}
+button.ghost{width:100%;padding:14px 0;border:1.5px solid var(--p);border-radius:14px;
+background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+/* 광고가 뜨기 전에 미리 알리는 문구. 운세 앱이 이게 없어 반려됐다(2026-08-24). 처음부터 넣는다. */
+.adnote{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 2px;line-height:1.5}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin-bottom:13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+.rsub{font-size:15px;font-weight:700;color:var(--p);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.bannerbox{margin:14px 0 4px;min-height:0}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+</style>
+  <link rel="canonical" href="https://daeillband2014-hub.github.io/jonghap-sodeukse-calc/">
+<style>
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+.adnote{display:none!important}
+</style>
+<meta name="description" content="과세표준을 넣으면 소득세법 제55조 세율로 산출세액과 지방소득세를 계산합니다. 8개 구간 세율과 누진공제를 함께 보여드립니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/jonghap-sodeukse-calc/">
+<meta property="og:title" content="종합소득세 계산기">
+<meta property="og:description" content="과세표준을 넣으면 소득세법 제55조 세율로 산출세액과 지방소득세를 계산합니다. 8개 구간 세율과 누진공제를 함께 보여드립니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/jonghap-sodeukse-calc/">
+<style>
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:0 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:10px}
+.webseo dd{margin:2px 0 0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>종합소득세 계산기</h1>
+<p class="desc">과세표준을 넣으면 소득세법 제55조 세율로 계산합니다</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">종합소득 과세표준 (원)</label>
+<input id="base" type="number" step="1000000" value="30000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p style="font-size:12px;color:#8B95A1;margin-top:6px;line-height:1.6">매출이 아니라 <b>필요경비와 소득공제를 뺀 뒤의 금액</b>입니다.</p>
+<button id="go" style="width:100%;margin-top:14px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+<p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">여기 나오는 값은 산출세액입니다. 세액공제와 감면을 뺀 금액이 실제로 낼 세금이라 이 계산기 결과보다 적어질 수 있습니다.</p>
+</div>
+<script>
+(function(){
+ var B=[[14000000,0.06,0],[50000000,0.15,1260000],[88000000,0.24,5760000],[150000000,0.35,15440000],[300000000,0.38,19940000],[500000000,0.40,25940000],[1000000000,0.42,35940000],[Infinity,0.45,65940000]];
+ var NM=['1,400만원 이하','1,400만원 초과 5,000만원 이하','5,000만원 초과 8,800만원 이하','8,800만원 초과 1억5천만원 이하','1억5천만원 초과 3억원 이하','3억원 초과 5억원 이하','5억원 초과 10억원 이하','10억원 초과'];
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ function calc(){
+  var x=Number(document.getElementById('base').value)||0;
+  if(x<=0){document.getElementById('out').innerHTML='';return;}
+  var i=0; for(i=0;i<B.length;i++){ if(x<=B[i][0]) break; }
+  var r=B[i][1], d=B[i][2], t=x*r-d;
+  var local=t*0.1;
+  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
+  h+='<div style="font-size:13px;color:#8B95A1">산출세액 + 지방소득세</div>';
+  h+='<div style="font-size:27px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(t+local)+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+NM[i]+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+Math.round(r*100)+'%</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">소득세 (산출세액)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(t)+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968">지방소득세 (소득세의 10%)</td><td style="padding:7px 0;text-align:right;font-weight:700">'+won(local)+'</td></tr>';
+  h+='</table>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">계산식: '+won(x)+' × '+Math.round(r*100)+'% − '+won(d)+' = '+won(t)+'</p></div>';
+  document.getElementById('out').innerHTML=h;
+ }
+ document.getElementById('go').addEventListener('click',calc);
+ document.getElementById('base').addEventListener('keydown',function(e){if(e.key==='Enter')calc();});
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>종합소득세 계산기</h2>
+<h3>10초 요약</h3>
+<p>종합소득세는 과세표준 구간에 따라 【6%에서 45%까지 여덟 단계】입니다.</p>
+<p><strong>【과세표준은 매출이 아닙니다.】 필요경비와 소득공제를 뺀 뒤의 금액입니다.</strong></p>
+<p>여기에 지방소득세 10%가 따로 붙습니다.</p>
+<h3>세율표 여덟 구간</h3>
+<p>소득세법 제55조에 있는 그대로입니다.</p>
+<p>· 1,400만원 이하 — 과세표준의 6퍼센트</p>
+<p>· 1,400만원 초과 5,000만원 이하 — 84만원 + 1,400만원 초과분의 15퍼센트</p>
+<p>· 5,000만원 초과 8,800만원 이하 — 624만원 + 5,000만원 초과분의 24퍼센트</p>
+<p>· 8,800만원 초과 1억5천만원 이하 — 1,536만원 + 8,800만원 초과분의 35퍼센트</p>
+<p>· 1억5천만원 초과 3억원 이하 — 3,706만원 + 1억5천만원 초과분의 38퍼센트</p>
+<p>· 3억원 초과 5억원 이하 — 9,406만원 + 3억원 초과분의 40퍼센트</p>
+<p>· 5억원 초과 10억원 이하 — 1억7,406만원 + 5억원 초과분의 42퍼센트</p>
+<p>· 10억원 초과 — 3억8,406만원 + 10억원 초과분의 45퍼센트</p>
+<h3>누진공제라는 말은 법에 없습니다</h3>
+<p>표를 찾아보면 대개 【누진공제】라는 칸이 있습니다. 그런데 법 원문에는 그런 말이 없습니다.</p>
+<p>법은 위처럼 기준금액에 초과분 세율을 더하는 방식으로 적습니다. 이걸 계산하기 편하게 바꾼 것이 누진공제입니다. 과세표준 전체에 세율을 곱한 뒤 정해진 금액을 빼는 방식이고, 두 식은 결과가 같습니다.</p>
+<p>과세표준 3,000만원으로 확인해 보겠습니다.</p>
+<p>· 법 원문대로 — 84만원 + (3,000만 − 1,400만) × 15% = 324만원</p>
+<p>· 누진공제로 — 3,000만 × 15% − 126만 = 324만원</p>
+<p><strong>【같은 값이 나옵니다.】 어느 쪽으로 계산해도 됩니다.</strong></p>
+<h3>구간이 올라가도 전체에 높은 세율이 붙지 않습니다</h3>
+<p>가장 많이 하는 오해입니다. 과세표준이 5,000만원을 넘으면 전부 24%가 되는 것으로 아시는 분이 많습니다.</p>
+<p>그렇지 않습니다. 넘은 부분에만 높은 세율이 붙습니다. 5,100만원이면 5,000만원까지는 그 아래 세율로 계산되고, 넘은 100만원에만 24%가 붙습니다.</p>
+<p><strong>【그래서 구간이 바뀐다고 세금이 갑자기 뛰지 않습니다.】</strong> 소득이 조금 늘었는데 세금 때문에 손해라는 일은 이 구조에서 생기지 않습니다.</p>
+<h3>지방소득세를 빠뜨리지 마십시오</h3>
+<p>소득세만 보고 계획을 세우면 실제 낼 돈보다 적게 잡습니다.</p>
+<p>지방소득세는 소득세의 10%입니다. 따로 신고하는 것이 아니라 종합소득세 신고할 때 같이 냅니다.</p>
+<p>과세표준 3,000만원이면 소득세 324만원에 지방소득세 32만 4천원이 붙어 총 356만 4천원입니다.</p>
+<h3>산출세액과 낼 세금은 다릅니다</h3>
+<p>이 계산기가 보여드리는 것은 산출세액입니다. 여기서 세액공제와 감면을 빼야 실제로 낼 금액이 나옵니다.</p>
+<p>자녀세액공제, 연금계좌 세액공제, 기부금 세액공제, 중소기업 취업자 감면 같은 것들이 여기서 빠집니다. 사람마다 다르고 종류가 많아 이 계산기에서는 계산하지 않습니다.</p>
+<p><strong>【정확한 금액은 국세청 홈택스에서 확인하십시오.】</strong> 신고할 때 공제 항목을 넣으면 자동으로 계산됩니다.</p>
+<h3>언제 신고하나</h3>
+<p>종합소득세는 전년도 소득에 대해 다음 해 5월에 신고하고 냅니다.</p>
+<p>성실신고확인 대상이면 6월까지입니다. 신고를 안 하면 무신고가산세가 붙고, 늦게 내면 납부지연가산세가 따로 붙습니다.</p>
+<h3>누가 신고하나</h3>
+<p>이자, 배당, 사업, 근로, 연금, 기타소득을 합쳐 신고합니다.</p>
+<p>회사에서 연말정산을 한 근로소득만 있으면 따로 신고하지 않아도 됩니다. 다만 다른 소득이 함께 있으면 합쳐서 신고해야 합니다.</p>
+<p>프리랜서로 3.3%를 떼고 받으셨다면 그건 미리 낸 세금이라 5월에 정산합니다. 실제 세금이 그보다 적으면 돌려받습니다.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>① 매출을 과세표준으로 넣는 것</p>
+<p>필요경비와 소득공제를 뺀 뒤가 과세표준입니다. 매출로 계산하면 세금이 실제보다 훨씬 크게 나옵니다.</p>
+<p>② 지방소득세를 빼먹는 것</p>
+<p>소득세의 10%가 더 붙습니다.</p>
+<p>③ 구간 전체에 높은 세율이 붙는다고 보는 것</p>
+<p>넘은 부분에만 붙습니다.</p>
+<h3>어디에서 확인하나</h3>
+<p><strong>【신고·납부】 국세청 홈택스</strong></p>
+<p><strong>【상담】 국세청 세미래 콜센터 126</strong></p>
+<p><strong>【세율 원문】 소득세법 제55조</strong></p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>종합소득세 세율이 어떻게 되나요?</dt><dd>과세표준에 따라 6%, 15%, 24%, 35%, 38%, 40%, 42%, 45% 여덟 구간입니다. 1,400만원 이하가 6%이고 10억원 초과가 45%입니다.</dd><dt>과세표준이 매출인가요?</dt><dd>아닙니다. 매출에서 필요경비를 빼고 소득공제까지 뺀 금액이 과세표준입니다. 매출로 계산하면 세금이 실제보다 훨씬 크게 나옵니다.</dd><dt>구간이 올라가면 전체에 높은 세율이 붙나요?</dt><dd>붙지 않습니다. 넘은 부분에만 높은 세율이 붙습니다. 그래서 구간이 바뀐다고 세금이 갑자기 뛰지 않습니다.</dd><dt>누진공제가 뭔가요?</dt><dd>법 원문에는 없는 말입니다. 기준금액에 초과분 세율을 더하는 법 방식을 계산하기 편하게 바꾼 것이고, 과세표준 전체에 세율을 곱한 뒤 정해진 금액을 빼는 방식입니다. 두 식은 결과가 같습니다.</dd><dt>이 계산기가 실제로 낼 세금을 알려주나요?</dt><dd>알려주지 않습니다. 산출세액까지만 계산합니다. 자녀세액공제나 연금계좌 세액공제 같은 세액공제와 감면은 사람마다 달라 넣지 않았습니다. 홈택스에서 확인하십시오.</dd><dt>지방소득세도 따로 내나요?</dt><dd>소득세의 10%가 붙습니다. 별도 신고가 아니라 종합소득세를 신고할 때 함께 냅니다.</dd><dt>언제 신고하나요?</dt><dd>전년도 소득에 대해 다음 해 5월에 신고하고 납부합니다. 성실신고확인 대상이면 6월까지입니다.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/vat-calc-kr/">부가세 계산기</a></li><li><a href="/4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="/toejikgum-calc/">퇴직금 계산기</a></li><li><a href="/interest-calc-kr/">이자 계산기</a></li><li><a href="/percent-calc-kr/">퍼센트 계산기</a></li></ul>
+<p class="note">세율은 소득세법 제55조제1항에서 확인한 값입니다. 세법은 개정될 수 있으니 신고 전에 국세청 안내로 다시 확인하십시오.</p>
+</section>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "종합소득세 세율이 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "과세표준에 따라 6%, 15%, 24%, 35%, 38%, 40%, 42%, 45% 여덟 구간입니다. 1,400만원 이하가 6%이고 10억원 초과가 45%입니다."}}, {"@type": "Question", "name": "과세표준이 매출인가요?", "acceptedAnswer": {"@type": "Answer", "text": "아닙니다. 매출에서 필요경비를 빼고 소득공제까지 뺀 금액이 과세표준입니다. 매출로 계산하면 세금이 실제보다 훨씬 크게 나옵니다."}}, {"@type": "Question", "name": "구간이 올라가면 전체에 높은 세율이 붙나요?", "acceptedAnswer": {"@type": "Answer", "text": "붙지 않습니다. 넘은 부분에만 높은 세율이 붙습니다. 그래서 구간이 바뀐다고 세금이 갑자기 뛰지 않습니다."}}, {"@type": "Question", "name": "누진공제가 뭔가요?", "acceptedAnswer": {"@type": "Answer", "text": "법 원문에는 없는 말입니다. 기준금액에 초과분 세율을 더하는 법 방식을 계산하기 편하게 바꾼 것이고, 과세표준 전체에 세율을 곱한 뒤 정해진 금액을 빼는 방식입니다. 두 식은 결과가 같습니다."}}, {"@type": "Question", "name": "이 계산기가 실제로 낼 세금을 알려주나요?", "acceptedAnswer": {"@type": "Answer", "text": "알려주지 않습니다. 산출세액까지만 계산합니다. 자녀세액공제나 연금계좌 세액공제 같은 세액공제와 감면은 사람마다 달라 넣지 않았습니다. 홈택스에서 확인하십시오."}}, {"@type": "Question", "name": "지방소득세도 따로 내나요?", "acceptedAnswer": {"@type": "Answer", "text": "소득세의 10%가 붙습니다. 별도 신고가 아니라 종합소득세를 신고할 때 함께 냅니다."}}, {"@type": "Question", "name": "언제 신고하나요?", "acceptedAnswer": {"@type": "Answer", "text": "전년도 소득에 대해 다음 해 5월에 신고하고 납부합니다. 성실신고확인 대상이면 6월까지입니다."}}]}</script>
+
+
+<div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>
