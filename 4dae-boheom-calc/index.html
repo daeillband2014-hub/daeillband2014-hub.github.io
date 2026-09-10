@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4대보험 계산기</title>
+<style>
+:root{--p:#6E2CA8;--pd:#531F80;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F8F4FC;--lt:#E2D3F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:12px 0 7px}
+input[type=date],input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px}
+button.big:active{transform:scale(.98)}
+button.ghost{width:100%;padding:14px 0;border:1.5px solid var(--p);border-radius:14px;
+background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+/* 광고가 뜨기 전에 미리 알리는 문구. 운세 앱이 이게 없어 반려됐다(2026-08-24). 처음부터 넣는다. */
+.adnote{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 2px;line-height:1.5}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin-bottom:13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+.rsub{font-size:15px;font-weight:700;color:var(--p);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.bannerbox{margin:14px 0 4px;min-height:0}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+</style>
+  <link rel="canonical" href="https://daeillband2014-hub.github.io/4dae-boheom-calc/">
+<style>
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+.adnote{display:none!important}
+</style>
+<meta name="description" content="2026년 요율로 국민연금·건강보험·장기요양·고용보험 공제액을 계산합니다. 국민연금이 4.75%로 오른 것까지 반영했습니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/4dae-boheom-calc/">
+<meta property="og:title" content="4대보험 계산기">
+<meta property="og:description" content="2026년 요율로 국민연금·건강보험·장기요양·고용보험 공제액을 계산합니다. 국민연금이 4.75%로 오른 것까지 반영했습니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/4dae-boheom-calc/">
+<style>
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:0 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:10px}
+.webseo dd{margin:2px 0 0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>4대보험 계산기</h1>
+<p class="desc">월급을 넣으면 2026년 요율로 공제액을 계산합니다</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">세전 월급 (원)</label>
+<input id="pay" type="number" step="10000" value="3000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<button id="go" style="width:100%;margin-top:14px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+<p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">소득세와 지방소득세는 부양가족 수에 따라 달라지는 근로소득 간이세액표를 쓰기 때문에 이 계산기에서는 계산하지 않습니다. 산재보험은 전액 사업주 부담이라 공제되지 않습니다.</p>
+</div>
+<script>
+(function(){
+ var R={pension:0.0475,health:0.03595,care:0.1314,employ:0.009};
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ function calc(){
+  var p=Number(document.getElementById('pay').value)||0;
+  if(p<=0){document.getElementById('out').innerHTML='';return;}
+  var pen=p*R.pension, hea=p*R.health, car=hea*R.care, emp=p*R.employ;
+  var sum=pen+hea+car+emp;
+  var rows=[['국민연금 4.75%',pen],['건강보험 3.595%',hea],['장기요양 건강보험료의 13.14%',car],['고용보험 0.9%',emp]];
+  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
+  h+='<div style="font-size:13px;color:#8B95A1">4대보험 공제 합계</div>';
+  h+='<div style="font-size:27px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(sum)+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  for(var i=0;i<rows.length;i++){
+   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">'+rows[i][0]+'</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(rows[i][1])+'</td></tr>';
+  }
+  h+='<tr><td style="padding:9px 0;font-weight:700">세금 떼기 전 남는 돈</td><td style="padding:9px 0;text-align:right;font-weight:800">'+won(p-sum)+'</td></tr>';
+  h+='</table>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">여기서 소득세와 지방소득세를 더 뺀 금액이 실수령액입니다.</p></div>';
+  document.getElementById('out').innerHTML=h;
+ }
+ document.getElementById('go').addEventListener('click',calc);
+ document.getElementById('pay').addEventListener('keydown',function(e){if(e.key==='Enter')calc();});
+ calc();
+})();
+</script>
+<div id="webad"></div><section class="webseo">
+<h2>4대보험 계산기</h2>
+<h3>10초 요약</h3>
+<p>2026년 근로자 본인 부담은 【국민연금 4.75% · 건강보험 3.595% · 장기요양은 건강보험료의 13.14% · 고용보험 0.9%】입니다.</p>
+<p><strong>【국민연금이 4.5%에서 4.75%로 올랐습니다.】 2026년 1월 1일부터입니다.</strong></p>
+<p>산재보험은 전액 사업주가 냅니다. 월급에서 빠지지 않습니다.</p>
+<h3>2026년에 요율이 바뀌었습니다</h3>
+<p>인터넷에 도는 계산기와 표 상당수가 아직 2025년 값을 씁니다. 두 곳이 달라졌습니다.</p>
+<p><strong>【국민연금】 본인 4.5% → 4.75%</strong></p>
+<p>2025년 4월 2일 개정된 국민연금법이 2026년 1월 1일부터 시행됐습니다. 최종 목표는 본인 6.5%인데 한 번에 올리지 않고 2026년부터 2032년까지 해마다 조금씩 올립니다. 부칙에 연도별 숫자가 그대로 적혀 있습니다.</p>
+<p>2026년 1만분의 475, 2027년 500, 2028년 525, 2029년 550, 2030년 575, 2031년 600, 2032년 625입니다. 각각 4.75%, 5.00%, 5.25%, 5.50%, 5.75%, 6.00%, 6.25%라는 뜻입니다.</p>
+<p><strong>【건강보험】 본인 3.545% → 3.595%</strong></p>
+<p>국민건강보험법 시행령이 2025년 12월 23일 개정되어 보험료율이 1만분의 719, 즉 7.19%가 됐습니다. 직장가입자는 사업주와 절반씩 내므로 본인은 3.595%입니다. 2026년 1월분 보험료부터 적용됩니다.</p>
+<h3>장기요양보험료는 월급이 아니라 건강보험료에 붙습니다</h3>
+<p>이걸 월급의 몇 퍼센트로 계산하면 틀립니다. 장기요양보험료는 이미 계산된 건강보험료에 비율을 곱해서 나옵니다.</p>
+<p>2026년 장기요양보험료율은 100만분의 9,448입니다. 이걸 건강보험료율 7.19%로 나누면 0.1314가 나오고, 그래서 【건강보험료의 13.14%】가 됩니다.</p>
+<p>월급을 기준으로 바로 보고 싶으시면 0.9448%이고, 본인 부담은 그 절반인 0.4724%입니다.</p>
+<h3>고용보험은 0.9%입니다</h3>
+<p>실업급여 보험료율이 1천분의 18, 즉 1.8%이고 근로자와 사업주가 절반씩 부담해서 본인은 0.9%입니다.</p>
+<p><strong>【1천분의 20이라는 숫자를 보셨다면 그건 자영업자 요율입니다.】</strong> 같은 법령 안에 나란히 있어서 헷갈리기 쉽습니다. 근로자와는 관계없습니다.</p>
+<p>고용안정·직업능력개발 사업 보험료는 사업주만 냅니다. 회사 규모에 따라 0.25%에서 0.85%까지 다릅니다.</p>
+<h3>월급 300만원이면 얼마가 빠지나</h3>
+<p>2026년 요율로 계산하면 이렇습니다.</p>
+<p>· 국민연금 142,500원 · 건강보험 107,850원 · 장기요양 14,171원 · 고용보험 27,000원</p>
+<p><strong>【4대보험 합계 291,521원】</strong></p>
+<p>여기서 소득세와 지방소득세를 더 빼야 실수령액이 나옵니다. 이 계산기는 그 앞까지만 보여드립니다.</p>
+<h3>소득세를 왜 계산하지 않나</h3>
+<p>4대보험은 요율이 정해져 있어 곱하기 한 번이면 나옵니다. 소득세는 다릅니다.</p>
+<p>근로소득 간이세액표를 쓰는데, 같은 월급이라도 부양가족이 몇 명인지, 8세 이상 20세 이하 자녀가 몇 명인지에 따라 금액이 달라집니다. 표를 봐야 하고 요율로는 못 구합니다.</p>
+<p><strong>【정확한 금액은 국세청 홈택스의 근로소득 간이세액표에서 확인하십시오.】</strong> 지방소득세는 그렇게 나온 소득세의 10%입니다.</p>
+<h3>고액 구간에서는 요율대로 안 늘어납니다</h3>
+<p>국민연금과 건강보험에는 기준소득월액 상한이 있습니다. 월급이 그 상한을 넘으면 넘는 만큼은 보험료가 더 붙지 않습니다.</p>
+<p>상한액은 해마다 고시로 바뀝니다. 이 계산기는 상한을 적용하지 않으므로, 월급이 높은 편이시면 국민연금공단과 건강보험공단 안내로 확인하십시오.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>① 작년 요율로 계산하는 것</p>
+<p>2026년에 국민연금과 건강보험이 둘 다 올랐습니다. 검색해서 나온 표가 언제 것인지 먼저 보십시오.</p>
+<p>② 장기요양보험료를 월급에 곱하는 것</p>
+<p>건강보험료에 곱해야 합니다. 월급에 13.14%를 곱하면 열 배 넘게 틀립니다.</p>
+<p>③ 산재보험이 빠진다고 생각하는 것</p>
+<p>산재보험은 전액 사업주 부담입니다. 근로자 월급에서 나가지 않습니다.</p>
+<h3>어디에서 확인하나</h3>
+<p><strong>【국민연금】 국민연금공단 1355</strong></p>
+<p><strong>【건강보험·장기요양】 국민건강보험공단 1577-1000</strong></p>
+<p><strong>【고용보험】 고용노동부 고객상담센터 1350</strong></p>
+<p><strong>【소득세】 국세청 홈택스 근로소득 간이세액표</strong></p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>2026년 4대보험 요율이 어떻게 되나요?</dt><dd>근로자 본인 부담은 국민연금 4.75%, 건강보험 3.595%, 장기요양은 건강보험료의 13.14%, 고용보험 0.9%입니다. 국민연금과 건강보험이 2026년에 올랐습니다.</dd><dt>국민연금이 왜 4.75%인가요? 4.5% 아닌가요?</dt><dd>2026년 1월 1일부터 4.75%입니다. 2025년 4월 개정된 국민연금법이 본인 부담을 6.5%까지 올리되 2026년부터 2032년까지 나눠서 올리도록 정했고, 2026년 몫이 4.75%입니다.</dd><dt>이 계산기가 실수령액도 알려주나요?</dt><dd>알려주지 않습니다. 4대보험을 뺀 금액까지만 보여드립니다. 소득세는 부양가족 수에 따라 달라지는 근로소득 간이세액표를 써야 해서 요율로 계산할 수 없습니다. 국세청 홈택스에서 확인하십시오.</dd><dt>산재보험도 월급에서 빠지나요?</dt><dd>빠지지 않습니다. 산재보험료는 전액 사업주가 부담합니다. 근로자 공제 항목은 국민연금, 건강보험, 장기요양, 고용보험 네 가지입니다.</dd><dt>장기요양보험료는 월급의 몇 퍼센트인가요?</dt><dd>월급이 아니라 건강보험료에 붙습니다. 건강보험료의 13.14%입니다. 굳이 월급 기준으로 보면 0.9448%이고 본인 부담은 그 절반입니다.</dd><dt>월급이 아주 많으면 그대로 곱하면 되나요?</dt><dd>되지 않습니다. 국민연금과 건강보험에는 기준소득월액 상한이 있어 일정 금액을 넘으면 더 늘지 않습니다. 이 계산기는 상한을 적용하지 않으니 각 공단 안내로 확인하십시오.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/alba-wage-check/">알바 급여 계산기</a></li><li><a href="/toejikgum-calc/">퇴직금 계산기</a></li><li><a href="/unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="/interest-calc-kr/">이자 계산기</a></li><li><a href="/percent-calc-kr/">퍼센트 계산기</a></li></ul>
+<p class="note">이 페이지의 요율은 국민연금법 부칙 제4조, 국민건강보험법 시행령 제44조, 노인장기요양보험법 시행령 제4조, 고용보험 및 산업재해보상보험의 보험료징수 등에 관한 법률 시행령 제12조에서 확인한 2026년 기준입니다. 요율은 해마다 바뀔 수 있으니 각 공단 안내로 다시 확인하십시오.</p>
+</section>
+
+<div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"2026년 4대보험 요율이 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"근로자 본인 부담은 국민연금 4.75%, 건강보험 3.595%, 장기요양은 건강보험료의 13.14%, 고용보험 0.9%입니다. 국민연금과 건강보험이 2026년에 올랐습니다."}},{"@type":"Question","name":"국민연금이 왜 4.75%인가요? 4.5% 아닌가요?","acceptedAnswer":{"@type":"Answer","text":"2026년 1월 1일부터 4.75%입니다. 2025년 4월 개정된 국민연금법이 본인 부담을 6.5%까지 올리되 2026년부터 2032년까지 나눠서 올리도록 정했고, 2026년 몫이 4.75%입니다."}},{"@type":"Question","name":"이 계산기가 실수령액도 알려주나요?","acceptedAnswer":{"@type":"Answer","text":"알려주지 않습니다. 4대보험을 뺀 금액까지만 보여드립니다. 소득세는 부양가족 수에 따라 달라지는 근로소득 간이세액표를 써야 해서 요율로 계산할 수 없습니다. 국세청 홈택스에서 확인하십시오."}},{"@type":"Question","name":"산재보험도 월급에서 빠지나요?","acceptedAnswer":{"@type":"Answer","text":"빠지지 않습니다. 산재보험료는 전액 사업주가 부담합니다. 근로자 공제 항목은 국민연금, 건강보험, 장기요양, 고용보험 네 가지입니다."}},{"@type":"Question","name":"장기요양보험료는 월급의 몇 퍼센트인가요?","acceptedAnswer":{"@type":"Answer","text":"월급이 아니라 건강보험료에 붙습니다. 건강보험료의 13.14%입니다. 굳이 월급 기준으로 보면 0.9448%이고 본인 부담은 그 절반입니다."}},{"@type":"Question","name":"월급이 아주 많으면 그대로 곱하면 되나요?","acceptedAnswer":{"@type":"Answer","text":"되지 않습니다. 국민연금과 건강보험에는 기준소득월액 상한이 있어 일정 금액을 넘으면 더 늘지 않습니다. 이 계산기는 상한을 적용하지 않으니 각 공단 안내로 확인하십시오."}}]}</script>
+</body>
+</html>
