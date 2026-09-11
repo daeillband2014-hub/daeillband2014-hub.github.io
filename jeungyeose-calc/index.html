@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>증여세 계산기</title>
+<style>
+:root{--p:#6E2CA8;--pd:#531F80;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F8F4FC;--lt:#E2D3F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:12px 0 7px}
+input[type=date],input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px}
+button.big:active{transform:scale(.98)}
+button.ghost{width:100%;padding:14px 0;border:1.5px solid var(--p);border-radius:14px;
+background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+/* 광고가 뜨기 전에 미리 알리는 문구. 운세 앱이 이게 없어 반려됐다(2026-08-24). 처음부터 넣는다. */
+.adnote{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 2px;line-height:1.5}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin-bottom:13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+.rsub{font-size:15px;font-weight:700;color:var(--p);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.bannerbox{margin:14px 0 4px;min-height:0}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+</style>
+  <link rel="canonical" href="https://daeillband2014-hub.github.io/jeungyeose-calc/">
+<style>
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+.adnote{display:none!important}
+</style>
+<meta name="description" content="증여받은 금액과 관계를 넣으면 공제와 세율을 적용해 증여세를 계산합니다. 10년 합산 공제와 혼인·출산 공제까지 반영합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/jeungyeose-calc/">
+<meta property="og:title" content="증여세 계산기">
+<meta property="og:description" content="증여받은 금액과 관계를 넣으면 공제와 세율을 적용해 증여세를 계산합니다. 10년 합산 공제와 혼인·출산 공제까지 반영합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/jeungyeose-calc/">
+<style>
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:0 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:10px}
+.webseo dd{margin:2px 0 0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>증여세 계산기</h1>
+<p class="desc">받은 금액과 관계를 넣으면 공제까지 반영해 계산합니다</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">증여받은 금액 (원)</label>
+<input id="amt" type="number" step="10000000" value="100000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">누구에게 받았나</label>
+<select id="rel" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
+<option value="600000000">배우자 — 6억원 공제</option>
+<option value="50000000" selected>부모·조부모 (직계존속) — 5천만원</option>
+<option value="20000000">부모·조부모에게 받는 미성년자 — 2천만원</option>
+<option value="50000000">자녀·손자녀 (직계비속) — 5천만원</option>
+<option value="10000000">4촌 이내 혈족, 3촌 이내 인척 — 1천만원</option>
+<option value="0">그 밖의 사람 — 공제 없음</option>
+</select>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">10년 안에 이미 공제받은 금액 (원)</label>
+<input id="prev" type="number" step="10000000" value="0" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:14px 0 0"><input type="checkbox" id="wed" style="width:18px;height:18px"> 혼인·출산 공제 대상 (직계존속에게 받은 경우, 최대 1억)</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:10px 0 0"><input type="checkbox" id="rep" checked style="width:18px;height:18px"> 기한 안에 신고 (산출세액 3% 공제)</label>
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+<p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">부동산이나 주식은 평가 방법이 따로 있어 이 계산기로는 정확하지 않습니다. 현금 증여 기준으로 보십시오.</p>
+</div>
+<script>
+(function(){
+ var B=[[100000000,0.10,0],[500000000,0.20,10000000],[1000000000,0.30,60000000],[3000000000,0.40,160000000],[Infinity,0.50,460000000]];
+ var NM=['1억원 이하','1억원 초과 5억원 이하','5억원 초과 10억원 이하','10억원 초과 30억원 이하','30억원 초과'];
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ function calc(){
+  var amt=Number(document.getElementById('amt').value)||0;
+  var sel=document.getElementById('rel');
+  var cap=Number(sel.value)||0;
+  var prev=Number(document.getElementById('prev').value)||0;
+  var wed=document.getElementById('wed').checked;
+  var rep=document.getElementById('rep').checked;
+  if(amt<=0){document.getElementById('out').innerHTML='';return;}
+  var ded=Math.max(0, cap-prev);
+  var wedDed=wed?100000000:0;
+  var base=Math.max(0, amt-ded-wedDed);
+  var i=0; for(i=0;i<B.length;i++){ if(base<=B[i][0]) break; }
+  var r=B[i][1], d=B[i][2];
+  var gross=base>0 ? base*r-d : 0;
+  var credit=rep?gross*0.03:0;
+  var pay=gross-credit;
+  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
+  h+='<div style="font-size:13px;color:#8B95A1">내야 할 증여세</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(pay)+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여받은 금액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(amt)+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여재산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(ded)+'</td></tr>';
+  if(wedDed) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">혼인·출산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(wedDed)+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">과세표준</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(base)+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간 · 세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+(base>0?NM[i]+' · '+Math.round(r*100)+'%':'-')+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">산출세액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(gross)+'</td></tr>';
+  if(credit) h+='<tr><td style="padding:7px 0;color:#4E5968">신고세액공제 3%</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673">-'+won(credit)+'</td></tr>';
+  h+='</table>';
+  if(base<=0) h+='<p style="font-size:13px;color:#2bb673;font-weight:700;margin-top:10px">공제 범위 안이라 낼 세금이 없습니다.</p>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">신고 기한은 증여받은 달의 말일부터 3개월입니다.</p></div>';
+  document.getElementById('out').innerHTML=h;
+ }
+ document.getElementById('go').addEventListener('click',calc);
+ ['amt','prev'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')calc();});});
+ ['rel','wed','rep'].forEach(function(id){document.getElementById(id).addEventListener('change',calc);});
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>증여세 계산기</h2>
+<h3>10초 요약</h3>
+<p>증여세는 【받은 금액 − 공제】에 세율을 적용합니다. 세율은 10%에서 50%까지 다섯 구간입니다.</p>
+<p><strong>【공제는 10년 단위입니다.】 해마다 새로 생기는 것이 아닙니다.</strong></p>
+<p>부모에게 받으면 5천만원, 배우자에게 받으면 6억원까지 공제됩니다.</p>
+<h3>얼마까지 세금이 없나</h3>
+<p>누구에게 받느냐로 갈립니다. 상속세 및 증여세법 제53조입니다.</p>
+<p>· 배우자 — 6억원</p>
+<p>· 부모·조부모 등 직계존속 — 5천만원 (받는 사람이 미성년자면 2천만원)</p>
+<p>· 자녀·손자녀 등 직계비속 — 5천만원</p>
+<p>· 4촌 이내 혈족, 3촌 이내 인척 — 1천만원</p>
+<p>그 밖의 사람에게 받으면 공제가 없습니다. 친구나 남에게 받으면 첫 원부터 세금이 붙습니다.</p>
+<h3>★10년에 한 번입니다</h3>
+<p>가장 많이 틀리는 부분입니다. "해마다 5천만원씩 받으면 세금이 없다"고 아는 분이 많은데 그렇지 않습니다.</p>
+<p>법 조문이 이렇게 못박고 있습니다. 공제받을 금액과 <strong>【그 증여를 받기 전 10년 이내에 공제받은 금액】</strong>을 합해서 한도를 넘으면 넘는 부분은 공제하지 않습니다.</p>
+<p>즉 부모에게 받는 5천만원은 <strong>【10년에 5천만원】</strong>입니다. 작년에 5천만원을 받아 공제를 다 썼으면 올해는 첫 원부터 세금이 붙습니다.</p>
+<h3>아버지와 어머니는 따로가 아닙니다</h3>
+<p>이것도 자주 틀립니다. 아버지에게 3천만원, 어머니에게 3천만원을 받으면 6천만원이니 각각 공제되는 줄 아시는데 아닙니다.</p>
+<p>공제는 <strong>【받는 사람 기준으로 관계별 합산】</strong>입니다. 아버지와 어머니는 둘 다 직계존속이라 합쳐서 5천만원까지만 공제됩니다.</p>
+<p>조부모도 직계존속이라 같이 묶입니다.</p>
+<h3>혼인·출산 공제는 별개로 1억원</h3>
+<p>2024년부터 생긴 제도입니다. 직계존속에게 받을 때만 해당합니다.</p>
+<p>혼인신고일 전후 2년 이내, 또는 자녀 출생일이나 입양일부터 2년 이내에 받으면 <strong>【1억원을 별개로 공제】</strong>합니다.</p>
+<p>직계존속 5천만원 공제와 따로 계산되므로 합치면 최대 1억 5천만원까지 세금 없이 받을 수 있습니다.</p>
+<p><strong>【혼인과 출산을 합쳐 1억원이 한도입니다.】</strong> 각각 1억원이 아닙니다. 법 제53조의2 제3항이 그렇게 정하고 있습니다.</p>
+<p>혼인 공제를 먼저 받고 2년 안에 혼인하지 않으면 수정신고를 해야 합니다. 이자도 붙습니다.</p>
+<h3>세율 다섯 구간</h3>
+<p>상속세와 같은 표를 씁니다.</p>
+<p>· 1억원 이하 — 10%</p>
+<p>· 1억원 초과 5억원 이하 — 1천만원 + 1억원 초과분의 20%</p>
+<p>· 5억원 초과 10억원 이하 — 9천만원 + 5억원 초과분의 30%</p>
+<p>· 10억원 초과 30억원 이하 — 2억4천만원 + 10억원 초과분의 40%</p>
+<p>· 30억원 초과 — 10억4천만원 + 30억원 초과분의 50%</p>
+<p><strong>【구간이 올라가도 전체에 높은 세율이 붙지 않습니다.】</strong> 넘은 부분에만 붙습니다.</p>
+<h3>신고만 해도 3% 깎아 줍니다</h3>
+<p>기한 안에 신고하면 산출세액의 3%를 공제합니다. 안 내는 것이 아니라 신고를 하면 깎아 주는 것입니다.</p>
+<p><strong>【신고 기한은 증여받은 달의 말일부터 3개월입니다.】</strong> 5월 10일에 받았으면 8월 31일까지입니다.</p>
+<p>기한을 넘기면 3% 공제를 못 받을 뿐 아니라 무신고가산세가 붙습니다.</p>
+<h3>얼마를 내게 되나</h3>
+<p>부모에게 현금을 받고 다른 공제가 없는 경우입니다. 신고세액공제 3%를 뺀 금액입니다.</p>
+<p>· 1억원 받으면 — 과세표준 5천만원, 세금 약 485만원</p>
+<p>· 2억원 받으면 — 과세표준 1억 5천만원, 세금 약 1,940만원</p>
+<p>· 3억원 받으면 — 과세표준 2억 5천만원, 세금 약 3,880만원</p>
+<p>· 5억원 받으면 — 과세표준 4억 5천만원, 세금 약 7,760만원</p>
+<h3>이 계산기가 하지 않는 것</h3>
+<p>부동산과 주식은 계산하지 않습니다. 시가를 어떻게 잡느냐에 따라 금액이 크게 달라지고, 법에 평가 방법이 따로 정해져 있습니다.</p>
+<p>세대를 건너뛴 증여(할아버지가 손자에게 주는 경우)에 붙는 할증도 넣지 않았습니다. 30% 또는 40%가 더 붙습니다.</p>
+<p><strong>【현금 증여를 기준으로 보십시오.】</strong> 그 밖의 경우는 국세청이나 세무사에게 확인하셔야 합니다.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>① 공제가 해마다 생긴다고 보는 것</p>
+<p>10년 단위입니다. 10년 안에 받은 것을 다 합쳐서 봅니다.</p>
+<p>② 아버지와 어머니를 따로 계산하는 것</p>
+<p>둘 다 직계존속이라 합쳐서 5천만원입니다.</p>
+<p>③ 증여받은 금액 전체에 세율을 곱하는 것</p>
+<p>공제를 뺀 과세표준에 곱합니다.</p>
+<h3>어디에서 확인하나</h3>
+<p><strong>【신고·납부】 국세청 홈택스</strong></p>
+<p><strong>【상담】 국세청 세미래 콜센터 126</strong></p>
+<p><strong>【원문】 상속세 및 증여세법 제26조·제53조·제53조의2</strong></p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>부모에게 얼마까지 세금 없이 받을 수 있나요?</dt><dd>5천만원입니다. 받는 사람이 미성년자면 2천만원입니다. 다만 해마다가 아니라 10년 단위로 합산합니다.</dd><dt>공제가 해마다 생기나요?</dt><dd>생기지 않습니다. 증여를 받기 전 10년 이내에 공제받은 금액을 합해서 한도를 봅니다. 작년에 5천만원을 받아 다 썼으면 올해는 첫 원부터 세금이 붙습니다.</dd><dt>아버지와 어머니에게 따로 받으면 각각 공제되나요?</dt><dd>되지 않습니다. 둘 다 직계존속이라 합쳐서 5천만원까지만 공제됩니다. 조부모도 같이 묶입니다.</dd><dt>결혼할 때 받으면 더 공제되나요?</dt><dd>됩니다. 직계존속에게 혼인신고일 전후 2년 이내에 받으면 1억원이 별개로 공제됩니다. 출산이나 입양 후 2년 이내도 같습니다. 다만 혼인과 출산을 합쳐 1억원이 한도입니다.</dd><dt>증여세 신고는 언제까지 하나요?</dt><dd>증여받은 달의 말일부터 3개월 이내입니다. 기한 안에 신고하면 산출세액의 3%를 공제해 줍니다.</dd><dt>증여세율이 어떻게 되나요?</dt><dd>과세표준에 따라 10%, 20%, 30%, 40%, 50% 다섯 구간입니다. 상속세와 같은 표를 씁니다. 구간이 올라가도 넘은 부분에만 높은 세율이 붙습니다.</dd><dt>부동산을 증여받아도 이 계산기로 되나요?</dt><dd>되지 않습니다. 부동산과 주식은 시가 평가 방법이 법에 따로 정해져 있어 금액이 크게 달라집니다. 이 계산기는 현금 증여 기준입니다.</dd><dt>할아버지가 손자에게 주면 다른가요?</dt><dd>다릅니다. 세대를 건너뛴 증여에는 30% 또는 40%가 더 붙습니다. 이 계산기는 그 할증을 넣지 않았습니다.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="/vat-calc-kr/">부가세 계산기</a></li><li><a href="/interest-calc-kr/">이자 계산기</a></li><li><a href="/loan-interest-calc-kr/">대출이자 계산기</a></li></ul>
+<p class="note">세율과 공제액은 상속세 및 증여세법 제26조, 제53조, 제53조의2에서 확인한 값입니다. 세법은 개정될 수 있으니 신고 전에 국세청 안내로 다시 확인하십시오.</p>
+</section>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "부모에게 얼마까지 세금 없이 받을 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "5천만원입니다. 받는 사람이 미성년자면 2천만원입니다. 다만 해마다가 아니라 10년 단위로 합산합니다."}}, {"@type": "Question", "name": "공제가 해마다 생기나요?", "acceptedAnswer": {"@type": "Answer", "text": "생기지 않습니다. 증여를 받기 전 10년 이내에 공제받은 금액을 합해서 한도를 봅니다. 작년에 5천만원을 받아 다 썼으면 올해는 첫 원부터 세금이 붙습니다."}}, {"@type": "Question", "name": "아버지와 어머니에게 따로 받으면 각각 공제되나요?", "acceptedAnswer": {"@type": "Answer", "text": "되지 않습니다. 둘 다 직계존속이라 합쳐서 5천만원까지만 공제됩니다. 조부모도 같이 묶입니다."}}, {"@type": "Question", "name": "결혼할 때 받으면 더 공제되나요?", "acceptedAnswer": {"@type": "Answer", "text": "됩니다. 직계존속에게 혼인신고일 전후 2년 이내에 받으면 1억원이 별개로 공제됩니다. 출산이나 입양 후 2년 이내도 같습니다. 다만 혼인과 출산을 합쳐 1억원이 한도입니다."}}, {"@type": "Question", "name": "증여세 신고는 언제까지 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "증여받은 달의 말일부터 3개월 이내입니다. 기한 안에 신고하면 산출세액의 3%를 공제해 줍니다."}}, {"@type": "Question", "name": "증여세율이 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "과세표준에 따라 10%, 20%, 30%, 40%, 50% 다섯 구간입니다. 상속세와 같은 표를 씁니다. 구간이 올라가도 넘은 부분에만 높은 세율이 붙습니다."}}, {"@type": "Question", "name": "부동산을 증여받아도 이 계산기로 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "되지 않습니다. 부동산과 주식은 시가 평가 방법이 법에 따로 정해져 있어 금액이 크게 달라집니다. 이 계산기는 현금 증여 기준입니다."}}, {"@type": "Question", "name": "할아버지가 손자에게 주면 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "다릅니다. 세대를 건너뛴 증여에는 30% 또는 40%가 더 붙습니다. 이 계산기는 그 할증을 넣지 않았습니다."}}]}</script>
+
+
+<div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>
