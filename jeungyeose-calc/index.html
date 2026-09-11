@@ -87,7 +87,8 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 <option value="10000000">4촌 이내 혈족, 3촌 이내 인척 — 1천만원</option>
 <option value="0">그 밖의 사람 — 공제 없음</option>
 </select>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">10년 안에 이미 공제받은 금액 (원)</label>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">10년 안에 같은 사람에게 이미 받은 금액 (원)</label>
+<p style="font-size:12px;color:#8B95A1;line-height:1.6;margin:0 0 6px">아버지에게 받는 경우 어머니에게 받은 것도 함께 넣으십시오. 직계존속은 그 배우자를 같은 사람으로 봅니다. 합계가 1천만원 이상이면 이번 증여와 합쳐 세율을 매깁니다.</p>
 <input id="prev" type="number" step="10000000" value="0" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
 <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:14px 0 0"><input type="checkbox" id="wed" style="width:18px;height:18px"> 혼인·출산 공제 대상 (직계존속에게 받은 경우, 최대 1억)</label>
 <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:10px 0 0"><input type="checkbox" id="rep" checked style="width:18px;height:18px"> 기한 안에 신고 (산출세액 3% 공제)</label>
@@ -100,6 +101,8 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
  var B=[[100000000,0.10,0],[500000000,0.20,10000000],[1000000000,0.30,60000000],[3000000000,0.40,160000000],[Infinity,0.50,460000000]];
  var NM=['1억원 이하','1억원 초과 5억원 이하','5억원 초과 10억원 이하','10억원 초과 30억원 이하','30억원 초과'];
  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ /* 과세표준에 세율을 매겨 산출세액을 낸다. 구간 번호도 함께 돌려준다(표시용). */
+ function tax(b){ if(b<=0) return {t:0,i:0,r:0}; var i=0; for(i=0;i<B.length;i++){ if(b<=B[i][0]) break; } return {t:b*B[i][1]-B[i][2], i:i, r:B[i][1]}; }
  function calc(){
   var amt=Number(document.getElementById('amt').value)||0;
   var sel=document.getElementById('rel');
@@ -108,27 +111,51 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
   var wed=document.getElementById('wed').checked;
   var rep=document.getElementById('rep').checked;
   if(amt<=0){document.getElementById('out').innerHTML='';return;}
-  var ded=Math.max(0, cap-prev);
   var wedDed=wed?100000000:0;
-  var base=Math.max(0, amt-ded-wedDed);
-  var i=0; for(i=0;i<B.length;i++){ if(base<=B[i][0]) break; }
-  var r=B[i][1], d=B[i][2];
-  var gross=base>0 ? base*r-d : 0;
-  var credit=rep?gross*0.03:0;
-  var pay=gross-credit;
+  /* [법 근거] 상속세 및 증여세법 제47조제2항 — 증여일 전 10년 이내에 같은 사람에게 받은
+     증여재산가액의 합이 1천만원 이상이면 그 가액을 증여세 과세가액에 "가산"한다.
+     공제 한도만 깎는 것이 아니라 합친 금액에 세율을 매기는 것이라, 누진 때문에 세금이 늘어난다.
+     그리고 제58조(납부세액공제)로 이전 증여분에 대해 이미 낸 세액을 빼고,
+     제69조제2항에 따라 신고세액공제 3%는 그 공제를 뺀 뒤의 금액에 매긴다. */
+  var addBack = (prev>=10000000);          // 1천만원 미만이면 가산하지 않는다
+  var total = addBack ? amt+prev : amt;    // 증여세 과세가액
+  var ded, base, prevBase=0, paidCredit=0;
+  if(addBack){
+   ded=Math.min(cap, total);               // 증여재산공제는 합친 금액에서 한 번만
+   base=Math.max(0, total-ded-wedDed);
+   prevBase=Math.max(0, prev-Math.min(cap, prev));   // 가산분의 과세표준
+  } else {
+   ded=Math.max(0, cap-prev);              // 이전 증여에서 이미 쓴 공제만큼 줄어든다
+   base=Math.max(0, amt-ded-wedDed);
+  }
+  var g=tax(base);
+  var gross=g.t, i=g.i, r=g.r;
+  if(addBack){
+   /* 제58조제1항 — 가산한 증여재산에 대해 납부했거나 납부할 증여세산출세액을 공제한다.
+      제58조제2항 — 다만 산출세액 × (가산분 과세표준 ÷ 전체 과세표준) 을 한도로 한다. */
+   var prevTax=tax(prevBase).t;
+   var limit = base>0 ? gross*(prevBase/base) : 0;
+   paidCredit=Math.min(prevTax, limit);
+  }
+  var afterPaid=Math.max(0, gross-paidCredit);
+  var credit=rep?afterPaid*0.03:0;
+  var pay=afterPaid-credit;
   var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
   h+='<div style="font-size:13px;color:#8B95A1">내야 할 증여세</div>';
   h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(pay)+'</div>';
   h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여받은 금액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(amt)+'</td></tr>';
+  if(addBack) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">10년 안에 받은 금액 가산</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">+'+won(prev)+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여재산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(ded)+'</td></tr>';
   if(wedDed) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">혼인·출산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(wedDed)+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">과세표준</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(base)+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간 · 세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+(base>0?NM[i]+' · '+Math.round(r*100)+'%':'-')+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">산출세액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(gross)+'</td></tr>';
+  if(paidCredit>0) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">납부세액공제 (전에 낸 증여세)</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(paidCredit)+'</td></tr>';
   if(credit) h+='<tr><td style="padding:7px 0;color:#4E5968">신고세액공제 3%</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673">-'+won(credit)+'</td></tr>';
   h+='</table>';
   if(base<=0) h+='<p style="font-size:13px;color:#2bb673;font-weight:700;margin-top:10px">공제 범위 안이라 낼 세금이 없습니다.</p>';
+  if(addBack) h+='<p style="font-size:12.5px;color:#4E5968;line-height:1.6;margin-top:10px">10년 안에 같은 사람에게 받은 '+won(prev)+'을 이번 증여와 합쳐 세율을 매겼습니다. 그때 낸 세금은 납부세액공제로 다시 뺐습니다. 상속세 및 증여세법 제47조제2항, 제58조입니다.</p>';
   h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">신고 기한은 증여받은 달의 말일부터 3개월입니다.</p></div>';
   document.getElementById('out').innerHTML=h;
  }
@@ -156,6 +183,15 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 <p>가장 많이 틀리는 부분입니다. "해마다 5천만원씩 받으면 세금이 없다"고 아는 분이 많은데 그렇지 않습니다.</p>
 <p>법 조문이 이렇게 못박고 있습니다. 공제받을 금액과 <strong>【그 증여를 받기 전 10년 이내에 공제받은 금액】</strong>을 합해서 한도를 넘으면 넘는 부분은 공제하지 않습니다.</p>
 <p>즉 부모에게 받는 5천만원은 <strong>【10년에 5천만원】</strong>입니다. 작년에 5천만원을 받아 공제를 다 썼으면 올해는 첫 원부터 세금이 붙습니다.</p>
+<h3>★공제만 줄어드는 것이 아닙니다</h3>
+<p>여기가 한 단계 더 있습니다. 10년 합산은 공제 한도만 깎는 것이 아니라, <strong>【예전에 받은 금액을 이번 과세가액에 더해서】</strong> 세율을 매깁니다. 상속세 및 증여세법 제47조제2항입니다.</p>
+<p>조문은 이렇습니다. 증여일 전 10년 이내에 <strong>【동일인】</strong>에게 받은 증여재산가액을 합친 금액이 <strong>【1천만원 이상】</strong>이면 그 가액을 증여세 과세가액에 가산합니다. 증여자가 직계존속이면 그 배우자도 같은 사람으로 봅니다. 아버지와 어머니가 한 사람으로 묶이는 것이 이 조항입니다.</p>
+<p>세율이 구간별로 올라가기 때문에 합치는 것과 따로 보는 것의 차이가 큽니다. 부모에게 2020년에 2억원, 2026년에 2억원을 받은 경우로 보겠습니다.</p>
+<p>· 따로 보면 — 2억원에서 공제를 뺀 1억 5천만원에 세율을 매겨 산출세액 2,000만원</p>
+<p>· 합쳐서 보면 — 4억원에서 공제 5천만원을 뺀 3억 5천만원에 세율을 매겨 산출세액 <strong>6,000만원</strong></p>
+<p>대신 2020년에 낸 세금을 다시 내지는 않습니다. 제58조 납부세액공제로 그때 낸 산출세액 2,000만원을 뺍니다. 그래서 이번에 낼 산출세액은 4,000만원이고, 기한 안에 신고하면 여기에서 3%를 더 공제해 <strong>3,880만원</strong>이 됩니다.</p>
+<p>신고세액공제 3%는 산출세액이 아니라 <strong>【납부세액공제를 뺀 뒤의 금액】</strong>에 매깁니다. 제69조제2항입니다.</p>
+<p>이 계산기는 세 단계를 모두 반영합니다. 10년 안에 같은 사람에게 받은 금액을 넣으시면 가산·납부세액공제·신고세액공제 순서로 계산해 보여 줍니다.</p>
 <h3>아버지와 어머니는 따로가 아닙니다</h3>
 <p>이것도 자주 틀립니다. 아버지에게 3천만원, 어머니에게 3천만원을 받으면 6천만원이니 각각 공제되는 줄 아시는데 아닙니다.</p>
 <p>공제는 <strong>【받는 사람 기준으로 관계별 합산】</strong>입니다. 아버지와 어머니는 둘 다 직계존속이라 합쳐서 5천만원까지만 공제됩니다.</p>
