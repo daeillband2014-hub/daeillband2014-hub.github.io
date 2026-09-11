@@ -81,6 +81,7 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 <p style="font-size:12px;color:#8B95A1;margin-top:6px;line-height:1.6"><b>육아휴직 시작일 기준</b>입니다. 휴직 중 임금이 올라도 반영되지 않습니다.</p>
 <label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">육아휴직 기간 (개월)</label>
 <input id="mon" type="number" min="1" max="18" step="1" value="12" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p style="font-size:12px;color:#8B95A1;line-height:1.6;margin:6px 0 0">육아휴직은 기본이 1년(12개월)입니다. 1년 6개월(18개월)은 ① 같은 자녀로 부모가 모두 각각 3개월 이상 쓴 경우 ② 한부모 ③ 장애아동의 부모 — 이 셋 중 하나에 해당할 때만 됩니다. 남녀고용평등법 제19조제2항입니다.</p>
 <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:14px 0 0"><input type="checkbox" id="single" style="width:18px;height:18px"> 한부모가족지원법상 한부모 (첫 3개월 상한 300만원)</label>
 <button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
@@ -113,7 +114,11 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
   if(mon>6) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">7개월째부터 (통상임금 80%)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">월 '+won(p3)+'</td></tr>';
   h+='<tr><td style="padding:9px 0;font-weight:700">월 평균</td><td style="padding:9px 0;text-align:right;font-weight:800">'+won(total/mon)+'</td></tr>';
   h+='</table>';
-  if(tw>2500000) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">통상임금이 상한을 넘어 상한액으로 계산됐습니다.</p>';
+  /* [왜 200만원인가] 상한은 구간마다 다르다. 통상임금 210만원이면 4~6개월(200만)과
+     7개월 이후(80% 곱해 160만)가 이미 상한에 걸린다. 2,500,000 으로 걸어 두면
+     그 사람에게는 안내가 안 뜬다. 그래서 가장 먼저 걸리는 지점으로 낮춘다. */
+  if(tw>2000000) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">'+(tw>2500000?'통상임금이 세 구간 상한을 모두 넘어 전부 상한액으로 계산됐습니다.':'일부 구간이 상한액으로 계산됐습니다.')+'</p>';
+  if(mon>12) h+='<p style="font-size:12.5px;color:#c0392b;line-height:1.6;margin-top:6px">12개월을 넘겨 계산했습니다. 육아휴직은 기본이 1년이고, 1년 6개월은 부모가 모두 각각 3개월 이상 쓴 경우·한부모·장애아동의 부모만 됩니다. 해당하지 않으시면 12개월로 다시 보십시오.</p>';
   if(tw<875000) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">하한 70만원이 적용된 달이 있습니다.</p>';
   h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:6px">회사에서 육아휴직을 이유로 따로 받는 돈이 있으면, 합쳐서 통상임금을 넘는 만큼 깎입니다.</p></div>';
   document.getElementById('out').innerHTML=h;
@@ -144,9 +149,19 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 <h3>1년 쓰면 총 얼마인가</h3>
 <p>통상임금별로 12개월치 총액입니다.</p>
 <p>· 통상임금 200만원 — 총 2,160만원</p>
+<p>· 통상임금 240만원 — 총 2,280만원</p>
+<p>· <strong>【통상임금 250만원 — 총 2,310만원】</strong></p>
 <p>· 통상임금 300만원 — 총 2,310만원</p>
 <p>· 통상임금 400만원 이상 — 총 2,310만원</p>
-<p>통상임금이 300만원을 넘으면 총액이 더 늘지 않습니다. 상한에 걸리기 때문입니다.</p>
+<p><strong>【통상임금이 250만원을 넘으면 총액이 더 늘지 않습니다.】</strong> 세 구간의 상한이 250만원에서 모두 걸리기 때문입니다. 1~3개월 상한이 250만원이고, 4~6개월은 200만원, 7개월째부터는 80%를 곱한 값이 160만원에 닿는 지점이 200만원이라 셋이 250만원에서 함께 걸립니다.</p>
+<p>통상임금이 250만원이든 500만원이든 1년 총액은 같습니다. 300만원을 기준선으로 알고 계신 분이 많은데 실제 경계는 250만원입니다.</p>
+<h3>★1년인가, 1년 6개월인가</h3>
+<p>"육아휴직이 1년 6개월로 늘었다"는 설명을 자주 보게 되는데 정확하지 않습니다. 남녀고용평등과 일·가정 양립 지원에 관한 법률 제19조제2항은 <strong>【육아휴직의 기간은 1년 이내로 한다】</strong>고 정하고, 다만 다음 세 경우에만 6개월 이내에서 추가로 쓸 수 있다고 합니다.</p>
+<p>· 같은 자녀를 대상으로 <strong>【부모가 모두 육아휴직을 각각 3개월 이상 사용한 경우】</strong>의 아버지 또는 어머니</p>
+<p>· 「한부모가족지원법」 제4조제1호의 아버지 또는 어머니</p>
+<p>· 고용노동부령으로 정하는 <strong>【장애아동】</strong>의 아버지 또는 어머니</p>
+<p><strong>【셋 중 어느 것에도 해당하지 않으면 1년까지입니다.】</strong> 배우자가 육아휴직을 쓰지 않았거나, 썼어도 3개월이 안 되면 1년이 한도입니다.</p>
+<p>이 계산기에 18개월을 넣으면 계산은 됩니다. 다만 해당하지 않으시면 실제로는 12개월치만 받습니다. 통상임금 300만원으로 18개월을 넣으면 3,270만원이 나오는데, 12개월이면 2,310만원입니다. 960만원 차이입니다.</p>
 <h3>한부모는 첫 3개월 상한이 높습니다</h3>
 <p>한부모가족지원법상 한부모에 해당하면 첫 3개월 상한이 【300만원】입니다.</p>
 <p>4개월째부터는 일반과 같습니다. 200만원, 160만원으로 내려갑니다.</p>
@@ -177,12 +192,12 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 <p><strong>【상담】 고용노동부 고객상담센터 1350</strong></p>
 <p><strong>【원문】 고용보험법 시행령 제95조, 한부모 특례는 제95조의3</strong></p>
 <h3>자주 묻는 질문</h3>
-<dl><dt>육아휴직 급여는 얼마인가요?</dt><dd>1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다.</dd><dt>왜 7개월째부터 줄어드나요?</dt><dd>법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다.</dd><dt>1년 쓰면 총 얼마를 받나요?</dt><dd>통상임금 200만원이면 약 2,160만원, 300만원 이상이면 약 2,310만원입니다. 통상임금이 300만원을 넘으면 상한에 걸려 총액이 더 늘지 않습니다.</dd><dt>통상임금이 400만원이면 250만원을 다 받나요?</dt><dd>첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다.</dd><dt>회사에서 따로 주는 돈이 있으면 어떻게 되나요?</dt><dd>합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다.</dd><dt>부모가 모두 육아휴직을 쓰면 더 받나요?</dt><dd>더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오.</dd><dt>한부모는 다른가요?</dt><dd>첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다.</dd><dt>통상임금은 언제 기준인가요?</dt><dd>육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다.</dd></dl>
+<dl><dt>육아휴직 급여는 얼마인가요?</dt><dd>1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다.</dd><dt>왜 7개월째부터 줄어드나요?</dt><dd>법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다.</dd><dt>1년 쓰면 총 얼마를 받나요?</dt><dd>통상임금 200만원이면 약 2,160만원, 250만원 이상이면 약 2,310만원입니다. 통상임금이 250만원을 넘으면 세 구간 상한에 모두 걸려 총액이 더 늘지 않습니다. 250만원이든 500만원이든 같습니다.</dd><dt>육아휴직은 최대 몇 개월인가요?</dt><dd>기본은 1년입니다. 같은 자녀로 부모가 모두 각각 3개월 이상 쓴 경우, 한부모인 경우, 장애아동의 부모인 경우에만 6개월을 더해 1년 6개월까지 됩니다. 셋 다 아니면 1년까지입니다. 남녀고용평등법 제19조제2항입니다.</dd><dt>통상임금이 400만원이면 250만원을 다 받나요?</dt><dd>첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다.</dd><dt>회사에서 따로 주는 돈이 있으면 어떻게 되나요?</dt><dd>합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다.</dd><dt>부모가 모두 육아휴직을 쓰면 더 받나요?</dt><dd>더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오.</dd><dt>한부모는 다른가요?</dt><dd>첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다.</dd><dt>통상임금은 언제 기준인가요?</dt><dd>육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다.</dd></dl>
 <h3>관련 도구</h3>
 <ul class="related"><li><a href="/unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="/toejikgum-calc/">퇴직금 계산기</a></li><li><a href="/4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="/alba-wage-check/">알바 급여 계산기</a></li></ul>
 <p class="note">금액은 고용보험법 시행령 제95조제1항과 제95조의3에서 확인한 값입니다. 제도가 자주 바뀌므로 신청 전에 고용24에서 다시 확인하십시오.</p>
 </section>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "육아휴직 급여는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다."}}, {"@type": "Question", "name": "왜 7개월째부터 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다."}}, {"@type": "Question", "name": "1년 쓰면 총 얼마를 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "통상임금 200만원이면 약 2,160만원, 300만원 이상이면 약 2,310만원입니다. 통상임금이 300만원을 넘으면 상한에 걸려 총액이 더 늘지 않습니다."}}, {"@type": "Question", "name": "통상임금이 400만원이면 250만원을 다 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다."}}, {"@type": "Question", "name": "회사에서 따로 주는 돈이 있으면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다."}}, {"@type": "Question", "name": "부모가 모두 육아휴직을 쓰면 더 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오."}}, {"@type": "Question", "name": "한부모는 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다."}}, {"@type": "Question", "name": "통상임금은 언제 기준인가요?", "acceptedAnswer": {"@type": "Answer", "text": "육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "육아휴직 급여는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다."}}, {"@type": "Question", "name": "왜 7개월째부터 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다."}}, {"@type": "Question", "name": "1년 쓰면 총 얼마를 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "통상임금 200만원이면 약 2,160만원, 250만원 이상이면 약 2,310만원입니다. 통상임금이 250만원을 넘으면 세 구간 상한에 모두 걸려 총액이 더 늘지 않습니다. 250만원이든 500만원이든 같습니다."}}, {"@type": "Question", "name": "통상임금이 400만원이면 250만원을 다 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다."}}, {"@type": "Question", "name": "회사에서 따로 주는 돈이 있으면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다."}}, {"@type": "Question", "name": "부모가 모두 육아휴직을 쓰면 더 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오."}}, {"@type": "Question", "name": "한부모는 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다."}}, {"@type": "Question", "name": "육아휴직은 최대 몇 개월인가요?", "acceptedAnswer": {"@type": "Answer", "text": "기본은 1년입니다. 같은 자녀로 부모가 모두 각각 3개월 이상 쓴 경우, 한부모인 경우, 장애아동의 부모인 경우에만 6개월을 더해 1년 6개월까지 됩니다. 셋 다 아니면 1년까지입니다. 남녀고용평등법 제19조제2항입니다."}}, {"@type": "Question", "name": "통상임금은 언제 기준인가요?", "acceptedAnswer": {"@type": "Answer", "text": "육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다."}}]}</script>
 
 
 <div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
