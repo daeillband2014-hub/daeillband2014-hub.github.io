@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>취득세 계산기</title>
+<style>
+:root{--p:#6E2CA8;--pd:#531F80;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F8F4FC;--lt:#E2D3F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:12px 0 7px}
+input[type=date],input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px}
+button.big:active{transform:scale(.98)}
+button.ghost{width:100%;padding:14px 0;border:1.5px solid var(--p);border-radius:14px;
+background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+/* 광고가 뜨기 전에 미리 알리는 문구. 운세 앱이 이게 없어 반려됐다(2026-08-24). 처음부터 넣는다. */
+.adnote{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 2px;line-height:1.5}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin-bottom:13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+.rsub{font-size:15px;font-weight:700;color:var(--p);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.bannerbox{margin:14px 0 4px;min-height:0}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+</style>
+  <link rel="canonical" href="https://daeillband2014-hub.github.io/chwideukse-calc/">
+<style>
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+.adnote{display:none!important}
+</style>
+<meta name="description" content="집값과 전용면적을 넣으면 취득세와 지방교육세, 농어촌특별세를 계산합니다. 6억에서 9억 사이 구간 계산식까지 반영합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/chwideukse-calc/">
+<meta property="og:title" content="취득세 계산기">
+<meta property="og:description" content="집값과 전용면적을 넣으면 취득세와 지방교육세, 농어촌특별세를 계산합니다. 6억에서 9억 사이 구간 계산식까지 반영합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/chwideukse-calc/">
+<style>
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:0 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:10px}
+.webseo dd{margin:2px 0 0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>취득세 계산기</h1>
+<p class="desc">집값을 넣으면 취득세와 지방교육세를 계산합니다</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">취득가액 (원)</label>
+<input id="price" type="number" step="10000000" value="600000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">전용면적</label>
+<select id="area" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
+<option value="0" selected>85제곱미터 이하 (농어촌특별세 없음)</option>
+<option value="1">85제곱미터 초과 (농어촌특별세 0.2%)</option>
+</select>
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+<p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">1주택자가 집을 사는 경우(유상거래) 기준입니다. 다주택자와 법인은 중과세율이 따로 있어 이 계산기로는 나오지 않습니다.</p>
+</div>
+<script>
+(function(){
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ function rateOf(p){
+  var eok=p/100000000;
+  if(eok<=6) return 0.01;
+  if(eok<=9) return Math.round(((eok*2/3-3)/100)*1000000)/1000000;
+  return 0.03;
+ }
+ function calc(){
+  var p=Number(document.getElementById('price').value)||0;
+  var big=document.getElementById('area').value==='1';
+  if(p<=0){document.getElementById('out').innerHTML='';return;}
+  var r=rateOf(p);
+  var acq=p*r;
+  var edu=p*(r*0.5)*0.20;
+  var farm=big?p*0.002:0;
+  var sum=acq+edu+farm;
+  var band = p<=600000000 ? '6억원 이하 · 1%' : (p<=900000000 ? '6억 초과 9억 이하 · 구간 계산식' : '9억원 초과 · 3%');
+  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
+  h+='<div style="font-size:13px;color:#8B95A1">내야 할 세금 합계</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(sum)+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+band+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">취득세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+(r*100).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')+'%</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">취득세</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(acq)+'</td></tr>';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">지방교육세</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(edu)+'</td></tr>';
+  if(farm) h+='<tr><td style="padding:7px 0;color:#4E5968">농어촌특별세 0.2%</td><td style="padding:7px 0;text-align:right;font-weight:700">'+won(farm)+'</td></tr>';
+  else h+='<tr><td style="padding:7px 0;color:#4E5968">농어촌특별세</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673">없음 (85㎡ 이하)</td></tr>';
+  h+='</table>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">취득일부터 60일 이내에 신고·납부해야 합니다.</p></div>';
+  document.getElementById('out').innerHTML=h;
+ }
+ document.getElementById('go').addEventListener('click',calc);
+ document.getElementById('price').addEventListener('keydown',function(e){if(e.key==='Enter')calc();});
+ document.getElementById('area').addEventListener('change',calc);
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>취득세 계산기</h2>
+<h3>10초 요약</h3>
+<p>집을 사면 취득세에 【지방교육세】가 붙고, 전용 85제곱미터를 넘으면 【농어촌특별세】까지 붙습니다.</p>
+<p><strong>【6억원 이하는 1%, 9억원 초과는 3%】이고 그 사이는 계산식으로 부드럽게 이어집니다.</strong></p>
+<p>취득세만 계산하면 실제 낼 돈보다 적게 잡습니다.</p>
+<h3>세율 세 구간</h3>
+<p>1주택자가 집을 사는 경우입니다. 지방세법 제11조제1항제8호입니다.</p>
+<p>· 6억원 이하 — 1%</p>
+<p>· 6억원 초과 9억원 이하 — 계산식으로 구합니다</p>
+<p>· 9억원 초과 — 3%</p>
+<p>가운데 구간의 계산식은 【(취득가액 × 2 ÷ 3억원 − 3) ÷ 100】이고 소수점 넷째 자리까지 씁니다.</p>
+<p>6억원을 넣으면 1%, 9억원을 넣으면 3%가 나옵니다. <strong>【구간 경계에서 세율이 끊기지 않고 이어집니다.】</strong></p>
+<h3>예전처럼 계단식이 아닙니다</h3>
+<p>전에는 6억원을 1원이라도 넘으면 세율이 뚝 올랐습니다. 6억원에 1%였다가 6억 1원에 2%가 되니, 집값이 조금 오른 것 때문에 세금이 수백만원 뛰었습니다.</p>
+<p>지금은 가운데 구간을 계산식으로 이어 놓아서 그런 일이 없습니다. 6억 1원이면 세율도 1%에서 아주 조금만 올라갑니다.</p>
+<h3>지방교육세가 함께 붙습니다</h3>
+<p>주택은 계산 방법이 조금 특이합니다. 지방세법 제151조제1항제1호를 보면, 주택의 경우 <strong>【해당 세율에 100분의 50을 곱한 세율로 산출한 금액의 100분의 20】</strong>입니다.</p>
+<p>쉽게 말하면 취득세의 10%입니다. 취득세율이 1%면 지방교육세는 0.1%입니다.</p>
+<p>6억원짜리 집이면 취득세 600만원에 지방교육세 60만원이 붙어 660만원입니다.</p>
+<h3>85제곱미터를 넘으면 농어촌특별세</h3>
+<p>전용면적이 85제곱미터를 넘으면 농어촌특별세 0.2%가 더 붙습니다.</p>
+<p>85제곱미터 이하는 면제됩니다. 이 차이가 생각보다 큽니다. 9억원짜리 집이면 180만원 차이입니다.</p>
+<p><strong>【전용면적 기준입니다.】</strong> 공급면적이 아닙니다. 분양 광고의 34평은 공급면적이고 전용면적은 84제곱미터인 경우가 많습니다.</p>
+<h3>실제로 얼마인가</h3>
+<p>전용 85제곱미터 이하 기준입니다.</p>
+<p>· 3억원 — 취득세 300만원 + 지방교육세 30만원 = 330만원</p>
+<p>· 6억원 — 취득세 600만원 + 지방교육세 60만원 = 660만원</p>
+<p>· 7억원 — 취득세 약 1,167만원 + 지방교육세 약 117만원 = 약 1,283만원</p>
+<p>· 9억원 — 취득세 2,700만원 + 지방교육세 270만원 = 2,970만원</p>
+<p>· 12억원 — 취득세 3,600만원 + 지방교육세 360만원 = 3,960만원</p>
+<h3>언제까지 내나</h3>
+<p><strong>【취득일부터 60일 이내】</strong>에 신고하고 납부해야 합니다.</p>
+<p>잔금을 치른 날이나 등기한 날 중 빠른 날이 취득일입니다. 기한을 넘기면 신고불성실가산세와 납부지연가산세가 붙습니다.</p>
+<p>등기를 하려면 취득세 납부 영수증이 필요해서, 보통 등기할 때 같이 처리합니다.</p>
+<h3>이 계산기가 하지 않는 것</h3>
+<p>다주택자와 법인은 계산하지 않습니다. 조정대상지역인지, 몇 번째 집인지에 따라 8%나 12% 같은 중과세율이 적용되고 조건이 복잡합니다.</p>
+<p>생애최초 주택 구입 감면, 신혼부부 감면 같은 것도 넣지 않았습니다. 요건이 해마다 바뀌고 소득 기준도 있습니다.</p>
+<p>상속이나 증여로 받은 경우도 세율이 다릅니다. 상속은 2.8%, 증여는 3.5%입니다.</p>
+<p><strong>【1주택자가 돈을 주고 사는 경우로 보십시오.】</strong> 그 밖의 경우는 위택스나 관할 시군구청에 확인하셔야 합니다.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>① 지방교육세를 빼먹는 것</p>
+<p>취득세의 10%가 더 붙습니다. 고지 금액과 계산이 안 맞으면 대개 이것입니다.</p>
+<p>② 공급면적으로 85제곱미터를 따지는 것</p>
+<p>전용면적 기준입니다.</p>
+<p>③ 6억원 넘으면 바로 2%라고 보는 것</p>
+<p>지금은 계산식으로 이어져서 조금씩 올라갑니다.</p>
+<h3>어디에서 확인하나</h3>
+<p><strong>【신고·납부】 위택스 또는 이택스(서울)</strong></p>
+<p><strong>【상담】 관할 시군구청 세무과</strong></p>
+<p><strong>【원문】 지방세법 제11조제1항제8호, 지방교육세는 제151조제1항제1호</strong></p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>6억원짜리 집을 사면 취득세가 얼마인가요?</dt><dd>취득세 600만원에 지방교육세 60만원이 붙어 660만원입니다. 전용면적이 85제곱미터를 넘으면 농어촌특별세 120만원이 더 붙습니다.</dd><dt>취득세율이 어떻게 되나요?</dt><dd>1주택자가 사는 경우 6억원 이하는 1%, 9억원 초과는 3%입니다. 그 사이는 계산식으로 이어져 6억원에서 9억원으로 갈수록 조금씩 올라갑니다.</dd><dt>6억원을 조금 넘으면 세금이 갑자기 뛰나요?</dt><dd>뛰지 않습니다. 예전에는 계단식이라 그랬지만 지금은 6억원에서 9억원 사이가 계산식으로 이어져 있어 세율이 조금씩만 올라갑니다.</dd><dt>지방교육세는 얼마인가요?</dt><dd>주택은 취득세의 10%입니다. 취득세율이 1%면 지방교육세는 0.1%입니다. 따로 고지되지 않고 함께 냅니다.</dd><dt>농어촌특별세는 누가 내나요?</dt><dd>전용면적 85제곱미터를 넘는 주택을 살 때 0.2%가 붙습니다. 85제곱미터 이하는 면제됩니다. 공급면적이 아니라 전용면적 기준입니다.</dd><dt>언제까지 내야 하나요?</dt><dd>취득일부터 60일 이내에 신고하고 납부해야 합니다. 잔금을 치른 날과 등기한 날 중 빠른 날이 취득일입니다.</dd><dt>다주택자도 이 계산기로 되나요?</dt><dd>되지 않습니다. 다주택자와 법인은 8%나 12% 같은 중과세율이 적용되고 조정대상지역인지에 따라서도 달라집니다. 위택스에서 확인하십시오.</dd><dt>생애최초 감면도 계산되나요?</dt><dd>계산하지 않습니다. 생애최초나 신혼부부 감면은 요건이 해마다 바뀌고 소득 기준도 있어 넣지 않았습니다. 해당되시면 실제 세금은 이보다 적습니다.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/jeungyeose-calc/">증여세 계산기</a></li><li><a href="/loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="/pyeong-calc-kr/">평수 계산기</a></li><li><a href="/jadongchase-calc/">자동차세 계산기</a></li><li><a href="/jonghap-sodeukse-calc/">종합소득세 계산기</a></li></ul>
+<p class="note">세율은 지방세법 제11조제1항제8호, 지방교육세는 제151조제1항제1호에서 확인한 값입니다. 감면 제도는 해마다 바뀌고 지자체 조례로 달라질 수 있으니 위택스에서 다시 확인하십시오.</p>
+</section>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "6억원짜리 집을 사면 취득세가 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "취득세 600만원에 지방교육세 60만원이 붙어 660만원입니다. 전용면적이 85제곱미터를 넘으면 농어촌특별세 120만원이 더 붙습니다."}}, {"@type": "Question", "name": "취득세율이 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "1주택자가 사는 경우 6억원 이하는 1%, 9억원 초과는 3%입니다. 그 사이는 계산식으로 이어져 6억원에서 9억원으로 갈수록 조금씩 올라갑니다."}}, {"@type": "Question", "name": "6억원을 조금 넘으면 세금이 갑자기 뛰나요?", "acceptedAnswer": {"@type": "Answer", "text": "뛰지 않습니다. 예전에는 계단식이라 그랬지만 지금은 6억원에서 9억원 사이가 계산식으로 이어져 있어 세율이 조금씩만 올라갑니다."}}, {"@type": "Question", "name": "지방교육세는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "주택은 취득세의 10%입니다. 취득세율이 1%면 지방교육세는 0.1%입니다. 따로 고지되지 않고 함께 냅니다."}}, {"@type": "Question", "name": "농어촌특별세는 누가 내나요?", "acceptedAnswer": {"@type": "Answer", "text": "전용면적 85제곱미터를 넘는 주택을 살 때 0.2%가 붙습니다. 85제곱미터 이하는 면제됩니다. 공급면적이 아니라 전용면적 기준입니다."}}, {"@type": "Question", "name": "언제까지 내야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "취득일부터 60일 이내에 신고하고 납부해야 합니다. 잔금을 치른 날과 등기한 날 중 빠른 날이 취득일입니다."}}, {"@type": "Question", "name": "다주택자도 이 계산기로 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "되지 않습니다. 다주택자와 법인은 8%나 12% 같은 중과세율이 적용되고 조정대상지역인지에 따라서도 달라집니다. 위택스에서 확인하십시오."}}, {"@type": "Question", "name": "생애최초 감면도 계산되나요?", "acceptedAnswer": {"@type": "Answer", "text": "계산하지 않습니다. 생애최초나 신혼부부 감면은 요건이 해마다 바뀌고 소득 기준도 있어 넣지 않았습니다. 해당되시면 실제 세금은 이보다 적습니다."}}]}</script>
+
+
+<div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>
