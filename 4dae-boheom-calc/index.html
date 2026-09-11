@@ -84,14 +84,23 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 </div>
 <script>
 (function(){
- var R={pension:0.0475,health:0.03595,care:0.1314,employ:0.009};
+ // 국민연금 본인부담은 2032년까지 연도별로 법에 정해져 있다 —
+ // 국민연금법 부칙(법률 제20903호, 2025.4.2) 제4조제1항. 1만분의 단위.
+ // 2033년부터는 본칙 제88조제3항의 1천분의 65(=6.5%)를 절반씩 나눈 값.
+ // 표로 두는 이유: 매년 손으로 고치면 고치는 걸 잊는 해에 조용히 틀린다.
+ var PEN={2026:0.0475,2027:0.0500,2028:0.0525,2029:0.0550,2030:0.0575,2031:0.0600,2032:0.0625};
+ var YR=new Date().getFullYear();
+ var penRate = PEN[YR] || (YR<2026 ? 0.045 : 0.065);
+ var R={pension:penRate,health:0.03595,care:0.1314,employ:0.009};
+ function pct(x,d){return (x*100).toFixed(d===undefined?3:d).replace(/\.?0+$/,'')+'%';}
  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
  function calc(){
   var p=Number(document.getElementById('pay').value)||0;
   if(p<=0){document.getElementById('out').innerHTML='';return;}
   var pen=p*R.pension, hea=p*R.health, car=hea*R.care, emp=p*R.employ;
   var sum=pen+hea+car+emp;
-  var rows=[['국민연금 4.75%',pen],['건강보험 3.595%',hea],['장기요양 건강보험료의 13.14%',car],['고용보험 0.9%',emp]];
+  // 라벨을 상수에서 만든다. 따로 적어 두면 상수만 고쳤을 때 화면이 옛 숫자를 말한다.
+  var rows=[['국민연금 '+pct(R.pension,2),pen],['건강보험 '+pct(R.health),hea],['장기요양 건강보험료의 '+pct(R.care,2),car],['고용보험 '+pct(R.employ,1),emp]];
   var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
   h+='<div style="font-size:13px;color:#8B95A1">4대보험 공제 합계</div>';
   h+='<div style="font-size:27px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(sum)+'</div>';
