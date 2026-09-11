@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>육아휴직 급여 계산기</title>
+<style>
+:root{--p:#6E2CA8;--pd:#531F80;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F8F4FC;--lt:#E2D3F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:12px 0 7px}
+input[type=date],input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px}
+button.big:active{transform:scale(.98)}
+button.ghost{width:100%;padding:14px 0;border:1.5px solid var(--p);border-radius:14px;
+background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+/* 광고가 뜨기 전에 미리 알리는 문구. 운세 앱이 이게 없어 반려됐다(2026-08-24). 처음부터 넣는다. */
+.adnote{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 2px;line-height:1.5}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin-bottom:13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+.rsub{font-size:15px;font-weight:700;color:var(--p);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.bannerbox{margin:14px 0 4px;min-height:0}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+</style>
+  <link rel="canonical" href="https://daeillband2014-hub.github.io/yuka-hyujik-calc/">
+<style>
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+.adnote{display:none!important}
+</style>
+<meta name="description" content="통상임금을 넣으면 육아휴직 급여를 기간별로 계산합니다. 7개월째부터 80%로 줄어드는 것과 상한·하한까지 반영합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/yuka-hyujik-calc/">
+<meta property="og:title" content="육아휴직 급여 계산기">
+<meta property="og:description" content="통상임금을 넣으면 육아휴직 급여를 기간별로 계산합니다. 7개월째부터 80%로 줄어드는 것과 상한·하한까지 반영합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/yuka-hyujik-calc/">
+<style>
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:0 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:10px}
+.webseo dd{margin:2px 0 0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>육아휴직 급여 계산기</h1>
+<p class="desc">통상임금을 넣으면 기간별로 얼마를 받는지 계산합니다</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">월 통상임금 (원)</label>
+<input id="tw" type="number" step="100000" value="3000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p style="font-size:12px;color:#8B95A1;margin-top:6px;line-height:1.6"><b>육아휴직 시작일 기준</b>입니다. 휴직 중 임금이 올라도 반영되지 않습니다.</p>
+<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">육아휴직 기간 (개월)</label>
+<input id="mon" type="number" min="1" max="18" step="1" value="12" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:14px 0 0"><input type="checkbox" id="single" style="width:18px;height:18px"> 한부모가족지원법상 한부모 (첫 3개월 상한 300만원)</label>
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+<p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">부모가 모두 육아휴직을 쓰는 경우(6+6 특례)는 상한이 달라 이 계산기로는 나오지 않습니다. 고용24에서 확인하십시오.</p>
+</div>
+<script>
+(function(){
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+ function monthPay(tw, m, single){
+  var cap, amt;
+  if(m<=3){ cap = single?3000000:2500000; amt=tw; }
+  else if(m<=6){ cap=2000000; amt=tw; }
+  else { cap=1600000; amt=tw*0.8; }
+  return Math.max(700000, Math.min(cap, amt));
+ }
+ function calc(){
+  var tw=Number(document.getElementById('tw').value)||0;
+  var mon=Math.min(18,Math.max(1,Number(document.getElementById('mon').value)||1));
+  var single=document.getElementById('single').checked;
+  if(tw<=0){document.getElementById('out').innerHTML='';return;}
+  var total=0;
+  for(var m=1;m<=mon;m++) total+=monthPay(tw,m,single);
+  var p1=monthPay(tw,1,single), p2=monthPay(tw,5,single), p3=monthPay(tw,8,single);
+  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
+  h+='<div style="font-size:13px;color:#8B95A1">'+mon+'개월 동안 받는 총액</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(total)+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">1~3개월 (통상임금 100%)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">월 '+won(p1)+'</td></tr>';
+  if(mon>3) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">4~6개월 (통상임금 100%)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">월 '+won(p2)+'</td></tr>';
+  if(mon>6) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">7개월째부터 (통상임금 80%)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">월 '+won(p3)+'</td></tr>';
+  h+='<tr><td style="padding:9px 0;font-weight:700">월 평균</td><td style="padding:9px 0;text-align:right;font-weight:800">'+won(total/mon)+'</td></tr>';
+  h+='</table>';
+  if(tw>2500000) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">통상임금이 상한을 넘어 상한액으로 계산됐습니다.</p>';
+  if(tw<875000) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">하한 70만원이 적용된 달이 있습니다.</p>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:6px">회사에서 육아휴직을 이유로 따로 받는 돈이 있으면, 합쳐서 통상임금을 넘는 만큼 깎입니다.</p></div>';
+  document.getElementById('out').innerHTML=h;
+ }
+ document.getElementById('go').addEventListener('click',calc);
+ ['tw','mon'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')calc();});});
+ document.getElementById('single').addEventListener('change',calc);
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>육아휴직 급여 계산기</h2>
+<h3>10초 요약</h3>
+<p>육아휴직 급여는 【1~3개월 · 4~6개월 · 7개월 이후】 세 구간으로 나뉩니다.</p>
+<p><strong>【7개월째부터 통상임금의 80%로 줄고 상한도 160만원으로 낮아집니다.】</strong></p>
+<p>상한은 250만원에서 시작해 200만원, 160만원으로 내려갑니다. 하한은 계속 70만원입니다.</p>
+<h3>기간별로 얼마인가</h3>
+<p>고용보험법 시행령 제95조제1항입니다.</p>
+<p>· 1~3개월 — 통상임금 100%, 상한 250만원, 하한 70만원</p>
+<p>· 4~6개월 — 통상임금 100%, 상한 200만원, 하한 70만원</p>
+<p>· 7개월째부터 — 통상임금의 80%, 상한 160만원, 하한 70만원</p>
+<p><strong>【상한은 통상임금이 아니라 받는 금액에 걸립니다.】</strong> 통상임금이 400만원이어도 첫 3개월에 받는 돈은 250만원입니다.</p>
+<h3>7개월째가 갈림길입니다</h3>
+<p>가장 놓치기 쉬운 부분입니다. 6개월까지는 통상임금 전액을 기준으로 하다가 7개월째부터 80%로 떨어집니다.</p>
+<p>게다가 상한도 200만원에서 160만원으로 같이 내려갑니다. 두 가지가 동시에 작용해서 체감이 큽니다.</p>
+<p>통상임금 300만원이면 1~3개월은 250만원, 4~6개월은 200만원, 7개월부터는 160만원입니다. <strong>【반년 만에 90만원이 줄어듭니다.】</strong></p>
+<h3>1년 쓰면 총 얼마인가</h3>
+<p>통상임금별로 12개월치 총액입니다.</p>
+<p>· 통상임금 200만원 — 총 2,160만원</p>
+<p>· 통상임금 300만원 — 총 2,310만원</p>
+<p>· 통상임금 400만원 이상 — 총 2,310만원</p>
+<p>통상임금이 300만원을 넘으면 총액이 더 늘지 않습니다. 상한에 걸리기 때문입니다.</p>
+<h3>한부모는 첫 3개월 상한이 높습니다</h3>
+<p>한부모가족지원법상 한부모에 해당하면 첫 3개월 상한이 【300만원】입니다.</p>
+<p>4개월째부터는 일반과 같습니다. 200만원, 160만원으로 내려갑니다.</p>
+<h3>회사에서 따로 받으면 깎입니다</h3>
+<p>육아휴직 중 회사가 육아휴직을 이유로 돈을 주는 경우가 있습니다. 이때는 그만큼 급여가 줄어듭니다.</p>
+<p>법은 이렇게 정합니다. 매월 회사에서 받은 금품과 육아휴직 급여를 합한 금액이 <strong>【월 통상임금을 초과하면 초과분을 빼고 지급】</strong>합니다.</p>
+<p>합쳐서 통상임금을 넘지 못한다는 뜻입니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다.</p>
+<h3>부모가 모두 쓰면 더 받습니다</h3>
+<p>같은 자녀에 대해 자녀 출생 후 18개월이 될 때까지 부모가 모두 육아휴직을 쓰면 상한이 올라갑니다. 이른바 6+6 특례입니다.</p>
+<p>기간이 겹치지 않아도 됩니다. 아빠와 엄마가 순서대로 써도 해당합니다.</p>
+<p><strong>【상한이 사용한 개월 수에 따라 단계적으로 달라져 이 계산기에는 넣지 않았습니다.】</strong> 해당되시면 고용24에서 확인하십시오. 일반보다 유리하니 꼭 확인해 보시는 편이 좋습니다.</p>
+<h3>통상임금은 시작일 기준입니다</h3>
+<p>육아휴직 시작일의 통상임금으로 계산합니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다.</p>
+<p>통상임금은 기본급에 정기적·일률적으로 주는 수당을 더한 것입니다. 성과급처럼 그때그때 달라지는 돈은 보통 빠집니다.</p>
+<h3>이 계산기가 하지 않는 것</h3>
+<p>6+6 특례는 계산하지 않습니다. 상한 표가 개월 수마다 달라 잘못 쓰면 오히려 적게 나옵니다.</p>
+<p>육아기 근로시간 단축 급여도 다른 제도입니다. 휴직 대신 시간을 줄이는 경우이고 계산 방법이 따로 있습니다.</p>
+<p>사후지급금 제도는 바뀌는 중이라 넣지 않았습니다. 그해 안내를 확인하십시오.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>① 1년 내내 통상임금의 100%를 받는다고 보는 것</p>
+<p>7개월째부터 80%이고 상한도 낮아집니다.</p>
+<p>② 상한이 통상임금에 걸린다고 보는 것</p>
+<p>받는 금액에 걸립니다.</p>
+<p>③ 부모가 모두 쓰는 경우를 일반으로 계산하는 것</p>
+<p>특례가 따로 있고 더 유리합니다.</p>
+<h3>어디에서 확인하나</h3>
+<p><strong>【신청·조회】 고용24</strong></p>
+<p><strong>【상담】 고용노동부 고객상담센터 1350</strong></p>
+<p><strong>【원문】 고용보험법 시행령 제95조, 한부모 특례는 제95조의3</strong></p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>육아휴직 급여는 얼마인가요?</dt><dd>1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다.</dd><dt>왜 7개월째부터 줄어드나요?</dt><dd>법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다.</dd><dt>1년 쓰면 총 얼마를 받나요?</dt><dd>통상임금 200만원이면 약 2,160만원, 300만원 이상이면 약 2,310만원입니다. 통상임금이 300만원을 넘으면 상한에 걸려 총액이 더 늘지 않습니다.</dd><dt>통상임금이 400만원이면 250만원을 다 받나요?</dt><dd>첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다.</dd><dt>회사에서 따로 주는 돈이 있으면 어떻게 되나요?</dt><dd>합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다.</dd><dt>부모가 모두 육아휴직을 쓰면 더 받나요?</dt><dd>더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오.</dd><dt>한부모는 다른가요?</dt><dd>첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다.</dd><dt>통상임금은 언제 기준인가요?</dt><dd>육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="/toejikgum-calc/">퇴직금 계산기</a></li><li><a href="/4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="/alba-wage-check/">알바 급여 계산기</a></li></ul>
+<p class="note">금액은 고용보험법 시행령 제95조제1항과 제95조의3에서 확인한 값입니다. 제도가 자주 바뀌므로 신청 전에 고용24에서 다시 확인하십시오.</p>
+</section>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "육아휴직 급여는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "1~3개월은 통상임금 100%에 상한 250만원, 4~6개월은 100%에 상한 200만원, 7개월째부터는 80%에 상한 160만원입니다. 하한은 계속 70만원입니다."}}, {"@type": "Question", "name": "왜 7개월째부터 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "법이 그렇게 정하고 있습니다. 고용보험법 시행령 제95조제1항제3호가 7개월째부터 통상임금의 100분의 80으로 정하고 상한도 160만원으로 낮췄습니다."}}, {"@type": "Question", "name": "1년 쓰면 총 얼마를 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "통상임금 200만원이면 약 2,160만원, 300만원 이상이면 약 2,310만원입니다. 통상임금이 300만원을 넘으면 상한에 걸려 총액이 더 늘지 않습니다."}}, {"@type": "Question", "name": "통상임금이 400만원이면 250만원을 다 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월은 상한인 250만원을 받습니다. 상한은 통상임금이 아니라 받는 금액에 걸리기 때문입니다."}}, {"@type": "Question", "name": "회사에서 따로 주는 돈이 있으면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "합쳐서 월 통상임금을 넘는 만큼 급여에서 빠집니다. 회사 지원금이 있으시면 고용센터에 알리셔야 합니다."}}, {"@type": "Question", "name": "부모가 모두 육아휴직을 쓰면 더 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "더 받습니다. 자녀 출생 후 18개월이 될 때까지 부모가 모두 쓰면 상한이 올라가는 특례가 있습니다. 기간이 겹치지 않아도 됩니다. 상한이 개월 수에 따라 달라 이 계산기에는 넣지 않았으니 고용24에서 확인하십시오."}}, {"@type": "Question", "name": "한부모는 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "첫 3개월 상한이 300만원으로 높습니다. 4개월째부터는 일반과 같습니다."}}, {"@type": "Question", "name": "통상임금은 언제 기준인가요?", "acceptedAnswer": {"@type": "Answer", "text": "육아휴직 시작일 기준입니다. 휴직 중에 회사 임금이 올라도 반영되지 않습니다."}}]}</script>
+
+
+<div class="webftr">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다.<br><a href="../">다른 도구 보기</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../contact.html">문의</a> · <a href="../terms.html">이용약관</a></div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>
