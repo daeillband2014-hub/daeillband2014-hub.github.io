@@ -67,7 +67,11 @@ table.days td.on{background:#FFF3CD;font-weight:800;color:#8A5A00}
   <label><input id="dis" type="checkbox" style="width:auto;margin:0 6px 0 0;vertical-align:middle"> 장애인고용촉진 및 직업재활법 제2조제1호에 따른 장애인</label>
   <label for="daily" style="margin-top:10px">기초일액(원) — 이직 전 3개월 평균임금의 1일분, 아신다면 입력 (선택)</label>
   <input id="daily" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 110000">
-  <p class="hint">1일 지급액은 기초일액의 60%입니다(고용보험법 제46조). 다만 최저구직급여일액(최저임금 기준 80%)과 상한액이 적용되면 금액이 달라집니다 — 그해 값은 매년 바뀌어 여기서 계산하지 않습니다. 고용24에서 확인하십시오.</p>
+  <label for="cap" style="margin-top:10px">그해 상한액(1일, 원) — 고용24에서 확인해 입력 (선택)</label>
+  <input id="cap" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 68100">
+  <label for="flr" style="margin-top:10px">그해 최저구직급여일액(1일, 원) — 고용24에서 확인해 입력 (선택)</label>
+  <input id="flr" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 66048">
+  <p class="hint">1일 지급액은 기초일액의 60%입니다(고용보험법 제46조). 다만 위아래로 <strong>상한액</strong>과 <strong>최저구직급여일액</strong>이 걸려서, 실제 금액은 대부분 60%가 아니라 이 두 값 중 하나로 잘립니다. 두 값은 해마다 바뀌므로 이 계산기에 넣어 두지 않았습니다 — 그해 값을 <a href="https://www.work24.go.kr" rel="nofollow">고용24</a>에서 확인해 위 칸에 넣으시면 잘라서 계산합니다. 넣지 않으면 금액을 보여드리지 않습니다.</p>
   <button class="big" id="go">계산하기</button>
 
   <div class="rcard" id="res">
@@ -76,7 +80,7 @@ table.days td.on{background:#FFF3CD;font-weight:800;color:#8A5A00}
     <div class="sub-row">
       <div class="sbox"><div class="v" id="months">—</div><div class="l">개월로 환산</div></div>
       <div class="sbox"><div class="v" id="band">—</div><div class="l">적용 구간</div></div>
-      <div class="sbox"><div class="v" id="total">—</div><div class="l">60% 기준 총액(입력 시) — 상한·하한 미적용</div></div>
+      <div class="sbox"><div class="v" id="total">—</div><div class="l">총액 — 상한·하한을 넣으면 계산됩니다</div></div>
     </div>
   </div>
   <div class="list" id="note" style="display:none">
@@ -144,7 +148,7 @@ table.days td.on{background:#FFF3CD;font-weight:800;color:#8A5A00}
 <p><strong>【2028년부터 산정 방식이 바뀝니다】 고용보험법 부칙(2026. 2. 19. 개정)에 따라 2028년 1월 1일 전에 이직한 근로자의 구직급여 산정은 종전 규정을 따릅니다.</strong></p>
 <h3>이 계산기가 하지 않는 것</h3>
 <p>이 계산기는 평균임금과 고용보험 가입기간만 받아 고용보험법 제46조의 60퍼센트 기준액과 별표1의 소정급여일수를 보여 줍니다. 아래는 계산에 들어가 있지 않습니다.</p>
-<p>· 최저구직급여일액과 상한액 — 그해 값이 해마다 바뀌어 넣지 않았습니다. 실제 금액은 이 범위에서 잘립니다</p>
+<p>· 최저구직급여일액과 상한액을 <strong>이 계산기가 알고 있지는 않습니다.</strong> 해마다 바뀌는 값이라 코드에 넣어 두면 이듬해에 조용히 틀립니다. 대신 입력칸을 두어 그해 값을 넣으시면 잘라서 계산합니다. 넣지 않으면 금액을 보여드리지 않습니다 — <strong>60%를 그대로 보여주면 대부분의 경우 실제와 크게 어긋나기 때문입니다.</strong> 2026년 기준으로 60%가 그대로 적용되는 구간은 기초일액 110,080원에서 113,500원 사이뿐입니다</p>
 <p>· 이직 사유가 수급 자격에 해당하는지 — 이건 고용센터가 판단합니다</p>
 <p>· 5년 안에 세 번 넘게 받은 경우의 반복수급 감액</p>
 <p>· 조기재취업수당·직업능력개발수당 같은 다른 급여</p>
@@ -176,7 +180,18 @@ table.days td.on{background:#FFF3CD;font-weight:800;color:#8A5A00}
     document.getElementById('months').textContent=(days/30)+'개월';
     document.getElementById('band').textContent=L[c];
     var d=parseInt(document.getElementById('daily').value,10);
-    document.getElementById('total').textContent = d>0 ? fmt(Math.round(d*0.6)*days)+'원' : '—';
+    var cap=parseInt(document.getElementById('cap').value,10);
+    var flr=parseInt(document.getElementById('flr').value,10);
+    var tEl=document.getElementById('total');
+    if(!(d>0)){
+      tEl.textContent='—';
+    } else if(!(cap>0)||!(flr>0)){
+      tEl.textContent='상한·하한 입력';
+    } else {
+      var one=Math.round(d*0.6);
+      var cut=Math.min(Math.max(one,flr),cap);
+      tEl.textContent=fmt(cut*days)+'원';
+    }
     document.getElementById('ageband').textContent = senior ? (age>=50?'50세 이상':'장애인 → 50세 이상 기준') : '50세 미만';
     var other=T[senior?0:1][c];
     document.getElementById('edge').textContent = c===0 ? '1년 미만은 나이와 무관 (120일)' : (senior ? '50세 미만이었다면 '+other+'일 (−30일)' : '50세 이상이면 '+other+'일 (+30일)');
