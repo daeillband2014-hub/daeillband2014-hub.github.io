@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>연차휴가 계산기</title>
+<meta name="description" content="입사일을 넣으면 올해 받는 연차 일수를 계산합니다. 1년 미만 월 1일, 3년마다 1일 가산, 25일 한도까지 근로기준법 제60조 기준으로 보여줍니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/yeoncha-calc/">
+<style>
+:root{--p:#4A5AA8;--pd:#37437F;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F4F5FC;--lt:#D6DAF0;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=date],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(40,50,110,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.big.no{color:var(--acc);font-size:21px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EEF0F8;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.ok{background:#EEF0FA;border-left:3px solid #4A5AA8;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#37437F;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+table.plan{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+table.plan th,table.plan td{padding:7px 6px;border-bottom:1px solid #EEF0F8;text-align:left}
+table.plan th{color:var(--mut);font-weight:400;font-size:12.5px}
+table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>연차휴가 계산기</h1>
+<p class="desc">입사일을 넣으면 지금까지 생긴 연차와 앞으로 늘어나는 일수가 나옵니다</p>
+
+<label for="join">입사일</label>
+<input id="join" type="date" value="2023-03-02" min="1960-01-01">
+
+<label for="base">기준일 (이 날짜에 몇 개인지 봅니다)</label>
+<input id="base" type="date">
+
+<label for="att">직전 1년 출근율</label>
+<select id="att">
+<option value="1" selected>80퍼센트 이상 (대부분 여기입니다)</option>
+<option value="0">80퍼센트 미만</option>
+</select>
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<p class="note">근로기준법 제60조를 그대로 옮긴 것입니다. 회사가 취업규칙이나 노사합의로 회계연도(1월 1일) 기준으로 운영하는 경우가 많은데, 그때는 날짜가 달라집니다. 이 계산기는 <b>입사일 기준</b>입니다.</p>
+</div>
+
+<script>
+(function(){
+ /* 연차 유급휴가 산정. 근로기준법 제60조.
+    ① 1년간 80% 이상 출근 → 15일
+    ② 계속근로 1년 미만 또는 80% 미만 출근 → 1개월 개근 시 1일
+    ④ 3년 이상 계속근로 → 최초 1년을 초과하는 계속근로 연수 매 2년마다 1일 가산,
+       가산 포함 총 25일 한도
+    [확인] 2026-09-12 법제처 오픈 API 원문(시행 2026-08-20)으로 대조했다.
+    ★회계연도 기준으로 운영하는 회사가 많다. 그건 법이 아니라 취업규칙·노사합의다.
+      이 도구는 법 조문대로 입사일 기준만 계산하고, 그 사실을 화면에 밝힌다. */
+
+ var D = function(s){ return new Date(s + 'T00:00:00'); };
+ function iso(d){
+  var m = ('0'+(d.getMonth()+1)).slice(-2), day = ('0'+d.getDate()).slice(-2);
+  return d.getFullYear()+'-'+m+'-'+day;
+ }
+ function fmt(s){ var d=D(s); return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일'; }
+
+ /* 입사일로부터 기준일까지의 만 근속 연수(해당 연도 응당일 도달 기준) */
+ function years(join, base){
+  var j=D(join), b=D(base);
+  var y = b.getFullYear() - j.getFullYear();
+  var m = b.getMonth() - j.getMonth();
+  if(m < 0 || (m === 0 && b.getDate() < j.getDate())) y--;
+  return y;
+ }
+ /* 만 근속 개월 수 */
+ function months(join, base){
+  var j=D(join), b=D(base);
+  var m = (b.getFullYear()-j.getFullYear())*12 + (b.getMonth()-j.getMonth());
+  if(b.getDate() < j.getDate()) m--;
+  return m;
+ }
+
+ /* 제60조제1항·제4항 — 근속 n년차에 받는 연차 일수 */
+ function annual(y){
+  if(y < 1) return 0;
+  if(y < 3) return 15;                     /* 1년, 2년차는 15일 */
+  var add = Math.floor((y - 1) / 2);       /* 최초 1년 초과 매 2년마다 1일 */
+  return Math.min(15 + add, 25);           /* 25일 한도 */
+ }
+
+ function calc(){
+  var join = document.getElementById('join').value;
+  var base = document.getElementById('base').value;
+  var ok80 = document.getElementById('att').value === '1';
+  var out = document.getElementById('out');
+  if(!join || !base){ out.innerHTML=''; return; }
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(join) || !/^\d{4}-\d{2}-\d{2}$/.test(base)){
+   out.innerHTML = '<div class="rcard"><div class="big no">날짜를 다시 넣어 주십시오</div></div>'; return;
+  }
+  if(D(base) < D(join)){
+   out.innerHTML = '<div class="rcard"><div class="big no">기준일이 입사일보다 빠릅니다</div>'
+     + '<div class="sub2">기준일을 입사일 뒤로 잡아 주십시오</div></div>'; return;
+  }
+
+  var y = years(join, base), m = months(join, base);
+  var h = '<div class="rcard">';
+
+  if(y < 1 || !ok80){
+   /* 제60조제2항 — 1개월 개근 시 1일 */
+   var d = Math.min(m, 11);
+   if(y >= 1 && !ok80) d = Math.min(m, 12);
+   h += '<div class="big">'+d+'일</div>';
+   h += '<div class="sub2">'+(y < 1 ? '계속근로 1년 미만' : '출근율 80퍼센트 미만')+'</div>';
+   h += '<div class="row"><span class="k">입사일</span><span class="v">'+fmt(join)+'</span></div>';
+   h += '<div class="row"><span class="k">기준일</span><span class="v">'+fmt(base)+'</span></div>';
+   h += '<div class="row"><span class="k">계속근로</span><span class="v">'+m+'개월</span></div>';
+   h += '<div class="ok"><b>제60조제2항</b>이 "계속하여 근로한 기간이 1년 미만인 근로자 또는 '
+      + '1년간 80퍼센트 미만 출근한 근로자에게 <b>1개월 개근 시 1일</b>의 유급휴가를 주어야 한다"고 정합니다. '
+      + '개근한 달만 세므로 결근이 있던 달은 빠집니다.</div>';
+   if(y < 1){
+    h += '<div class="warn"><b>1년을 채우면 따로 15일이 생깁니다.</b> '
+       + '입사 첫 해에 월 단위로 받은 휴가와 별개입니다. '
+       + '1년이 되는 날은 <b>'+fmt(iso(new Date(D(join).getFullYear()+1, D(join).getMonth(), D(join).getDate())))+'</b>입니다.</div>';
+   }
+   h += '</div>'; out.innerHTML = h; return;
+  }
+
+  var days = annual(y);
+  var add = days - 15;
+  h += '<div class="big">'+days+'일</div>';
+  h += '<div class="sub2">근속 '+y+'년차 · 입사일 기준</div>';
+  h += '<div class="row"><span class="k">입사일</span><span class="v">'+fmt(join)+'</span></div>';
+  h += '<div class="row"><span class="k">기준일</span><span class="v">'+fmt(base)+'</span></div>';
+  h += '<div class="row"><span class="k">계속근로</span><span class="v">'+y+'년 '+(m - y*12)+'개월</span></div>';
+  h += '<div class="row"><span class="k">기본</span><span class="v">15일</span></div>';
+  h += '<div class="row"><span class="k">가산</span><span class="v">'+(add > 0 ? '+'+add+'일' : '없음')+'</span></div>';
+
+  if(days >= 25){
+   h += '<div class="warn"><b>25일이 한도입니다.</b> 제60조제4항이 '
+      + '"가산휴가를 포함한 총 휴가 일수는 25일을 한도로 한다"고 정합니다. '
+      + '더 근속해도 법정 연차는 늘지 않습니다.</div>';
+  }else{
+   /* 다음 가산 시점 */
+   var nextY = y + (((y - 1) % 2 === 0) ? 2 : 1);
+   var nd = new Date(D(join).getFullYear()+nextY, D(join).getMonth(), D(join).getDate());
+   h += '<div class="ok"><b>다음 가산은 근속 '+nextY+'년차부터 '+annual(nextY)+'일</b>입니다 ('+fmt(iso(nd))+'). '
+      + '제60조제4항이 <b>최초 1년을 초과하는 계속근로 연수 매 2년마다 1일</b>을 더하도록 정합니다.</div>';
+  }
+
+  /* 앞으로 6년 */
+  h += '<table class="plan"><tr><th>근속</th><th>연차</th><th>그 해가 시작되는 날</th></tr>';
+  for(var k = y; k < y + 6 && k <= 21; k++){
+   var dd = new Date(D(join).getFullYear()+k, D(join).getMonth(), D(join).getDate());
+   h += '<tr><td>'+k+'년차</td><td class="n">'+annual(k)+'일</td><td style="color:#8B95A1">'+fmt(iso(dd))+'</td></tr>';
+  }
+  h += '</table>';
+  h += '<p class="note" style="margin-top:12px">연차는 발생일부터 <b>1년간</b> 쓸 수 있고, 그 안에 안 쓰면 원칙적으로 없어집니다(제60조제7항). 다만 회사가 제61조의 사용촉진 조치를 하지 않았다면 미사용 연차를 수당으로 보상해야 합니다.</p>';
+  h += '</div>';
+  out.innerHTML = h;
+ }
+
+ /* 기준일 기본값은 오늘 */
+ (function(){
+  var t = new Date();
+  document.getElementById('base').value = iso(new Date(t.getFullYear(), t.getMonth(), t.getDate()));
+ })();
+
+ document.getElementById('go').addEventListener('click', calc);
+ ['join','base','att'].forEach(function(id){
+  document.getElementById(id).addEventListener('change', calc);
+ });
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>연차휴가 계산기</h2>
+
+<h3>10초 요약</h3>
+<p>1년간 <strong>80퍼센트 이상 출근</strong>하면 <strong>15일</strong>입니다. 1년이 안 됐거나 출근율이 80퍼센트에 못 미치면 <strong>1개월 개근에 1일</strong>씩입니다.</p>
+<p>3년 이상 다니면 <strong>최초 1년을 넘는 근속 연수 매 2년마다 1일</strong>이 붙습니다. 그래서 3년차 16일, 5년차 17일로 올라가고 <strong>25일이 한도</strong>입니다.</p>
+<p>근거는 근로기준법 제60조입니다.</p>
+
+<h3>입사 첫 해는 두 가지가 겹칩니다</h3>
+<p>1년 미만일 때는 개근한 달마다 1일씩 생기고, 1년을 채우면 그와 별개로 15일이 생깁니다. 첫 해에 월 단위로 받은 것과 1년 뒤 15일은 다른 휴가입니다.</p>
+
+<h3>자주 틀리는 것</h3>
+<p>회계연도 기준과 입사일 기준을 섞습니다. 법은 입사일 기준이고, 많은 회사가 관리 편의를 위해 회계연도(1월 1일)로 맞춥니다. 그건 취업규칙이나 노사합의로 하는 것이고, <b>근로자에게 불리하면 안 됩니다.</b> 이 계산기는 법 조문대로 입사일 기준으로 계산합니다.</p>
+<p>가산이 매년이라고 생각합니다. 매 2년마다 1일입니다.</p>
+<p>안 쓰면 무조건 수당으로 받는다고 생각합니다. 회사가 제61조의 사용촉진 조치를 제대로 했다면 보상 의무가 없어집니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>육아휴직을 썼는데 연차가 줄어드나요</dt>
+<dd>줄지 않습니다. 제60조제6항이 육아휴직 기간, 업무상 부상·질병 휴업 기간, 출산전후휴가 기간, 육아기 근로시간 단축으로 단축된 시간 등을 <b>출근한 것으로 본다</b>고 정합니다.</dd>
+<dt>주 15시간 미만 일해도 연차가 있나요</dt>
+<dd>4주 평균 1주 소정근로시간이 15시간 미만이면 연차 규정이 적용되지 않습니다(근로기준법 제18조제3항).</dd>
+<dt>연차를 쓰면 급여가 깎이나요</dt>
+<dd>깎이지 않습니다. 제60조제5항이 유급으로 주도록 정하고 있고, 취업규칙 등에서 정하는 통상임금 또는 평균임금을 지급해야 합니다.</dd>
+<dt>언제까지 써야 하나요</dt>
+<dd>발생일부터 1년간입니다. 그 안에 쓰지 않으면 원칙적으로 없어지지만, 회사가 사용촉진 조치를 하지 않았다면 미사용분을 수당으로 보상해야 합니다.</dd>
+</dl>
+
+<p class="note">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다. 회사의 취업규칙과 노사합의에 따라 실제 운영이 다를 수 있어 결과는 참고용입니다.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"육아휴직을 썼는데 연차가 줄어드나요","acceptedAnswer":{"@type":"Answer","text":"줄지 않습니다. 제60조제6항이 육아휴직 기간, 업무상 부상·질병 휴업 기간, 출산전후휴가 기간, 육아기 근로시간 단축으로 단축된 시간 등을 출근한 것으로 본다고 정합니다."}},{"@type":"Question","name":"주 15시간 미만 일해도 연차가 있나요","acceptedAnswer":{"@type":"Answer","text":"4주 평균 1주 소정근로시간이 15시간 미만이면 연차 규정이 적용되지 않습니다(근로기준법 제18조제3항)."}},{"@type":"Question","name":"연차를 쓰면 급여가 깎이나요","acceptedAnswer":{"@type":"Answer","text":"깎이지 않습니다. 제60조제5항이 유급으로 주도록 정하고 있고, 취업규칙 등에서 정하는 통상임금 또는 평균임금을 지급해야 합니다."}},{"@type":"Question","name":"언제까지 써야 하나요","acceptedAnswer":{"@type":"Answer","text":"발생일부터 1년간입니다. 그 안에 쓰지 않으면 원칙적으로 없어지지만, 회사가 사용촉진 조치를 하지 않았다면 미사용분을 수당으로 보상해야 합니다."}}]}</script>
+</body>
+</html>

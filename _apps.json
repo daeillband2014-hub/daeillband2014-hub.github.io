@@ -228,6 +228,10 @@
   "title": "연봉 실수령액 계산기"
  },
  {
+  "slug": "yeoncha-calc",
+  "title": "연차휴가 계산기"
+ },
+ {
   "slug": "yuka-hyujik-calc",
   "title": "육아휴직 급여 계산기"
  }
