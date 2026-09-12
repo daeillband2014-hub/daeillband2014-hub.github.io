@@ -128,6 +128,13 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
    ded=Math.max(0, cap-prev);              // 이전 증여에서 이미 쓴 공제만큼 줄어든다
    base=Math.max(0, amt-ded-wedDed);
   }
+  /* ★제55조제2항 — "과세표준이 50만원 미만이면 증여세를 부과하지 아니한다."
+     제1항(과세표준 계산)만 구현하고 이 항을 빠뜨리면, 공제 한도를 조금 넘긴
+     사람에게 안 내도 되는 세금을 내야 한다고 말하게 된다. 공제 한도에 맞춰
+     증여하다 몇십만원 넘긴 경우가 정확히 이 구간이다.
+     (2팀이 잡음, 2026-09-12) */
+  var minFree = base > 0 && base < 500000;
+  if (minFree) base = 0;
   var g=tax(base);
   var gross=g.t, i=g.i, r=g.r;
   if(addBack){
@@ -143,6 +150,7 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
   var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
   h+='<div style="font-size:13px;color:#8B95A1">내야 할 증여세</div>';
   h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(pay)+'</div>';
+  if(minFree){ h+='<div style="background:#F6F0FC;border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:13px;color:#4E5968;line-height:1.7">과세표준이 <b>50만원 미만</b>이라 증여세를 부과하지 않습니다. 상속세 및 증여세법 제55조제2항입니다.</div>'; }
   h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여받은 금액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(amt)+'</td></tr>';
   if(addBack) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">10년 안에 받은 금액 가산</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">+'+won(prev)+'</td></tr>';
