@@ -1,5 +1,9 @@
 [
  {
+  "slug": "4dae-boheom-calc",
+  "title": "4대보험 계산기"
+ },
+ {
   "slug": "adopt-pets",
   "title": "우리동네 유기견"
  },
@@ -22,6 +26,10 @@
  {
   "slug": "chuseok-greeting",
   "title": "추석 인사말"
+ },
+ {
+  "slug": "chwideukse-calc",
+  "title": "취득세 계산기"
  },
  {
   "slug": "daily-wise-words",
@@ -56,8 +64,20 @@
   "title": "이자 계산기"
  },
  {
+  "slug": "jadongchase-calc",
+  "title": "자동차세 계산기"
+ },
+ {
   "slug": "jeonyeok-dday",
   "title": "전역일 계산기"
+ },
+ {
+  "slug": "jeungyeose-calc",
+  "title": "증여세 계산기"
+ },
+ {
+  "slug": "jonghap-sodeukse-calc",
+  "title": "종합소득세 계산기"
  },
  {
   "slug": "korean-age-calc",
@@ -172,6 +192,10 @@
   "title": "전국 화장실 지도"
  },
  {
+  "slug": "unemployment-benefit-calc",
+  "title": "실업급여 계산기"
+ },
+ {
   "slug": "vat-calc-kr",
   "title": "부가세 계산기"
  },
@@ -186,5 +210,13 @@
  {
   "slug": "xmas-dday-kr",
   "title": "크리스마스 디데이"
+ },
+ {
+  "slug": "yeonbong-silsuryeong",
+  "title": "연봉 실수령액 계산기"
+ },
+ {
+  "slug": "yuka-hyujik-calc",
+  "title": "육아휴직 급여 계산기"
  }
 ]
