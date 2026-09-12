@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>근로장려금 계산기</title>
+<meta name="description" content="총급여액과 가구 유형을 넣으면 근로장려금 산정액을 계산합니다. 재산 1억7천만원 이상 절반 감액과 반기신청 35%까지 조세특례제한법 조문 기준으로 보여줍니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/geunro-jangryeogeum-calc/">
+<style>
+:root{--p:#1B5E8C;--pd:#14486B;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FB;--lt:#CFE0EC;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=number],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+input[type=number]{text-align:right;font-size:17px}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(20,60,90,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.big.no{color:var(--acc);font-size:22px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EEF2F5;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.bad{background:#FFF0F0;border-left:3px solid #E63C46;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#8A1F26;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>근로장려금 계산기</h1>
+<p class="desc">총급여액과 가구 유형을 넣으면 산정액을 계산합니다</p>
+
+<label for="gagu">가구 유형</label>
+<select id="gagu">
+<option value="single">단독가구 (배우자·부양자녀·70세 이상 직계존속 없음)</option>
+<option value="hot" selected>홑벌이 가구 (배우자 총급여 300만원 미만 등)</option>
+<option value="mat">맞벌이 가구 (배우자 총급여 300만원 이상)</option>
+</select>
+
+<label for="pay">총급여액 등 (연간, 원)</label>
+<input id="pay" type="number" step="1000000" value="20000000">
+
+<label for="jaesan">가구원 재산 합계액 (원)</label>
+<input id="jaesan" type="number" step="10000000" value="100000000">
+
+<label for="ban">신청 구분</label>
+<select id="ban">
+<option value="0" selected>정기신청 (한 해치 전체)</option>
+<option value="1">반기 상반기분 (9월 1~15일 신청)</option>
+</select>
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#1B5E8C;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<p class="note">조세특례제한법 제100조의3·제100조의5의 계산식을 그대로 옮긴 것입니다. 실제 지급액은 같은 조 제5항에 따라 시행령의 <b>근로장려금산정표</b>(구간별 표)로 정해지므로 이 값과 몇 천원 차이가 날 수 있습니다. 최종 금액은 국세청 안내를 확인하십시오.</p>
+</div>
+
+<script>
+(function(){
+ /* 근로장려금 산정.
+    [근거] 조세특례제한법 제100조의3제1항제2호(총소득기준금액)·제4호(재산 2억4천만원 미만)
+           · 제100조의5제1항(가구별 산정식) · 제4항(재산 1억7천만원 이상이면 50%)
+           · 제2항제1호(반기 상반기분은 35%)
+    [확인] 2026-09-12 법제처 오픈 API 원문(시행 2026-01-01)으로 대조했다.
+    ★제100조의5제5항 — 실제 지급액은 시행령의 "근로장려금산정표"(구간별 표)로 정해진다.
+      이 계산기는 법 본문의 계산식을 쓰므로 구간 반올림만큼 차이가 날 수 있다.
+      그 사실을 화면에 밝힌다. 정확한 척하지 않는다. */
+ var MAN = 10000;
+ var LIMIT = { single: 2200*MAN, hot: 3200*MAN, mat: 4400*MAN };   /* 총소득기준금액 */
+ var NAME  = { single: '단독가구', hot: '홑벌이 가구', mat: '맞벌이 가구' };
+ var JAESAN_MAX = 24000*MAN;    /* 2억4천만원 미만이어야 신청 가능 */
+ var JAESAN_HALF = 17000*MAN;   /* 1억7천만원 이상이면 절반 */
+
+ function won(n){ return Math.round(n).toLocaleString('ko-KR')+'원'; }
+
+ /* 제100조의5제1항 각 호 */
+ function amount(type, pay){
+  if(type === 'single'){
+   if(pay < 400*MAN)  return pay * 165/400;
+   if(pay < 900*MAN)  return 165*MAN;
+   if(pay < 2200*MAN) return 165*MAN - (pay - 900*MAN) * 165/1300;
+   return 0;
+  }
+  if(type === 'hot'){
+   if(pay < 700*MAN)  return pay * 285/700;
+   if(pay < 1400*MAN) return 285*MAN;
+   if(pay < 3200*MAN) return 285*MAN - (pay - 1400*MAN) * 285/1800;
+   return 0;
+  }
+  if(pay < 800*MAN)  return pay * 330/800;
+  if(pay < 1700*MAN) return 330*MAN;
+  if(pay < 4400*MAN) return 330*MAN - (pay - 1700*MAN) * 330/2700;
+  return 0;
+ }
+
+ function calc(){
+  var type = document.getElementById('gagu').value;
+  var pay  = Number(document.getElementById('pay').value)||0;
+  var jae  = Number(document.getElementById('jaesan').value)||0;
+  var ban  = document.getElementById('ban').value === '1';
+  var out  = document.getElementById('out');
+  if(pay < 0){ out.innerHTML=''; return; }
+
+  var h = '<div class="rcard">';
+
+  /* 자격 먼저 — 못 받는 경우를 금액보다 앞에 말한다 */
+  if(jae >= JAESAN_MAX){
+   h += '<div class="big no">신청 대상이 아닙니다</div>';
+   h += '<div class="sub2">재산 요건에 걸립니다</div>';
+   h += '<div class="bad"><b>가구원 재산 합계액이 2억4천만원 이상입니다.</b> '
+      + '조세특례제한법 제100조의3제1항제4호가 <b>2억4천만원 미만</b>일 것을 요건으로 정합니다. '
+      + '재산에는 토지·건물·자동차·예금 등이 들어가고 부채는 빼지 않습니다.</div>';
+   h += '</div>'; out.innerHTML = h; return;
+  }
+  if(pay >= LIMIT[type]){
+   h += '<div class="big no">신청 대상이 아닙니다</div>';
+   h += '<div class="sub2">총소득기준금액을 넘었습니다</div>';
+   h += '<div class="bad"><b>'+NAME[type]+'의 총소득기준금액은 '+won(LIMIT[type])+'</b>이고 '
+      + '그 <b>미만</b>이어야 합니다(제100조의3제1항제2호). 넣으신 금액은 '+won(pay)+'입니다. '
+      + '여기서 보는 것은 총급여액이 아니라 <b>부부 합산 연간 총소득</b>이라는 점도 확인해 보십시오.</div>';
+   h += '</div>'; out.innerHTML = h; return;
+  }
+
+  var base = amount(type, pay);
+  var halved = jae >= JAESAN_HALF;
+  var afterJae = halved ? base*0.5 : base;
+  var fin = ban ? afterJae*0.35 : afterJae;
+
+  h += '<div class="big">'+won(fin)+'</div>';
+  h += '<div class="sub2">'+NAME[type]+' · '+(ban ? '반기 상반기분' : '정기신청 기준')+'</div>';
+  h += '<div class="row"><span class="k">총급여액 등</span><span class="v">'+won(pay)+'</span></div>';
+  h += '<div class="row"><span class="k">총소득기준금액</span><span class="v">'+won(LIMIT[type])+' 미만</span></div>';
+  h += '<div class="row"><span class="k">산정액</span><span class="v">'+won(base)+'</span></div>';
+  if(halved){
+   h += '<div class="row"><span class="k">재산 감액 후</span><span class="v">'+won(afterJae)+'</span></div>';
+  }
+  if(ban){
+   h += '<div class="row"><span class="k">상반기분 (35%)</span><span class="v">'+won(fin)+'</span></div>';
+  }
+
+  if(halved){
+   h += '<div class="warn"><b>재산이 1억7천만원 이상이라 절반만 나옵니다.</b> '
+      + '제100조의5제4항이 <b>1억7천만원 이상이면 계산한 금액의 100분의 50</b>으로 정합니다. '
+      + '2억4천만원을 넘으면 아예 못 받습니다.</div>';
+  }
+  if(ban){
+   h += '<div class="warn"><b>반기신청은 먼저 35%만 받습니다.</b> '
+      + '제100조의5제2항제1호입니다. 나머지는 하반기분으로 정산되며, '
+      + '제100조의8제8항에 따라 다음 연도 6월 30일까지 차액을 환급하거나 환수합니다. '
+      + '<b>상반기분 신청 기간은 9월 1일부터 15일까지</b>입니다.</div>';
+  }
+  h += '<p class="note" style="margin-top:12px">재산 '+won(jae)+' 기준으로 계산했습니다. '
+     + '부부가 모두 소득이 있으면 제100조의5제3항에 따라 <b>두 사람의 총급여액을 합산</b>합니다.</p>';
+  h += '</div>';
+  out.innerHTML = h;
+ }
+
+ document.getElementById('go').addEventListener('click', calc);
+ ['pay','jaesan'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown', function(e){ if(e.key==='Enter') calc(); });
+ });
+ ['gagu','ban'].forEach(function(id){
+  document.getElementById(id).addEventListener('change', calc);
+ });
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>근로장려금 계산기</h2>
+
+<h3>10초 요약</h3>
+<p>근로장려금은 <strong>일해서 번 돈이 적을 때 국가가 얹어 주는 돈</strong>입니다. 낸 세금에서 빼 주는 공제가 아니라 세금을 안 냈어도 받습니다.</p>
+<p>금액은 <strong>가구 유형과 총급여액</strong>으로 정해집니다. 소득이 아주 적으면 오히려 적게 받고, 중간 구간에서 가장 많이 받은 뒤, 기준금액에 가까워질수록 줄어드는 산 모양입니다.</p>
+<p>재산이 <strong>1억7천만원 이상이면 절반</strong>, <strong>2억4천만원 이상이면 못 받습니다.</strong></p>
+
+<h3>계산 방법</h3>
+<p>조세특례제한법 제100조의5제1항이 가구 유형별로 세 구간을 둡니다. 단독가구는 400만원·900만원·2,200만원, 홑벌이는 700만원·1,400만원·3,200만원, 맞벌이는 800만원·1,700만원·4,400만원이 구간을 나누는 금액입니다.</p>
+<p>최대 금액은 단독 165만원, 홑벌이 285만원, 맞벌이 330만원입니다.</p>
+<p>재산 합계액이 1억7천만원 이상이면 제100조의5제4항에 따라 계산한 금액의 절반만 나옵니다.</p>
+
+<h3>자주 틀리는 것</h3>
+<p>총급여액과 총소득을 섞습니다. 자격을 볼 때 쓰는 총소득기준금액은 부부 합산 연간 총소득이고, 금액을 계산할 때 쓰는 것은 총급여액 등입니다. 둘은 범위가 다릅니다.</p>
+<p>재산에서 부채를 빼지 않습니다. 대출이 남아 있어도 재산 합계액에는 그대로 들어갑니다.</p>
+<p>소득이 적을수록 많이 받는다고 생각합니다. 실제로는 중간 구간이 가장 많고, 아주 적으면 비례해서 줄어듭니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>반기신청은 언제 하나요</dt>
+<dd>근로소득만 있는 경우에 할 수 있고, 상반기분은 9월 1일부터 15일까지, 하반기분은 다음 해 3월 1일부터 15일까지입니다. 상반기분으로는 산정액의 35%를 먼저 받고 나머지는 나중에 정산합니다.</dd>
+<dt>신청 기간을 놓쳤습니다</dt>
+<dd>조세특례제한법 제100조의6제8항이 신청기간 종료일의 다음 날부터 6개월 이내에 신청할 수 있도록 하고 있습니다. 다만 이 경우 산정액의 일부가 감액됩니다.</dd>
+<dt>계산기 금액과 국세청 안내가 다릅니다</dt>
+<dd>제100조의5제5항에 따라 실제 지급액은 시행령의 근로장려금산정표, 즉 구간별로 미리 만들어 둔 표로 정해집니다. 이 계산기는 법 본문의 계산식을 쓰므로 구간 반올림만큼 차이가 납니다. 최종 금액은 국세청 안내가 기준입니다.</dd>
+<dt>가구 유형은 어떻게 정해지나요</dt>
+<dd>배우자도 부양자녀도 70세 이상 직계존속도 없으면 단독가구입니다. 배우자가 있어도 그 배우자의 총급여액이 300만원 미만이면 홑벌이, 300만원 이상이면 맞벌이로 봅니다.</dd>
+</dl>
+
+<p class="note">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다. 실제 지급 여부와 금액은 국세청 심사로 정해지므로 결과는 참고용입니다.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"반기신청은 언제 하나요","acceptedAnswer":{"@type":"Answer","text":"근로소득만 있는 경우에 할 수 있고, 상반기분은 9월 1일부터 15일까지, 하반기분은 다음 해 3월 1일부터 15일까지입니다. 상반기분으로는 산정액의 35%를 먼저 받고 나머지는 나중에 정산합니다."}},{"@type":"Question","name":"신청 기간을 놓쳤습니다","acceptedAnswer":{"@type":"Answer","text":"조세특례제한법 제100조의6제8항이 신청기간 종료일의 다음 날부터 6개월 이내에 신청할 수 있도록 하고 있습니다. 다만 이 경우 산정액의 일부가 감액됩니다."}},{"@type":"Question","name":"계산기 금액과 국세청 안내가 다릅니다","acceptedAnswer":{"@type":"Answer","text":"제100조의5제5항에 따라 실제 지급액은 시행령의 근로장려금산정표, 즉 구간별로 미리 만들어 둔 표로 정해집니다. 이 계산기는 법 본문의 계산식을 쓰므로 구간 반올림만큼 차이가 납니다. 최종 금액은 국세청 안내가 기준입니다."}},{"@type":"Question","name":"가구 유형은 어떻게 정해지나요","acceptedAnswer":{"@type":"Answer","text":"배우자도 부양자녀도 70세 이상 직계존속도 없으면 단독가구입니다. 배우자가 있어도 그 배우자의 총급여액이 300만원 미만이면 홑벌이, 300만원 이상이면 맞벌이로 봅니다."}}]}</script>
+</body>
+</html>
