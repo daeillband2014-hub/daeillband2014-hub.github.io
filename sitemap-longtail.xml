@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ★이 파일을 검색엔진에 제출하지 마십시오.
+     여기 실린 주소는 전부 noindex 입니다(날짜 x 대상 조합 페이지).
+     같은 틀에 숫자만 바뀌는 페이지라 색인 대상에서 뺀 것들입니다.
+     이 파일은 되돌릴 때 병합용으로만 남겨 둡니다.
+     검색엔진에 내는 것은 sitemap.xml 하나이고 robots.txt 도 그것만 가리킵니다. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://daeillband2014-hub.github.io/fortune/2026-09-04/jwi/</loc><lastmod>2026-09-04T09:54:27+00:00</lastmod><changefreq>daily</changefreq></url>
   <url><loc>https://daeillband2014-hub.github.io/fortune/2026-09-04/so/</loc><lastmod>2026-09-04T09:54:27+00:00</lastmod><changefreq>daily</changefreq></url>
