@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>재산세 계산기</title>
+<meta name="description" content="시가표준액을 넣으면 주택 재산세를 계산합니다. 1세대 1주택 공정시장가액비율 43~45%와 특례세율, 7월·9월 납기 구분까지 지방세법 조문 기준으로 보여줍니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/jaesanse-calc/">
+<style>
+:root{--p:#1F6F5C;--pd:#17513F;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2FAF7;--lt:#CFE8DE;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}
+.webseo dl{margin:6px 0 0}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=number],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+input[type=number]{text-align:right;font-size:17px}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(20,80,60,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EFF3F1;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>재산세 계산기</h1>
+<p class="desc">시가표준액(공시가격)을 넣으면 주택 재산세를 계산합니다</p>
+
+<label for="std">주택 시가표준액 · 공시가격 (원)</label>
+<input id="std" type="number" step="10000000" value="300000000">
+
+<label for="one">1세대 1주택인가요</label>
+<select id="one">
+<option value="1" selected>네 (공정시장가액비율 43~45%, 특례세율)</option>
+<option value="0">아니요 (공정시장가액비율 60%, 일반세율)</option>
+</select>
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#1F6F5C;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<p class="note">주택 재산세 본세만 계산합니다. 도시지역분(과세표준의 0.14%)과 지방교육세(재산세액의 20%)는 지역·조례에 따라 붙거나 빠지므로 넣지 않았습니다. 실제 고지서 금액은 이 값보다 큽니다.</p>
+</div>
+
+<script>
+(function(){
+ /* 재산세 주택분 계산.
+    [근거] 지방세법 제110조(과세표준) · 제111조제1항제3호나목(일반 세율)
+           · 제111조의2제1항(1세대 1주택 특례세율) · 지방세법 시행령 제109조제1항(공정시장가액비율)
+    [확인] 2026-09-12 법제처 오픈 API 원문으로 대조했다.
+    ★공정시장가액비율의 1세대 1주택 구간(43/44/45%)은 "2026년도에 납세의무가 성립하는" 것에
+      한정된 단서다. 해가 바뀌면 시행령을 다시 봐야 한다. 그래서 연도를 코드가 읽어
+      2026년이 아니면 그 사실을 화면에 밝힌다 — 모르면 틀린 답을 주는 것보다 안 주는 게 낫다. */
+ var RATIO_YEAR = 2026;
+ var THIS_YEAR = new Date().getFullYear();
+
+ function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+
+ /* 시행령 제109조제1항제2호 단서 — 1세대 1주택 구간별 비율 */
+ function ratioOne(std){
+  if(std <= 300000000) return 0.43;
+  if(std <= 600000000) return 0.44;
+  return 0.45;
+ }
+
+ /* 제111조제1항제3호나목 — 그 밖의 주택 */
+ function normalTax(base){
+  if(base <= 60000000)  return base*0.001;
+  if(base <= 150000000) return 60000  + (base-60000000)*0.0015;
+  if(base <= 300000000) return 195000 + (base-150000000)*0.0025;
+  return 570000 + (base-300000000)*0.004;
+ }
+
+ /* 제111조의2제1항 — 1세대 1주택 특례세율 */
+ function specialTax(base){
+  if(base <= 60000000)  return base*0.0005;
+  if(base <= 150000000) return 30000  + (base-60000000)*0.001;
+  if(base <= 300000000) return 120000 + (base-150000000)*0.002;
+  return 420000 + (base-300000000)*0.0035;
+ }
+
+ function calc(){
+  var std = Number(document.getElementById('std').value)||0;
+  var isOne = document.getElementById('one').value === '1';
+  var out = document.getElementById('out');
+  if(std <= 0){ out.innerHTML=''; return; }
+
+  var ratio = isOne ? ratioOne(std) : 0.60;
+  var base  = std * ratio;
+
+  /* ★세율 특례는 시가표준액 9억원 이하만이다(제111조의2제1항).
+     비율 43~45% 는 1세대 1주택이면 9억 초과도 적용되므로 둘의 조건이 다르다.
+     여기를 같이 묶으면 9억 초과 1주택에서 세금을 실제보다 적게 말하게 된다. */
+  var canSpecial = isOne && std <= 900000000;
+  var tax = canSpecial ? specialTax(base) : normalTax(base);
+  var full = normalTax(base);
+
+  var h = '<div class="rcard">';
+  h += '<div class="big">'+won(tax)+'</div>';
+  h += '<div class="sub2">'+THIS_YEAR+'년 주택 재산세 본세 (한 해치)</div>';
+  h += '<div class="row"><span class="k">시가표준액</span><span class="v">'+won(std)+'</span></div>';
+  h += '<div class="row"><span class="k">공정시장가액비율</span><span class="v">'+(ratio*100).toFixed(0)+'%</span></div>';
+  h += '<div class="row"><span class="k">과세표준</span><span class="v">'+won(base)+'</span></div>';
+  h += '<div class="row"><span class="k">적용 세율</span><span class="v">'+(canSpecial?'1세대 1주택 특례':'일반')+'</span></div>';
+  if(canSpecial){
+   h += '<div class="row"><span class="k">일반세율이면</span><span class="v">'+won(full)+'</span></div>';
+   h += '<div class="row"><span class="k">특례로 덜 내는 금액</span><span class="v" style="color:#1F6F5C">'+won(full-tax)+'</span></div>';
+  }
+
+  /* 제115조제1항제3호 단서 — 한 해 세액이 20만원 이하면 7월에 한꺼번에 */
+  if(tax <= 200000){
+   h += '<div class="row"><span class="k">납기</span><span class="v">7월 16~31일 한 번</span></div>';
+  }else{
+   h += '<div class="row"><span class="k">납기</span><span class="v">7월·9월 반씩</span></div>';
+   h += '<div class="row"><span class="k">9월에 낼 금액</span><span class="v">'+won(tax/2)+'</span></div>';
+  }
+
+  if(isOne && std > 900000000){
+   h += '<div class="warn"><b>시가표준액이 9억원을 넘어 세율 특례가 적용되지 않습니다.</b> '
+      + '제111조의2제1항이 특례를 9억원 이하로 한정합니다. 다만 공정시장가액비율 45%는 그대로 적용됩니다.</div>';
+  }
+  if(canSpecial){
+   h += '<div class="warn"><b>이 특례세율에는 유효기간이 붙어 있습니다.</b> '
+      + '법률 제17769호 부칙 제2조가 "시행일부터 6년이 되는 날까지 성립한 납세의무"로 한정하고, '
+      + '법제처 조문에 <b>2026년 12월 28일까지 유효</b>하다고 표시돼 있습니다. '
+      + '재산세 납세의무는 6월 1일에 성립하므로 연장이 없으면 2027년분부터는 위의 '
+      + '<b>일반세율 '+won(full)+'</b>로 계산됩니다. 연장 여부는 확정되지 않았습니다.</div>';
+  }
+  if(THIS_YEAR !== RATIO_YEAR){
+   h += '<div class="warn"><b>'+THIS_YEAR+'년 공정시장가액비율을 확인하셔야 합니다.</b> '
+      + '이 계산기에 넣은 1세대 1주택 비율(43~45%)은 시행령이 <b>'+RATIO_YEAR+'년에 성립하는 납세의무</b>로 '
+      + '한정해 정한 값입니다. 해가 바뀌면 비율이 달라질 수 있으니 그해 시행령 제109조를 보고 판단하십시오.</div>';
+  }
+  h += '<p class="note" style="margin-top:12px">과세기준일은 6월 1일입니다(제114조). 그날 소유자가 한 해치를 전부 냅니다.</p>';
+  h += '</div>';
+  out.innerHTML = h;
+ }
+
+ document.getElementById('go').addEventListener('click', calc);
+ document.getElementById('std').addEventListener('keydown', function(e){ if(e.key==='Enter') calc(); });
+ document.getElementById('one').addEventListener('change', calc);
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>재산세 계산기</h2>
+
+<h3>10초 요약</h3>
+<p>재산세는 <strong>6월 1일에 그 집을 가지고 있던 사람</strong>이 한 해치를 전부 냅니다. 일할로 나누지 않습니다.</p>
+<p>금액은 <strong>시가표준액에 공정시장가액비율을 곱해 과세표준을 구한 뒤</strong> 세율표를 적용합니다. 1세대 1주택이면 비율도 낮고 세율도 낮습니다.</p>
+<p>주택은 <strong>7월과 9월에 반씩</strong> 냅니다. 다만 한 해 세액이 20만원 이하면 7월에 한 번으로 끝납니다.</p>
+
+<h3>계산 방법</h3>
+<p>과세표준 = 시가표준액 × 공정시장가액비율입니다. 시가표준액은 공시가격을 말하며 실제 매매가가 아닙니다.</p>
+<p>공정시장가액비율은 지방세법 시행령 제109조제1항이 정합니다. 일반 주택은 60%, 1세대 1주택은 시가표준액에 따라 3억원 이하 43%, 3억 초과 6억 이하 44%, 6억 초과 45%입니다.</p>
+<p>세율은 지방세법 제111조제1항제3호나목(일반)과 제111조의2제1항(1세대 1주택 특례) 두 가지입니다. 특례는 시가표준액 9억원 이하에만 적용됩니다.</p>
+
+<h3>자주 틀리는 것</h3>
+<p>비율과 세율의 조건이 다릅니다. 공정시장가액비율 43~45%는 1세대 1주택이면 9억원을 넘어도 적용되지만, 세율 특례는 9억원 이하만입니다. 둘을 같이 묶으면 9억 초과 1주택에서 세금을 실제보다 적게 잡습니다.</p>
+<p>6월 1일 하루로 한 해치가 통째로 옮겨갑니다. 5월 31일에 잔금을 치르면 사는 쪽이 그 해 재산세를 다 냅니다.</p>
+<p>세 부담 상한 150%는 주택에 적용되지 않습니다. 제122조 단서가 그렇게 정하고 있고, 주택에는 대신 과세표준 단계에 상한이 걸립니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>7월에 냈는데 9월에 또 나왔습니다</dt>
+<dd>잘못 나온 것이 아닙니다. 지방세법 제115조제1항제3호가 주택 재산세를 반으로 갈라 7월 16~31일과 9월 16~30일에 걷도록 정하고 있습니다. 9월 고지서에는 토지분이 함께 들어 있을 수도 있습니다.</dd>
+<dt>9월에는 고지서가 안 왔습니다</dt>
+<dd>한 해 세액이 20만원 이하이면 조례에 따라 7월에 한꺼번에 부과할 수 있습니다. 같은 조문 단서입니다. 이 경우 9월에는 나오지 않습니다.</dd>
+<dt>계산기 금액과 고지서 금액이 다릅니다</dt>
+<dd>이 계산기는 재산세 본세만 계산합니다. 실제 고지서에는 도시지역분과 지방교육세가 더해지고, 지역과 조례에 따라 세율을 가감할 수도 있습니다. 그래서 고지서 금액이 더 큽니다.</dd>
+<dt>1세대 1주택 특례는 계속 있나요</dt>
+<dd>유효기간이 붙어 있습니다. 법률 제17769호 부칙 제2조가 시행일부터 6년이 되는 날까지 성립한 납세의무로 한정하고, 법제처 조문에는 2026년 12월 28일까지 유효하다고 표시돼 있습니다. 재산세 납세의무는 6월 1일에 성립하므로 연장이 없으면 2027년분부터는 일반세율입니다. 연장 여부는 확정되지 않았습니다.</dd>
+<dt>시가표준액은 어디서 보나요</dt>
+<dd>공동주택은 부동산공시가격 알리미에서, 고지서를 받으셨다면 과세대장 열람으로 확인할 수 있습니다. 위택스나 관할 시·군·구청 세무과에서도 조회됩니다.</dd>
+</dl>
+
+<p class="note">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다. 재산세는 지역과 조례에 따라 달라질 수 있으므로 결과는 참고용입니다.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"7월에 냈는데 9월에 또 나왔습니다","acceptedAnswer":{"@type":"Answer","text":"잘못 나온 것이 아닙니다. 지방세법 제115조제1항제3호가 주택 재산세를 반으로 갈라 7월 16~31일과 9월 16~30일에 걷도록 정하고 있습니다. 9월 고지서에는 토지분이 함께 들어 있을 수도 있습니다."}},{"@type":"Question","name":"9월에는 고지서가 안 왔습니다","acceptedAnswer":{"@type":"Answer","text":"한 해 세액이 20만원 이하이면 조례에 따라 7월에 한꺼번에 부과할 수 있습니다. 같은 조문 단서입니다. 이 경우 9월에는 나오지 않습니다."}},{"@type":"Question","name":"계산기 금액과 고지서 금액이 다릅니다","acceptedAnswer":{"@type":"Answer","text":"이 계산기는 재산세 본세만 계산합니다. 실제 고지서에는 도시지역분과 지방교육세가 더해지고, 지역과 조례에 따라 세율을 가감할 수도 있습니다. 그래서 고지서 금액이 더 큽니다."}},{"@type":"Question","name":"1세대 1주택 특례는 계속 있나요","acceptedAnswer":{"@type":"Answer","text":"유효기간이 붙어 있습니다. 법률 제17769호 부칙 제2조가 시행일부터 6년이 되는 날까지 성립한 납세의무로 한정하고, 법제처 조문에는 2026년 12월 28일까지 유효하다고 표시돼 있습니다. 재산세 납세의무는 6월 1일에 성립하므로 연장이 없으면 2027년분부터는 일반세율입니다. 연장 여부는 확정되지 않았습니다."}},{"@type":"Question","name":"시가표준액은 어디서 보나요","acceptedAnswer":{"@type":"Answer","text":"공동주택은 부동산공시가격 알리미에서, 고지서를 받으셨다면 과세대장 열람으로 확인할 수 있습니다. 위택스나 관할 시·군·구청 세무과에서도 조회됩니다."}}]}</script>
+</body>
+</html>
