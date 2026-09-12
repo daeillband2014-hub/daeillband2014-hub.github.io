@@ -157,6 +157,23 @@ border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:i
    var edge  = (age === 8);   /* 접종 기간 중에 아홉 살이 될 수 있는 나이 */
    var twice = young && (shots === '0' || shots === '1');
    var start = twice ? '2026-09-21' : '2026-09-28';
+
+   /* ★2026-09-12 추가. 생후 6개월이 안 된 아기는 시작일이 다르다.
+      대상 하한이 "생후 6개월"이라 2026-03-22 이후에 태어난 아기는 9월 21일에
+      아직 6개월이 안 됐다. 상한인 2026-08-31 생은 2027-02-28 에야 6개월이다.
+      163일치 코호트가 여기 걸린다. 시작일만 찍으면 부모가 그날 병원에 갔다가
+      돌려보내진다. 6개월 되는 날은 출생일 + 6개월이라 셀 필요가 없다. */
+   /* 월말 보정. 8월 31일생의 여섯 달 뒤는 2월 31일인데 그런 날이 없다.
+      그냥 Date 에 넘기면 3월 3일로 넘어간다. 민법 제160조제3항이
+      "그 월의 말일로 한다"고 정하므로 2월 28일로 맞춘다. */
+   var bY = Number(bd.slice(0,4)), bM = Number(bd.slice(5,7)), bD = Number(bd.slice(8,10));
+   var tM = bM + 6, tY = bY + Math.floor((tM - 1) / 12);
+   tM = ((tM - 1) % 12) + 1;
+   var lastDay = new Date(tY, tM, 0).getDate();
+   var tD = Math.min(bD, lastDay);
+   var sixStr = tY + '-' + ('0'+tM).slice(-2) + '-' + ('0'+tD).slice(-2);
+   var lateBaby = sixStr > start;
+   if(lateBaby) start = sixStr;
    h += '<div class="big">무료 접종 대상입니다</div>';
    h += '<div class="sub2">어린이 · '+SEASON+'</div>';
    h += '<div class="row"><span class="k">접종 횟수</span><span class="v">'+(twice ? '2회 (1개월 간격)' : '1회')+'</span></div>';
@@ -168,6 +185,13 @@ border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:i
        + '<b>1개월 간격으로 2회</b> 맞고, 그 뒤로는 매년 1회입니다.</div>';
    }else{
     h += '<div class="ok">1회 접종 대상입니다. 2회 대상자는 9월 21일부터, 1회 대상자는 9월 28일부터입니다.</div>';
+   }
+   if(lateBaby){
+    h += '<div class="warn" style="border-color:#D89A6A"><b>★사업 시작일이 아니라 아기가 여섯 달 되는 날부터입니다.</b> '
+       + '무료 접종 대상은 <b>생후 6개월</b>부터입니다. 이 아기는 '+fmt(sixStr)+'에 여섯 달이 되므로 '
+       + '그날부터 맞힐 수 있습니다. 9월 21일이나 28일에 가시면 아직 이르다고 돌려보내십니다.<br><br>'
+       + '접종 기간이 '+fmt(SEASON_END)+'까지라 <b>2회 접종도 기간 안에 끝납니다.</b> '
+       + '여섯 달 되는 날 1차를 맞고 한 달 뒤에 2차를 맞으시면 됩니다.</div>';
    }
    if(edge){
     h += '<div class="warn"><b>아홉 살 경계에 있어 병원에서 확인하셔야 합니다.</b> '
