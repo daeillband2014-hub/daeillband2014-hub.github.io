@@ -204,6 +204,10 @@
   "title": "전국 화장실 지도"
  },
  {
+  "slug": "uiryobi-calc",
+  "title": "의료비 세액공제 계산기"
+ },
+ {
   "slug": "unemployment-benefit-calc",
   "title": "실업급여 계산기"
  },

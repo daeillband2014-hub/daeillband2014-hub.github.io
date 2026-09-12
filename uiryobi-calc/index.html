@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>의료비 세액공제 계산기</title>
+<meta name="description" content="총급여와 의료비를 넣으면 연말정산 의료비 세액공제액을 계산합니다. 총급여 3% 문턱, 700만원 한도, 난임시술 30%까지 소득세법 제59조의4 기준입니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/uiryobi-calc/">
+<style>
+:root{--p:#C2504B;--pd:#9B3A36;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#FDF4F3;--lt:#F0D4D2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+label small{display:block;font-weight:400;color:var(--mut);font-size:12px;margin-top:2px;line-height:1.5}
+input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:17px;background:#fff;color:var(--ink);font-family:inherit;text-align:right}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(120,40,40,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.big.no{color:var(--acc);font-size:21px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #F7EBEA;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.ok{background:#FBF0EF;border-left:3px solid #C2504B;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#9B3A36;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>의료비 세액공제 계산기</h1>
+<p class="desc">총급여와 의료비를 넣으면 돌려받는 세금이 나옵니다</p>
+
+<label for="pay">총급여액 (연간, 원)</label>
+<input id="pay" type="number" step="1000000" value="40000000">
+
+<label for="m1">일반 의료비 (원)
+<small>부양가족 등 기본공제대상자를 위해 쓴 돈. 아래 칸에 넣는 것은 빼고 적으십시오</small></label>
+<input id="m1" type="number" step="100000" value="2000000">
+
+<label for="m2">본인 · 65세 이상 · 6세 이하 · 장애인 의료비 (원)
+<small>이 항목은 700만원 한도가 없습니다</small></label>
+<input id="m2" type="number" step="100000" value="0">
+
+<label for="m4">난임시술비 (원)
+<small>공제율이 30퍼센트로 가장 높습니다</small></label>
+<input id="m4" type="number" step="100000" value="0">
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#C2504B;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<p class="note">소득세법 제59조의4제2항을 그대로 옮긴 것입니다. 미숙아·선천성이상아 의료비(공제율 20퍼센트)는 칸을 따로 두지 않았습니다. 실손보험으로 돌려받은 금액은 의료비에서 빼고 넣으셔야 합니다.</p>
+</div>
+
+<script>
+(function(){
+ /* 의료비 세액공제. 소득세법 제59조의4제2항.
+    각 호 금액의 15%(제3호 20%, 제4호 30%)를 산출세액에서 공제.
+    1호 일반 의료비 : 총급여 x 3% 를 초과하는 금액, 연 700만원 한도
+    2호 본인·6세 이하·65세 이상·장애인·중증질환자 등 : 한도 없음.
+        단 1호 의료비가 3% 문턱에 미달하면 그 미달분을 뺀다
+    4호 난임시술비 : 30%. 앞 호 합계가 문턱에 미달하면 그 미달분을 뺀다
+    [확인] 2026-09-12 법제처 오픈 API 원문(소득세법 시행 2026-01-01)으로 대조했다.
+
+    ★문턱(3%)을 어디서 빼느냐가 이 제도의 핵심이다.
+      1호에서 먼저 빼고, 1호가 문턱에 못 미치면 남은 문턱을 2호에서, 그래도 남으면 4호에서 뺀다.
+      이 순서를 뒤집으면 금액이 달라진다. */
+ var RATE1 = 0.15, RATE4 = 0.30;
+ var CAP1  = 7000000;   /* 1호 연 700만원 한도 */
+ var FLOOR = 0.03;      /* 총급여의 3% */
+
+ function won(n){ return Math.round(n).toLocaleString('ko-KR')+'원'; }
+
+ function calc(){
+  var pay = Number(document.getElementById('pay').value)||0;
+  var m1  = Number(document.getElementById('m1').value)||0;
+  var m2  = Number(document.getElementById('m2').value)||0;
+  var m4  = Number(document.getElementById('m4').value)||0;
+  var out = document.getElementById('out');
+  if(pay <= 0){ out.innerHTML=''; return; }
+
+  var floor = pay * FLOOR;
+  var total = m1 + m2 + m4;
+
+  var h = '<div class="rcard">';
+
+  if(total <= floor){
+   h += '<div class="big no">공제액이 없습니다</div>';
+   h += '<div class="sub2">3퍼센트 문턱을 넘지 못했습니다</div>';
+   h += '<div class="row"><span class="k">총급여의 3%</span><span class="v">'+won(floor)+'</span></div>';
+   h += '<div class="row"><span class="k">넣으신 의료비 합계</span><span class="v">'+won(total)+'</span></div>';
+   h += '<div class="row"><span class="k">모자란 금액</span><span class="v">'+won(floor - total)+'</span></div>';
+   h += '<div class="ok"><b>의료비는 총급여의 3퍼센트를 넘긴 금액부터 공제됩니다.</b> '
+      + '소득세법 제59조의4제2항제1호가 "총급여액에 100분의 3을 곱하여 계산한 금액을 초과하는 금액"이라고 정합니다. '
+      + '문턱을 안 넘으면 한 푼도 공제되지 않습니다. 빠뜨린 의료비가 없는지 확인해 보십시오.</div>';
+   h += '</div>'; out.innerHTML = h; return;
+  }
+
+  /* 1호 — 문턱을 먼저 여기서 뺀다. 한도 700만원 */
+  var base1 = Math.max(0, m1 - floor);
+  var over1 = base1 > CAP1;
+  base1 = Math.min(base1, CAP1);
+
+  /* 남은 문턱 — 1호가 문턱에 못 미친 만큼 */
+  var rest = Math.max(0, floor - m1);
+
+  /* 2호 — 남은 문턱을 뺀다. 한도 없음 */
+  var base2 = Math.max(0, m2 - rest);
+  rest = Math.max(0, rest - m2);
+
+  /* 4호 — 그래도 남은 문턱을 뺀다. 30% */
+  var base4 = Math.max(0, m4 - rest);
+
+  var c1 = base1 * RATE1, c2 = base2 * RATE1, c4 = base4 * RATE4;
+  var sum = c1 + c2 + c4;
+
+  h += '<div class="big">'+won(sum)+'</div>';
+  h += '<div class="sub2">의료비 세액공제액 (산출세액에서 빼는 금액)</div>';
+  h += '<div class="row"><span class="k">총급여의 3% (문턱)</span><span class="v">'+won(floor)+'</span></div>';
+  if(m1 > 0){
+   h += '<div class="row"><span class="k">일반 의료비 공제대상</span><span class="v">'+won(base1)+'</span></div>';
+   h += '<div class="row"><span class="k">　└ 공제액 15%</span><span class="v">'+won(c1)+'</span></div>';
+  }
+  if(m2 > 0){
+   h += '<div class="row"><span class="k">본인·65세이상·6세이하·장애인</span><span class="v">'+won(base2)+'</span></div>';
+   h += '<div class="row"><span class="k">　└ 공제액 15%</span><span class="v">'+won(c2)+'</span></div>';
+  }
+  if(m4 > 0){
+   h += '<div class="row"><span class="k">난임시술비</span><span class="v">'+won(base4)+'</span></div>';
+   h += '<div class="row"><span class="k">　└ 공제액 30%</span><span class="v">'+won(c4)+'</span></div>';
+  }
+
+  if(over1){
+   h += '<div class="warn"><b>일반 의료비는 연 700만원까지만 공제됩니다.</b> '
+      + '제1호 단서가 "그 금액이 연 700만원을 초과하는 경우에는 연 700만원으로 한다"고 정합니다. '
+      + '문턱을 뺀 금액이 700만원을 넘어 잘렸습니다. '
+      + '<b>본인·65세 이상·6세 이하·장애인 의료비는 이 한도가 없으니</b> 칸을 나눠 넣으셨는지 확인해 보십시오.</div>';
+  }
+  if(m1 < floor && (m2 > 0 || m4 > 0)){
+   h += '<div class="ok"><b>문턱은 한 번만 뺍니다.</b> '
+      + '일반 의료비가 문턱('+won(floor)+')에 '+won(floor - m1)+' 모자라서, '
+      + '그 모자란 만큼을 아래 항목에서 뺐습니다. 같은 문턱을 두 번 빼지 않습니다.</div>';
+  }
+  h += '<p class="note" style="margin-top:12px">이 금액은 <b>산출세액에서 직접 빼는 세액공제</b>입니다. 소득에서 빼는 소득공제와 다릅니다. 낼 세금이 이 금액보다 적으면 그만큼만 줄어듭니다.</p>';
+  h += '</div>';
+  out.innerHTML = h;
+ }
+
+ document.getElementById('go').addEventListener('click', calc);
+ ['pay','m1','m2','m4'].forEach(function(id){
+  var el = document.getElementById(id);
+  el.addEventListener('keydown', function(e){ if(e.key==='Enter') calc(); });
+  el.addEventListener('change', calc);
+ });
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>의료비 세액공제 계산기</h2>
+
+<h3>10초 요약</h3>
+<p>의료비는 <strong>총급여의 3퍼센트를 넘긴 금액</strong>부터 공제됩니다. 그 문턱을 못 넘으면 한 푼도 없습니다.</p>
+<p>공제율은 <strong>15퍼센트</strong>이고, 난임시술비는 <strong>30퍼센트</strong>, 미숙아·선천성이상아 의료비는 20퍼센트입니다.</p>
+<p>일반 의료비는 <strong>연 700만원 한도</strong>가 있지만, <strong>본인·65세 이상·6세 이하·장애인·중증질환자</strong>의 의료비는 한도가 없습니다.</p>
+
+<h3>문턱을 어디서 빼느냐가 핵심입니다</h3>
+<p>3퍼센트 문턱은 <b>한 번만</b> 뺍니다. 일반 의료비에서 먼저 빼고, 일반 의료비가 문턱에 못 미치면 남은 만큼을 본인·65세 이상 항목에서 빼고, 그래도 남으면 난임시술비에서 뺍니다. 소득세법 제59조의4제2항 각 호의 단서가 그렇게 정하고 있습니다.</p>
+<p>그래서 <b>어느 칸에 넣느냐에 따라 공제액이 달라집니다.</b> 한도가 없는 항목(본인·65세 이상·6세 이하·장애인)을 일반 의료비 칸에 함께 적으면 700만원에서 잘릴 수 있습니다.</p>
+
+<h3>자주 틀리는 것</h3>
+<p>실손보험으로 받은 돈을 빼지 않습니다. 보험금으로 보전받은 금액은 공제 대상 의료비가 아닙니다.</p>
+<p>세액공제와 소득공제를 헷갈립니다. 의료비는 <b>산출세액에서 직접 빼는</b> 세액공제입니다.</p>
+<p>미용·성형이나 건강증진 목적 의약품을 넣습니다. 공제 대상이 아닙니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>부양가족 나이나 소득 요건이 있나요</dt>
+<dd>의료비는 예외입니다. 제59조의4제2항이 "기본공제대상자(나이 및 소득의 제한을 받지 아니한다)"라고 적고 있습니다. 다른 공제와 달리 나이와 소득으로 막히지 않습니다.</dd>
+<dt>안경이나 콘택트렌즈도 되나요</dt>
+<dd>시력교정용은 1인당 연 50만원 한도로 공제 대상에 들어갑니다. 구입처에서 영수증을 받아 두셔야 합니다.</dd>
+<dt>총급여가 적으면 유리한가요</dt>
+<dd>문턱이 낮아지므로 같은 의료비면 공제 대상 금액이 커집니다. 다만 낼 세금 자체가 적으면 공제를 다 쓰지 못할 수 있습니다.</dd>
+<dt>연말정산 간소화에 안 나오는 의료비는요</dt>
+<dd>안 나오는 항목이 있습니다. 해당 의료기관에서 영수증을 직접 받아 회사에 제출하시면 됩니다.</dd>
+</dl>
+
+<p class="note">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다. 실제 공제액은 다른 공제와의 관계, 산출세액 규모에 따라 달라질 수 있어 결과는 참고용입니다.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"부양가족 나이나 소득 요건이 있나요","acceptedAnswer":{"@type":"Answer","text":"의료비는 예외입니다. 제59조의4제2항이 \"기본공제대상자(나이 및 소득의 제한을 받지 아니한다)\"라고 적고 있습니다. 다른 공제와 달리 나이와 소득으로 막히지 않습니다."}},{"@type":"Question","name":"안경이나 콘택트렌즈도 되나요","acceptedAnswer":{"@type":"Answer","text":"시력교정용은 1인당 연 50만원 한도로 공제 대상에 들어갑니다. 구입처에서 영수증을 받아 두셔야 합니다."}},{"@type":"Question","name":"총급여가 적으면 유리한가요","acceptedAnswer":{"@type":"Answer","text":"문턱이 낮아지므로 같은 의료비면 공제 대상 금액이 커집니다. 다만 낼 세금 자체가 적으면 공제를 다 쓰지 못할 수 있습니다."}},{"@type":"Question","name":"연말정산 간소화에 안 나오는 의료비는요","acceptedAnswer":{"@type":"Answer","text":"안 나오는 항목이 있습니다. 해당 의료기관에서 영수증을 직접 받아 회사에 제출하시면 됩니다."}}]}</script>
+</body>
+</html>
