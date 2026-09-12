@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>독감 예방접종 무료 대상 확인</title>
+<meta name="description" content="생년월일을 넣으면 2026~2027절기 독감 무료 예방접종 대상인지, 언제부터 맞을 수 있는지 알려드립니다. 질병관리청 사업 안내 기준입니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/flu-vaccine-check/">
+<style>
+:root{--p:#2B6E4F;--pd:#1F5239;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F1F8F3;--lt:#CFE6D8;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=date],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(20,80,55,.07)}
+.big{font-size:26px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px;line-height:1.35}
+.big.no{color:var(--acc);font-size:21px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EDF3EF;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.ok{background:#EDF7F1;border-left:3px solid #2B6E4F;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#1F5239;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>독감 예방접종 무료 대상 확인</h1>
+<p class="desc">생년월일을 넣으면 대상인지, 언제부터 맞을 수 있는지 나옵니다</p>
+
+<label for="bd">생년월일</label>
+<input id="bd" type="date" value="1958-05-10" min="1900-01-01">
+
+<label for="preg">임신 중이신가요</label>
+<select id="preg">
+<option value="0" selected>아니요</option>
+<option value="1">네 (임신부는 나이와 무관하게 대상입니다)</option>
+</select>
+
+<label for="first">(만 9세 미만 어린이만) 지금까지 독감 접종을 몇 번 했나요</label>
+<select id="first">
+<option value="2" selected>2회 이상 했다 / 해당 없음</option>
+<option value="0">한 번도 없다</option>
+<option value="1">한 해에 1회만 했다</option>
+</select>
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#2B6E4F;color:#fff;font-size:16px;font-weight:700">확인하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<p class="note">2026~2027절기 국가예방접종 지원사업 기준입니다. 대상과 접종 횟수는 질병관리청 고시가, 시작일과 기간은 그해 사업 안내가 정합니다. 다음 절기에는 달라지므로 그때는 예방접종도우미에서 확인하십시오.</p>
+</div>
+
+<script>
+(function(){
+ /* 2026~2027절기 인플루엔자 국가예방접종 지원 대상·일정.
+    [출처] 질병관리청 보도자료 「올겨울 인플루엔자 국가예방접종, 14세까지 확대해
+           9월 21일부터 순차 시행」(2026-08-25) + 예방접종도우미 사업 안내.
+           대상 연령은 질병관리청 고시 제2026-11호(2026-08-02 시행) 별표1.
+    ★출생일 범위를 원문에 적힌 그대로 쓴다. 나이를 계산해서 판정하지 않는다.
+      "생후 6개월"이나 "만 65세"를 코드가 세면 경계에서 하루씩 어긋난다.
+      원문이 이미 2012.1.1.~2026.8.31. 같은 날짜 범위로 적어 두었으므로 그대로 비교한다.
+    ★이 표는 이번 절기 전용이다. 절기가 바뀌면 전부 달라진다.
+      그래서 SEASON_END 를 지나면 계산 대신 "그해 안내를 보라"고 말한다. */
+ var SEASON = '2026~2027절기';
+ var SEASON_END = '2027-04-30';
+
+ var KID_FROM = '2012-01-01', KID_TO = '2026-08-31';   /* 생후 6개월~14세 */
+ var OLD_75   = '1951-12-31';                          /* 75세 이상: 이전 출생 */
+ var OLD_70   = ['1952-01-01','1956-12-31'];           /* 70~74세 */
+ var OLD_65   = ['1957-01-01','1961-12-31'];           /* 65~69세 */
+ /* ★"6개월 이상 9세 미만"은 접종일 기준이다. 접종 기간이 9/21~4/30 으로 길어서
+    그 사이에 아홉 살이 되는 아이가 있다. 접종일을 모르므로 코드가 단정하지 않는다.
+    오늘 기준 만 나이를 구해 두고, 경계(만 8세)면 화면에서 병원 확인을 안내한다. */
+ function manAge(bd){
+  var b = D(bd), t = new Date();
+  var a = t.getFullYear() - b.getFullYear();
+  var m = t.getMonth() - b.getMonth();
+  if(m < 0 || (m === 0 && t.getDate() < b.getDate())) a--;
+  return a;
+ }
+
+ var D = function(s){ return new Date(s + 'T00:00:00'); };
+ function fmt(s){ var d=D(s); return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일'; }
+ function daysTo(s){
+  var t = new Date(); t = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  return Math.round((D(s) - t) / 86400000);
+ }
+ function whenText(start){
+  var n = daysTo(start);
+  if(n > 0)  return fmt(start)+'부터 (' + n + '일 남음)';
+  if(n === 0) return fmt(start)+' — 오늘부터입니다';
+  return fmt(start)+'부터 (이미 시작됐습니다)';
+ }
+
+ function calc(){
+  var bd = document.getElementById('bd').value;
+  var preg = document.getElementById('preg').value === '1';
+  var shots = document.getElementById('first').value;
+  var out = document.getElementById('out');
+  if(!bd){ out.innerHTML=''; return; }
+
+  var h = '<div class="rcard">';
+  var over = daysTo(SEASON_END) < 0;
+
+  /* 임신부가 먼저다 — 나이와 무관하게 대상이다 */
+  if(preg){
+   h += '<div class="big">무료 접종 대상입니다</div>';
+   h += '<div class="sub2">임신부 · '+SEASON+'</div>';
+   h += '<div class="row"><span class="k">접종 시작</span><span class="v">'+whenText('2026-09-21')+'</span></div>';
+   h += '<div class="row"><span class="k">접종 기간</span><span class="v">'+fmt(SEASON_END)+'까지</span></div>';
+   h += '<div class="ok">임신부는 <b>임신 주수와 상관없이</b> 접종할 수 있습니다. '
+      + '산모수첩 등으로 임신 여부를 확인합니다.</div>';
+   h += '</div>';
+   if(over) h += seasonWarn();
+   out.innerHTML = h; return;
+  }
+
+  var isKid = bd >= KID_FROM && bd <= KID_TO;
+  var is75  = bd <= OLD_75;
+  var is70  = bd >= OLD_70[0] && bd <= OLD_70[1];
+  var is65  = bd >= OLD_65[0] && bd <= OLD_65[1];
+
+  if(isKid){
+   /* 2회 접종 대상: 과거 접종력이 없거나 1회만 받은 6개월 이상 9세 미만 */
+   var age = manAge(bd);
+   var young = age < 9;
+   var edge  = (age === 8);   /* 접종 기간 중에 아홉 살이 될 수 있는 나이 */
+   var twice = young && (shots === '0' || shots === '1');
+   var start = twice ? '2026-09-21' : '2026-09-28';
+   h += '<div class="big">무료 접종 대상입니다</div>';
+   h += '<div class="sub2">어린이 · '+SEASON+'</div>';
+   h += '<div class="row"><span class="k">접종 횟수</span><span class="v">'+(twice ? '2회 (1개월 간격)' : '1회')+'</span></div>';
+   h += '<div class="row"><span class="k">접종 시작</span><span class="v">'+whenText(start)+'</span></div>';
+   h += '<div class="row"><span class="k">접종 기간</span><span class="v">'+fmt(SEASON_END)+'까지</span></div>';
+   if(twice){
+    h += '<div class="ok"><b>2회 접종 대상이라 1주일 먼저 시작합니다.</b> '
+       + '과거 접종력이 없거나 한 해에 1회만 받은 <b>6개월 이상 9세 미만</b> 어린이는 '
+       + '<b>1개월 간격으로 2회</b> 맞고, 그 뒤로는 매년 1회입니다.</div>';
+   }else{
+    h += '<div class="ok">1회 접종 대상입니다. 2회 대상자는 9월 21일부터, 1회 대상자는 9월 28일부터입니다.</div>';
+   }
+   if(edge){
+    h += '<div class="warn"><b>아홉 살 경계에 있어 병원에서 확인하셔야 합니다.</b> '
+       + '2회 접종 기준은 <b>접종일에 만 9세 미만</b>인지로 봅니다. 접종 기간이 이듬해 4월 30일까지라 '
+       + '그 사이에 생일이 지나면 기준이 달라집니다. 지금 만 '+age+'세입니다.</div>';
+   }
+   h += '<div class="warn">이번 절기부터 지원 대상이 <b>13세에서 14세로 넓어졌습니다.</b> '
+      + '지난해 글을 보고 대상이 아니라고 생각해 돈을 내고 맞는 경우가 있습니다. '
+      + '기준 출생일은 <b>2012년 1월 1일 ~ 2026년 8월 31일</b>입니다.</div>';
+   h += '</div>';
+   if(over) h += seasonWarn();
+   out.innerHTML = h; return;
+  }
+
+  if(is75 || is70 || is65){
+   var g = is75 ? ['75세 이상','2026-10-12'] : (is70 ? ['70~74세','2026-10-15'] : ['65~69세','2026-10-19']);
+   h += '<div class="big">무료 접종 대상입니다</div>';
+   h += '<div class="sub2">어르신 '+g[0]+' · '+SEASON+'</div>';
+   h += '<div class="row"><span class="k">접종 횟수</span><span class="v">1회</span></div>';
+   h += '<div class="row"><span class="k">접종 시작</span><span class="v">'+whenText(g[1])+'</span></div>';
+   h += '<div class="row"><span class="k">접종 기간</span><span class="v">'+fmt(SEASON_END)+'까지</span></div>';
+   h += '<div class="ok"><b>어르신은 나이대별로 시작일이 다릅니다.</b> '
+      + '75세 이상 10월 12일, 70~74세 10월 15일, 65~69세 10월 19일입니다. '
+      + '한꺼번에 몰리지 않게 나눈 것이고, 시작일이 지나면 기간 안에 아무 때나 맞을 수 있습니다.</div>';
+   h += '</div>';
+   if(over) h += seasonWarn();
+   out.innerHTML = h; return;
+  }
+
+  h += '<div class="big no">무료 접종 대상이 아닙니다</div>';
+  h += '<div class="sub2">'+SEASON+' 국가예방접종 지원 기준</div>';
+  h += '<div class="row"><span class="k">어린이</span><span class="v">2012-01-01 ~ 2026-08-31 출생</span></div>';
+  h += '<div class="row"><span class="k">어르신</span><span class="v">1961-12-31 이전 출생</span></div>';
+  h += '<div class="row"><span class="k">임신부</span><span class="v">나이 무관</span></div>';
+  h += '<div class="warn">위 셋과 조혈모세포이식환자가 지원 대상입니다. '
+     + '대상이 아니어도 <b>맞을 수 없는 것이 아니라 비용을 본인이 내는 것</b>입니다. '
+     + '유료 접종 비용은 의료기관마다 다르고, 건강보험심사평가원 「비급여 진료비용 정보」에서 '
+     + '의료기관별로 확인하실 수 있습니다.</div>';
+  h += '</div>';
+  if(over) h += seasonWarn();
+  out.innerHTML = h;
+ }
+
+ function seasonWarn(){
+  return '<div class="warn" style="margin-top:12px"><b>이 절기가 끝났습니다.</b> '
+       + '위 날짜는 '+SEASON+' 기준이라 지금은 맞지 않습니다. '
+       + '그해 대상과 일정은 예방접종도우미(nip.kdca.go.kr)나 관할 보건소에서 확인하십시오.</div>';
+ }
+
+ document.getElementById('go').addEventListener('click', calc);
+ ['bd','preg','first'].forEach(function(id){
+  document.getElementById(id).addEventListener('change', calc);
+ });
+ calc();
+})();
+</script>
+
+<div id="webad"></div><section class="webseo">
+<h2>독감 예방접종 무료 대상 확인</h2>
+
+<h3>10초 요약</h3>
+<p>2026~2027절기 국가예방접종 지원 대상은 <strong>어린이(2012년 1월 1일 ~ 2026년 8월 31일 출생), 65세 이상 어르신(1961년 12월 31일 이전 출생), 임신부, 조혈모세포이식환자</strong>입니다.</p>
+<p>이번 절기부터 어린이 지원이 <strong>13세에서 14세로 넓어졌습니다.</strong> 지난해 기준으로 적힌 글이 아직 많습니다.</p>
+<p>시작일이 대상마다 다릅니다. <strong>어린이 2회 대상과 임신부는 9월 21일</strong>, <strong>어린이 1회 대상은 9월 28일</strong>, <strong>어르신은 10월 12·15·19일</strong>로 나이대별로 나뉩니다. 모두 <strong>2027년 4월 30일</strong>까지입니다.</p>
+
+<h3>왜 시작일이 나뉘어 있나</h3>
+<p>한꺼번에 몰리는 것을 막기 위해서입니다. 어르신은 75세 이상이 10월 12일, 70~74세가 10월 15일, 65~69세가 10월 19일입니다. 시작일이 지나면 기간 안에 아무 때나 맞을 수 있고, 늦게 맞는다고 불이익이 있는 것은 아닙니다.</p>
+
+<h3>어린이 2회 접종은 누가 하나</h3>
+<p>과거 접종력이 없거나 한 해에 1회만 받은 <strong>6개월 이상 9세 미만</strong> 어린이입니다. <strong>1개월 간격으로 2회</strong> 맞고 그 뒤로는 매년 1회입니다. 2회 대상이면 1주일 먼저인 9월 21일부터 시작합니다.</p>
+
+<h3>자주 틀리는 것</h3>
+<p>지난해 대상 연령을 그대로 보는 것입니다. 대상은 질병관리청 고시로 정해지고 실제로 이번에 넓어졌습니다.</p>
+<p>아이 첫 접종을 한 번으로 끝내는 것입니다. 접종력이 없는 9세 미만은 2회가 기본입니다.</p>
+<p>대상이 아니면 못 맞는다고 생각하는 것입니다. 대상이 아닌 것은 <b>비용을 본인이 낸다</b>는 뜻입니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>어디서 맞나요</dt>
+<dd>주소지와 관계없이 가까운 위탁의료기관이나 보건소에서 맞을 수 있습니다. 기관은 예방접종도우미(nip.kdca.go.kr)의 예방접종관리 메뉴에서 지역을 골라 찾으면 됩니다.</dd>
+<dt>임신 중인데 몇 주부터 되나요</dt>
+<dd>임신 주수와 상관없이 접종할 수 있습니다. 산모수첩 등으로 임신 여부를 확인합니다.</dd>
+<dt>유료로 맞으면 얼마인가요</dt>
+<dd>의료기관마다 다릅니다. 건강보험심사평가원의 비급여 진료비용 정보에서 의료기관별 금액을 확인하실 수 있습니다. 여기에 특정 금액을 적지 않는 이유입니다.</dd>
+<dt>접종 후에 바로 가도 되나요</dt>
+<dd>질병관리청은 접종 후 20~30분간 접종기관에 머물러 상태를 관찰하도록 안내합니다.</dd>
+</dl>
+
+<p class="note">입력값은 기기 안에서만 계산되며 서버로 전송되지 않습니다. 대상 여부와 일정은 그해 사업 안내로 정해지므로 결과는 참고용이며, 최종 확인은 예방접종도우미나 관할 보건소에서 하십시오.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"어디서 맞나요","acceptedAnswer":{"@type":"Answer","text":"주소지와 관계없이 가까운 위탁의료기관이나 보건소에서 맞을 수 있습니다. 기관은 예방접종도우미(nip.kdca.go.kr)의 예방접종관리 메뉴에서 지역을 골라 찾으면 됩니다."}},{"@type":"Question","name":"임신 중인데 몇 주부터 되나요","acceptedAnswer":{"@type":"Answer","text":"임신 주수와 상관없이 접종할 수 있습니다. 산모수첩 등으로 임신 여부를 확인합니다."}},{"@type":"Question","name":"유료로 맞으면 얼마인가요","acceptedAnswer":{"@type":"Answer","text":"의료기관마다 다릅니다. 건강보험심사평가원의 비급여 진료비용 정보에서 의료기관별 금액을 확인하실 수 있습니다. 여기에 특정 금액을 적지 않는 이유입니다."}},{"@type":"Question","name":"접종 후에 바로 가도 되나요","acceptedAnswer":{"@type":"Answer","text":"질병관리청은 접종 후 20~30분간 접종기관에 머물러 상태를 관찰하도록 안내합니다."}}]}</script>
+</body>
+</html>
