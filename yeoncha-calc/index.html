@@ -41,7 +41,8 @@ border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:i
 .warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
 .ok{background:#EEF0FA;border-left:3px solid #4A5AA8;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#37437F;line-height:1.7}
 .note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
-table.plan{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+table.plan{width:100%;min-width:320px;border-collapse:collapse;font-size:13.5px}
 table.plan th,table.plan td{padding:7px 6px;border-bottom:1px solid #EEF0F8;text-align:left}
 table.plan th{color:var(--mut);font-weight:400;font-size:12.5px}
 table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
@@ -174,12 +175,14 @@ table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nu
   }
 
   /* 앞으로 6년 */
-  h += '<table class="plan"><tr><th>근속</th><th>연차</th><th>그 해가 시작되는 날</th></tr>';
+  /* ★2팀 지적(2026-09-12) — 모바일 폭에서 표가 가로로 넘친다.
+     표만 따로 overflow-x 컨테이너에 넣는다. 본문은 그대로 두고 표만 밀리게 한다. */
+  h += '<div class="tw"><table class="plan"><tr><th>근속</th><th>연차</th><th>그 해가 시작되는 날</th></tr>';
   for(var k = y; k < y + 6 && k <= 21; k++){
    var dd = new Date(D(join).getFullYear()+k, D(join).getMonth(), D(join).getDate());
    h += '<tr><td>'+k+'년차</td><td class="n">'+annual(k)+'일</td><td style="color:#8B95A1">'+fmt(iso(dd))+'</td></tr>';
   }
-  h += '</table>';
+  h += '</table></div>';
   h += '<p class="note" style="margin-top:12px">연차는 발생일부터 <b>1년간</b> 쓸 수 있고, 그 안에 안 쓰면 원칙적으로 없어집니다(제60조제7항). 다만 회사가 제61조의 사용촉진 조치를 하지 않았다면 미사용 연차를 수당으로 보상해야 합니다.</p>';
   h += '</div>';
   out.innerHTML = h;
