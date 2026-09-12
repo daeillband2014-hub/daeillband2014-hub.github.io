@@ -67,11 +67,11 @@ table.days td.on{background:#FFF3CD;font-weight:800;color:#8A5A00}
   <label><input id="dis" type="checkbox" style="width:auto;margin:0 6px 0 0;vertical-align:middle"> 장애인고용촉진 및 직업재활법 제2조제1호에 따른 장애인</label>
   <label for="daily" style="margin-top:10px">기초일액(원) — 이직 전 3개월 평균임금의 1일분, 아신다면 입력 (선택)</label>
   <input id="daily" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 110000">
-  <label for="cap" style="margin-top:10px">그해 상한액(1일, 원) — 고용24에서 확인해 입력 (선택)</label>
+  <label for="cap" style="margin-top:10px">구직급여 <strong>1일 상한액</strong>(원) — 고용24 안내의 상한액을 그대로 (선택)</label>
   <input id="cap" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 68100">
-  <label for="flr" style="margin-top:10px">그해 최저구직급여일액(1일, 원) — 고용24에서 확인해 입력 (선택)</label>
+  <label for="flr" style="margin-top:10px">최저구직급여일액(1일, 원) — 고용24 안내의 하한액을 그대로 (선택)</label>
   <input id="flr" type="number" inputmode="numeric" min="0" step="10" placeholder="예: 66048">
-  <p class="hint">1일 지급액은 기초일액의 60%입니다(고용보험법 제46조). 다만 위아래로 <strong>상한액</strong>과 <strong>최저구직급여일액</strong>이 걸려서, 실제 금액은 대부분 60%가 아니라 이 두 값 중 하나로 잘립니다. 두 값은 해마다 바뀌므로 이 계산기에 넣어 두지 않았습니다 — 그해 값을 <a href="https://www.work24.go.kr" rel="nofollow">고용24</a>에서 확인해 위 칸에 넣으시면 잘라서 계산합니다. 넣지 않으면 금액을 보여드리지 않습니다.</p>
+  <p class="hint">1일 지급액은 기초일액의 60%입니다(고용보험법 제46조). 다만 위아래로 <strong>상한액</strong>과 <strong>최저구직급여일액</strong>이 걸려서, 실제 금액은 대부분 60%가 아니라 이 두 값 중 하나로 잘립니다. 두 값은 해마다 바뀌므로 이 계산기에 넣어 두지 않았습니다 — 그해 값을 <a href="https://www.work24.go.kr" rel="nofollow">고용24</a>에서 확인해 위 칸에 넣으시면 잘라서 계산합니다. 넣지 않으면 금액을 보여드리지 않습니다. <strong>넣는 값은 1일 지급액 기준입니다.</strong> 고용보험법 시행령이 정한 <strong>임금일액</strong> 상한(2026년 11만3,500원)이 아니라 거기에 60%를 곱한 <strong>1일 상한액</strong>(2026년 6만8,100원)을 넣으셔야 합니다. 시행령 숫자를 그대로 넣으면 상한이 걸리지 않아 실제보다 많게 나옵니다.</p>
   <button class="big" id="go">계산하기</button>
 
   <div class="rcard" id="res">
