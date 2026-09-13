@@ -200,7 +200,7 @@
   "title": "퇴직금 계산기"
  },
  {
-  "slug": "toilet-map",
+  "slug": "toilet-map-korea",
   "title": "전국 화장실 지도"
  },
  {
@@ -242,5 +242,9 @@
  {
   "slug": "yuka-hyujik-calc",
   "title": "육아휴직 급여 계산기"
+ },
+ {
+  "slug": "yeongum-jogi-calc",
+  "title": "국민연금 조기수령 감액 계산기"
  }
 ]

@@ -58,7 +58,9 @@ background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;ma
 .webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
 .webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
 .webftr a{color:#4E5968}
-#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+#webad{max-width:480px;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 .webseo{max-width:680px;margin:8px auto 0;padding:0 20px 10px;font-size:15px;line-height:1.85;color:#333D4B}
 .webseo h2{font-size:21px;margin:26px 0 10px;color:#191F28}
 .webseo h3{font-size:17px;margin:22px 0 8px;color:#191F28}
@@ -69,6 +71,7 @@ background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;ma
 .webseo table{font-size:14px;box-shadow:none;border:1px solid #E5E8EB}
 .webseo th,.webseo td{text-align:left;padding:9px 10px}
 </style>
+
 </head>
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
@@ -128,7 +131,9 @@ background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;ma
   </div>
 </div>
 
-<div id="webad"></div>
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
 <section class="webseo">
 <h2>국민연금 조기수령 감액 계산기</h2>
@@ -416,5 +421,6 @@ background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;ma
   });
 })();
 </script>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|토스에서)/;var app=document.getElementById('app');if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
 </body>
 </html>

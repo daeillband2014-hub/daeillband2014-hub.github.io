@@ -52,7 +52,9 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 .webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
 .webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
 .webftr a{color:#4E5968}
-#webad{max-width:480px;margin:8px auto 0;padding:0 20px;min-height:0}
+#webad{max-width:480px;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 .adnote{display:none!important}
 </style>
 <meta name="description" content="연봉을 넣으면 4대보험과 소득세를 빼고 실제 월 실수령액을 계산합니다. 소득세법 별표2 근로소득 간이세액표를 그대로 넣어 부양가족 수까지 반영합니다.">
@@ -168,7 +170,9 @@ var TAX=[[770,0,0,0,0,0,0,0,0,0,0,0],[775,0,0,0,0,0,0,0,0,0,0,0],[780,0,0,0,0,0,
 })();
 </script>
 
-<div id="webad"></div><section class="webseo">
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><section class="webseo">
 <h2>연봉 실수령액 계산기</h2>
 <h3>10초 요약</h3>
 <p>세전 연봉에서 【4대보험 + 소득세 + 지방소득세】를 빼면 실수령액입니다.</p>
