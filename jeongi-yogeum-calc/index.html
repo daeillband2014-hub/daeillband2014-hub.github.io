@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>전기요금 누진제 계산기</title>
+<style>
+:root{--p:#1E6E96;--pd:#155372;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FD;--lt:#CFE2F7}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px 28px}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:8px;text-align:center}
+.basis{font-size:12px;color:var(--mut);text-align:center;margin-bottom:16px;
+background:#fff;border-radius:10px;padding:8px 12px;line-height:1.5}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:14px 0 7px}
+select,input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:4px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:18px}
+button.big:active{transform:scale(.98)}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin:16px 0 13px}
+.rbig{font-size:44px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12px;padding:9px 6px;font-weight:700}
+td{padding:9px 6px;text-align:right;border-top:1px solid #E7F0FA;color:var(--sub)}
+td:first-child,th:first-child{text-align:left}
+td b{color:var(--ink)}
+tr.sum td{background:#F7FBFF;font-weight:700;color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.hide{display:none}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:22px 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:12px}
+.webseo dd{margin:2px 0 0}
+.webseo ul{margin:0 0 10px 18px}
+.webseo li{margin-bottom:5px}
+.src{font-size:11.5px;color:#8B95A1;line-height:1.7;margin-top:18px;border-top:1px solid #E5E8EB;padding-top:12px}
+</style>
+<link rel="canonical" href="https://daeillband2014-hub.github.io/jeongi-yogeum-calc/">
+<meta name="description" content="전기요금 누진제를 구간별로 계산합니다. 저압과 고압, 하계와 동계 구간이 다르고 슈퍼유저 요금이 붙는 달도 따로입니다. 요금표 기준일을 화면에 표시합니다.">
+<meta property="og:title" content="전기요금 누진제 계산기">
+<meta property="og:description" content="사용량을 넣으면 누진 구간별로 나눠 계산합니다. 부가세와 전력산업기반기금까지 더한 청구금액을 냅니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/jeongi-yogeum-calc/">
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<div class="emoji">💡</div>
+<h1>전기요금 누진제 계산기</h1>
+<p class="desc">사용량을 넣으면 누진 구간별로 나눠 계산합니다</p>
+<p class="basis">요금표 기준일 <b>2023년 11월 9일</b> · 한국전력 주택용 전력<br>전력산업기반기금 2.7%는 2024년 6월 4일 개정값입니다</p>
+
+<label>공급 방식</label>
+<div class="seg">
+<button id="b0" class="on" onclick="setV(0)">저압 (단독·빌라)</button>
+<button id="b1" onclick="setV(1)">고압 (아파트)</button>
+</div>
+<p class="foot" style="margin:6px 0 0;text-align:left">대부분의 아파트는 고압입니다. 관리비 고지서에 적혀 있습니다.</p>
+
+<label>사용한 달</label>
+<select id="mon">
+<option value="summer">7월 · 8월 (하계)</option>
+<option value="winter">12월 · 1월 · 2월 (동계)</option>
+<option value="spring" selected>3~6월 · 9~11월 (봄가을)</option>
+</select>
+
+<label>한 달 사용량 (kWh)</label>
+<input type="number" id="kwh" value="300" min="0" step="1">
+
+<button class="big" onclick="calc()">요금 계산하기</button>
+
+<div id="out" class="hide">
+<div class="rcard"><div class="rbig"><span id="tot">0</span>원</div><div class="rlabel">청구금액 (부가세·기금 포함)</div></div>
+<table><thead><tr><th>항목</th><th>계산</th><th>금액</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="note" id="tip"></div>
+</div>
+
+<div class="note"><b>계산에 넣지 않은 것</b> 복지할인, 다자녀·대가족·출산가구 할인, 추가감액제도(구 필수사용량 보장공제)는 반영하지 않았습니다. 해당되시면 실제 청구액이 이보다 적습니다. 한전 청구서는 원 단위 처리 방식이 달라 몇 원 차이가 날 수 있습니다.</div>
+<p class="foot">입력값은 기기 안에서만 계산되고 저장하지 않습니다</p>
+</div>
+
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<script>
+/* 한국전력 주택용 전력 요금표 — 적용일자 2023년 11월 9일.
+   출처 사본: 개인수익화/조사/_한전_주택용요금표.txt
+   ★단가는 하계와 기타계절이 같고 구간 경계만 다르다.
+   ★슈퍼유저는 하계(7~8월)와 동계(12~2월)에만 붙는다. 봄가을에는 없다. */
+var RATE={
+  0:{ /* 저압 */
+    base:[910,1600,7300], unit:[120.0,214.6,307.3], sup:736.2,
+    edge:{summer:[300,450], winter:[200,400], spring:[200,400]}
+  },
+  1:{ /* 고압 */
+    base:[730,1260,6060], unit:[105.0,174.0,242.3], sup:593.3,
+    edge:{summer:[300,450], winter:[200,400], spring:[200,400]}
+  }
+};
+/* 전기사업법 시행령 제36조 — 부담금은 전기요금의 1천분의 27 <개정 2024.6.4> */
+var FUND=0.027;
+/* 부가가치세법 제30조 — 세율은 10퍼센트 */
+var VAT=0.10;
+
+var volt=0;
+function setV(v){
+  volt=v;
+  document.getElementById("b0").className = v===0?"on":"";
+  document.getElementById("b1").className = v===1?"on":"";
+}
+function won(n){return Math.round(n).toLocaleString("ko-KR");}
+
+function calc(){
+  var kwh=Math.max(0,Math.floor(+document.getElementById("kwh").value||0));
+  var mon=document.getElementById("mon").value;
+  var R=RATE[volt], E=R.edge[mon];
+  var e1=E[0], e2=E[1];
+  /* 슈퍼유저는 하계와 동계에만 */
+  var supOn = (mon==="summer"||mon==="winter");
+
+  var seg=[],used=0,energy=0,tier=0;
+  var q1=Math.min(kwh,e1);
+  if(q1>0){seg.push([("1구간 "+e1+"kWh 이하"),q1,R.unit[0]]);energy+=q1*R.unit[0];used+=q1;tier=0;}
+  var q2=Math.min(Math.max(kwh-e1,0),e2-e1);
+  if(q2>0){seg.push([("2구간 "+(e1+1)+"~"+e2+"kWh"),q2,R.unit[1]]);energy+=q2*R.unit[1];used+=q2;tier=1;}
+  var rest=Math.max(kwh-e2,0);
+  if(rest>0){
+    tier=2;
+    if(supOn && kwh>1000){
+      var q3=1000-e2;
+      seg.push([("3구간 "+e2+"kWh 초과"),q3,R.unit[2]]);energy+=q3*R.unit[2];
+      var q4=kwh-1000;
+      seg.push(["슈퍼유저 1,000kWh 초과",q4,R.sup]);energy+=q4*R.sup;
+    }else{
+      seg.push([("3구간 "+e2+"kWh 초과"),rest,R.unit[2]]);energy+=rest*R.unit[2];
+    }
+  }
+  var base=R.base[tier];
+  var sub=base+energy;
+  var vat=sub*VAT;
+  var fund=sub*FUND;
+  var tot=sub+vat+fund;
+
+  var html="";
+  html+="<tr><td>기본요금</td><td>"+(tier+1)+"구간</td><td><b>"+won(base)+"</b></td></tr>";
+  for(var i=0;i<seg.length;i++){
+    html+="<tr><td>"+seg[i][0]+"</td><td>"+seg[i][1]+"kWh x "+seg[i][2]+"원</td><td><b>"+won(seg[i][1]*seg[i][2])+"</b></td></tr>";
+  }
+  html+="<tr class='sum'><td>전기요금계</td><td></td><td>"+won(sub)+"</td></tr>";
+  html+="<tr><td>부가가치세</td><td>10%</td><td>"+won(vat)+"</td></tr>";
+  html+="<tr><td>전력산업기반기금</td><td>2.7%</td><td>"+won(fund)+"</td></tr>";
+  html+="<tr class='sum'><td>청구금액</td><td></td><td>"+won(tot)+"</td></tr>";
+  document.getElementById("rows").innerHTML=html;
+  document.getElementById("tot").textContent=won(tot);
+
+  var t="";
+  if(kwh>e2){
+    var over=kwh-e2;
+    t="<b>3구간에 "+over+"kWh가 들어갔습니다.</b> 이 구간 단가는 "+R.unit[2]+"원으로 1구간("+R.unit[0]+"원)의 약 "+(R.unit[2]/R.unit[0]).toFixed(1)+"배입니다. ";
+    t+=over+"kWh를 줄이면 약 "+won(over*(R.unit[2]-R.unit[1])*1.127)+"원이 줄어듭니다.";
+  }else if(kwh>e1){
+    t="<b>2구간까지 쓰셨습니다.</b> "+e2+"kWh를 넘기면 단가가 "+R.unit[1]+"원에서 "+R.unit[2]+"원으로 뜁니다. 남은 여유는 "+(e2-kwh)+"kWh입니다.";
+  }else{
+    t="<b>1구간입니다.</b> 가장 싼 구간입니다. "+e1+"kWh까지 여유가 "+(e1-kwh)+"kWh 남았습니다.";
+  }
+  if(supOn && kwh>1000){
+    t+="<br><br><b>슈퍼유저 요금이 붙었습니다.</b> 1,000kWh를 넘는 부분에 "+R.sup+"원이 적용됩니다. 하계와 동계에만 있는 요금입니다.";
+  }
+  document.getElementById("tip").innerHTML=t;
+  document.getElementById("out").className="";
+}
+</script>
+
+<section class="webseo">
+<h2>전기요금 누진제는 계단입니다</h2>
+<p>많이 쓰면 전체가 비싸지는 것이 아닙니다. <strong>넘어간 만큼만</strong> 비싼 단가가 붙습니다. 300kWh를 썼다고 300kWh 전부에 3구간 단가를 매기지 않습니다.</p>
+<p>봄가을에 300kWh를 쓴 저압 가구를 예로 들면 이렇게 나뉩니다.</p>
+<ul>
+<li>처음 200kWh는 <strong>120.0원</strong>씩 = 24,000원</li>
+<li>나머지 100kWh는 <strong>214.6원</strong>씩 = 21,460원</li>
+</ul>
+<p>여기에 그 구간의 기본요금 1,600원이 더해집니다. 전체에 214.6원을 곱하는 것이 아닙니다. <strong>기본요금은 도달한 구간의 것 하나만</strong> 붙습니다.</p>
+
+<h2>구간은 계절마다 다릅니다</h2>
+<p>여름에는 구간이 넓어집니다. 단가가 내려가는 것이 아니라 <strong>경계가 밀려납니다.</strong></p>
+<table><thead><tr><th>구간</th><th>하계 (7~8월)</th><th>그 밖의 달</th></tr></thead><tbody>
+<tr><td>1구간</td><td>300kWh 이하</td><td>200kWh 이하</td></tr>
+<tr><td>2구간</td><td>301~450kWh</td><td>201~400kWh</td></tr>
+<tr><td>3구간</td><td>450kWh 초과</td><td>400kWh 초과</td></tr>
+</tbody></table>
+<p>단가는 양쪽이 같습니다. 저압 기준으로 1구간 120.0원, 2구간 214.6원, 3구간 307.3원입니다. <strong>7~8월에만 100kWh와 50kWh씩 여유가 생기는 것</strong>입니다.</p>
+
+<h2>저압과 고압 — 아파트는 대체로 고압입니다</h2>
+<p>같은 주택용이라도 공급 방식에 따라 요금이 다릅니다. 고압이 더 쌉니다.</p>
+<table><thead><tr><th>구간</th><th>저압</th><th>고압</th></tr></thead><tbody>
+<tr><td>1구간 단가</td><td>120.0원</td><td><b>105.0원</b></td></tr>
+<tr><td>2구간 단가</td><td>214.6원</td><td><b>174.0원</b></td></tr>
+<tr><td>3구간 단가</td><td>307.3원</td><td><b>242.3원</b></td></tr>
+<tr><td>1구간 기본요금</td><td>910원</td><td><b>730원</b></td></tr>
+</tbody></table>
+<p>3구간에서 차이가 가장 큽니다. 65원이나 벌어집니다. 단독주택과 다세대는 대개 저압, 아파트는 대개 고압입니다. 관리비 고지서나 한전 청구서에 적혀 있습니다.</p>
+<p>한전이 정한 주택용 적용 대상은 주거용 고객(아파트 포함), 계약전력 3kW 이하 고객, 독신자 합숙소나 기숙사 같은 집단주거용 시설 중 희망하는 경우, 그리고 <strong>주거용 오피스텔</strong>입니다. 주택은 아니지만 실제 주거용도로 쓰는 오피스텔이 여기 들어갑니다.</p>
+
+<h2>슈퍼유저 요금 — 붙는 달이 따로 있습니다</h2>
+<p>이것을 잘못 아는 경우가 많습니다. 1,000kWh를 넘기면 언제나 붙는 것이 아닙니다.</p>
+<p>한전 요금표의 문장은 둘로 나뉘어 있습니다.</p>
+<ul>
+<li>"슈퍼유저요금 : <strong>하계(7월 1일~8월 31일)</strong> 1,000kWh초과 전력량요금은 736.2원/kWh 적용"</li>
+<li>"슈퍼유저요금 : <strong>동계(12월 1일~2월 말일)</strong> 1,000kWh초과 전력량요금은 736.2원/kWh 적용"</li>
+</ul>
+<p>둘 다 없는 달이 있습니다. <strong>3~6월과 9~11월</strong>입니다. 이 다섯 달과 두 달, 모두 일곱 달에는 1,000kWh를 넘겨도 3구간 단가 307.3원이 계속 적용됩니다.</p>
+<p>한편 "기타계절"이라는 말은 <strong>1월 1일~6월 30일, 9월 1일~12월 31일</strong>을 가리킵니다. 구간 경계를 정할 때 쓰는 구분입니다. <strong>슈퍼유저가 붙는 동계(12~2월)와 범위가 다릅니다.</strong> 12월과 1~2월은 기타계절 구간(200/400kWh)을 쓰면서 슈퍼유저도 적용받습니다.</p>
+<p>고압은 슈퍼유저 단가가 593.3원입니다. 저압보다 143원 낮습니다.</p>
+<h3>날짜를 정확히 적으면</h3>
+<p>헷갈리기 쉬우니 요금표에 적힌 그대로 옮깁니다. 하계는 <strong>7월 1일부터 8월 31일까지</strong>입니다. 기타계절은 <strong>1월 1일부터 6월 30일까지, 그리고 9월 1일부터 12월 31일까지</strong>입니다. 슈퍼유저가 붙는 동계는 <strong>12월 1일부터 2월 말일까지</strong>입니다. 2월 말일이라고만 적혀 있어 윤년이면 29일까지입니다.</p>
+
+<h2>청구금액에는 두 가지가 더 붙습니다</h2>
+<p>전기요금계가 끝이 아닙니다. 부가가치세와 전력산업기반기금이 더해집니다.</p>
+<h3>부가가치세 10%</h3>
+<p>부가가치세법 제30조입니다. "부가가치세의 세율은 10퍼센트로 한다."</p>
+<h3>전력산업기반기금 2.7%</h3>
+<p>여기를 특히 조심해야 합니다. 인터넷에 <strong>3.7%</strong>로 적힌 글이 아직 많은데 <strong>바뀌었습니다.</strong></p>
+<p>전기사업법 시행령 제36조(부담금의 부과기준) 현재 원문입니다.</p>
+<p>"법 제51조제1항에 따른 부담금은 <strong>전기요금의 1천분의 27</strong>에 해당하는 금액으로 한다. <strong>〈개정 2024. 6. 4.〉</strong>"</p>
+<p>1천분의 27, 즉 <strong>2.7%</strong>입니다. 2024년 6월 4일에 3.7%에서 내렸습니다. 오래된 글의 3.7%로 계산하면 금액이 실제보다 커집니다.</p>
+<p>정리하면 청구금액은 이렇게 나옵니다.</p>
+<ul>
+<li>전기요금계 = 기본요금 + 전력량요금</li>
+<li>부가가치세 = 전기요금계 x 10%</li>
+<li>전력산업기반기금 = 전기요금계 x 2.7%</li>
+<li>청구금액 = 세 가지의 합</li>
+</ul>
+<p>두 가지를 더하면 전기요금계의 <strong>12.7%</strong>가 붙는 셈입니다.</p>
+<h3>2.7%는 법이 아니라 시행령이 정합니다</h3>
+<p>법은 상한만 둡니다. 전기사업법 제51조제1항입니다.</p>
+<p>"기후에너지환경부장관은 제49조 각 호의 사업을 수행하기 위하여 전기사용자에 대하여 전기요금의 <strong>1천분의 65 이내에서 대통령령으로 정하는 바에 따라</strong> 부담금을 부과·징수할 수 있다."</p>
+<p>법이 정한 천장은 <strong>6.5%</strong>이고, 그 안에서 시행령이 2.7%로 정해 둔 것입니다. 그래서 요율이 바뀔 때 법을 고치지 않고 시행령만 고칩니다. 2024년 6월의 인하도 시행령 개정이었습니다.</p>
+<p>소관도 바뀌었습니다. 예전에는 산업통상자원부장관이었는데 2025년 10월 1일 개정으로 <strong>기후에너지환경부장관</strong>이 되었습니다.</p>
+<h3>이 돈은 어디에 쓰이나</h3>
+<p>전기사업법 제49조가 기금의 사용처를 열거합니다. 재생에너지 발전사업자 지원과 전력계통 연계조건 개선, 수소발전사업자 지원, 전력수요 관리사업, 전원개발 촉진사업, <strong>도서·벽지 주민에 대한 전력공급 지원</strong>, 전력산업 연구개발, 석탄·액화천연가스·집단에너지 산업 지원, 전기안전관리법에 따른 <strong>일반용전기설비 점검과 공동주택 안전점검</strong>, 발전소 주변지역 지원 등입니다.</p>
+<p>고지서에 한 줄로 적히는 금액이지만 근거와 쓰임이 법에 적혀 있습니다.</p>
+<h3>내지 않아도 되는 전기</h3>
+<p>제51조제2항은 부담금을 부과하지 않을 수 있는 전기를 셋으로 정합니다. 자가발전설비로 생산한 전기, 전력시장에 팔 전기를 만들려고 쓰는 양수발전사업용 전기, 그리고 구역전기사업자가 특정 공급구역에 공급하는 전기입니다. 일반 가정과는 대체로 거리가 먼 경우들입니다.</p>
+
+<h2>얼마를 줄이면 얼마가 줄어드나</h2>
+<p>누진제에서는 <strong>어느 구간을 줄이느냐</strong>가 전부입니다. 3구간에 걸쳐 있는 가구가 10kWh를 줄이면 그 10kWh는 307.3원짜리입니다. 3,073원이 빠지고, 여기에 부가세와 기금 12.7%까지 빠지므로 실제로는 약 3,463원이 줄어듭니다.</p>
+<p>같은 10kWh를 1구간 가구가 줄이면 120원씩, 1,200원과 그 12.7%입니다. <strong>같은 10kWh인데 차이가 세 배 가까이 납니다.</strong></p>
+<p>그래서 구간 경계를 아는 것이 중요합니다. 봄가을에 405kWh를 쓰고 계시다면 5kWh만 줄여도 3구간에서 빠져나옵니다. 기본요금도 7,300원에서 1,600원으로 내려갑니다. <strong>5kWh를 줄였는데 기본요금에서만 5,700원이 빠집니다.</strong></p>
+
+<h2>실제로 계산해 보면 이렇습니다</h2>
+<p>말로만 하면 감이 안 옵니다. 같은 300kWh를 조건만 바꿔 계산한 값입니다. 할인은 넣지 않았습니다.</p>
+<table><thead><tr><th>조건</th><th>전기요금계</th><th>청구금액</th></tr></thead><tbody>
+<tr><td>저압 · 봄가을 300kWh</td><td>47,060원</td><td><b>53,037원</b></td></tr>
+<tr><td>저압 · 하계 300kWh</td><td>36,910원</td><td><b>41,598원</b></td></tr>
+<tr><td>고압 · 봄가을 300kWh</td><td>39,660원</td><td><b>44,697원</b></td></tr>
+</tbody></table>
+<p>같은 300kWh인데 세 값이 다 다릅니다. 사용량이 같아도 <strong>언제 썼는지</strong>와 <strong>어떻게 공급받는지</strong>에 따라 요금이 갈린다는 뜻입니다.</p>
+<p><strong>저압 봄가을과 하계의 차이는 11,439원</strong>입니다. 7~8월에는 300kWh가 통째로 1구간에 들어가 전부 120.0원이 적용되고 기본요금도 910원입니다. 봄가을에는 100kWh가 2구간으로 넘어가면서 그 몫이 214.6원이 되고 기본요금도 1,600원이 됩니다.</p>
+<p><strong>저압과 고압의 차이는 8,340원</strong>입니다. 아파트에 사는 것만으로 같은 사용량에 15퍼센트 남짓 덜 냅니다.</p>
+
+<h3>슈퍼유저가 얼마나 무거운지</h3>
+<p>1,200kWh를 쓴 저압 가구를 달만 바꿔 계산해 보면 차이가 확연합니다.</p>
+<table><thead><tr><th>언제</th><th>슈퍼유저</th><th>청구금액</th></tr></thead><tbody>
+<tr><td>12~2월 (동계)</td><td>붙습니다</td><td><b>457,382원</b></td></tr>
+<tr><td>3~6월 · 9~11월</td><td>없습니다</td><td><b>360,708원</b></td></tr>
+</tbody></table>
+<p>같은 1,200kWh인데 <strong>96,674원</strong>이 차이 납니다. 1,000kWh를 넘은 200kWh에 307.3원 대신 736.2원이 붙었기 때문입니다. 그 200kWh에서만 85,780원이 벌어지고 부가세와 기금이 그 위에 붙습니다.</p>
+<p>구간이 넷으로 쪼개집니다. 처음 200kWh는 120.0원, 다음 200kWh는 214.6원, 400kWh 초과분 중 1,000kWh까지인 600kWh는 307.3원, 그리고 남은 200kWh가 736.2원입니다.</p>
+
+<h2>한전이 따로 안내하는 것 하나</h2>
+<p>요금표 페이지에는 계산기로는 다루기 어려운 안내가 하나 붙어 있습니다.</p>
+<p>"복지할인 적용대상 중 <strong>월 200kWh 이하 사용 가구</strong>는 <strong>추가감액제도</strong>(구 필수사용량 보장공제) 대상이나 복지할인 종류에 따라 요금이 상이할 수 있으므로 전기요금 계산기를 참고해주시기 바랍니다."</p>
+<p>복지할인 대상이면서 200kWh 이하를 쓰는 가구는 추가로 깎아 주는데, <strong>어느 복지할인을 받느냐에 따라 금액이 달라진다</strong>는 뜻입니다. 이 페이지의 계산에는 넣지 않았습니다. 해당되시면 실제 청구액이 여기 나온 값보다 적습니다.</p>
+<p>이 밖에 다자녀, 대가족, 출산가구 할인도 있습니다. 조건과 금액이 제도마다 달라 한전 고지서나 한전 사이버지점에서 확인하셔야 정확합니다.</p>
+
+<h2>자주 묻는 것</h2>
+<dl>
+<dt>300kWh를 쓰면 300kWh 전부에 비싼 단가가 붙나요?</dt>
+<dd>아닙니다. 구간별로 나눠서 계산합니다. 봄가을 저압이라면 처음 200kWh는 120.0원, 나머지 100kWh만 214.6원입니다.</dd>
+<dt>기본요금도 구간마다 여러 번 붙나요?</dt>
+<dd>아닙니다. 도달한 구간의 기본요금 하나만 붙습니다. 3구간에 들어갔으면 저압 7,300원 하나입니다.</dd>
+<dt>여름에는 전기요금이 싼가요?</dt>
+<dd>단가는 같습니다. 7~8월에는 구간 경계만 300kWh와 450kWh로 넓어집니다. 같은 사용량이면 여름이 싸게 나오는 이유가 이것입니다.</dd>
+<dt>우리 집은 저압인가요 고압인가요?</dt>
+<dd>아파트는 대개 고압, 단독주택과 다세대는 대개 저압입니다. 관리비 고지서나 한전 청구서에 적혀 있습니다. 고압이 모든 구간에서 더 쌉니다.</dd>
+<dt>1,000kWh를 넘으면 항상 슈퍼유저 요금인가요?</dt>
+<dd>아닙니다. 하계(7월 1일~8월 31일)와 동계(12월 1일~2월 말일)에만 적용됩니다. 3~6월과 9~11월에는 1,000kWh를 넘겨도 3구간 단가가 이어집니다.</dd>
+<dt>전력산업기반기금이 3.7% 아닌가요?</dt>
+<dd>2024년 6월 4일에 2.7%로 바뀌었습니다. 전기사업법 시행령 제36조가 "전기요금의 1천분의 27"로 정하고 있습니다. 오래된 글에 3.7%가 남아 있습니다.</dd>
+<dt>주거용 오피스텔도 주택용 요금인가요?</dt>
+<dd>그렇습니다. 한전이 정한 주택용 전력 적용 대상에 주거용 오피스텔이 들어 있습니다. 주택은 아니지만 실제 주거용도로 이용되는 오피스텔을 말합니다.</dd>
+<dt>이 계산기 금액이 고지서와 정확히 같나요?</dt>
+<dd>몇 원 차이가 날 수 있습니다. 한전은 부가세와 기금의 원 단위를 처리하는 방식이 따로 있습니다. 또 복지할인, 다자녀·대가족·출산가구 할인, 추가감액제도는 이 계산에 넣지 않았습니다. 해당되시면 실제 청구액이 이보다 적습니다.</dd>
+<dt>전력산업기반기금은 안 낼 수 없나요?</dt>
+<dd>일반 가정은 어렵습니다. 전기사업법 제51조제2항이 부과하지 않을 수 있는 전기를 셋으로 정하는데, 자가발전설비로 생산한 전기, 전력시장 판매용 전기를 만드는 양수발전사업용 전기, 구역전기사업자가 특정 공급구역에 공급하는 전기입니다.</dd>
+<dt>이 기금은 어디에 쓰이나요?</dt>
+<dd>전기사업법 제49조에 열거돼 있습니다. 재생에너지와 수소발전 지원, 전력수요 관리, 전원개발 촉진, 도서·벽지 전력공급 지원, 전력산업 연구개발, 일반용전기설비와 공동주택 안전점검, 발전소 주변지역 지원 등입니다.</dd>
+<dt>기금 요율이 더 오를 수도 있나요?</dt>
+<dd>법상 상한은 6.5%입니다. 전기사업법 제51조제1항이 "전기요금의 1천분의 65 이내에서 대통령령으로 정하는 바에 따라"라고 하고, 그 안에서 시행령이 현재 2.7%로 정하고 있습니다. 요율 변경은 법이 아니라 시행령 개정으로 이뤄집니다.</dd>
+<dt>기본요금은 왜 구간마다 다른가요?</dt>
+<dd>많이 쓰는 가구일수록 기본요금도 커지도록 설계돼 있습니다. 저압 기준 1구간 910원, 2구간 1,600원, 3구간 7,300원입니다. 3구간 문턱을 넘는 순간 기본요금만 5,700원이 뛰기 때문에, 경계 근처에서는 몇 kWh를 줄이는 효과가 유난히 큽니다.</dd>
+<dt>요금표는 언제 것인가요?</dt>
+<dd>적용일자 2023년 11월 9일 요금표입니다. 화면 위쪽에 기준일을 적어 두었습니다. 요금표가 바뀌면 이 페이지도 고칩니다. 계산기를 쓰실 때는 기준일이 지금 요금표와 같은지 먼저 확인해 주십시오.</dd>
+</dl>
+
+<h2>함께 보면 좋은 계산기</h2>
+<ul>
+<li><a href="../pyeong-calc-kr/">평수 계산기</a> — 우리 집 면적부터</li>
+<li><a href="../4dae-boheom-calc/">4대보험 계산기</a> — 급여에서 빠지는 것들</li>
+<li><a href="../vat-calc-kr/">부가세 계산기</a> — 10퍼센트를 붙이고 떼는 법</li>
+<li><a href="../percent-calc-kr/">퍼센트 계산기</a> — 몇 퍼센트 올랐는지</li>
+<li><a href="../jaesanse-calc/">재산세 계산기</a> — 집에 붙는 세금</li>
+<li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a> — 한 달에 손에 쥐는 돈</li>
+</ul>
+
+<p class="src">근거: 한국전력공사 한글 전기요금표(주택용 저압·고압), 적용일자 2023년 11월 9일 · 전기사업법 시행령 제36조(부담금의 부과기준, 개정 2024. 6. 4.) · 부가가치세법 제30조(세율). 할인 제도는 반영하지 않았으며 실제 청구액은 한전 고지서를 따릅니다.</p>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">전체 도구</a> · <a href="../about.html">소개</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a> · <a href="../contact.html">문의</a>
+</div>
+</body>
+</html>

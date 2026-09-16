@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>청약가점 계산기</title>
+<style>
+:root{--p:#1E6E96;--pd:#155372;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FD;--lt:#CFE2F7}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px 28px}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:14px 0 7px}
+select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:18px}
+button.big:active{transform:scale(.98)}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin:16px 0 13px}
+.rbig{font-size:52px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13.5px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12.5px;padding:10px 8px;font-weight:700}
+td{padding:10px 8px;text-align:center;border-top:1px solid #E7F0FA;color:var(--sub)}
+td b{color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.chk{display:flex;align-items:center;gap:9px;margin-top:16px;font-size:13.5px;color:var(--sub)}
+.chk input{width:19px;height:19px;accent-color:var(--p)}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.hide{display:none}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:22px 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:12px}
+.webseo dd{margin:2px 0 0}
+.webseo ul{margin:0 0 10px 18px}
+.webseo li{margin-bottom:5px}
+.src{font-size:11.5px;color:#8B95A1;line-height:1.7;margin-top:18px;border-top:1px solid #E5E8EB;padding-top:12px}
+</style>
+<link rel="canonical" href="https://daeillband2014-hub.github.io/cheongyak-gajeom-calc/">
+<meta name="description" content="청약가점 84점을 무주택기간, 부양가족수, 통장 가입기간으로 계산합니다. 주택공급에 관한 규칙 별표 1 그대로 계산하고 배우자 통장 합산까지 반영합니다.">
+<meta property="og:title" content="청약가점 계산기">
+<meta property="og:description" content="무주택기간, 부양가족수, 통장 가입기간으로 청약가점을 계산합니다. 법령 별표 1 기준입니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/cheongyak-gajeom-calc/">
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<div class="emoji">🏢</div>
+<h1>청약가점 계산기</h1>
+<p class="desc">무주택기간, 부양가족수, 통장 가입기간으로 84점을 계산합니다</p>
+
+<label>① 무주택기간 (가점 상한 32점)</label>
+<select id="m1"></select>
+
+<label>② 부양가족수 (가점 상한 35점) — 본인은 빼고 셉니다</label>
+<select id="m2"></select>
+
+<label>③ 주택청약종합저축 가입기간 (가점 상한 17점)</label>
+<select id="m3"></select>
+
+<div class="chk"><input type="checkbox" id="sp"><label for="sp" style="margin:0;font-weight:600">배우자도 청약통장이 있습니다</label></div>
+<div id="spbox" class="hide">
+<label>배우자 통장 가입기간 — 기간의 50%가 최대 3점까지 더해집니다</label>
+<select id="m4"></select>
+</div>
+
+<button class="big" onclick="calc()">가점 계산하기</button>
+
+<div id="out" class="hide">
+<div class="rcard"><div class="rbig"><span id="tot">0</span>점</div><div class="rlabel">84점 만점</div></div>
+<table><thead><tr><th>가점항목</th><th>선택</th><th>점수</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="note" id="tip"></div>
+</div>
+
+<div class="note"><b>기준</b> 주택공급에 관한 규칙 별표 1 「가점제 적용기준」(개정 2024. 12. 18.)의 점수표를 그대로 씁니다. 배우자 통장 합산은 같은 별표 비고 제2호입니다.</div>
+<p class="foot">입력값은 기기 안에서만 계산되고 저장하지 않습니다</p>
+</div>
+
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<script>
+/* 주택공급에 관한 규칙 별표 1 제2호나목 가점 산정기준 표 그대로.
+   값을 임의로 고치지 말 것 — 법령 별표의 숫자다.
+   원문 사본: 개인수익화/조사/_주택공급규칙_별표1_가점제.txt */
+var T1=[["1년 미만",2],["1년 이상~2년 미만",4],["2년 이상~3년 미만",6],["3년 이상~4년 미만",8],
+["4년 이상~5년 미만",10],["5년 이상~6년 미만",12],["6년 이상~7년 미만",14],["7년 이상~8년 미만",16],
+["8년 이상~9년 미만",18],["9년 이상~10년 미만",20],["10년 이상~11년 미만",22],["11년 이상~12년 미만",24],
+["12년 이상~13년 미만",26],["13년 이상~14년 미만",28],["14년 이상~15년 미만",30],["15년 이상",32]];
+var T2=[["0명",5],["1명",10],["2명",15],["3명",20],["4명",25],["5명",30],["6명 이상",35]];
+var T3=[["6개월 미만",1],["6개월 이상~1년 미만",2],["1년 이상~2년 미만",3],["2년 이상~3년 미만",4],
+["3년 이상~4년 미만",5],["4년 이상~5년 미만",6],["5년 이상~6년 미만",7],["6년 이상~7년 미만",8],
+["7년 이상~8년 미만",9],["8년 이상~9년 미만",10],["9년 이상~10년 미만",11],["10년 이상~11년 미만",12],
+["11년 이상~12년 미만",13],["12년 이상~13년 미만",14],["13년 이상~14년 미만",15],["14년 이상~15년 미만",16],
+["15년 이상",17]];
+/* 배우자 구간을 개월 수로 옮긴 값. 구간의 가운데를 쓴다(6개월 미만은 3개월로 본다). */
+var SPM=[3,9,18,30,42,54,66,78,90,102,114,126,138,150,162,174,186];
+
+function fill(id,t,showScore){
+  var s=document.getElementById(id);
+  for(var i=0;i<t.length;i++){
+    var o=document.createElement("option");
+    o.value=i;
+    o.textContent=showScore? t[i][0]+" ("+t[i][1]+"점)" : t[i][0];
+    s.appendChild(o);
+  }
+}
+fill("m1",T1,true);fill("m2",T2,true);fill("m3",T3,true);fill("m4",T3,false);
+document.getElementById("sp").onchange=function(){
+  document.getElementById("spbox").className=this.checked?"":"hide";
+};
+
+/* 개월 수를 가입기간 점수로 바꾼다. 표의 구간을 그대로 따른다.
+   1년 이상부터는 (연수 + 2)점이고 15년 이상은 17점에서 멈춘다. */
+function jipScore(mon){
+  if(mon<6)return 1;
+  if(mon<12)return 2;
+  var y=Math.floor(mon/12);
+  if(y>=15)return 17;
+  return y+2;
+}
+
+function calc(){
+  var i1=+document.getElementById("m1").value;
+  var i2=+document.getElementById("m2").value;
+  var i3=+document.getElementById("m3").value;
+  var p1=T1[i1][1],p2=T2[i2][1],p3=T3[i3][1],bonus=0,bonusTxt="";
+  if(document.getElementById("sp").checked){
+    var half=SPM[+document.getElementById("m4").value]/2;
+    bonus=Math.min(jipScore(half),3);
+    if(p3+bonus>17)bonus=17-p3;
+    if(bonus<0)bonus=0;
+    bonusTxt=" + 배우자 "+bonus+"점";
+  }
+  var tot=p1+p2+p3+bonus;
+  document.getElementById("tot").textContent=tot;
+  document.getElementById("rows").innerHTML=
+    "<tr><td>① 무주택기간</td><td>"+T1[i1][0]+"</td><td><b>"+p1+"</b></td></tr>"+
+    "<tr><td>② 부양가족수</td><td>"+T2[i2][0]+"</td><td><b>"+p2+"</b></td></tr>"+
+    "<tr><td>③ 통장 가입기간</td><td>"+T3[i3][0]+bonusTxt+"</td><td><b>"+(p3+bonus)+"</b></td></tr>";
+  var t="";
+  if(tot>=70)t="<b>높은 편입니다.</b> 경쟁이 센 곳도 넣어볼 만한 구간입니다.";
+  else if(tot>=60)t="<b>보통보다 위입니다.</b> 지역과 단지에 따라 갈립니다.";
+  else if(tot>=50)t="<b>중간입니다.</b> 경쟁이 덜한 곳을 함께 보시는 편이 좋습니다.";
+  else t="<b>아직 낮은 편입니다.</b> 통장은 그대로 두시고 무주택기간이 쌓이기를 기다리는 것이 유리합니다.";
+  t+="<br><br>당첨선은 단지마다 다릅니다. 이 계산은 <b>내 가점이 몇 점인지</b>를 내는 것이고, 당첨 여부를 판정하지 않습니다.";
+  document.getElementById("tip").innerHTML=t;
+  document.getElementById("out").className="";
+}
+</script>
+
+<section class="webseo">
+<h2>청약가점은 84점 만점입니다</h2>
+<p>청약가점제는 세 가지만 봅니다. 주택공급에 관한 규칙 제2조제8호가 그 셋을 이렇게 정합니다.</p>
+<p>"가점제란 다음 각 목의 가점항목에 대하여 별표 1의 기준을 적용하여 산정한 점수가 높은 순으로 입주자를 선정하는 것을 말한다. 가. 무주택기간 나. 부양가족수 다. 주택청약종합저축 가입기간"</p>
+<p>상한은 각각 32점, 35점, 17점입니다. 더하면 84점입니다. 소득도, 나이도, 자산도 들어가지 않습니다.</p>
+<table><thead><tr><th>가점항목</th><th>상한</th><th>최고점 조건</th></tr></thead><tbody>
+<tr><td>무주택기간</td><td><b>32점</b></td><td>15년 이상</td></tr>
+<tr><td>부양가족수</td><td><b>35점</b></td><td>6명 이상</td></tr>
+<tr><td>통장 가입기간</td><td><b>17점</b></td><td>15년 이상</td></tr>
+</tbody></table>
+<p>가장 큰 몫은 무주택기간이 아니라 <strong>부양가족수 35점</strong>입니다. 한 명당 5점씩 움직이기 때문에, 부양가족 한 명이 무주택기간 2년 반과 맞먹습니다.</p>
+
+<h2>① 무주택기간 — 만 30세부터 셉니다</h2>
+<p>그전에 먼저 걸리는 문턱이 있습니다. 별표 1 제1호가목1)의 첫 줄입니다.</p>
+<p>"입주자모집공고일 현재 <strong>세대원 모두</strong> 주택을 소유하지 않아야 한다."</p>
+<p>나 혼자 무주택인 것으로는 부족하고 <strong>세대원 전원</strong>이 무주택이어야 합니다. 같이 사는 가족 중 한 사람이라도 집이 있으면 이 항목의 점수를 받을 수 없습니다. 앞서 본 제53조의 열두 가지 예외에 해당하는 경우만 빠져나갑니다.</p>
+<p>지방 주택에도 길이 하나 있습니다. 제53조제2호는 도시지역이 아닌 지역이나 면 지역(수도권 제외)에 있는 주택의 소유자가 그곳에 살다가 다른 주택건설지역으로 이주한 경우를 무주택으로 봅니다. 사용승인 후 20년이 지난 단독주택, 85제곱미터 이하의 단독주택, 최초 등록기준지에 있으면서 직계존속이나 배우자에게서 상속 등으로 이전받은 단독주택 세 가지입니다.</p>
+<p>이제 기간을 세는 법입니다. 여기서 가장 많이 틀립니다. 태어나서부터가 아니고, 집을 안 산 때부터도 아닙니다. 별표 1 제1호가목3)의 원문입니다.</p>
+<p>"무주택기간은 주택공급신청자와 그 배우자를 기준으로 하고, <strong>주택공급신청자의 연령이 30세가 되는 날부터</strong> 계속하여 무주택인 기간으로 하되, <strong>30세가 되기 전에 혼인한 경우에는</strong> 가족관계의 등록 등에 관한 법률에 따른 혼인관계증명서에 <strong>혼인신고일로 등재된 날부터</strong> 무주택기간을 기산한다."</p>
+<p>시작점은 둘 중 하나입니다.</p>
+<ul>
+<li>만 30세가 된 날</li>
+<li>30세 전에 혼인신고를 했다면 그 <strong>혼인신고일</strong></li>
+</ul>
+<p>27세에 혼인신고를 했다면 27세부터 셉니다. 3년을 더 버는 셈이라 6점 차이입니다. 반대로 미혼이라면 아무리 오래 무주택이어도 30세 전 기간은 들어가지 않습니다.</p>
+<h3>집을 샀다 팔았다면</h3>
+<p>같은 항이 이어집니다. "주택공급신청자 또는 배우자가 주택을 소유한 사실이 있는 경우에는 그 주택을 처분한 후 <strong>무주택자가 된 날</strong>(2회 이상 주택을 소유한 사실이 있는 경우에는 <strong>최근에 무주택자가 된 날</strong>을 말한다)부터 무주택기간을 산정한다."</p>
+<p>중간에 한 번이라도 집이 있었으면 그 전 기간은 사라집니다. 두 번 이상이면 <strong>가장 최근에 무주택이 된 날</strong>이 시작점입니다.</p>
+<p>그리고 첫 문장에 배우자가 함께 적혀 있습니다. 배우자가 혼인 전에 집을 갖고 있었다면 그것도 걸립니다.</p>
+
+<h2>② 부양가족수 — 본인은 빼고 셉니다</h2>
+<p>0명이 0점이 아니라 <strong>5점</strong>입니다. 여기서 시작해 한 명당 5점씩 올라갑니다.</p>
+<table><thead><tr><th>인원</th><th>점수</th><th>인원</th><th>점수</th></tr></thead><tbody>
+<tr><td>0명</td><td><b>5</b></td><td>4명</td><td><b>25</b></td></tr>
+<tr><td>1명</td><td><b>10</b></td><td>5명</td><td><b>30</b></td></tr>
+<tr><td>2명</td><td><b>15</b></td><td>6명 이상</td><td><b>35</b></td></tr>
+<tr><td>3명</td><td><b>20</b></td><td></td><td></td></tr>
+</tbody></table>
+<p>누구를 넣을 수 있는지가 문제입니다. 별표 1 제1호나목이 셋으로 나눠 정합니다.</p>
+<h3>기본 — 같은 주민등록표에 있어야 합니다</h3>
+<p>"부양가족은 입주자모집공고일 현재 주택공급신청자 또는 그 배우자와 <strong>같은 세대별 주민등록표에 등재된 세대원</strong>으로 한다. 다만, 자녀의 경우 <strong>미혼으로 한정한다</strong>."</p>
+<p>배우자는 주민등록이 따로 되어 있어도 부양가족으로 봅니다(같은 목 괄호). 자녀는 혼인하면 빠집니다.</p>
+<h3>부모님 — 3년이 관문입니다</h3>
+<p>"주택공급신청자 또는 그 배우자의 직계존속은 주택공급신청자가 입주자모집공고일 현재 <strong>세대주인 경우</strong>로서 입주자모집공고일을 기준으로 <strong>최근 3년 이상 계속하여</strong> 같은 세대별 주민등록표에 등재된 경우에 부양가족으로 본다."</p>
+<p>조건이 둘입니다. 내가 <strong>세대주</strong>일 것, 그리고 <strong>3년 이상</strong> 같이 등재돼 있을 것. 청약을 넣기 직전에 주소를 옮기면 소용이 없습니다.</p>
+<p>단서가 하나 더 붙습니다. "다만, 직계존속과 그 배우자 중 <strong>한 명이라도 주택을 소유하고 있는 경우에는 직계존속과 그 배우자 모두 부양가족으로 보지 않는다.</strong>"</p>
+<p>아버지 명의 집이 있으면 어머니까지 함께 빠집니다. <strong>두 분이 한꺼번에 빠지므로 10점이 날아갑니다.</strong></p>
+<h3>30세를 넘은 자녀 — 1년입니다</h3>
+<p>"주택공급신청자의 30세 이상인 직계비속은 입주자모집공고일을 기준으로 <strong>최근 1년 이상 계속하여</strong> 같은 세대별 주민등록표에 등재된 경우에 부양가족으로 본다."</p>
+<p>30세 미만 자녀는 이 조건이 없고, 30세를 넘으면 1년 요건이 생깁니다.</p>
+
+<h2>③ 통장 가입기간 — 종류를 바꿔도 처음 날짜입니다</h2>
+<p>별표 1 제1호다목입니다. "주택청약종합저축의 <strong>종류, 금액, 가입자 명의변경을 한 경우에도 최초 가입일을 기준으로</strong> 가입기간을 산정한다."</p>
+<p>월 납입액을 바꾸거나 통장 종류를 바꿔도 기간은 이어집니다. 명의변경도 마찬가지입니다.</p>
+<p>점수는 6개월 미만 1점에서 시작해 15년 이상 17점까지입니다. 1년을 넘긴 뒤로는 <strong>1년에 1점씩</strong>입니다. 무주택기간이 1년에 2점인 것과 비교하면 절반입니다.</p>
+
+<h2>배우자 통장도 합산됩니다 — 2024년 12월에 생긴 규정</h2>
+<p>이것을 빠뜨린 계산기가 많습니다. 별표 1 비고 제2호입니다.</p>
+<p>"입주자모집공고일 현재 주택공급신청자의 배우자가 주택청약종합저축에 가입하고 있는 경우에는 제46조에 따른 특별공급의 경우를 제외하고 그 배우자의 주택청약종합저축 가입기간의 <strong>50퍼센트에 해당하는 기간</strong>에 대해 산정한 점수(<strong>3점을 초과하는 경우에는 3점</strong>을 말한다)를 주택공급신청자의 가입기간 가점 점수에 <strong>합산할 수 있다</strong>. 이 경우 합산한 점수가 17점을 초과하는 경우에는 17점으로 한다."</p>
+<ul>
+<li>배우자 기간의 <strong>절반</strong>만 봅니다</li>
+<li>더해지는 점수는 <strong>최대 3점</strong>입니다</li>
+<li>합쳐서 <strong>17점을 넘을 수 없습니다</strong></li>
+<li><strong>특별공급에는 적용되지 않습니다</strong>(제46조)</li>
+</ul>
+<p>배우자 통장이 6년이면 절반은 3년이고, 3년 구간은 5점인데 상한이 걸려 3점만 더해집니다. 위 계산기는 이 세 제한을 모두 반영합니다.</p>
+
+<h2>부모님이 집을 갖고 계실 때 — 두 규정이 다릅니다</h2>
+<p>여기가 가장 헷갈리는 자리입니다. 같은 사실을 두고 <strong>무주택 판정</strong>과 <strong>부양가족 판정</strong>이 서로 다르게 움직이기 때문입니다.</p>
+<p>먼저 무주택 쪽입니다. 주택공급에 관한 규칙 제53조는 집이 있어도 없는 것으로 보는 경우를 열두 가지로 정하는데, 그 제6호가 이렇습니다.</p>
+<p>"<strong>60세 이상의 직계존속</strong>(배우자의 직계존속을 포함한다)이 주택 또는 분양권등을 소유하고 있는 경우"</p>
+<p>부모님이 만 60세를 넘으셨고 그분 명의로 집이 있어도, <strong>나는 무주택자입니다.</strong> 무주택기간이 끊기지 않습니다.</p>
+<p>그런데 부양가족 쪽은 다릅니다. 별표 1 제1호라목이 못을 박습니다.</p>
+<p>"가목 및 나목에 따라 주택소유 여부를 판정하거나 무주택기간을 산정하려는 경우에는 제23조제4항 및 제53조에 따른다. 다만, <strong>나목에 따라 부양가족 여부를 판단할 때에는 제53조제6호를 적용하지 않는다.</strong>"</p>
+<p>나목이 부양가족 규정입니다. 부양가족을 따질 때만 <strong>제6호를 빼고</strong> 보라는 것입니다. 그래서 결과가 이렇게 갈립니다.</p>
+<table><thead><tr><th>60세 넘은 부모님 명의 집이 있을 때</th><th>결과</th></tr></thead><tbody>
+<tr><td>나의 무주택 여부</td><td><b>무주택입니다</b> (제53조제6호)</td></tr>
+<tr><td>부모님의 부양가족 인정</td><td><b>안 됩니다</b> (별표 1 라목 단서)</td></tr>
+</tbody></table>
+<p>모순이 아니라 서로 다른 목적의 규정입니다. <strong>청약 자격은 살려주되 점수는 주지 않는 것</strong>입니다. 그리고 앞서 본 대로 아버지 명의 집이면 어머니까지 함께 빠지므로 <strong>10점</strong>이 사라집니다.</p>
+
+<h2>집이 있어도 무주택으로 보는 경우</h2>
+<p>제53조에는 60세 규정 말고도 여러 가지가 있습니다. 실제로 자주 걸리는 것들입니다.</p>
+<h3>아주 작은 집 — 20제곱미터 이하</h3>
+<p>제5호입니다. "주택공급신청자가 속한 세대가 <strong>20제곱미터 이하</strong>의 주택 또는 분양권등을 <strong>1호 또는 1세대만</strong> 소유하고 있는 경우"</p>
+<p>약 6평입니다. 한 채만이어야 하고, 두 채면 적용되지 않습니다.</p>
+<h3>소형이면서 저가인 집</h3>
+<p>제9호가 면적과 가격을 함께 봅니다. 둘 다 만족해야 하고, 역시 <strong>한 채만</strong>일 때입니다.</p>
+<table><thead><tr><th>구분</th><th>면적</th><th>가격</th></tr></thead><tbody>
+<tr><td>가목</td><td>전용 60제곱미터 이하</td><td><b>1억원</b> 이하 (수도권 1억6천만원)</td></tr>
+<tr><td>나목</td><td>전용 85제곱미터 이하</td><td><b>3억원</b> 이하 (수도권 5억원)</td></tr>
+</tbody></table>
+<p>여기서 말하는 가격은 시세가 아니라 <strong>주택공시가격</strong>입니다. 별표 1 제1호가목2)가 어느 시점의 공시가격을 쓰는지까지 정해 둡니다. 입주자모집공고일 뒤에 처분하면 공고일에 가장 가까운 날의 공시가격, 공고일 전에 이미 처분했으면 처분일 이전 중 처분일에 가장 가까운 날의 공시가격입니다.</p>
+<h3>상속받은 지분</h3>
+<p>제1호입니다. "상속으로 주택의 <strong>공유지분</strong>을 취득한 사실이 판명되어 사업주체로부터 부적격자로 통보받은 날부터 <strong>3개월 이내에 그 지분을 처분한 경우</strong>"</p>
+<p>가만히 있으면 안 되고 <strong>3개월 안에 처분</strong>해야 합니다. 통보를 받은 날부터 셉니다.</p>
+<h3>보증금을 못 받아 떠안은 집</h3>
+<p>제11호는 2023년에 들어온 규정입니다. "임차인으로서 보증금의 전부 또는 일부를 돌려받지 못한 사람이 임차주택을 <strong>경매 또는 공매로 매수</strong>하여 소유하고 있는 경우"</p>
+<p>다만 주택가격이 1억5천만원(수도권 3억원)을 넘거나 전용면적이 85제곱미터를 넘으면 제외입니다.</p>
+<p><strong>제53조의 첫 문장도 함께 읽어야 합니다.</strong> "주택소유 여부를 판단할 때 <strong>분양권등을 갖고 있거나</strong> 주택 또는 분양권등의 <strong>공유지분을 소유하고 있는 경우에는 주택을 소유하고 있는 것으로 보되</strong>" — 분양권도, 지분 일부도 원칙은 주택 소유입니다. 위 열두 가지는 그 예외입니다.</p>
+
+<h2>집이 한 채 있으면 1순위 가점제에서 빠집니다</h2>
+<p>별표 1 비고 제1호입니다. "제28조제6항에 따라 입주자모집공고일 현재 <strong>1호 또는 1세대의 주택을 소유한 세대에 속한 자</strong>와 <strong>과거 2년 이내에 가점제를 적용받아 다른 주택의 당첨자가 된 자</strong>의 세대에 속한 자는 <strong>제1순위에서 가점제의 적용 대상자에서 제외</strong>되며, 추첨제의 적용 대상자에 포함된다."</p>
+<p>점수가 높아도 집이 한 채 있으면 1순위 가점제로는 넣지 못하고 추첨제로 갑니다. 2년 안에 가점제로 당첨된 적이 있어도 같습니다.</p>
+
+<h2>자주 묻는 것</h2>
+<dl>
+<dt>가점 만점은 몇 점인가요?</dt>
+<dd>84점입니다. 무주택기간 32점, 부양가족수 35점, 통장 가입기간 17점을 더한 값입니다.</dd>
+<dt>무주택기간은 언제부터 세나요?</dt>
+<dd>만 30세가 된 날부터입니다. 다만 30세가 되기 전에 혼인신고를 했다면 혼인신고일부터 셉니다. 집을 소유한 적이 있다면 가장 최근에 무주택자가 된 날부터 다시 셉니다.</dd>
+<dt>부양가족이 0명이면 0점인가요?</dt>
+<dd>아닙니다. 0명이 5점입니다. 한 명당 5점씩 올라가 6명 이상이면 35점입니다.</dd>
+<dt>부모님을 부양가족에 넣으려면 어떻게 하나요?</dt>
+<dd>내가 세대주여야 하고, 입주자모집공고일 기준 최근 3년 이상 계속 같은 주민등록표에 등재돼 있어야 합니다. 직계존속과 그 배우자 중 한 명이라도 집이 있으면 두 분 다 빠집니다.</dd>
+<dt>배우자 청약통장도 점수가 되나요?</dt>
+<dd>됩니다. 배우자 가입기간의 50퍼센트에 해당하는 기간으로 점수를 내되 최대 3점까지입니다. 합쳐서 17점을 넘을 수는 없고, 특별공급에는 적용되지 않습니다.</dd>
+<dt>통장 종류를 바꾸면 기간이 끊기나요?</dt>
+<dd>끊기지 않습니다. 종류, 금액, 명의변경 어느 쪽이든 최초 가입일을 기준으로 기간을 셉니다.</dd>
+<dt>혼인한 자녀도 부양가족인가요?</dt>
+<dd>아닙니다. 자녀는 미혼인 경우로 한정합니다.</dd>
+<dt>집이 한 채 있는데 가점제로 넣을 수 있나요?</dt>
+<dd>1순위 가점제에서는 제외됩니다. 추첨제 대상에는 들어갑니다.</dd>
+<dt>60세 넘으신 부모님 명의 집이 있으면 저도 유주택인가요?</dt>
+<dd>아닙니다. 제53조제6호에 따라 60세 이상 직계존속(배우자의 직계존속 포함)이 주택이나 분양권을 갖고 계셔도 신청자는 무주택으로 봅니다. 다만 부양가족을 따질 때는 이 제6호를 적용하지 않으므로(별표 1 제1호라목 단서) 그 부모님은 부양가족으로 인정되지 않습니다. 자격은 살고 점수는 빠집니다.</dd>
+<dt>분양권만 있어도 주택을 가진 것으로 보나요?</dt>
+<dd>그렇습니다. 제53조 본문이 "분양권등을 갖고 있거나 주택 또는 분양권등의 공유지분을 소유하고 있는 경우에는 주택을 소유하고 있는 것으로 보되"라고 정합니다. 지분 일부만 있어도 원칙은 주택 소유입니다. 같은 조 각 호에 해당할 때만 예외가 됩니다.</dd>
+<dt>20제곱미터 이하 집을 두 채 갖고 있으면요?</dt>
+<dd>적용되지 않습니다. 제5호는 "1호 또는 1세대만 소유하고 있는 경우"로 한정합니다. 소형·저가주택을 다루는 제9호도 마찬가지로 한 채일 때만입니다.</dd>
+<dt>소형·저가주택의 가격은 시세를 말하나요?</dt>
+<dd>아닙니다. 주택공시가격입니다. 부동산 가격공시에 관한 법률 제16조 또는 제17조에 따라 공시된 가격을 쓰고, 어느 시점의 공시가격인지는 별표 1 제1호가목2)가 따로 정합니다.</dd>
+<dt>몇 점이면 당첨되나요?</dt>
+<dd>정해진 선이 없습니다. 단지마다, 지역마다, 공급 물량마다 달라집니다. 이 계산기는 내 점수가 몇 점인지를 계산하는 것이고 당첨 여부를 판정하지 않습니다.</dd>
+</dl>
+
+<h2>함께 보면 좋은 계산기</h2>
+<ul>
+<li><a href="../pyeong-calc-kr/">평수 계산기</a> — 전용 84제곱미터가 몇 평인지, 공급면적과 무엇이 다른지</li>
+<li><a href="../chwideukse-calc/">취득세 계산기</a> — 분양받은 뒤 내야 하는 세금</li>
+<li><a href="../jaesanse-calc/">재산세 계산기</a> — 집을 갖게 된 다음 해부터 매년</li>
+<li><a href="../loan-interest-calc-kr/">대출이자 계산기</a> — 중도금과 잔금 대출 이자</li>
+<li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a> — 입주 전까지 월세로 지낸다면</li>
+<li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a> — 상환 여력을 가늠할 때</li>
+</ul>
+
+<p class="src">근거: 주택공급에 관한 규칙 제2조제8호 · 같은 규칙 [별표 1] 가점제 적용기준(개정 2024. 12. 18.) 및 그 비고 제1호·제2호. 법제처 국가법령정보센터 원문을 그대로 옮겼습니다. 이 페이지는 가점 계산만 하며 당첨 가능성을 판정하지 않습니다. 실제 청약은 입주자모집공고문과 청약홈 안내를 따르십시오.</p>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">전체 도구</a> · <a href="../about.html">소개</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a> · <a href="../contact.html">문의</a>
+</div>
+</body>
+</html>
