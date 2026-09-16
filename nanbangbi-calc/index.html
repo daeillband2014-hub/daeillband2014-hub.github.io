@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>지역난방비 계산기</title>
+<style>
+:root{--p:#1E6E96;--pd:#155372;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FD;--lt:#CFE2F7}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px 28px}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:8px;text-align:center}
+.basis{font-size:12px;color:var(--mut);text-align:center;margin-bottom:16px;
+background:#fff;border-radius:10px;padding:8px 12px;line-height:1.5}
+.emoji{font-size:54px;margin-bottom:8px;text-align:center}
+label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin:14px 0 7px}
+select,input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:13px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.seg{display:flex;background:#fff;border:1.5px solid var(--lt);border-radius:13px;overflow:hidden;margin-bottom:4px}
+.seg button{flex:1;padding:12px 0;border:none;background:transparent;font-size:13.5px;
+font-weight:700;color:var(--mut);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--p);color:#fff}
+button.big{width:100%;padding:16px 0;border:none;border-radius:14px;background:var(--p);
+color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-top:18px}
+button.big:active{transform:scale(.98)}
+.rcard{background:#fff;border-radius:20px;padding:28px 20px;text-align:center;
+box-shadow:0 5px 20px rgba(14,90,180,.12);margin:16px 0 13px}
+.rbig{font-size:44px;font-weight:800;color:var(--acc);line-height:1.15;letter-spacing:-1px}
+.rlabel{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:15px;overflow:hidden;
+box-shadow:0 2px 12px rgba(14,90,180,.08);font-size:13px;margin-bottom:12px}
+th{background:var(--lt);color:var(--pd);font-size:12px;padding:9px 6px;font-weight:700}
+td{padding:9px 6px;text-align:right;border-top:1px solid #E7F0FA;color:var(--sub)}
+td:first-child,th:first-child{text-align:left}
+td b{color:var(--ink)}
+tr.sum td{background:#F7FBFF;font-weight:700;color:var(--ink)}
+.note{background:#fff;border-radius:15px;padding:15px 17px;font-size:13px;
+color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
+.note b{color:var(--pd)}
+.foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.hide{display:none}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+#webad{max-width:480px;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{max-width:480px;margin:22px auto 0;padding:0 20px;color:#4E5968;font-size:13px;line-height:1.85}
+.webseo h2{font-size:15px;color:#191F28;margin:22px 0 8px}
+.webseo h3{font-size:13px;color:#191F28;margin:16px 0 6px}
+.webseo p{margin:0 0 10px}
+.webseo dt{font-weight:700;color:#333D4B;margin-top:12px}
+.webseo dd{margin:2px 0 0}
+.webseo ul{margin:0 0 10px 18px}
+.webseo li{margin-bottom:5px}
+.src{font-size:11.5px;color:#8B95A1;line-height:1.7;margin-top:18px;border-top:1px solid #E5E8EB;padding-top:12px}
+</style>
+<link rel="canonical" href="https://daeillband2014-hub.github.io/nanbangbi-calc/">
+<meta name="description" content="지역난방 난방비를 계약면적과 사용량으로 계산합니다. 기본요금과 사용요금을 나눠 보여주고 계절별 차등요금도 반영합니다. 요금표 기준일을 화면에 표시합니다.">
+<meta property="og:title" content="지역난방비 계산기">
+<meta property="og:description" content="계약면적과 Mcal 사용량을 넣으면 기본요금·사용요금·부가세를 나눠 계산합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daeillband2014-hub.github.io/nanbangbi-calc/">
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<div class="emoji">🔥</div>
+<h1>지역난방비 계산기</h1>
+<p class="desc">계약면적과 사용량(Mcal)으로 난방비를 계산합니다</p>
+<p class="basis">요금표 기준일 <b>2024년 7월 1일</b> · 한국지역난방공사 주택용<br>★도시가스 개별난방은 요금 체계가 다릅니다</p>
+
+<label>요금제</label>
+<div class="seg">
+<button id="b0" class="on" onclick="setM(0)">단일요금 (기본)</button>
+<button id="b1" onclick="setM(1)">계절별 차등요금</button>
+</div>
+<p class="foot" style="margin:6px 0 0;text-align:left">계절별 차등요금은 <b>신청해서 선택한 가구</b>만 적용됩니다. 신청하지 않았다면 단일요금입니다.</p>
+
+<div id="seasonbox" class="hide">
+<label>사용한 시기</label>
+<select id="season">
+<option value="chunchu">3~5월 · 9~11월 (춘추절기)</option>
+<option value="ha">6~8월 (하절기)</option>
+<option value="dong" selected>12~2월 (동절기)</option>
+</select>
+</div>
+
+<label>우리 집 계약면적 (제곱미터)</label>
+<input type="number" id="area" value="84" min="0" step="0.01">
+
+<label>한 달 사용량 (Mcal)</label>
+<input type="number" id="mcal" value="1000" min="0" step="1">
+
+<button class="big" onclick="calc()">난방비 계산하기</button>
+
+<div id="out" class="hide">
+<div class="rcard"><div class="rbig"><span id="tot">0</span>원</div><div class="rlabel">부가세 포함</div></div>
+<table><thead><tr><th>항목</th><th>계산</th><th>금액</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="note" id="tip"></div>
+</div>
+
+<div class="note"><b>근사치입니다</b> 요금표의 계약면적은 공사와 <b>단지</b> 사이의 계약 면적(전 세대 전용면적 합계 + 발코니 확장 + 관리사무소·경비실 등)입니다. 세대별로 어떻게 나누는지는 관리사무소가 정합니다. 고지서의 우리 집 면적을 넣으면 <b>대략의 금액</b>이 나옵니다.</div>
+<p class="foot">입력값은 기기 안에서만 계산되고 저장하지 않습니다</p>
+</div>
+
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<script>
+/* 한국지역난방공사 열요금표 — 2024년 7월 1일부. 부가가치세 별도.
+   출처 사본: 개인수익화/조사/_한난_열요금표.txt
+   ★계절별 차등요금은 "주택용 사용자 중 계절별 차등요금을 선택한 사용자"에게만 적용된다.
+     신청하지 않은 가구는 계절과 무관하게 단일요금 112.32원이다. */
+var BASE = 52.40;      /* 기본요금 — 계약면적 1제곱미터당 */
+var UNIT_ONE = 112.32; /* 단일요금 — Mcal당 */
+var UNIT_SEASON = { chunchu: 110.04, ha: 99.02, dong: 115.59 };
+var SEASON_NAME = { chunchu: '춘추절기(3~5월·9~11월)', ha: '하절기(6~8월)', dong: '동절기(12~2월)' };
+/* 부가가치세법 제30조 — 세율은 10퍼센트 */
+var VAT = 0.10;
+
+var mode = 0;
+function setM(v){
+  mode = v;
+  document.getElementById("b0").className = v===0?"on":"";
+  document.getElementById("b1").className = v===1?"on":"";
+  document.getElementById("seasonbox").className = v===1?"":"hide";
+}
+function won(n){ return Math.round(n).toLocaleString("ko-KR"); }
+
+function calc(){
+  var area = Math.max(0, +document.getElementById("area").value || 0);
+  var mcal = Math.max(0, +document.getElementById("mcal").value || 0);
+  var unit = UNIT_ONE, label = '단일요금';
+  if(mode === 1){
+    var s = document.getElementById("season").value;
+    unit = UNIT_SEASON[s];
+    label = SEASON_NAME[s];
+  }
+  var base = area * BASE;
+  var use = mcal * unit;
+  var sub = base + use;
+  var vat = sub * VAT;
+  var tot = sub + vat;
+
+  document.getElementById("tot").textContent = won(tot);
+  document.getElementById("rows").innerHTML =
+    "<tr><td>기본요금</td><td>" + area + "제곱미터 x " + BASE + "원</td><td><b>" + won(base) + "</b></td></tr>" +
+    "<tr><td>사용요금</td><td>" + mcal + "Mcal x " + unit + "원</td><td><b>" + won(use) + "</b></td></tr>" +
+    "<tr class='sum'><td>소계</td><td>" + label + "</td><td>" + won(sub) + "</td></tr>" +
+    "<tr><td>부가가치세</td><td>10%</td><td>" + won(vat) + "</td></tr>" +
+    "<tr class='sum'><td>합계</td><td></td><td>" + won(tot) + "</td></tr>";
+
+  var t = "";
+  if(mode === 1){
+    var diff = (UNIT_SEASON.dong - UNIT_SEASON.ha).toFixed(2);
+    t = "<b>계절별 차등요금으로 계산했습니다.</b> 동절기가 가장 비싸고(115.59원) 하절기가 가장 쌉니다(99.02원). 차이는 Mcal당 " + diff + "원입니다. " + mcal + "Mcal이면 두 계절 사이에 " + won(mcal * (UNIT_SEASON.dong - UNIT_SEASON.ha) * 1.1) + "원이 벌어집니다.";
+    t += "<br><br>★이 요금제는 <b>신청한 가구만</b> 적용됩니다. 신청하지 않으셨다면 위 단일요금 버튼으로 다시 계산해 보십시오.";
+  } else {
+    t = "<b>단일요금으로 계산했습니다.</b> 계절과 무관하게 Mcal당 112.32원입니다. 대부분의 가구가 여기에 해당합니다.";
+    t += "<br><br>계절별 차등요금을 신청하면 여름에 99.02원, 겨울에 115.59원이 적용됩니다. <b>여름에 난방을 적게 쓰고 겨울에 많이 쓰는 집이라면 손해일 수 있습니다.</b> 겨울 단가가 단일요금보다 3.27원 비싸기 때문입니다.";
+  }
+  t += "<br><br>기본요금이 " + won(base) + "원으로 전체의 " + Math.round(base / sub * 100) + "퍼센트입니다. 기본요금은 <b>난방을 한 줄도 안 써도 나옵니다.</b>";
+  document.getElementById("tip").innerHTML = t;
+  document.getElementById("out").className = "";
+}
+</script>
+
+<section class="webseo">
+<h2>지역난방비는 두 덩어리입니다</h2>
+<p>고지서에 한 줄로 찍히지만 안에서는 둘로 나뉩니다.</p>
+<ul>
+<li><strong>기본요금</strong> — 계약면적에 붙습니다. 난방을 안 써도 나옵니다</li>
+<li><strong>사용요금</strong> — 실제로 쓴 열량(Mcal)에 붙습니다</li>
+</ul>
+<p>여기에 <strong>부가가치세 10퍼센트</strong>가 더해집니다. 한국지역난방공사 요금표에 "부가가치세 별도"라고 적혀 있습니다.</p>
+<table><thead><tr><th>구분</th><th>단가</th></tr></thead><tbody>
+<tr><td>기본요금</td><td>계약면적 1제곱미터당 <b>52.40원</b></td></tr>
+<tr><td>사용요금(단일)</td><td>Mcal당 <b>112.32원</b></td></tr>
+</tbody></table>
+<p>전용 84제곱미터 집이라면 기본요금만 <strong>4,402원</strong>입니다. 난방을 한 줄도 안 써도 이 금액에 부가세가 붙어 나옵니다.</p>
+
+<h2>계절별 차등요금은 신청한 집만입니다</h2>
+<p>여기서 많이 헷갈립니다. 요금표에 계절별 단가가 적혀 있지만 <strong>모두에게 적용되는 것이 아닙니다.</strong></p>
+<p>요금표 주2)의 원문입니다.</p>
+<p>"적용대상 : <strong>주택용 사용자중 계절별 차등요금을 선택한 사용자</strong>"</p>
+<p>즉 <strong>신청해서 고른 가구만</strong> 계절 단가를 씁니다. 신청하지 않았다면 <strong>계절과 무관하게 112.32원</strong>입니다.</p>
+<table><thead><tr><th>절기</th><th>기간</th><th>단가</th></tr></thead><tbody>
+<tr><td>춘추절기</td><td>3~5월, 9~11월</td><td>110.04원</td></tr>
+<tr><td>하절기</td><td>6~8월</td><td><b>99.02원</b></td></tr>
+<tr><td>동절기</td><td>12~다음해 2월</td><td><b>115.59원</b></td></tr>
+</tbody></table>
+<h3>차등요금이 유리한 집, 불리한 집</h3>
+<p>단일요금 112.32원과 비교하면 이렇습니다.</p>
+<ul>
+<li>하절기 99.02원 — 단일요금보다 <strong>13.30원 쌉니다</strong></li>
+<li>춘추절기 110.04원 — <strong>2.28원 쌉니다</strong></li>
+<li>동절기 115.59원 — <strong>3.27원 비쌉니다</strong></li>
+</ul>
+<p><strong>난방은 겨울에 몰립니다.</strong> 여름에 난방을 거의 안 쓰는 집이라면, 싸지는 구간(여름)에는 쓸 일이 없고 비싸지는 구간(겨울)에만 걸립니다. <strong>차등요금이 무조건 이득은 아닙니다.</strong></p>
+<p>반대로 <strong>온수를 여름에도 많이 쓰는 집</strong>이라면 하절기 단가가 유리하게 작용할 수 있습니다. 지역난방은 난방과 온수가 같은 열을 씁니다.</p>
+
+<h2>★계약면적이 무엇인가 — 여기가 가장 헷갈립니다</h2>
+<p>요금표 주1)의 원문을 그대로 옮깁니다.</p>
+<p>"건축물관리대장 등 공부상의 <strong>세대별 전용면적의 합계</strong>와 <strong>세대별 발코니 확장면적의 합계</strong> 및 공용면적 중 지역난방열을 사용하는 <strong>관리사무소, 노인정, 경비실 등의 건축연면적 합계</strong>로 함. (다만, 계약면적에서 제외된 부분에 열을 사용하는 경우에는 그때부터 계약면적에 산입함)"</p>
+<p><strong>"세대별 전용면적의 합계"</strong>입니다. 우리 집 하나가 아니라 <strong>단지 전체</strong>를 더한 값입니다. 여기에 발코니 확장분과 관리사무소·노인정·경비실 면적까지 들어갑니다.</p>
+<p>즉 이 계약은 <strong>공사와 단지 사이의 계약</strong>입니다. 그 총액을 세대별로 어떻게 나누는지는 요금표에 없습니다. <strong>관리사무소가 정합니다.</strong></p>
+<p>그래서 위 계산기에 우리 집 면적을 넣으면 <strong>근사치</strong>가 나옵니다. 정확한 금액은 관리비 고지서를 보셔야 합니다. 다만 <strong>기본요금과 사용요금의 비율</strong>, <strong>계절 단가의 차이</strong>는 이 계산으로도 그대로 보입니다.</p>
+
+<h2>Mcal이 무엇인가</h2>
+<p>전기는 kWh, 가스는 세제곱미터로 재는데 지역난방은 <strong>Mcal(메가칼로리)</strong>로 잽니다. 열량 단위입니다.</p>
+<p>세대마다 <strong>열량계</strong>가 달려 있고, 그 계량기가 읽은 Mcal이 고지서에 찍힙니다. 관리비 고지서의 난방 항목에 "사용량"으로 적혀 있습니다.</p>
+<p>얼마나 쓰는지는 집마다 크게 다릅니다. 같은 평수라도 <strong>맨 위층·모서리 집</strong>은 열이 빠져나가는 면이 많아 더 씁니다. <strong>가운데 층·가운데 집</strong>은 위아래 옆에서 열을 받습니다.</p>
+
+<h2>도시가스 난방과는 다릅니다</h2>
+<p>이 계산기는 <strong>지역난방</strong>용입니다. 아파트 관리비에 "지역난방비"나 "열사용료"로 찍히는 경우입니다.</p>
+<p><strong>개별난방(도시가스 보일러)</strong>은 체계가 완전히 다릅니다.</p>
+<ul>
+<li>단위가 <strong>세제곱미터</strong>(㎥)입니다. Mcal이 아닙니다</li>
+<li>요금이 <strong>시·도마다 다릅니다.</strong> 도시가스 회사가 지역별로 다르기 때문입니다</li>
+<li>고지서가 관리비가 아니라 <strong>도시가스 회사에서 따로</strong> 옵니다</li>
+</ul>
+<p>우리 집이 어느 쪽인지는 <strong>보일러가 있는지</strong>로 구분하시면 쉽습니다. 집 안에 가스보일러가 있으면 개별난방, 없고 열교환기만 있으면 지역난방입니다.</p>
+
+<h2>열요금은 어떻게 정해지나</h2>
+<p>한국지역난방공사가 임의로 정하는 것이 아닙니다. 공사가 밝힌 산정원칙입니다.</p>
+<p>"「지역냉난방 열요금산정기준 및 상한지정」에 따른 <strong>총괄원가를 보상하는 수준</strong>에서 결정"하고 <strong>공공요금 산정의 기본원칙</strong>을 준용합니다.</p>
+<ul>
+<li><strong>총괄원가 = 적정원가 + 적정투자보수</strong></li>
+<li>적정원가 — 연료비·수열비, 동력비, 노무비·제조경비·일반경비, 일부 영업외손익과 법인세</li>
+<li>적정투자보수 = <strong>요금기저 × 적정투자보수율</strong></li>
+</ul>
+<p>그리고 <strong>상한제</strong>가 있습니다. "사업자가 열요금 신고 시 초과해서는 안되는 한도로서, <strong>시장기준요금의 110%</strong>"입니다.</p>
+<p>연료비가 오르면 열요금도 오릅니다. <strong>이 페이지의 단가는 2024년 7월 1일 기준</strong>이고, 화면 위쪽에 기준일을 적어 두었습니다.</p>
+
+<h2>실제로 계산해 보면</h2>
+<p>전용 84제곱미터 집이 한 달에 1,000Mcal을 쓴 경우입니다. 부가세를 포함한 금액입니다.</p>
+<table><thead><tr><th>요금제</th><th>사용요금 단가</th><th>합계</th></tr></thead><tbody>
+<tr><td>단일요금</td><td>112.32원</td><td><b>128,394원</b></td></tr>
+<tr><td>차등 · 동절기</td><td>115.59원</td><td><b>131,991원</b></td></tr>
+<tr><td>차등 · 하절기</td><td>99.02원</td><td><b>113,764원</b></td></tr>
+</tbody></table>
+<p>같은 사용량인데 <strong>동절기와 하절기가 18,227원 차이</strong>납니다. 그런데 난방은 겨울에 쓰고 여름에는 온수만 씁니다. <strong>겨울에 1,000Mcal을 쓰는 집이 여름에도 1,000Mcal을 쓰지는 않습니다.</strong></p>
+<p>그래서 차등요금을 고를 때는 <strong>여름 사용량이 얼마나 되는지</strong>를 먼저 보셔야 합니다. 여름에 열을 거의 안 쓰면 싸지는 구간을 못 쓰고, 겨울에만 3.27원씩 더 내게 됩니다.</p>
+<h3>면적이 바뀌면 기본요금만 움직입니다</h3>
+<p>사용량 1,000Mcal을 고정하고 면적만 바꿔 보겠습니다(단일요금 기준).</p>
+<table><thead><tr><th>전용면적</th><th>기본요금</th><th>합계</th></tr></thead><tbody>
+<tr><td>59제곱미터</td><td>3,092원</td><td>126,953원</td></tr>
+<tr><td>84제곱미터</td><td>4,402원</td><td>128,394원</td></tr>
+<tr><td>114제곱미터</td><td>5,974원</td><td>130,123원</td></tr>
+</tbody></table>
+<p>면적이 두 배 가까이 늘어도 합계는 <strong>3,170원</strong>밖에 안 늘었습니다. <strong>난방비를 좌우하는 것은 면적이 아니라 사용량</strong>입니다. 기본요금은 전체의 3~5퍼센트 수준입니다.</p>
+<p>다만 큰 집이 열을 더 많이 쓰는 것은 별개입니다. 같은 사용량을 가정했을 때 면적의 영향이 작다는 뜻입니다.</p>
+
+<p>참고로 <strong>같은 단지 안에서도 세대마다 단가는 같습니다.</strong> 공사가 단지와 맺은 계약이 하나이기 때문입니다. 요금 차이는 오직 사용량과 면적에서 나옵니다. 옆집보다 많이 나왔다면 단가가 달라서가 아니라 열을 더 썼거나 면적이 넓은 것입니다.</p>
+<h2>온수도 같은 열을 씁니다</h2>
+<p>지역난방은 하나의 열을 난방과 온수에 나눠 씁니다. 그래서 <strong>여름에도 요금이 0원이 되지 않습니다.</strong> 샤워를 하면 온수 사용량이 Mcal로 잡힙니다.</p>
+<p>요금표에는 <strong>냉방용</strong>도 따로 있습니다. 5월부터 9월까지 Mcal당 25.11원이고, 1~4월과 10~12월에는 난방용 사용요금을 적용합니다. 다만 이건 지역냉방 설비가 있는 건물 이야기라 일반 아파트 세대와는 거리가 있습니다.</p>
+<p>요금표 주6)에 이런 단서도 있습니다. "온수를 난방용과 냉방용으로 함께 사용할 경우에는 <strong>온수 냉방용에 대한 기본요금은 제외</strong>"합니다. 기본요금을 두 번 걷지 않는다는 뜻입니다.</p>
+
+<h2>업무용·공공용은 체계가 다릅니다</h2>
+<p>이 계산기는 <strong>주택용</strong>입니다. 상가나 사무실, 학교·관공서는 다른 표를 씁니다.</p>
+<table><thead><tr><th>구분</th><th>기본요금</th><th>사용요금(단일)</th></tr></thead><tbody>
+<tr><td>주택용</td><td>면적 1제곱미터당 52.40원</td><td>112.32원</td></tr>
+<tr><td>업무용</td><td>계약용량 1Mcal/h당 396.79원</td><td>145.82원</td></tr>
+<tr><td>공공용</td><td>계약용량 1Mcal/h당 361.98원</td><td>127.34원</td></tr>
+</tbody></table>
+<p>주택용은 <strong>면적</strong>으로 기본요금을 매기는데 업무용·공공용은 <strong>계약용량</strong>(시간당 몇 Mcal을 받을 수 있는가)으로 매깁니다. 단위가 다릅니다.</p>
+<p>그리고 업무용·공공용에는 <strong>시간대별 차등요금</strong>이 있습니다. 주택용의 계절별 차등과 다른 제도입니다.</p>
+<ul>
+<li>적용 기간은 <strong>12월부터 다음해 2월까지</strong>입니다</li>
+<li>수요관리 시간대는 <strong>오전 7시부터 10시까지</strong>입니다</li>
+<li>그 시간대에 업무용은 167.71원, 공공용은 146.43원으로 올라갑니다</li>
+</ul>
+<p>겨울 아침에 난방 수요가 몰리기 때문에 그 시간을 비싸게 매겨 분산시키는 것입니다. 이것도 <strong>선택한 사용자에게만</strong> 적용됩니다.</p>
+
+<h2>난방비를 줄이는 지점</h2>
+<p>요금 구조를 보면 줄일 수 있는 자리가 어디인지 분명해집니다.</p>
+<ul>
+<li><strong>기본요금은 못 줄입니다.</strong> 면적에 붙는 것이라 이사하지 않는 한 그대로입니다</li>
+<li><strong>사용요금만 줄일 수 있습니다.</strong> 전체의 95퍼센트 이상이 여기입니다</li>
+</ul>
+<p>그리고 지역난방은 전기처럼 <strong>누진제가 없습니다.</strong> 많이 쓰든 적게 쓰든 Mcal당 단가가 같습니다. 그래서 <strong>10퍼센트를 줄이면 요금도 거의 10퍼센트가 줍니다.</strong> 전기요금처럼 구간을 넘나들며 크게 뛰지 않습니다.</p>
+<p>반대로 말하면 <strong>조금씩 새는 것이 그대로 쌓입니다.</strong> 난방을 약하게 오래 켜두는 것과 강하게 잠깐 켜는 것 중 무엇이 유리한지는 집 구조에 따라 다르지만, 결국 <strong>계량기가 읽은 Mcal 총량</strong>이 요금을 정합니다.</p>
+<p>온수도 같은 열입니다. 샤워 시간을 줄이면 난방비가 줍니다. 난방과 온수가 따로 계산되는 것이 아닙니다.</p>
+<h2>자주 묻는 것</h2>
+<dl>
+<dt>난방을 안 쓰면 요금이 0원인가요?</dt>
+<dd>아닙니다. 기본요금이 계약면적에 붙기 때문에 사용량이 0이어도 나옵니다. 전용 84제곱미터 기준으로 기본요금만 약 4,402원이고 여기에 부가세가 붙습니다.</dd>
+<dt>계절별 차등요금은 자동으로 적용되나요?</dt>
+<dd>아닙니다. 요금표에 "주택용 사용자중 계절별 차등요금을 선택한 사용자"라고 적혀 있습니다. 신청해서 고른 가구만 적용되고, 그 밖에는 계절과 무관하게 Mcal당 112.32원입니다.</dd>
+<dt>계절별 차등요금이 더 싼가요?</dt>
+<dd>집마다 다릅니다. 하절기는 13.30원 싸지만 동절기는 3.27원 비쌉니다. 난방은 겨울에 몰리므로, 여름에 열을 거의 안 쓰는 집이라면 싸지는 구간을 못 쓰고 비싸지는 구간에만 걸릴 수 있습니다.</dd>
+<dt>계산기 금액이 고지서와 다릅니다</dt>
+<dd>요금표의 계약면적은 공사와 단지 사이의 계약 면적(전 세대 전용면적 합계 + 발코니 확장 + 관리사무소·경비실 등)입니다. 세대별 배분은 관리사무소가 정하므로 이 계산은 근사치입니다.</dd>
+<dt>Mcal은 어디서 보나요?</dt>
+<dd>관리비 고지서의 난방 항목에 사용량으로 적혀 있습니다. 세대마다 열량계가 달려 있고 그 계량기가 읽은 값입니다. Mcal은 메가칼로리로 열량을 재는 단위이고, 전기의 kWh나 도시가스의 세제곱미터와는 다른 단위입니다. 고지서에 세제곱미터로 적혀 있다면 지역난방이 아니라 도시가스입니다.</dd>
+<dt>부가세가 따로 붙나요?</dt>
+<dd>그렇습니다. 요금표에 "부가가치세 별도"라고 명시돼 있습니다. 부가가치세법 제30조에 따라 10퍼센트입니다.</dd>
+<dt>우리 집이 지역난방인지 개별난방인지 어떻게 아나요?</dt>
+<dd>집 안에 가스보일러가 있으면 개별난방, 없고 열교환기만 있으면 지역난방입니다. 관리비 고지서에 "지역난방비"나 "열사용료" 항목이 있으면 지역난방입니다.</dd>
+<dt>같은 평수인데 왜 이웃집과 다른가요?</dt>
+<dd>기본요금은 면적으로 같지만 사용요금은 실제 쓴 열량으로 달라집니다. 맨 위층이나 모서리 집은 열이 빠져나가는 면이 많아 더 쓰고, 가운데 층·가운데 집은 위아래 옆에서 열을 받아 덜 씁니다.</dd>
+<dt>계약면적에 발코니 확장분도 들어가나요?</dt>
+<dd>들어갑니다. 확장 공사를 한 세대의 발코니 면적도 계약면적에 산입됩니다. 요금표 주1)이 "세대별 전용면적의 합계와 세대별 발코니 확장면적의 합계"라고 정하고 있습니다. 관리사무소, 노인정, 경비실 등 지역난방열을 쓰는 공용부 면적도 포함됩니다.</dd>
+<dt>업무용·공공용은 이 계산기로 되나요?</dt>
+<dd>안 됩니다. 주택용은 면적으로 기본요금을 매기지만 업무용·공공용은 계약용량(1Mcal/h당)으로 매깁니다. 단가도 다르고 시간대별 차등요금이라는 별도 제도가 있습니다.</dd>
+<dt>여름에도 요금이 나오는 이유가 뭔가요?</dt>
+<dd>지역난방은 난방과 온수에 같은 열을 씁니다. 난방을 끄더라도 샤워를 하면 온수 사용량이 Mcal로 잡힙니다. 여기에 기본요금이 면적에 붙어 계속 나옵니다.</dd>
+<dt>기본요금이 전체에서 얼마나 되나요?</dt>
+<dd>사용량에 따라 다릅니다. 전용 84제곱미터가 1,000Mcal을 쓰면 기본요금 4,402원으로 전체의 3~4퍼센트 수준입니다. 사용량이 적은 달에는 비중이 커집니다.</dd>
+<dt>시간대별 차등요금은 주택에도 있나요?</dt>
+<dd>없습니다. 시간대별 차등요금은 업무용·공공용 사용자 중 선택한 곳에만 적용되고, 12월부터 다음해 2월까지 오전 7시~10시가 수요관리 시간대입니다. 주택용에 있는 것은 계절별 차등요금입니다.</dd>
+<dt>요금이 언제 오르나요?</dt>
+<dd>정해진 주기가 없습니다. 총괄원가를 보상하는 수준에서 정해지므로 연료비가 오르면 열요금도 오르고, 내리면 내릴 수도 있습니다. 실제로는 연료 가격이 크게 움직인 뒤에 조정되는 일이 많습니다. 다만 상한제가 있어 시장기준요금의 110퍼센트를 넘지 못합니다. 이 페이지는 2024년 7월 1일 요금표 기준이며 화면 위쪽에 기준일을 적어 두었습니다.</dd>
+</dl>
+
+<h2>함께 보면 좋은 계산기</h2>
+<ul>
+<li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a> — 같은 관리비에 붙는 전기</li>
+<li><a href="../pyeong-calc-kr/">평수 계산기</a> — 우리 집 면적부터</li>
+<li><a href="../jaesanse-calc/">재산세 계산기</a> — 집에 붙는 세금</li>
+<li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a> — 세입자라면</li>
+<li><a href="../vat-calc-kr/">부가세 계산기</a> — 10퍼센트를 붙이고 떼는 법</li>
+<li><a href="../percent-calc-kr/">퍼센트 계산기</a> — 몇 퍼센트 올랐는지</li>
+</ul>
+
+<p class="src">근거: 한국지역난방공사 열요금표(2024년 7월 1일부, 부가가치세 별도) 및 같은 표의 주1) 계약면적 산정·주2) 계절별 차등요금제도 · 한국지역난방공사 열요금 산정원칙과 상한제 안내 · 부가가치세법 제30조(세율). 계약면적은 공사와 단지 사이의 계약 기준이며 세대별 배분은 관리사무소가 정하므로 이 계산은 근사치입니다. 도시가스 개별난방에는 적용되지 않습니다.</p>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">전체 도구</a> · <a href="../about.html">소개</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a> · <a href="../contact.html">문의</a>
+</div>
+</body>
+</html>
