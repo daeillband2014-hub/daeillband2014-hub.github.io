@@ -82,11 +82,16 @@ border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.12);font-size:18px
 <!-- rebuild-nudge 2026-09-18: 이 경로만 GitHub Pages 라이브가 옛 버전(10,578자)에서 멈춰 있었다.
      저장소 원본은 14,369자로 이미 고쳐져 있었는데 라이브에만 "SDK 연동 예정" 자리표시자가 보였다.
      파일을 건드려 재빌드를 유도한다. 안 되면 새 경로로 비켜 간다. -->
-<style>
-.cpbanner{max-width:480px;margin:18px auto 0;padding:0 20px;text-align:center}
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다. ★지금 우리 슬롯은 status 가 null 이라 이 줄은 아직 효과가 없다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
 .cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
  font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
-</style>
+</style><!--/cpcss-->
 </head>
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
