@@ -99,7 +99,7 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
     <div class="sub-row">
       <div class="sbox"><div class="v" id="months">—</div><div class="l">개월로 환산</div></div>
       <div class="sbox"><div class="v" id="band">—</div><div class="l">적용 구간</div></div>
-      <div class="sbox"><div class="v" id="total">—</div><div class="l">60% 기준 총액(입력 시)</div></div>
+      <div class="sbox"><div class="v" id="total">—</div><div class="l" id="totlabel">기초일액을 넣으시면 상·하한을 걸어 계산합니다</div></div>
     </div>
   </div>
   <div class="list" id="note" style="display:none">
@@ -278,7 +278,27 @@ border-radius:10px;padding:10px 12px;text-decoration:none;line-height:1.45}
     document.getElementById('months').textContent=(days/30)+'개월';
     document.getElementById('band').textContent=L[c];
     var d=parseInt(document.getElementById('daily').value,10);
-    document.getElementById('total').textContent = d>0 ? fmt(Math.round(d*0.6)*days)+'원' : '—';
+    /* ★2026-09-20 — ★상·하한을 건다. 앞판은 평균임금×60% 를 그대로 곱했다.
+       평균임금 200,000원 → ★25,200,000원을 보여 줬다(실제 14,301,000원).
+       상한 68,100원은 평균임금 113,500원 = ★월급 약 345만원이라 ★흔하게 걸린다.
+       근거 — 제46조제1항제1호(60%) · 시행령 제68조제1항(기초일액 상한 113,500원)
+              제45조제4항·제46조제1항제2호(최저구직급여일액 = 최저기초일액×80%)
+              제46조제2항(제1호가 적으면 ★제2호를 준다)
+       ★하한은 ★1일 소정근로시간 8시간 가정이다(본문에 같이 적혀 있다).
+       ★연도가 바뀜면 ★아래 세 값을 같이 고쳐야 한다. 본문 숫자도 함께. */
+    var CAP_BASE  = 113500;   /* 2026 기초일액 상한 · 시행령 제68조제1항 */
+    var MIN_DAILY = 66048;    /* 2026 최저구직급여일액 · 10,320원×8시간×80% */
+    var perDay = 0, capHit = '';
+    if (d > 0) {
+      var byRate = Math.round(Math.min(d, CAP_BASE) * 0.6);
+      if (byRate < MIN_DAILY) { perDay = MIN_DAILY; capHit = '하한 적용'; }
+      else { perDay = byRate; capHit = (d > CAP_BASE) ? '상한 적용' : '60% 적용'; }
+    }
+    document.getElementById('total').textContent = d>0 ? fmt(perDay*days)+'원' : '—';
+    var tl = document.getElementById('totlabel');
+    if (tl) tl.textContent = d>0
+      ? ('하루 ' + fmt(perDay) + '원 × ' + days + '일 (' + capHit + ')')
+      : '기초일액을 넣으시면 상·하한을 걸어 계산합니다';
     document.getElementById('ageband').textContent = senior ? (age>=50?'50세 이상':'장애인 → 50세 이상 기준') : '50세 미만';
     var other=T[senior?0:1][c];
     document.getElementById('edge').textContent = c===0 ? '1년 미만은 나이와 무관 (120일)' : (senior ? '50세 미만이었다면 '+other+'일 (−30일)' : '50세 이상이면 '+other+'일 (+30일)');
