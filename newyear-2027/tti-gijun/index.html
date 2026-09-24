@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>내 띠는? 양력 생일로 띠 판정 — 2027 정미년 설날·입춘 기준</title>
+<meta property="og:title" content="내 띠는? 양력 생일로 띠 판정 — 2027 정미년 설날·입춘 기준">
+<meta property="og:description" content="양력 생년월일로 설날 기준 띠와 입춘 기준 띠를 따로 판정합니다. 2027 정미년은 설날 2월 7일, 입춘 2월 4일 10시 46분에 시작해 1~2월생은 띠가 갈릴 수 있습니다. 민간 삼재와 띠별 풀이도 함께 봅니다.">
+<meta name="description" content="양력 생년월일로 설날 기준 띠와 입춘 기준 띠를 따로 판정합니다. 2027 정미년은 설날 2월 7일, 입춘 2월 4일 10시 46분에 시작해 1~2월생은 띠가 갈릴 수 있습니다. 민간 삼재와 띠별 풀이도 함께 봅니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/newyear-2027/tti-gijun/">
+<style>
+:root{--p:#1B5E8C;--pd:#14486B;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FB;--lt:#CFE0EC;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+#app .tool select,#app .tool input[type=number],#app .tool input[type=date],#app .tool input[type=text]{border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+#gb-run,#gc-run{background:var(--p);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+#gc-ey-add{background:#fff;color:var(--p);border:1.5px solid var(--lt);border-radius:10px;cursor:pointer}
+.gb-step{border-left:4px solid var(--lt);background:#F9FBFD;border-radius:8px;padding:10px 12px;margin:10px 0}
+.gb-status-pass{border-left-color:#2E9E5B}.gb-status-fail,.gb-status-over{border-left-color:#E63C46}
+.gb-status-conditional,.gb-status-partial{border-left-color:#E0A100}
+.gb-overall{font-weight:800;font-size:17px;padding:12px 14px;border-radius:10px;background:#EEF5FA;color:var(--pd);margin:12px 0}
+.gb-overall-eligible{background:#EAF7EF;color:#1E7A45}.gb-overall-over,.gb-overall-none{background:#FFF0F0;color:#8A1F26}
+.gb-overall-conditional,.gb-overall-partial{background:#FFF6E5;color:#6B5200}
+.gb-warning{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#6B5200}
+.gb-errors{color:#8A1F26;margin:8px 0 8px 18px}.gb-footer{font-size:12.5px;color:var(--mut);margin-top:12px}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+/* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+
+/* 2026-09-24 띠 판정 도구(#sn-tool) 버튼·결과 */
+#sn-run{background:var(--p);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer;margin-top:4px}
+#sn-tool .sn-headline{font-weight:800;font-size:16px;color:var(--pd)}#sn-tool .sn-errors{color:#8A1F26}
+#sn-tool .sn-footer,#sn-tool .sn-folk,#sn-tool .sn-note{font-size:12.5px;color:var(--mut)}
+.crumb{font-size:12.5px;color:var(--mut);text-align:center;margin:0 0 8px}.crumb a{color:var(--sub)}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../../">생활 계산기 · 운세 모음</a><a class="all" href="../../">전체 보기 →</a></div>
+<div id="app">
+<p class="crumb"><a href="../../">홈</a> › <a href="../">2027년 띠별 운세</a> › 내 띠 판정</p>
+<h1>내 띠는? 양력 생일로 띠 판정</h1>
+<p class="desc">양력 생년월일로 설날 기준 띠와 입춘 기준 띠를 따로 판정합니다. 2027 정미년은 설날 2월 7일, 입춘 2월 4일 10시 46분에 시작해 1~2월생은 띠가 갈릴 수 있습니다. 민간 삼재와 띠별 풀이도 함께 봅니다.</p>
+<div class="tool">
+<div id="sn-tool">
+<style>
+#sn-tool{max-width:100%;overflow-wrap:break-word}
+#sn-tool fieldset{min-width:0;border:0;padding:0;margin:0 0 16px}
+#sn-tool legend{font-weight:bold;padding:0;margin:0 0 8px}
+#sn-tool .sn-date{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+#sn-tool .sn-field{flex:1 1 88px;min-width:0}
+#sn-tool label{display:block;font-weight:bold;margin:0 0 4px}
+#sn-tool input,#sn-tool select,#sn-tool button{width:100%;box-sizing:border-box;font-size:16px;padding:8px}
+#sn-tool small{display:block}
+#sn-tool .sn-block{margin:16px 0 0}
+#sn-tool .sn-block p{margin:4px 0}
+#sn-tool .sn-lines{margin:4px 0;padding-left:20px}
+</style>
+<form id="sn-form" novalidate>
+<p id="sn-intro"><strong>내 띠는? 양력 생일로 띠 판정</strong><br>양력 생년월일을 넣으면 띠(설날 기준·입춘 기준), 2027년 삼재(민간 풍습), 그 띠의 2027년 풀이를 보여 줍니다.</p>
+<fieldset id="sn-fs-date">
+<legend>양력 생년월일</legend>
+<div class="sn-date">
+<div class="sn-field"><label for="sn-year">연도</label><input id="sn-year" type="number" inputmode="numeric" min="1920" max="2027" step="1" placeholder="예: 1991" autocomplete="bday-year"></div>
+<div class="sn-field"><label for="sn-month">월</label><select id="sn-month" autocomplete="bday-month"><option value="">월</option><option value="1">1월</option><option value="2">2월</option><option value="3">3월</option><option value="4">4월</option><option value="5">5월</option><option value="6">6월</option><option value="7">7월</option><option value="8">8월</option><option value="9">9월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option></select></div>
+<div class="sn-field"><label for="sn-day">일</label><select id="sn-day" autocomplete="bday-day"><option value="">일</option><option value="1">1일</option><option value="2">2일</option><option value="3">3일</option><option value="4">4일</option><option value="5">5일</option><option value="6">6일</option><option value="7">7일</option><option value="8">8일</option><option value="9">9일</option><option value="10">10일</option><option value="11">11일</option><option value="12">12일</option><option value="13">13일</option><option value="14">14일</option><option value="15">15일</option><option value="16">16일</option><option value="17">17일</option><option value="18">18일</option><option value="19">19일</option><option value="20">20일</option><option value="21">21일</option><option value="22">22일</option><option value="23">23일</option><option value="24">24일</option><option value="25">25일</option><option value="26">26일</option><option value="27">27일</option><option value="28">28일</option><option value="29">29일</option><option value="30">30일</option><option value="31">31일</option></select></div>
+</div>
+<small id="sn-range">1920년 1월 1일부터 2027년 12월 31일까지 넣을 수 있습니다. 음력 생일이면 양력으로 바꿔서 넣으세요.</small>
+</fieldset>
+<button type="submit" id="sn-run">띠와 2027년 풀이 보기</button>
+</form>
+<div id="sn-result" aria-live="polite" tabindex="-1"></div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var FIRST_YEAR = 1920;
+  var LAST_YEAR = 2027;
+  var TARGET_YEAR = 2027;
+
+  // 한국천문연구원 음양력 자료 — 해마다 음력 1월 1일(설날)의 양력 날짜. 월*100+일. 1920년부터.
+  var SEOL = [
+    220, 208, 128, 216, 205, 124, 213, 202, 123, 210,
+    130, 217, 206, 126, 214, 204, 124, 211, 131, 219,
+    208, 127, 215, 205, 126, 213, 202, 122, 210, 129,
+    217, 206, 127, 214, 204, 124, 212, 131, 219, 208,
+    128, 215, 205, 125, 213, 202, 122, 209, 130, 217,
+    206, 127, 215, 203, 123, 211, 131, 218, 207, 128,
+    216, 205, 125, 213, 202, 220, 209, 129, 218, 206,
+    127, 215, 204, 123, 210, 131, 219, 208, 128, 216,
+    205, 124, 212, 201, 122, 209, 129, 218, 207, 126,
+    214, 203, 123, 210, 131, 219, 208, 128, 216, 205,
+    125, 212, 201, 122, 210, 129, 217, 207
+  ];
+  // 한국천문연구원 24기 입기 시각(1920~2100년) — 해마다 입춘. 달은 모두 2월. 일*10000+시*100+분. 현재 한국 표준시 기준.
+  var IPCHUN = [
+    51126, 41720, 42306, 50500, 51050, 41637, 42238, 50430, 51016, 41609,
+    42151, 50341, 50929, 41509, 42104, 50249, 50829, 41426, 42015, 50210,
+    50808, 41350, 41949, 50140, 50723, 41319, 41904, 50050, 50642, 41223,
+    41821, 50013, 50553, 41146, 41731, 42318, 50512, 41055, 41649, 42242,
+    50423, 41022, 41617, 42208, 50405, 40946, 41538, 42131, 50307, 40859,
+    41446, 42025, 50220, 40804, 41400, 41959, 50139, 40733, 41327, 41912,
+    50109, 40655, 41245, 41840, 50019, 40612, 41208, 41752, 42343, 40527,
+    41114, 41708, 42248, 40437, 41031, 41613, 42208, 40402, 40957, 41557,
+    42140, 40329, 40924, 41505, 42056, 40243, 40827, 41418, 42000, 40150,
+    40748, 41333, 41922, 40113, 40703, 41258, 41846, 40034, 40628, 41214,
+    41803, 32359, 40551, 41143, 41727, 32310, 40502, 41046
+  ];
+
+  var ANIMALS = ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'];
+  var GAN = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+  var GAN_H = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+  var JI = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+  var JI_H = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+  var SAMJAE_KIND = ['들삼재', '눌삼재', '날삼재'];
+  var FOOTER = '재미로 보는 풀이입니다. 과학적 근거가 없으며 중요한 결정은 스스로 판단하세요.';
+  var FOLK_NOTE = '삼재와 띠 궁합은 원문 근거가 없는 민간 풍습입니다. 이 도구는 민간에서 널리 쓰는 삼재 규칙(해묘미·사유축·신자진·인오술 묶음)대로 세기만 하고, 좋고 나쁨을 정하지 않습니다. 띠 궁합은 판정하지 않습니다.';
+  var LABELS = [['total', '총운'], ['money', '재물'], ['work', '일'], ['people', '관계'], ['health', '건강']];
+
+  // 12띠 2027년 풀이 — 이 사이트가 새로 쓴 문장. 차례는 쥐(0)부터 돼지(11)까지.
+  var FORTUNE = [
+    { total: '계획을 작게 나눠 하나씩 끝내 가기 좋은 흐름입니다. 순서를 먼저 정해 두면 한 해를 덜 바쁘게 보내기 쉽습니다.',
+      money: '고정으로 나가는 돈을 한 번 적어 보고 줄일 곳을 찾아 두면 좋습니다.',
+      work: '마감 날짜를 먼저 확인하고 하루씩 여유를 두는 습관을 챙기면 좋습니다.',
+      people: '연락이 뜸했던 사람에게 먼저 안부를 건네기 좋은 해입니다.',
+      health: '잠드는 시간을 일정하게 맞추는 데서 시작해 보세요.' },
+    { total: '해 오던 일을 꾸준히 이어 가며 결을 다듬기 좋은 흐름입니다.',
+      money: '큰 지출은 한 달쯤 두고 다시 따져 본 뒤 정하는 편을 권합니다.',
+      work: '익숙한 방식에 새 도구 하나를 더해 보면 손이 가벼워질 수 있습니다.',
+      people: '도움을 받았다면 고맙다는 말을 그날 바로 전해 보세요.',
+      health: '오래 앉아 있었다면 한 시간에 한 번 일어나 몸을 펴 주세요.' },
+    { total: '새로 벌이기보다 이미 시작한 일을 마무리하는 데 힘을 모으기 좋은 흐름입니다.',
+      money: '쓰지 않는 구독이나 회비를 정리해 두면 좋습니다.',
+      work: '혼자 끌고 가던 일을 함께 나눌 사람을 찾아 두면 좋습니다.',
+      people: '의견이 다를 때는 결론보다 상대의 이유를 먼저 들어 보세요.',
+      health: '저녁 식사 시간을 조금 앞당겨 보는 것을 권합니다.' },
+    { total: '미뤄 둔 일을 정리하고 매듭짓기 좋은 흐름입니다.',
+      money: '흩어진 통장과 카드를 한곳에 모아 돈의 흐름이 한눈에 보이게 해 두면 좋습니다.',
+      work: '끝낸 일을 짧게 기록해 두면 다음 기회를 설명할 때 도움이 될 수 있습니다.',
+      people: '가까운 사람과 한 해 계획을 나눠 보면 서로 맞출 곳이 보이기 쉽습니다.',
+      health: '하루 중 걷는 시간을 정해 두고 지켜 보세요.' },
+    { total: '배우고 싶었던 것을 하나 골라 시작해 보기 좋은 흐름입니다.',
+      money: '비상금을 따로 떼어 두는 칸을 만들어 두면 마음이 편합니다.',
+      work: '결과를 서두르기보다 과정을 차근차근 쌓는 쪽을 권합니다.',
+      people: '새 모임에서는 말하는 시간보다 듣는 시간을 조금 늘려 보세요.',
+      health: '물 마시는 때를 정해 두는 작은 습관을 챙기면 좋습니다.' },
+    { total: '생각해 둔 방향을 글로 적어 두고 한 걸음씩 옮겨 보기 좋은 흐름입니다.',
+      money: '계약서나 약관처럼 돈이 걸린 문서는 끝까지 읽고 서명하는 습관을 챙기세요.',
+      work: '도움을 청할 때 무엇이 필요한지 구체적으로 말하면 일이 수월해질 수 있습니다.',
+      people: '약속 시간을 지키는 것만으로도 믿음을 쌓기 좋은 해입니다.',
+      health: '잠들기 전 화면을 보는 시간을 줄여 보세요.' },
+    { total: '속도를 조금 늦추고 방향을 점검하기 좋은 흐름입니다.',
+      money: '한 해 예산을 달마다 나눠 두고 지출이 많은 달을 미리 표시해 두면 좋습니다.',
+      work: '여러 일을 한꺼번에 벌이기보다 우선순위 세 가지만 남겨 보세요.',
+      people: '오랜 친구와 만날 날을 달력에 먼저 적어 두면 좋습니다.',
+      health: '쉬는 날 하루는 일정을 비워 두는 것을 권합니다.' },
+    { total: '자기 띠의 해를 맞아 한 해의 기준을 새로 세워 보기 좋은 흐름입니다.',
+      money: '수입과 지출을 한 달만 적어 보면 줄일 곳과 지킬 곳을 나누기 쉽습니다.',
+      work: '잘하는 일 하나를 더 깊게 다듬는 쪽을 권합니다.',
+      people: '부탁을 거절해야 할 때는 이유를 짧고 부드럽게 전해 보세요.',
+      health: '아침에 햇볕을 쬐며 몇 분 걷는 습관을 챙기면 좋습니다.' },
+    { total: '떠오른 생각을 실행하기 전에 하룻밤 두고 다시 보기 좋은 흐름입니다.',
+      money: '장바구니에 담은 물건은 하루 뒤에 다시 보고 정하는 규칙을 세워 보세요.',
+      work: '잘 풀린 방법은 적어 두었다가 다른 일에도 옮겨 써 보세요.',
+      people: '농담이 상대에게 어떻게 들렸을지 한 번 돌아보면 좋습니다.',
+      health: '끼니를 거르지 않고 제때 챙기는 것을 권합니다.' },
+    { total: '주변을 정리 정돈하며 한 해를 열기 좋은 흐름입니다. 공간을 비우면 할 일이 또렷해지기 쉽습니다.',
+      money: '영수증과 카드 명세서를 달마다 한 번 훑어보는 시간을 만들어 두면 좋습니다.',
+      work: '마지막 확인 단계를 꼼꼼히 챙기면 좋습니다.',
+      people: '칭찬할 일이 있으면 미루지 말고 그 자리에서 전해 보세요.',
+      health: '계단을 이용하는 것처럼 생활 속 움직임을 조금씩 늘려 보세요.' },
+    { total: '믿을 만한 사람들과 함께 움직이기 좋은 흐름입니다.',
+      money: '보증을 서거나 큰돈을 빌려주는 일은 가족과 충분히 상의한 뒤 정하는 편을 권합니다.',
+      work: '맡은 역할의 범위를 처음에 분명히 해 두면 좋습니다.',
+      people: '서운한 일은 쌓아 두기보다 가볍게 먼저 말해 보세요.',
+      health: '긴장이 쌓였다 싶으면 숨을 천천히 고르는 시간을 가져 보세요.' },
+    { total: '넉넉함을 나누되 내 몫의 쉼도 챙기기 좋은 흐름입니다.',
+      money: '모임 비용처럼 되풀이되는 지출은 미리 정해 둔 선 안에서 쓰는 것을 권합니다.',
+      work: '끝맺지 못한 일을 목록으로 만들어 하나씩 지워 가기 좋은 해입니다.',
+      people: '가족과 함께 밥을 먹는 날을 정해 두면 좋습니다.',
+      health: '하루를 마칠 때 가볍게 몸을 풀어 주는 시간을 가져 보세요.' }
+  ];
+
+  function mod(a, n) { return ((a % n) + n) % n; }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+  function daysInMonth(y, m) {
+    if (m === 2) return isLeap(y) ? 29 : 28;
+    return (m === 4 || m === 6 || m === 9 || m === 11) ? 30 : 31;
+  }
+  function cmpMD(m1, d1, m2, d2) {
+    return m1 !== m2 ? (m1 < m2 ? -1 : 1) : (d1 === d2 ? 0 : (d1 < d2 ? -1 : 1));
+  }
+
+  function snGanji(year) {
+    var i = mod(year - 4, 60);
+    var g = i % 10;
+    var b = i % 12;
+    return {
+      year: year,
+      index: i,
+      branch: b,
+      name: GAN[g] + JI[b],
+      hanja: GAN_H[g] + JI_H[b],
+      animal: ANIMALS[b]
+    };
+  }
+
+  function seolOf(year) {
+    var v = SEOL[year - FIRST_YEAR];
+    return { month: Math.floor(v / 100), day: v % 100 };
+  }
+  function ipchunOf(year) {
+    var v = IPCHUN[year - FIRST_YEAR];
+    return { month: 2, day: Math.floor(v / 10000), hour: Math.floor(v / 100) % 100, minute: v % 100 };
+  }
+
+  function toInt(v) {
+    if (v === null || v === undefined) return null;
+    if (typeof v === 'number') return (isFinite(v) && Math.floor(v) === v) ? v : NaN;
+    var s = String(v).replace(/^\s+|\s+$/g, '');
+    if (s === '') return null;
+    return /^\d+$/.test(s) ? parseInt(s, 10) : NaN;
+  }
+
+  function snValidate(input) {
+    var src = input || {};
+    var y = toInt(src.year);
+    var m = toInt(src.month);
+    var d = toInt(src.day);
+    var errors = [];
+    var yearOk = false;
+    if (y === null) errors.push('태어난 연도를 넣어 주세요.');
+    else if (isNaN(y)) errors.push('연도는 숫자 네 자리로 넣어 주세요. 예: 1991');
+    else if (y < FIRST_YEAR || y > LAST_YEAR) errors.push('연도는 ' + FIRST_YEAR + '년부터 ' + LAST_YEAR + '년까지 넣을 수 있습니다.');
+    else yearOk = true;
+    var monthOk = false;
+    if (m === null) errors.push('태어난 달을 골라 주세요.');
+    else if (isNaN(m) || m < 1 || m > 12) errors.push('달은 1월부터 12월 사이로 골라 주세요.');
+    else monthOk = true;
+    if (d === null) errors.push('태어난 날을 골라 주세요.');
+    else if (isNaN(d) || d < 1 || d > 31) errors.push('날은 1일부터 31일 사이로 골라 주세요.');
+    else if (monthOk) {
+      var dim = daysInMonth(yearOk ? y : 2000, m);
+      if (d > dim) errors.push((yearOk ? y + '년 ' : '') + m + '월에는 ' + d + '일이 없습니다. 이 달은 ' + dim + '일까지입니다.');
+    }
+    return { ok: errors.length === 0, errors: errors, year: y, month: m, day: d };
+  }
+
+  // 순수 함수: 양력 연·월·일(정수) → 두 기준의 띠
+  function snTti(y, m, d) {
+    var seol = seolOf(y);
+    var ip = ipchunOf(y);
+    var cs = cmpMD(m, d, seol.month, seol.day);
+    var ci = cmpMD(m, d, ip.month, ip.day);
+    var seolYear = cs < 0 ? y - 1 : y;
+    var ipYear = ci < 0 ? y - 1 : y;
+    var sameDay = ci === 0;
+    var years = [];
+    function add(v) { if (years.indexOf(v) < 0) years.push(v); }
+    add(seolYear);
+    add(ipYear);
+    if (sameDay) add(y - 1);
+    years.sort(function (a, b) { return a - b; });
+    return {
+      year: y, month: m, day: d,
+      solar: snGanji(y),
+      seol: { month: seol.month, day: seol.day, before: cs < 0, year: seolYear, gz: snGanji(seolYear) },
+      ipchun: {
+        month: 2, day: ip.day, hour: ip.hour, minute: ip.minute,
+        before: ci < 0, sameDay: sameDay, year: ipYear, gz: snGanji(ipYear),
+        beforeTimeGz: sameDay ? snGanji(y - 1) : null
+      },
+      split: years.length > 1,
+      solarMismatch: years.length === 1 && years[0] !== y,
+      years: years
+    };
+  }
+
+  // 순수 함수: 민간 삼재 셈법. branch = 띠의 지지(0 쥐 ~ 11 돼지), year = 셀 해
+  function snSamjae(branch, year) {
+    var g = mod(branch, 12) % 4;
+    var start = mod(2 - 3 * g, 12); // 해묘미→사, 사유축→해, 신자진→인, 인오술→신
+    var off = mod(mod(year - 4, 12) - start, 12);
+    var head = mod(8 - 3 * g, 12); // 묶음의 첫 지지: 신·사·인·해
+    var members = [head, mod(head + 4, 12), mod(head + 8, 12)];
+    return {
+      branch: mod(branch, 12),
+      year: year,
+      inSamjae: off < 3,
+      order: off < 3 ? off + 1 : 0,
+      kind: off < 3 ? SAMJAE_KIND[off] : null,
+      startYear: off < 3 ? year - off : null,
+      groupBranches: members,
+      groupName: members.map(function (x) { return JI[x]; }).join(''),
+      groupAnimals: members.map(function (x) { return ANIMALS[x]; }),
+      samjaeBranches: [start, mod(start + 1, 12), mod(start + 2, 12)]
+    };
+  }
+
+  function snNextSamjae(branch, fromYear) {
+    for (var y = fromYear; y < fromYear + 12; y++) {
+      if (snSamjae(branch, y).order === 1) return y;
+    }
+    return null;
+  }
+
+  function mdText(m, d) { return m + '월 ' + d + '일'; }
+  function hmText(h, mi) { return h + '시 ' + pad2(mi) + '분'; }
+  function gzText(gz) { return gz.animal + '띠(' + gz.name + '년 ' + gz.hanja + ')'; }
+
+  function samjaeText(branch) {
+    var s = snSamjae(branch, TARGET_YEAR);
+    var tg = snGanji(TARGET_YEAR);
+    var animal = ANIMALS[branch];
+    var group = s.groupAnimals.join('·') + '(' + s.groupName + ')';
+    if (s.inSamjae) {
+      return '민간 셈법으로 ' + TARGET_YEAR + '년 ' + tg.name + '년은 ' + animal + '띠에게 ' + s.kind + '입니다. ' +
+        group + ' 묶음은 ' + s.startYear + '년 들삼재, ' + (s.startYear + 1) + '년 눌삼재, ' + (s.startYear + 2) + '년 날삼재로 셉니다.';
+    }
+    var next = snNextSamjae(branch, TARGET_YEAR);
+    return '민간 셈법으로 ' + TARGET_YEAR + '년 ' + tg.name + '년은 ' + animal + '띠의 삼재가 아닙니다. 같은 셈법으로 ' +
+      group + ' 묶음의 다음 들삼재는 ' + next + '년입니다.';
+  }
+
+  function snJudge(input) {
+    var v = snValidate(input);
+    if (!v.ok) return { ok: false, errors: v.errors, footer: FOOTER };
+    var t = snTti(v.year, v.month, v.day);
+    var y = t.year;
+    var seolLine = y + '년 설날(음력 1월 1일)은 양력 ' + mdText(t.seol.month, t.seol.day) + '입니다. ' +
+      (t.seol.before ? '그 전에' : '그날이나 그 뒤에') + ' 태어났으므로 ' + gzText(t.seol.gz) + '입니다.';
+    var ipLine;
+    if (t.ipchun.sameDay) {
+      ipLine = y + '년 입춘은 ' + mdText(2, t.ipchun.day) + ' ' + hmText(t.ipchun.hour, t.ipchun.minute) + '입니다. 입춘 당일에 태어나 시각에 따라 갈립니다. ' +
+        hmText(t.ipchun.hour, t.ipchun.minute) + ' 이후 출생이면 ' + gzText(t.ipchun.gz) + ', 그 전이면 ' + gzText(t.ipchun.beforeTimeGz) + '입니다.';
+    } else {
+      ipLine = y + '년 입춘은 ' + mdText(2, t.ipchun.day) + ' ' + hmText(t.ipchun.hour, t.ipchun.minute) + '입니다. ' +
+        (t.ipchun.before ? '그 전에' : '그 뒤에') + ' 태어났으므로 ' + gzText(t.ipchun.gz) + '입니다.';
+    }
+    var headline;
+    if (t.split) {
+      headline = t.years.map(function (yy) { return snGanji(yy).animal + '띠'; }).join(' 또는 ') + ' — 기준에 따라 띠가 갈리는 생일입니다.';
+    } else {
+      headline = gzText(snGanji(t.years[0])) + '입니다. 설날 기준과 입춘 기준이 같습니다.';
+    }
+    var notes = [];
+    if (t.split) {
+      notes.push('두 기준 모두 관습이고, 어느 쪽이 맞다고 정한 규정은 없습니다. 사주는 입춘을 쓰고, 음력으로 해를 세는 풍습은 설날을 씁니다. 아래에 두 띠를 모두 보여 드립니다.');
+    }
+    if (t.ipchun.sameDay) {
+      notes.push('입춘 시각은 한국천문연구원 자료의 값으로, 현재 한국 표준시 기준입니다. 과거 표준시 변경은 반영하지 않은 값이라 시각 경계는 참고로만 보세요.');
+    }
+    if (t.solarMismatch) {
+      notes.push('양력 연도(' + y + '년)만 보면 ' + t.solar.animal + '띠로 알기 쉽지만, 설날과 입춘이 모두 오기 전에 태어나 두 기준 모두 ' + snGanji(t.years[0]).animal + '띠입니다.');
+    }
+    var readings = t.years.map(function (yy) {
+      var gz = snGanji(yy);
+      var f = FORTUNE[gz.branch];
+      return {
+        year: yy,
+        branch: gz.branch,
+        animal: gz.animal,
+        title: t.split ? gz.animal + '띠로 볼 때' : gz.animal + '띠 ' + TARGET_YEAR + '년 풀이',
+        samjae: snSamjae(gz.branch, TARGET_YEAR),
+        samjaeText: samjaeText(gz.branch),
+        lines: LABELS.map(function (l) { return [l[1], f[l[0]]]; })
+      };
+    });
+    return {
+      ok: true,
+      errors: [],
+      label: y + '년 ' + t.month + '월 ' + t.day + '일(양력)',
+      tti: t,
+      headline: headline,
+      basis: [['설날 기준', seolLine], ['입춘 기준', ipLine]],
+      notes: notes,
+      readings: readings,
+      folkNote: FOLK_NOTE,
+      footer: FOOTER
+    };
+  }
+
+  function initDom() {
+    var root = document.getElementById('sn-tool');
+    if (!root) return;
+    function byId(id) { return document.getElementById(id); }
+    function el(tag, text, cls) {
+      var e = document.createElement(tag);
+      if (text !== undefined && text !== null) e.textContent = text;
+      if (cls) e.className = cls;
+      return e;
+    }
+    function strongP(label, text, cls) {
+      var p = el('p', null, cls);
+      p.appendChild(el('strong', label));
+      p.appendChild(document.createTextNode(' ' + text));
+      return p;
+    }
+    function render(res) {
+      var out = byId('sn-result');
+      while (out.firstChild) out.removeChild(out.firstChild);
+      if (!res.ok) {
+        out.appendChild(el('p', '확인하려면 다음을 넣어 주세요.', 'sn-error-title'));
+        var ul = el('ul', null, 'sn-errors');
+        for (var i = 0; i < res.errors.length; i++) ul.appendChild(el('li', res.errors[i]));
+        out.appendChild(ul);
+      } else {
+        out.appendChild(el('p', res.label, 'sn-meta'));
+        var h = el('p', null, 'sn-headline' + (res.tti.split ? ' sn-split' : ''));
+        h.appendChild(el('strong', res.headline));
+        out.appendChild(h);
+        var basis = el('div', null, 'sn-block sn-basis');
+        for (var b = 0; b < res.basis.length; b++) basis.appendChild(strongP(res.basis[b][0], res.basis[b][1]));
+        for (var n = 0; n < res.notes.length; n++) basis.appendChild(el('p', res.notes[n], 'sn-note'));
+        out.appendChild(basis);
+        for (var r = 0; r < res.readings.length; r++) {
+          var rd = res.readings[r];
+          var box = el('div', null, 'sn-block sn-reading');
+          var t = el('p');
+          t.appendChild(el('strong', rd.title));
+          box.appendChild(t);
+          box.appendChild(strongP('삼재(민간 풍습)', rd.samjaeText, 'sn-samjae' + (rd.samjae.inSamjae ? ' sn-samjae-in' : '')));
+          var list = el('ul', null, 'sn-lines');
+          for (var k = 0; k < rd.lines.length; k++) {
+            var li = el('li');
+            li.appendChild(el('strong', rd.lines[k][0]));
+            li.appendChild(document.createTextNode(' ' + rd.lines[k][1]));
+            list.appendChild(li);
+          }
+          box.appendChild(list);
+          out.appendChild(box);
+        }
+        out.appendChild(el('p', res.folkNote, 'sn-block sn-folk'));
+      }
+      out.appendChild(el('p', res.footer, 'sn-block sn-footer'));
+      if (out.focus) out.focus();
+    }
+    byId('sn-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      render(snJudge({ year: byId('sn-year').value, month: byId('sn-month').value, day: byId('sn-day').value }));
+    });
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDom);
+    else initDom();
+  }
+
+  var SN_DATA = { FIRST_YEAR: FIRST_YEAR, LAST_YEAR: LAST_YEAR, TARGET_YEAR: TARGET_YEAR, SEOL: SEOL, IPCHUN: IPCHUN, ANIMALS: ANIMALS, FOOTER: FOOTER, FOLK_NOTE: FOLK_NOTE };
+  var SN_FORTUNE = FORTUNE;
+  if (typeof module!=='undefined') module.exports={snJudge,snTti,snSamjae,snNextSamjae,snValidate,snGanji,SN_FORTUNE,SN_DATA};
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031250,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>내 띠는? 양력 생일로 띠 판정</h2>
+<h3>10초 요약</h3>
+<p><strong>【2027년은 정미년(丁未年), 양띠 해입니다.】 그런데 정미년이 시작되는 날은 하나가 아닙니다. 설날로 세면 2027년 2월 7일, 입춘으로 세면 2월 4일 10시 46분입니다.</strong></p>
+<p>그래서 1월과 2월 초에 태어난 사람은 띠부터 확인해야 합니다. 양력 1월 1일은 두 기준 어디에도 들지 않습니다. 이 쪽의 도구에 양력 생년월일을 넣으면 두 기준의 띠, 민간에서 세는 삼재, 그 띠의 2027년 풀이가 한 번에 나옵니다.</p>
+<table><caption>2027년 정미년이 시작되는 날 (한국천문연구원 자료)</caption><thead><tr><th>기준</th><th>날짜</th><th>확인한 내용</th></tr></thead><tbody><tr><th scope="row">설날</th><td>2027년 2월 7일(일)</td><td>음력 1월 1일입니다. 이날부터 해 간지가 정미(丁未)로 나옵니다. 하루 전 2월 6일은 음력 2026년 12월 30일, 병오(丙午)년입니다.</td></tr><tr><th scope="row">입춘</th><td>2027년 2월 4일(목) 10시 46분</td><td>24기 입기 시각 자료의 입춘 시각입니다.</td></tr></tbody></table>
+
+<h3>2027년이 정미년이고 양띠인 까닭</h3>
+<p>해의 이름은 천간 열 개와 지지 열두 개를 차례로 짝지어 붙이는 육십갑자입니다. 2027년은 천간이 넷째 정(丁), 지지가 여덟째 미(未)입니다. 한국민족문화대백과는 띠를 &quot;사람이 태어난 해의 지지를 동물 이름으로 상징하여 이르는 말&quot;로 풀고, 열두 띠를 쥐·소·범·토끼·용·뱀·말·양·잔나비·닭·개·돼지 차례로 적습니다. 여덟째가 양이므로 2027년은 양띠 해입니다. 잔나비는 같은 항목에서 원숭이로 풀이됩니다.</p>
+<p>같은 정미년은 60년 전인 1967년이었고 다음은 2087년입니다. 앞뒤 해는 2026년 병오년(말띠)과 2028년 무신년(원숭이띠)입니다. 천문연구원 음양력 자료에서도 1967년 음력 1월 1일(양력 2월 9일)의 해 간지가 정미로 나옵니다.</p>
+
+<h3>띠를 가르는 두 기준 — 설날과 입춘</h3>
+<p>띠가 바뀌는 날을 정한 법이나 공식 규정은 없습니다. 널리 쓰이는 관습이 둘입니다.</p>
+<ul class="blist"><li>설날 기준 — 음력 1월 1일에 해가 바뀐다고 보는 셈입니다. 음력으로 해를 세는 풍습을 따릅니다.</li><li>입춘 기준 — 24절기의 첫째인 입춘에 해가 바뀐다고 보는 셈입니다. 사주에서 태어난 해의 간지(연주)를 정할 때 이 기준을 씁니다.</li></ul>
+<p><strong>【두 기준 모두 관습이고, 어느 쪽이 맞다고 정해진 답은 없습니다.】 집안이나 보는 곳마다 말이 다른 까닭이 여기 있습니다. 한 번 정한 기준을 계속 쓰면 헷갈림이 줄어듭니다.</strong></p>
+<p>입춘은 태양의 위치로 정해져 해마다 양력 2월 3~5일에 옵니다. 설날은 달의 모양으로 정해져 크게 움직입니다. 천문연구원 자료로 1920년부터 2030년까지 111해를 세어 보면 설날은 1월 22일부터 2월 20일 사이에 왔습니다. 입춘이 설날보다 먼저 온 해가 58번, 설날이 먼저 온 해가 49번, 같은 날이었던 해가 4번(1924·1943·1954·1992년)입니다.</p>
+<p><strong>【그래서 두 기준이 갈리는 날짜는 해마다 다릅니다.】 입춘이 먼저 오는 해에는 입춘부터 설날 전날까지 태어난 사람이, 설날이 먼저 오는 해에는 설날부터 입춘 전까지 태어난 사람이 두 띠 사이에 걸립니다.</strong></p>
+
+<h3>양띠 해마다 설날과 입춘 (1967~2027)</h3>
+<table><caption>양띠 해가 시작된 날 — 설날과 입춘 (한국천문연구원 음양력·24기 자료)</caption><thead><tr><th>해</th><th>설날</th><th>입춘</th><th>두 기준이 갈리는 출생일</th></tr></thead><tbody><tr><th scope="row">1967 정미</th><td>2월 9일</td><td>2월 4일 21:31</td><td>2월 4일(21:31 이후)~8일 — 입춘으로는 양띠, 설날로는 말띠</td></tr><tr><th scope="row">1979 기미</th><td>1월 28일</td><td>2월 4일 19:12</td><td>1월 28일~2월 4일(19:12 전) — 설날로는 양띠, 입춘으로는 말띠</td></tr><tr><th scope="row">1991 신미</th><td>2월 15일</td><td>2월 4일 17:08</td><td>2월 4일(17:08 이후)~14일 — 입춘으로는 양띠, 설날로는 말띠</td></tr><tr><th scope="row">2003 계미</th><td>2월 1일</td><td>2월 4일 15:05</td><td>2월 1일~4일(15:05 전) — 설날로는 양띠, 입춘으로는 말띠</td></tr><tr><th scope="row">2015 을미</th><td>2월 19일</td><td>2월 4일 12:58</td><td>2월 4일(12:58 이후)~18일 — 입춘으로는 양띠, 설날로는 말띠</td></tr><tr><th scope="row">2027 정미</th><td>2월 7일</td><td>2월 4일 10:46</td><td>2월 4일(10:46 이후)~6일 — 입춘으로는 양띠, 설날로는 말띠</td></tr></tbody></table>
+<p>예를 들어 1991년 2월 10일에 태어났다면 입춘(2월 4일)은 지났고 설날(2월 15일)은 아직입니다. 입춘으로는 양띠, 설날로는 말띠입니다. 반대로 2003년 2월 2일생은 설날(2월 1일)은 지났고 입춘(2월 4일)은 아직이라 설날로는 양띠, 입춘으로는 말띠입니다. 양띠 해가 끝나는 쪽 경계는 다음 해의 설날과 입춘이고, 도구가 이 경계까지 함께 봅니다.</p>
+
+<h3>입춘 당일에 태어났다면</h3>
+<p>입춘은 날이 아니라 시각으로 정해집니다. 2027년 입춘은 2월 4일 10시 46분이므로, 입춘으로 세면 그날 10시 46분 이후에 태어난 아기부터 양띠입니다. 도구에 입춘 당일 생일을 넣으면 그해 입춘 시각과 함께 두 띠를 모두 보여 줍니다.</p>
+<p>천문연구원 24기 자료에는 &quot;현재 KST 기준이며, 과거 표준자오선 변경이나 써머타임은 고려하지 않음&quot;이라는 단서가 붙어 있습니다. 옛날 입춘 당일에 태어났다면 시각 경계는 참고로만 보세요.</p>
+
+<h3>삼재를 세는 법 — 민간 풍습</h3>
+<p><strong>【삼재는 역법이나 법에 근거가 있는 제도가 아니라 민간에서 전해 오는 셈법입니다.】 이 쪽은 민간에서 널리 쓰는 규칙을 옮겨 계산만 하고, 좋고 나쁨을 정하지 않습니다.</strong></p>
+<p>민간에서는 이렇게 셉니다. 열두 띠를 네 칸씩 건너 셋씩 묶어 네 묶음(삼합)을 만들고, 묶음마다 삼재가 드는 세 해를 정해 둡니다. 첫해를 들삼재, 둘째 해를 눌삼재, 셋째 해를 날삼재라고 부릅니다.</p>
+<table><caption>민간에서 세는 삼재 묶음 (해묘미·사유축·신자진·인오술)</caption><thead><tr><th>띠 묶음</th><th>삼재가 드는 해</th><th>가까운 차례</th></tr></thead><tbody><tr><th scope="row">돼지·토끼·양 (해묘미)</th><td>뱀·말·양해 (사·오·미)</td><td>2025 들 · 2026 눌 · 2027 날</td></tr><tr><th scope="row">호랑이·말·개 (인오술)</th><td>원숭이·닭·개해 (신·유·술)</td><td>2028 들 · 2029 눌 · 2030 날</td></tr><tr><th scope="row">뱀·닭·소 (사유축)</th><td>돼지·쥐·소해 (해·자·축)</td><td>2031 들 · 2032 눌 · 2033 날</td></tr><tr><th scope="row">원숭이·쥐·용 (신자진)</th><td>호랑이·토끼·용해 (인·묘·진)</td><td>2034 들 · 2035 눌 · 2036 날</td></tr></tbody></table>
+<p><strong>【이 셈법대로라면 2027년 정미년의 삼재띠는 돼지·토끼·양띠이고, 셋 모두 날삼재입니다.】 2028년 무신년에는 호랑이·말·개띠가 들삼재가 됩니다. 묶음이 넷이고 한 묶음이 세 해씩이라, 어느 띠든 열두 해 가운데 세 해가 이 셈법의 삼재입니다.</strong></p>
+<p>두 가지를 함께 보세요. 첫째, 삼재도 띠로 세므로 1~2월생은 어느 기준의 띠냐에 따라 결과가 갈립니다. 도구는 두 띠의 삼재를 모두 보여 줍니다. 둘째, &quot;2027년 삼재&quot;의 2027년은 정미년을 뜻하고, 정미년이 시작되는 날에도 설날(2월 7일)과 입춘(2월 4일) 두 기준이 있습니다.</p>
+<p>삼재 기간에 무엇을 피해야 한다는 말들은 이 쪽에서 다루지 않습니다. 확인할 원문이 없기 때문입니다. 삼재를 이유로 큰 비용을 요구받는다면 그 자리에서 정하지 말고 가족과 상의하세요. 띠 궁합도 민간에서 전해 오는 풍습으로 원문 근거가 없고, 이 쪽의 도구는 궁합을 판정하지 않습니다.</p>
+
+<h3>열두 띠 2027년 한눈에</h3>
+<table><caption>열두 띠 2027년 요약 — 출생 연도는 그해 설날·입춘이 지난 뒤 태어난 경우</caption><thead><tr><th>띠</th><th>출생 연도</th><th>2027 삼재(민간)</th><th>2027년 한 줄</th></tr></thead><tbody><tr><th scope="row">쥐</th><td>1960·1972·1984·1996·2008·2020</td><td>아님</td><td>계획을 작게 나눠 하나씩 끝내 가기 좋은 흐름</td></tr><tr><th scope="row">소</th><td>1961·1973·1985·1997·2009·2021</td><td>아님</td><td>해 오던 일을 꾸준히 이어 가며 결을 다듬기 좋은 흐름</td></tr><tr><th scope="row">호랑이</th><td>1962·1974·1986·1998·2010·2022</td><td>아님(2028 들삼재)</td><td>이미 시작한 일을 마무리하는 데 힘을 모으기 좋은 흐름</td></tr><tr><th scope="row">토끼</th><td>1963·1975·1987·1999·2011·2023</td><td>날삼재</td><td>미뤄 둔 일을 정리하고 매듭짓기 좋은 흐름</td></tr><tr><th scope="row">용</th><td>1964·1976·1988·2000·2012·2024</td><td>아님</td><td>배우고 싶었던 것을 하나 골라 시작해 보기 좋은 흐름</td></tr><tr><th scope="row">뱀</th><td>1965·1977·1989·2001·2013·2025</td><td>아님</td><td>생각해 둔 방향을 글로 적어 한 걸음씩 옮겨 보기 좋은 흐름</td></tr><tr><th scope="row">말</th><td>1966·1978·1990·2002·2014·2026</td><td>아님(2028 들삼재)</td><td>속도를 조금 늦추고 방향을 점검하기 좋은 흐름</td></tr><tr><th scope="row">양</th><td>1967·1979·1991·2003·2015·2027</td><td>날삼재</td><td>자기 띠의 해를 맞아 한 해의 기준을 새로 세워 보기 좋은 흐름</td></tr><tr><th scope="row">원숭이</th><td>1956·1968·1980·1992·2004·2016</td><td>아님</td><td>떠오른 생각을 하룻밤 두고 다시 보기 좋은 흐름</td></tr><tr><th scope="row">닭</th><td>1957·1969·1981·1993·2005·2017</td><td>아님</td><td>주변을 정리 정돈하며 한 해를 열기 좋은 흐름</td></tr><tr><th scope="row">개</th><td>1958·1970·1982·1994·2006·2018</td><td>아님(2028 들삼재)</td><td>믿을 만한 사람들과 함께 움직이기 좋은 흐름</td></tr><tr><th scope="row">돼지</th><td>1959·1971·1983·1995·2007·2019</td><td>날삼재</td><td>넉넉함을 나누되 내 몫의 쉼도 챙기기 좋은 흐름</td></tr></tbody></table>
+<p>재물·일·관계·건강 풀이는 도구 결과에 띠마다 한 줄씩 나옵니다. 1~2월생이라면 위 표의 연도만 보지 말고 도구로 띠를 먼저 확인하세요.</p>
+
+<h3>신년운세는 언제 보나</h3>
+<p>정해진 때는 없고, 양력 새해·입춘·설날 가운데 편한 때에 봅니다. 지난해(2025~2026년) 네이버 검색 추이를 보면 &quot;신년운세&quot;는 11월 마지막 주에 한 주 만에 크게 늘었고, 양력 새해 첫 주에 가장 많았습니다. 설 연휴 무렵까지 높게 이어지다 3월 첫 주에 크게 줄었습니다. 해 이름(병오년)과 &quot;띠 계산&quot; 검색은 설 무렵에 한 번 더 늘었습니다.</p>
+<p><strong>【양력 1월에 보는 2027 신년운세는 엄밀히 말하면 아직 병오년(말띠 해) 안에서 보는 것입니다.】 정미년은 입춘으로는 2월 4일, 설날로는 2월 7일에 시작합니다.</strong></p>
+<p>2027년 설 연휴는 2월 6일(토)부터 8일(월)까지이고, 연휴 가운데 설날이 일요일이라 2월 9일(화)이 대체공휴일입니다(한국천문연구원 2027년 달력자료).</p>
+
+<h3>풀이를 읽는 법</h3>
+<p>띠로 보는 신년운세는 같은 띠라면 누구에게나 같은 문장이 나옵니다. 이 쪽의 풀이는 이 사이트가 새로 쓴 것이고, 무엇이 일어난다고 말하지 않습니다. 한 해를 시작하며 챙겨 볼 만한 생활 습관을 띠마다 다섯 줄로 적었습니다.</p>
+<p><strong>【재미로 보는 풀이입니다. 과학적 근거가 없으며 중요한 결정은 스스로 판단하세요.】 돈과 건강에 관한 줄도 생활 습관 이야기일 뿐, 투자나 치료에 관한 조언이 아닙니다.</strong></p>
+
+<h3>자주 헷갈리는 세 가지</h3>
+<p>첫째, 양력 1월생의 띠입니다. 입춘은 언제나 2월 3~5일이라 1월생은 입춘 기준으로 늘 앞 해의 띠입니다. 설날 기준으로도 그해 설날이 오기 전에 태어났다면 앞 해의 띠입니다.</p>
+<p>둘째, 음력 생일을 그대로 넣는 경우입니다. 도구는 양력 생년월일을 받습니다. 음력 날짜를 넣으면 날짜가 한 달 가까이 어긋나 기준일 앞뒤가 뒤바뀔 수 있습니다.</p>
+<p>셋째, 나이로 띠를 거꾸로 세는 경우입니다. 만 나이는 생일에 한 살씩 늘어 띠가 바뀌는 날과 다릅니다. 태어난 연월일로 세는 편이 정확합니다.</p>
+<p class="note">근거 — 설날·입춘 날짜와 해 간지: 한국천문연구원 천문우주지식정보의 음양력 변환 자료(1920~2030년 음력 1월 1일), 24기 입기 시각 자료(1920~2100년, 2026년 9월 2일 판), 2027년 달력자료(자료생성 V1.0a). 띠의 뜻과 열두 띠 차례: 한국민족문화대백과 &quot;띠&quot; 항목. 삼재와 띠 궁합은 원문 근거가 없는 민간 풍습이며, 삼재는 해묘미·사유축·신자진·인오술 묶음 규칙대로 셌습니다. 검색 추이: 네이버 데이터랩(2025년 9월~2026년 9월). 12띠 풀이는 이 사이트가 새로 쓴 문장입니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>2027년은 무슨 띠인가요</dt><dd>정미년(丁未年), 양띠 해입니다. 한국천문연구원 자료로 정미년은 설날 기준 2027년 2월 7일, 입춘 기준 2월 4일 10시 46분에 시작합니다. 같은 정미년은 1967년이었고 다음은 2087년입니다.</dd><dt>2027년 1월이나 2월 초에 태어나면 무슨 띠인가요</dt><dd>1월 1일부터 2월 4일 10시 46분 전까지는 두 기준 모두 말띠(병오년)입니다. 2월 4일 10시 46분 이후부터 2월 6일까지는 입춘으로는 양띠, 설날로는 말띠입니다. 2월 7일부터는 두 기준 모두 양띠입니다.</dd><dt>띠는 설날 기준인가요, 입춘 기준인가요</dt><dd>둘 다 쓰이는 관습이고 정해진 규정은 없습니다. 사주는 태어난 해의 간지를 입춘으로 정하고, 음력으로 해를 세는 풍습은 설날을 씁니다. 두 날짜 사이에 태어났다면 도구가 두 띠를 모두 보여 줍니다.</dd><dt>2027년 삼재띠는 무슨 띠인가요</dt><dd>민간에서 널리 쓰는 셈법으로는 돼지·토끼·양띠이고, 셋 모두 날삼재입니다. 2025년 들삼재, 2026년 눌삼재에 이은 마지막 해로 셉니다. 같은 셈법으로 2028년에는 호랑이·말·개띠가 들삼재입니다. 삼재는 역법이나 법에 근거가 없는 민간 풍습입니다.</dd><dt>1~2월생인데 삼재가 두 가지로 나와요</dt><dd>삼재도 띠로 세기 때문입니다. 설날 기준 띠와 입춘 기준 띠가 다르면 삼재 결과도 달라질 수 있어 도구가 둘을 모두 보여 줍니다. 평소 쓰는 띠 기준에 맞춰 보면 됩니다.</dd><dt>음력 생일만 알아요</dt><dd>도구는 양력 생년월일을 받습니다. 음력 날짜를 그대로 넣으면 한 달 가까이 어긋나 설날·입춘 앞뒤가 바뀔 수 있습니다. 한국천문연구원 음양력 변환 등으로 양력 날짜를 확인한 뒤 넣으세요.</dd><dt>신년운세는 양력 1월 1일에 봐야 하나요</dt><dd>정해진 때는 없습니다. 양력 새해에 찾는 사람이 가장 많지만, 정미년 자체는 입춘(2월 4일)이나 설날(2월 7일)에 시작합니다. 1월에 본 풀이를 설 무렵 다시 읽어 봐도 좋습니다.</dd><dt>띠 궁합도 볼 수 있나요</dt><dd>이 도구는 궁합을 판정하지 않습니다. 띠 궁합은 삼재처럼 원문 근거가 없는 민간 풍습입니다.</dd></dl>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/newyear-2027/">2027년 띠별 운세 — 열두 띠 월별</a></li><li><a href="/newyear-2027/yang/">2027년 양띠 운세</a></li><li><a href="/newyear-2027/samjae/">2027년 삼재띠</a></li><li><a href="/newyear-fortune/">2027 신년운세 — 띠 고르기</a></li><li><a href="/saju-four-pillars/">사주팔자</a></li><li><a href="/fortune/">띠별 운세 달력</a></li></ul>
+</section>
+
+<div class="webftr">
+<a href="../">2027년 띠별 운세 — 열두 띠 총운·월별 보기 →</a>
+<br><a href="../../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../../about.html">사이트 소개</a> · <a href="../../contact.html">문의</a> · <a href="../../privacy.html">개인정보처리방침</a> · <a href="../../terms.html">이용약관</a>
+</div>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "2027년은 무슨 띠인가요", "acceptedAnswer": {"@type": "Answer", "text": "정미년(丁未年), 양띠 해입니다. 한국천문연구원 자료로 정미년은 설날 기준 2027년 2월 7일, 입춘 기준 2월 4일 10시 46분에 시작합니다. 같은 정미년은 1967년이었고 다음은 2087년입니다."}}, {"@type": "Question", "name": "2027년 1월이나 2월 초에 태어나면 무슨 띠인가요", "acceptedAnswer": {"@type": "Answer", "text": "1월 1일부터 2월 4일 10시 46분 전까지는 두 기준 모두 말띠(병오년)입니다. 2월 4일 10시 46분 이후부터 2월 6일까지는 입춘으로는 양띠, 설날로는 말띠입니다. 2월 7일부터는 두 기준 모두 양띠입니다."}}, {"@type": "Question", "name": "띠는 설날 기준인가요, 입춘 기준인가요", "acceptedAnswer": {"@type": "Answer", "text": "둘 다 쓰이는 관습이고 정해진 규정은 없습니다. 사주는 태어난 해의 간지를 입춘으로 정하고, 음력으로 해를 세는 풍습은 설날을 씁니다. 두 날짜 사이에 태어났다면 도구가 두 띠를 모두 보여 줍니다."}}, {"@type": "Question", "name": "2027년 삼재띠는 무슨 띠인가요", "acceptedAnswer": {"@type": "Answer", "text": "민간에서 널리 쓰는 셈법으로는 돼지·토끼·양띠이고, 셋 모두 날삼재입니다. 2025년 들삼재, 2026년 눌삼재에 이은 마지막 해로 셉니다. 같은 셈법으로 2028년에는 호랑이·말·개띠가 들삼재입니다. 삼재는 역법이나 법에 근거가 없는 민간 풍습입니다."}}, {"@type": "Question", "name": "1~2월생인데 삼재가 두 가지로 나와요", "acceptedAnswer": {"@type": "Answer", "text": "삼재도 띠로 세기 때문입니다. 설날 기준 띠와 입춘 기준 띠가 다르면 삼재 결과도 달라질 수 있어 도구가 둘을 모두 보여 줍니다. 평소 쓰는 띠 기준에 맞춰 보면 됩니다."}}, {"@type": "Question", "name": "음력 생일만 알아요", "acceptedAnswer": {"@type": "Answer", "text": "도구는 양력 생년월일을 받습니다. 음력 날짜를 그대로 넣으면 한 달 가까이 어긋나 설날·입춘 앞뒤가 바뀔 수 있습니다. 한국천문연구원 음양력 변환 등으로 양력 날짜를 확인한 뒤 넣으세요."}}, {"@type": "Question", "name": "신년운세는 양력 1월 1일에 봐야 하나요", "acceptedAnswer": {"@type": "Answer", "text": "정해진 때는 없습니다. 양력 새해에 찾는 사람이 가장 많지만, 정미년 자체는 입춘(2월 4일)이나 설날(2월 7일)에 시작합니다. 1월에 본 풀이를 설 무렵 다시 읽어 봐도 좋습니다."}}, {"@type": "Question", "name": "띠 궁합도 볼 수 있나요", "acceptedAnswer": {"@type": "Answer", "text": "이 도구는 궁합을 판정하지 않습니다. 띠 궁합은 삼재처럼 원문 근거가 없는 민간 풍습입니다."}}]}</script>
+</body>
+</html>
