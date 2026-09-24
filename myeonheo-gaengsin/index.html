@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>운전면허 갱신·적성검사 기간 계산: 올해 내가 대상인가</title>
+<meta property="og:title" content="운전면허 갱신·적성검사 기간 계산: 올해 내가 대상인가">
+<meta property="og:description" content="운전면허 갱신은 기준일부터 10년(65세 이상 5년·75세 이상 3년) 되는 해 생일 전후 6개월 안에 합니다. 2026년 바뀐 기간과 1종·2종 적성검사를 계산합니다.">
+<meta name="description" content="운전면허 갱신은 기준일부터 10년(65세 이상 5년·75세 이상 3년) 되는 해 생일 전후 6개월 안에 합니다. 2026년 바뀐 기간과 1종·2종 적성검사를 계산합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/myeonheo-gaengsin/">
+<style>
+:root{--p:#1B5E8C;--pd:#14486B;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FB;--lt:#CFE0EC;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+#app .tool select,#app .tool input[type=number],#app .tool input[type=date],#app .tool input[type=text]{border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+#gb-run,#gc-run{background:var(--p);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+#gc-ey-add{background:#fff;color:var(--p);border:1.5px solid var(--lt);border-radius:10px;cursor:pointer}
+.gb-step{border-left:4px solid var(--lt);background:#F9FBFD;border-radius:8px;padding:10px 12px;margin:10px 0}
+.gb-status-pass{border-left-color:#2E9E5B}.gb-status-fail,.gb-status-over{border-left-color:#E63C46}
+.gb-status-conditional,.gb-status-partial{border-left-color:#E0A100}
+.gb-overall{font-weight:800;font-size:17px;padding:12px 14px;border-radius:10px;background:#EEF5FA;color:var(--pd);margin:12px 0}
+.gb-overall-eligible{background:#EAF7EF;color:#1E7A45}.gb-overall-over,.gb-overall-none{background:#FFF0F0;color:#8A1F26}
+.gb-overall-conditional,.gb-overall-partial{background:#FFF6E5;color:#6B5200}
+.gb-warning{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#6B5200}
+.gb-errors{color:#8A1F26;margin:8px 0 8px 18px}.gb-footer{font-size:12.5px;color:var(--mut);margin-top:12px}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+/* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>운전면허 갱신 기간 계산</h1>
+<p class="desc">운전면허 갱신은 기준일부터 10년(65세 이상 5년·75세 이상 3년) 되는 해 생일 전후 6개월 안에 합니다. 2026년 바뀐 기간과 1종·2종 적성검사를 계산합니다.</p>
+<div class="tool">
+<div id="mh-tool" style="max-width:640px;margin:16px auto;padding:14px;border:1px solid #d5d9e0;border-radius:10px;font-size:16px;line-height:1.6;color:#1f2328;background:#fff;box-sizing:border-box;">
+  <p style="margin:0 0 10px;font-weight:700;font-size:18px;">운전면허 갱신·적성검사 기간 계산</p>
+
+  <label for="mh-kind" style="display:block;font-weight:600;margin-top:8px;">면허 종류</label>
+  <select id="mh-kind" style="width:100%;box-sizing:border-box;font-size:16px;padding:8px;border:1px solid #b8bec8;border-radius:6px;background:#fff;">
+    <option value="">고르세요</option>
+    <option value="1">1종 대형·특수·소형</option>
+    <option value="1b">1종 보통</option>
+    <option value="2">2종(보통·소형·원동기장치자전거)</option>
+  </select>
+  <p style="margin:4px 0 0;font-size:14px;color:#57606a;">면허가 여러 개면 가장 높은 종류를 고르세요(1종이 하나라도 있으면 1종).</p>
+
+  <div id="mh-eye-row" style="display:none;margin-top:8px;">
+    <label style="font-size:15px;"><input type="checkbox" id="mh-eye" style="width:18px;height:18px;vertical-align:-3px;"> 한쪽 눈만 보지 못함</label>
+  </div>
+
+  <label for="mh-birth" style="display:block;font-weight:600;margin-top:12px;">생년월일</label>
+  <input type="date" id="mh-birth" style="width:100%;box-sizing:border-box;font-size:16px;padding:8px;border:1px solid #b8bec8;border-radius:6px;">
+
+  <label for="mh-base" style="display:block;font-weight:600;margin-top:12px;">기준일</label>
+  <input type="date" id="mh-base" style="width:100%;box-sizing:border-box;font-size:16px;padding:8px;border:1px solid #b8bec8;border-radius:6px;">
+  <p style="margin:4px 0 0;font-size:14px;color:#57606a;">마지막으로 면허증을 갱신한 날(1종은 정기 적성검사에 합격해 새 면허증을 받은 날). 한 번도 갱신하지 않았으면 면허시험 합격일.</p>
+
+  <label for="mh-check" style="display:block;font-weight:600;margin-top:12px;">확인일</label>
+  <input type="date" id="mh-check" style="width:100%;box-sizing:border-box;font-size:16px;padding:8px;border:1px solid #b8bec8;border-radius:6px;">
+  <p style="margin:4px 0 0;font-size:14px;color:#57606a;">기본은 오늘입니다.</p>
+
+  <div style="margin-top:12px;">
+    <label style="font-size:15px;"><input type="checkbox" id="mh-defer" style="width:18px;height:18px;vertical-align:-3px;"> 갱신·적성검사 연기를 받은 적 있음</label>
+  </div>
+
+  <button type="button" id="mh-go" style="display:block;width:100%;margin-top:14px;padding:12px;font-size:16px;font-weight:700;color:#fff;background:#1f6feb;border:0;border-radius:8px;cursor:pointer;">계산하기</button>
+
+  <div id="mh-result" aria-live="polite"></div>
+
+  <p id="mh-foot" style="margin:14px 0 0;font-size:14px;color:#57606a;">정확한 기간은 한국도로교통공단 안전운전 통합민원 마이페이지 또는 경찰청 교통민원24에서 조회하세요</p>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /* === 규칙 상수 시작 === 조문 대조로 바뀌는 값은 여기만 고친다(초안 「도구 규칙」 번호) */
+  var MH = {
+    // R5·R5-a·R5-b: 「생일 전후 각각 6개월」 시행일. 도로교통법 부칙 <제21016호> 제1조
+    NEW_LAW_DATE: '2026-01-01',
+    // R2-a: 이 날 전 기준일이면 CYCLES_BEFORE_R2A 표를 쓴다(65세 이상 5년, 75세 이상도 5년)
+    R2A_BEFORE: '2019-01-01',
+    // R2-b: 이 날 전 기준일은 계산하지 않는다
+    R2B_BEFORE: '2011-12-09',
+    // R2: 기준일 만 나이 → 주기(년). 위에서부터 처음 맞는 줄. minAge 0 줄이 기본 주기
+    CYCLES: [
+      { minAge: 75, years: 3 },
+      { minAge: 65, years: 5 },
+      { minAge: 0, years: 10 }
+    ],
+    CYCLES_BEFORE_R2A: [
+      { minAge: 65, years: 5 },
+      { minAge: 0, years: 10 }
+    ],
+    // R2: 한쪽 눈만 보지 못하는 사람으로서 1종 보통
+    CYCLE_ONE_EYE: 3,
+    // R4: 새 기준 기간 = (갱신 연도 생일 − WINDOW_MONTHS개월) + START_OFFSET_DAYS일 ~ 생일 + WINDOW_MONTHS개월
+    WINDOW_MONTHS: 6,
+    START_OFFSET_DAYS: 1,
+    // R6: 2종 정기 적성검사 나이(갱신 기간에 만 70세 이상)
+    APTITUDE_AGE_2: 70,
+    // R7: 교통안전교육(갱신하는 날 만 75세 이상), 교육 시간
+    EDU_AGE: 75,
+    EDU_HOURS: 2,
+    // R10: 과태료(원)
+    FINE_RENEW: 20000,
+    FINE_RENEW_SELF: 16000,
+    FINE_APT: 30000,
+    FINE_APT_SELF: 24000,
+    // R13: 결과 끝 고정 문구(#mh-foot 와 같아야 함)
+    FOOTER: '정확한 기간은 한국도로교통공단 안전운전 통합민원 마이페이지 또는 경찰청 교통민원24에서 조회하세요'
+  };
+  /* === 규칙 상수 끝 === */
+
+  /* ---------- 날짜: 로컬 연·월·일 정수만 쓴다(UTC 변환 없음) ---------- */
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+  function dim(y, m) {
+    if (m === 2) return isLeap(y) ? 29 : 28;
+    return (m === 4 || m === 6 || m === 9 || m === 11) ? 30 : 31;
+  }
+  function isValid(y, m, d) {
+    return Math.floor(y) === y && Math.floor(m) === m && Math.floor(d) === d &&
+      y >= 1000 && y <= 9999 && m >= 1 && m <= 12 && d >= 1 && d <= dim(y, m);
+  }
+  // 그레고리력 날짜 ↔ 일련번호(정수). 시간대와 무관
+  function toDays(y, m, d) {
+    y -= m <= 2 ? 1 : 0;
+    var era = Math.floor(y / 400);
+    var yoe = y - era * 400;
+    var mp = (m + 9) % 12;
+    var doy = Math.floor((153 * mp + 2) / 5) + d - 1;
+    var doe = yoe * 365 + Math.floor(yoe / 4) - Math.floor(yoe / 100) + doy;
+    return era * 146097 + doe - 719468;
+  }
+  function fromDays(z) {
+    z += 719468;
+    var era = Math.floor(z / 146097);
+    var doe = z - era * 146097;
+    var yoe = Math.floor((doe - Math.floor(doe / 1460) + Math.floor(doe / 36524) - Math.floor(doe / 146096)) / 365);
+    var doy = doe - (365 * yoe + Math.floor(yoe / 4) - Math.floor(yoe / 100));
+    var mp = Math.floor((5 * doy + 2) / 153);
+    var d = doy - Math.floor((153 * mp + 2) / 5) + 1;
+    var m = mp < 10 ? mp + 3 : mp - 9;
+    return { y: yoe + era * 400 + (m <= 2 ? 1 : 0), m: m, d: d };
+  }
+  function dn(o) { return toDays(o.y, o.m, o.d); }
+  function iso(o) { return o.y + '-' + pad2(o.m) + '-' + pad2(o.d); }
+  function isoN(n) { return iso(fromDays(n)); }
+  // 달 더하기. 결과 달에 같은 날이 없으면 그 달 말일(clamped=true)
+  function addMonths(y, m, d, k) {
+    var t = y * 12 + (m - 1) + k;
+    var ny = Math.floor(t / 12);
+    var nm = t - ny * 12 + 1;
+    var last = dim(ny, nm);
+    return { y: ny, m: nm, d: Math.min(d, last), clamped: d > last };
+  }
+  // R1: 만 나이(행정기본법 제7조의2). 생일(2월 29일생은 평년 3월 1일)에 한 살 는다
+  function ageOn(b, t) {
+    var a = t.y - b.y;
+    if (t.m < b.m || (t.m === b.m && t.d < b.d)) a--;
+    return a;
+  }
+  // 만 N세가 되는 날
+  function ageReach(b, n) {
+    var y = b.y + n;
+    return isValid(y, b.m, b.d) ? { y: y, m: b.m, d: b.d } : { y: y, m: 3, d: 1 };
+  }
+  function parseDate(v) {
+    if (v === null || v === undefined || v === '') return null;
+    if (Object.prototype.toString.call(v) === '[object Date]') {
+      if (isNaN(v.getTime())) return null;
+      return { y: v.getFullYear(), m: v.getMonth() + 1, d: v.getDate() };
+    }
+    if (typeof v === 'object') {
+      return isValid(v.y, v.m, v.d) ? { y: v.y, m: v.m, d: v.d } : null;
+    }
+    var mt = /^\s*(\d{4})\s*[-.\/년]?\s*(\d{1,2})\s*[-.\/월]?\s*(\d{1,2})\s*[.일]?\s*$/.exec(String(v));
+    if (!mt) return null;
+    var y = +mt[1], m = +mt[2], d = +mt[3];
+    return isValid(y, m, d) ? { y: y, m: m, d: d } : null;
+  }
+  function statusOf(s, e, t) { return t < s ? 'before' : (t > e ? 'after' : 'in'); }
+
+  /* ---------- 주기(R2, R2-a) ---------- */
+  function cycleByAge(age, dateN) {
+    var table = dateN < dn(parseDate(MH.R2A_BEFORE)) ? MH.CYCLES_BEFORE_R2A : MH.CYCLES;
+    for (var i = 0; i < table.length; i++) {
+      if (age >= table[i].minAge) return { years: table[i].years, ageRule: table[i].minAge > 0, preR2A: table === MH.CYCLES_BEFORE_R2A };
+    }
+    return { years: table[table.length - 1].years, ageRule: false, preR2A: table === MH.CYCLES_BEFORE_R2A };
+  }
+  function cycleFor(age, dateN, oneEye1b) {
+    var byAge = cycleByAge(age, dateN);
+    if (oneEye1b) {
+      return {
+        years: MH.CYCLE_ONE_EYE, rule: 'R2-eye', preR2A: byAge.preR2A,
+        conflict: byAge.ageRule && byAge.years !== MH.CYCLE_ONE_EYE, ageYears: byAge.years
+      };
+    }
+    return { years: byAge.years, rule: (byAge.preR2A && byAge.ageRule) ? 'R2-a' : 'R2', preR2A: byAge.preR2A, conflict: false, ageYears: byAge.years };
+  }
+
+  /* ---------- 판정(순수 함수): today 는 확인일('YYYY-MM-DD' | {y,m,d} | Date) ---------- */
+  function mhCalc(input, today) {
+    input = input || {};
+    var res = { ok: false, code: '', errors: [], notes: [], footer: MH.FOOTER };
+
+    if (input.deferred) {
+      res.code = 'DEFERRED';
+      res.message = '연기를 받았다면 갱신 기간이 연기 결과에 따라 달라지므로 계산하지 않습니다. 연기사실확인서에 적힌 기간을 확인하거나 공단에서 조회하세요.';
+      return res;
+    }
+
+    var kind = input.kind;
+    if (kind !== '1' && kind !== '1b' && kind !== '2') res.errors.push('면허 종류를 고르세요.');
+    var b = parseDate(input.birth);
+    var base = parseDate(input.base);
+    var t = parseDate(today);
+    if (!b) res.errors.push('생년월일을 날짜로 넣으세요.');
+    if (!base) res.errors.push('기준일을 날짜로 넣으세요.');
+    if (!t) res.errors.push('확인일을 날짜로 넣으세요.');
+    if (b && base && dn(base) <= dn(b)) res.errors.push('기준일이 생년월일보다 앞이거나 같습니다.');
+    if (base && t && dn(base) > dn(t)) res.errors.push('기준일이 확인일보다 뒤입니다. 이미 지난 날짜를 넣으세요.');
+    if (res.errors.length) { res.code = 'INPUT'; return res; }
+
+    var baseN = dn(base), tN = dn(t);
+    var law = parseDate(MH.NEW_LAW_DATE), lawN = dn(law);
+    var r2bN = dn(parseDate(MH.R2B_BEFORE));
+
+    // R2-b
+    if (baseN < r2bN) {
+      res.code = 'PRE_R2B';
+      res.message = '기준일이 ' + fmtK(MH.R2B_BEFORE) + ' 전이면 계산하지 않습니다. 면허증에 적힌 기간을 따르며(공단 안내), 이미 지난 기간일 수 있으니 공단에서 조회하세요.';
+      return res;
+    }
+
+    var oneEye1b = kind === '1b' && !!input.oneEye;
+    // R1
+    var baseAge = ageOn(b, base);
+    // R2, R2-a
+    var cyc = cycleFor(baseAge, baseN, oneEye1b);
+    // R3
+    var Y = base.y + cyc.years;
+
+    var transitional = baseN < lawN;          // R5
+    var oldOnly = Y < law.y;                  // R5-b
+    var periods = { newStd: null, oldStd: null, shown: null };
+
+    if (!oldOnly) {
+      // R4
+      var s6 = addMonths(Y, b.m, b.d, -MH.WINDOW_MONTHS);
+      var e6 = addMonths(Y, b.m, b.d, MH.WINDOW_MONTHS);
+      var nsN = dn(s6) + MH.START_OFFSET_DAYS;
+      var neN = dn(e6);
+      var clipped = false;
+      // R5-a
+      if (nsN < lawN) { nsN = lawN; clipped = true; }
+      var feb29 = b.m === 2 && b.d === 29 && !isLeap(Y);
+      periods.newStd = {
+        start: isoN(nsN), end: isoN(neN), clippedToLaw: clipped,
+        startUnclear: (s6.clamped || feb29) && !clipped,
+        endUnclear: e6.clamped || feb29,
+        feb29: feb29
+      };
+      periods.newStd._s = nsN; periods.newStd._e = neN;
+    }
+    if (transitional || oldOnly) {
+      var osN = toDays(Y, 1, 1), oeN = toDays(Y, 12, 31);
+      periods.oldStd = { start: isoN(osN), end: isoN(oeN), _s: osN, _e: oeN };
+    }
+    var sN, eN, regime;
+    if (oldOnly) {                             // R5-b
+      regime = 'old'; sN = periods.oldStd._s; eN = periods.oldStd._e;
+    } else if (transitional) {                 // R5: 합친 범위
+      regime = 'transitional';
+      sN = Math.min(periods.newStd._s, periods.oldStd._s);
+      eN = Math.max(periods.newStd._e, periods.oldStd._e);
+    } else {
+      regime = 'new'; sN = periods.newStd._s; eN = periods.newStd._e;
+    }
+    periods.shown = { start: isoN(sN), end: isoN(eN) };
+
+    // R8
+    var status = statusOf(sN, eN, tN);
+    res.status = status;
+    res.daysToStart = status === 'before' ? sN - tN : null;
+    res.daysLeft = status === 'in' ? eN - tN : null;
+    res.daysPast = status === 'after' ? tN - eN : null;
+    res.periodStatus = {
+      newStd: periods.newStd ? statusOf(periods.newStd._s, periods.newStd._e, tN) : null,
+      oldStd: periods.oldStd ? statusOf(periods.oldStd._s, periods.oldStd._e, tN) : null
+    };
+
+    // R4-a 조회 표시
+    if (periods.newStd) {
+      var ns = periods.newStd;
+      var shownHit = (ns.startUnclear && ns._s === sN) || (ns.endUnclear && ns._e === eN);
+      if (ns.feb29) {
+        res.notes.push({ code: 'FEB29', shown: shownHit, text: '2월 29일 생일인데 갱신 연도가 평년이라 그해 생일 날짜가 없습니다. 새 기준 기간의 시작일·끝일이 며칠 차이 날 수 있으니 공단에서 조회하세요.' });
+      } else if (ns.startUnclear || ns.endUnclear) {
+        res.notes.push({ code: 'R4-a', shown: shownHit, text: '생일이 달 끝이라 6개월 앞뒤 달에 같은 날이 없습니다. 새 기준 기간이 하루 차이 날 수 있으니 공단에서 조회하세요.' });
+      }
+    }
+    if (cyc.conflict) {
+      res.notes.push({ code: 'ONE_EYE_AGE', shown: true, text: '한쪽 눈 기준(' + MH.CYCLE_ONE_EYE + '년)과 나이 기준(' + cyc.ageYears + '년)이 함께 걸립니다. 조문이 어느 쪽을 먼저 쓰는지 정하지 않아 ' + MH.CYCLE_ONE_EYE + '년으로 계산했습니다. 공단에서 조회하세요.' });
+    }
+
+    // R6 적성검사, R7 교육: 표시 기간 시작일·끝일의 만 나이
+    var sD = fromDays(sN), eD = fromDays(eN);
+    var ageS = ageOn(b, sD), ageE = ageOn(b, eD);
+    var apt;
+    if (kind === '1' || kind === '1b') apt = 'yes';
+    else if (ageS >= MH.APTITUDE_AGE_2) apt = 'yes';
+    else if (ageE >= MH.APTITUDE_AGE_2) apt = 'maybe';
+    else apt = 'no';
+    var edu;
+    if (ageS >= MH.EDU_AGE) edu = 'yes';
+    else if (ageE >= MH.EDU_AGE) edu = 'maybe';
+    else edu = 'no';
+
+    // R9
+    var thisYear = sN <= toDays(t.y, 12, 31) && eN >= toDays(t.y, 1, 1);
+
+    // R10, R11
+    var fines = null, cancelFrom = null;
+    if (status === 'after') {
+      fines = [];
+      if (apt !== 'no') fines.push({ kind: 'aptitude', amount: MH.FINE_APT, selfPay: MH.FINE_APT_SELF });
+      if (apt !== 'yes') fines.push({ kind: 'renew', amount: MH.FINE_RENEW, selfPay: MH.FINE_RENEW_SELF });
+      if (apt !== 'no') cancelFrom = isoN(eN + 1);
+    }
+
+    // R12 다음 주기: 갱신하는 날(표시 기간 안)의 나이로
+    var nx = [];
+    [[ageS, sN], [ageE, eN]].forEach(function (p) {
+      var c = cycleFor(p[0], p[1], oneEye1b).years;
+      if (nx.indexOf(c) < 0) nx.push(c);
+    });
+
+    res.ok = true;
+    res.code = 'OK';
+    res.kind = kind;
+    res.checkDate = iso(t);
+    res.checkYear = t.y;
+    res.baseAge = baseAge;
+    res.cycle = cyc.years;
+    res.cycleRule = cyc.rule;
+    res.renewYear = Y;
+    res.regime = regime;
+    res.periods = {
+      newStd: periods.newStd ? {
+        start: periods.newStd.start, end: periods.newStd.end, clippedToLaw: periods.newStd.clippedToLaw,
+        startUnclear: periods.newStd.startUnclear, endUnclear: periods.newStd.endUnclear
+      } : null,
+      oldStd: periods.oldStd ? { start: periods.oldStd.start, end: periods.oldStd.end } : null,
+      shown: periods.shown
+    };
+    res.ageAtStart = ageS;
+    res.ageAtEnd = ageE;
+    res.aptitude = apt;
+    res.aptitudeAgeDate = apt === 'maybe' ? iso(ageReach(b, MH.APTITUDE_AGE_2)) : null;
+    res.education = edu;
+    res.educationAgeDate = edu === 'maybe' ? iso(ageReach(b, MH.EDU_AGE)) : null;
+    res.thisYear = thisYear;
+    res.fines = fines;
+    res.cancelFrom = cancelFrom;
+    res.nextCycle = nx;
+    return res;
+  }
+
+  /* ---------- 화면 ---------- */
+  function fmtK(s) {
+    var p = String(s).split('-');
+    return +p[0] + '년 ' + +p[1] + '월 ' + +p[2] + '일';
+  }
+  function won(n) {
+    var man = Math.floor(n / 10000), rest = n % 10000, ch = Math.floor(rest / 1000), r = rest % 1000;
+    return (man ? man + '만' : '') + (ch ? ch + '천' : '') + (r ? r : '') + (n ? '' : '0') + '원';
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function nextText() {
+    var rows = MH.CYCLES, parts = [];
+    for (var i = 0; i < rows.length - 1; i++) {
+      var hi = i > 0 ? rows[i - 1].minAge : null;
+      parts.push((hi ? rows[i].minAge + '세 이상 ' + hi + '세 미만' : rows[i].minAge + '세 이상') + '이면 다음은 ' + rows[i].years + '년 뒤');
+    }
+    parts.reverse();
+    return '이번에 갱신하는 날 ' + parts.join(', ') + ', 그 외 ' + rows[rows.length - 1].years + '년 뒤입니다.';
+  }
+  var SHORT = { before: '아직', 'in': '기간 안', after: '지남' };
+  var P = 'margin:10px 0 0;';
+
+  function render(r) {
+    var box = '<div style="margin-top:14px;padding:12px;border:1px solid #d5d9e0;border-radius:8px;background:#f6f8fa;">';
+    if (!r.ok) {
+      if (r.code === 'INPUT') {
+        return box + '<p style="margin:0;font-weight:700;color:#cf222e;">입력을 확인하세요</p><ul style="margin:6px 0 0;padding-left:20px;">' +
+          r.errors.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') + '</ul></div>';
+      }
+      return box + '<p style="margin:0;font-weight:700;">계산하지 않습니다</p><p style="' + P + '">' + esc(r.message) + '</p></div>';
+    }
+    var sh = r.periods.shown, h = [];
+    var color = { before: '#57606a', 'in': '#1a7f37', after: '#cf222e' }[r.status];
+    var title = { before: '아직 갱신 기간이 아닙니다', 'in': '지금 갱신 기간입니다', after: '갱신 기간이 지났습니다' }[r.status];
+    var sub;
+    if (r.status === 'before') sub = fmtK(sh.start) + '부터입니다. 시작까지 ' + r.daysToStart + '일 남았습니다.';
+    else if (r.status === 'in') sub = r.daysLeft === 0 ? '오늘이 마지막 날입니다.' : '끝나는 날까지 ' + r.daysLeft + '일 남았습니다.';
+    else sub = fmtK(sh.end) + '에 끝났고, ' + r.daysPast + '일 지났습니다.';
+    h.push('<p style="margin:0;font-weight:700;font-size:18px;color:' + color + ';">' + title + '</p>');
+    h.push('<p style="margin:2px 0 0;">' + esc(sub) + ' <span style="color:#57606a;font-size:14px;">(확인일 ' + fmtK(r.checkDate) + ')</span></p>');
+
+    var flag = '';
+    r.notes.forEach(function (n) {
+      if (n.shown && n.code === 'R4-a') flag = '하루 차이가 날 수 있음, 공단 조회';
+      if (n.shown && n.code === 'FEB29') flag = '며칠 차이가 날 수 있음, 공단 조회';
+    });
+    h.push('<p style="' + P + '"><b>내 갱신 기간</b><br>' + fmtK(sh.start) + ' ~ ' + fmtK(sh.end) +
+      (flag ? ' <span style="color:#9a6700;font-size:14px;">(' + flag + ')</span>' : '') + '</p>');
+    h.push('<p style="margin:4px 0 0;">' + r.checkYear + '년 갱신 대상: <b>' + (r.thisYear ? '예' : '아니오') + '</b></p>');
+
+    if (r.regime === 'transitional') {
+      var ns = r.periods.newStd, os = r.periods.oldStd;
+      var nFlag = ns.startUnclear || ns.endUnclear;
+      h.push('<div style="' + P + 'padding:10px;border-left:4px solid #1f6feb;background:#fff;">' +
+        '<b>두 기간 중 하나를 따릅니다(경과조치)</b>' +
+        '<p style="margin:4px 0 0;font-size:15px;">기준일이 ' + fmtK(MH.NEW_LAW_DATE) + ' 전이라 이번 첫 갱신은 새 기준과 종전 기준 중 하나를 따릅니다(도로교통법 부칙 &lt;제21016호&gt; 제2조). 위 기간은 공단 안내대로 두 기간을 합친 범위입니다.</p>' +
+        '<ul style="margin:6px 0 0;padding-left:20px;font-size:15px;">' +
+        '<li>새 기준(생일 전후 6개월): ' + fmtK(ns.start) + ' ~ ' + fmtK(ns.end) +
+          (ns.clippedToLaw ? ' <span style="color:#57606a;">(새 기준 시행일부터)</span>' : '') +
+          (nFlag ? ' <span style="color:#9a6700;">(공단 조회)</span>' : '') + ' — ' + SHORT[r.periodStatus.newStd] + '</li>' +
+        '<li>종전 기준(1월 1일~12월 31일): ' + fmtK(os.start) + ' ~ ' + fmtK(os.end) + ' — ' + SHORT[r.periodStatus.oldStd] + '</li>' +
+        '</ul>' +
+        '<p style="margin:6px 0 0;font-size:15px;">갱신 연도의 1월 1일부터 12월 31일 사이에 마치면 종전 기준으로도 맞습니다. ' + fmtK(MH.NEW_LAW_DATE) + ' 전에 받은 면허증에 적힌 기간은 실제 법적 기간과 다를 수 있습니다(공단 안내).</p></div>');
+    } else if (r.regime === 'old') {
+      h.push('<p style="' + P + 'font-size:15px;">갱신 연도가 새 기준 시행(' + fmtK(MH.NEW_LAW_DATE) + ') 전이라 종전 방식(그해 1월 1일~12월 31일) 기간입니다.</p>');
+    }
+
+    var eye = r.cycleRule === 'R2-eye' ? ' (한쪽 눈만 보지 못하는 1종 보통)' : (r.cycleRule === 'R2-a' ? ' (기준일이 ' + fmtK(MH.R2A_BEFORE) + ' 전이라 그때 기준)' : '');
+    h.push('<p style="' + P + '"><b>계산 근거</b><br>기준일 당시 만 ' + r.baseAge + '세 → 주기 ' + r.cycle + '년' + eye + ' → 갱신 연도 ' + r.renewYear + '년</p>');
+
+    var todo = [];
+    if (r.aptitude === 'yes') todo.push(r.kind === '2' ? '정기 적성검사를 받아야 합니다(2종, 기간 시작일에 만 ' + r.ageAtStart + '세).' : '정기 적성검사를 받아야 합니다(1종). 합격하면 새 면허증이 나옵니다.');
+    else if (r.aptitude === 'maybe') todo.push('갱신 기간 도중 만 ' + MH.APTITUDE_AGE_2 + '세가 됩니다(' + fmtK(r.aptitudeAgeDate) + '). 정기 적성검사 대상일 수 있으니 공단에서 조회하세요.');
+    else todo.push('면허증 갱신만 하면 됩니다(적성검사 없음).');
+    if (r.education === 'yes') todo.push('갱신하는 날 만 ' + MH.EDU_AGE + '세 이상이므로 교통안전교육(' + MH.EDU_HOURS + '시간)을 갱신 기간 안에 먼저 받아야 합니다.');
+    else if (r.education === 'maybe') todo.push('갱신 기간 도중 만 ' + MH.EDU_AGE + '세가 됩니다(' + fmtK(r.educationAgeDate) + '). 갱신하는 날 ' + MH.EDU_AGE + '세 이상이면 교통안전교육(' + MH.EDU_HOURS + '시간)이 필요합니다.');
+    h.push('<p style="' + P + '"><b>갱신 기간에 할 일</b></p><ul style="margin:4px 0 0;padding-left:20px;">' +
+      todo.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>');
+
+    if (r.status === 'after') {
+      var fl = r.fines.map(function (f) {
+        var what = f.kind === 'aptitude' ? '정기 적성검사를 받지 않음' : '갱신 기간에 면허증을 갱신하지 않음';
+        var pre = r.fines.length > 1 ? (f.kind === 'aptitude' ? '적성검사 대상이면' : '대상이 아니면') : '';
+        return '<li>' + (pre ? pre + '(' + what + ')' : what) + ': 과태료 ' + won(f.amount) + '(의견 제출 기한 안에 자진 납부하면 ' + won(f.selfPay) + ')</li>';
+      }).join('');
+      h.push('<p style="' + P + '"><b>기간이 지났을 때</b></p><ul style="margin:4px 0 0;padding-left:20px;">' + fl + '</ul>');
+      if (r.cancelFrom) {
+        h.push('<p style="margin:6px 0 0;color:#cf222e;">' + (r.aptitude === 'maybe' ? '적성검사 대상이라면, ' : '') +
+          '기간 끝 다음 날(' + fmtK(r.cancelFrom) + ')부터 적성검사를 받지 않고 1년을 넘기면 면허가 취소됩니다.</p>');
+      }
+      h.push('<p style="margin:6px 0 0;font-size:14px;color:#57606a;">이 기간 안에 이미 갱신했다면 그 갱신일을 기준일로 넣고 다시 계산하세요.</p>');
+    }
+
+    var nxt;
+    if (r.nextCycle.length === 1) {
+      nxt = '기간 안에 갱신하면 다음 갱신 기간은 그 갱신일부터 ' + r.nextCycle[0] + '년이 되는 해에 돌아옵니다' +
+        (r.cycleRule === 'R2-eye' ? '(한쪽 눈 기준).' : '(갱신하는 날 만 ' + r.ageAtStart + (r.ageAtEnd !== r.ageAtStart ? '~' + r.ageAtEnd : '') + '세 기준).');
+    } else {
+      nxt = nextText();
+    }
+    h.push('<p style="' + P + '"><b>다음 주기</b><br>' + esc(nxt) + '</p>');
+
+    if (r.notes.length) {
+      h.push('<p style="' + P + 'font-weight:700;color:#9a6700;">조회 권장</p><ul style="margin:4px 0 0;padding-left:20px;color:#9a6700;font-size:15px;">' +
+        r.notes.map(function (n) { return '<li>' + esc(n.text) + '</li>'; }).join('') + '</ul>');
+    }
+    h.push('<p style="' + P + 'font-size:14px;color:#57606a;">' + esc(r.footer) + '</p>');
+    return box + h.join('') + '</div>';
+  }
+
+  if (typeof document !== 'undefined') {
+    var g = function (id) { return document.getElementById(id); };
+    var elKind = g('mh-kind'), elEyeRow = g('mh-eye-row'), elEye = g('mh-eye'), elBirth = g('mh-birth'),
+      elBase = g('mh-base'), elCheck = g('mh-check'), elDefer = g('mh-defer'), elGo = g('mh-go'), elOut = g('mh-result');
+    if (elKind && elGo && elOut) {
+      var localToday = function () { var n = new Date(); return iso({ y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }); };
+      if (elCheck && !elCheck.value) elCheck.value = localToday();
+      var syncEye = function () {
+        var on = elKind.value === '1b';
+        if (elEyeRow) elEyeRow.style.display = on ? '' : 'none';
+        if (!on && elEye) elEye.checked = false;
+      };
+      elKind.addEventListener('change', syncEye);
+      syncEye();
+      elGo.addEventListener('click', function () {
+        var r = mhCalc({
+          kind: elKind.value,
+          oneEye: elEye ? elEye.checked : false,
+          birth: elBirth ? elBirth.value : '',
+          base: elBase ? elBase.value : '',
+          deferred: elDefer ? elDefer.checked : false
+        }, (elCheck && elCheck.value) || localToday());
+        elOut.innerHTML = render(r);
+      });
+    }
+  }
+
+  if (typeof module!=='undefined') module.exports={mhCalc};
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031250,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>운전면허 갱신 기간 계산</h2>
+<h3>10초 요약</h3>
+<p><strong>【운전면허 갱신은 기준일부터 10년이 되는 해의 내 생일 앞뒤 6개월 안에 합니다.】 기준일은 직전에 면허증을 갱신한 날이고, 처음이면 면허시험 합격일입니다.</strong></p>
+<p>기준일에 65세 이상 75세 미만이었다면 5년, 75세 이상이었다면 3년마다 돌아옵니다. 1종 면허와, 갱신 기간에 70세 이상인 2종 면허는 같은 기간 안에 정기 적성검사도 받아야 합니다. 도로교통법 제87조입니다.</p>
+<p><strong>【2026년 1월 1일부터 기간이 바뀌었습니다.】 예전에는 갱신 연도의 1월 1일부터 12월 31일까지였고, 지금은 생일 전후 각각 6개월입니다. 2026년 전에 면허증을 받은 사람은 첫 갱신 때 두 기간 중 하나를 따릅니다.</strong></p>
+
+<h3>내 갱신 기간 찾는 4단계</h3>
+<ul class="blist"><li>1. 기준일을 찾습니다 — 직전에 면허증을 갱신한 날입니다. 1종은 정기 적성검사에 합격하면 새 면허증이 나오므로(시행령 제54조제2항) 그날이 갱신일입니다. 한 번도 갱신한 적이 없으면 면허시험 합격일입니다</li><li>2. 기준일의 만 나이로 주기를 정합니다 — 65세 미만 10년, 65세 이상 75세 미만 5년, 75세 이상 3년</li><li>3. 갱신 연도 = 기준일의 연도 + 주기 — 법 문구는 &quot;10년이 되는 날이 속하는 해&quot;입니다</li><li>4. 그해 생일 전후 각각 6개월 이내가 갱신 기간입니다 — 기준일이 2026년 1월 1일 전이면 그해 1월 1일부터 12월 31일까지도 인정됩니다</li></ul>
+<p>공식 기록과 맞춰 보려면 한국도로교통공단 안전운전 통합민원 마이페이지나 경찰청교통민원24에서 본인 기간을 조회하면 됩니다.</p>
+
+<h3>갱신 주기는 기준일의 나이로 정해집니다</h3>
+<div class="tblx"><table><caption>운전면허 갱신 주기 (도로교통법 제87조제1항)</caption><thead><tr><th>기준일(합격일 또는 직전 갱신일)의 나이</th><th>다음 갱신까지</th></tr></thead><tbody><tr><th scope="row">65세 미만</th><td>10년</td></tr><tr><th scope="row">65세 이상 75세 미만</th><td>5년</td></tr><tr><th scope="row">75세 이상</th><td>3년</td></tr><tr><th scope="row">한쪽 눈만 보지 못하는 사람으로서 1종 보통면허</th><td>3년</td></tr></tbody></table></div>
+<p>주기는 1종과 2종이 같습니다. <strong>【&quot;65세가 넘으면 5년마다&quot;가 아닙니다.】 법은 갱신하는 해의 나이가 아니라 기준일의 나이를 봅니다.</strong> 64세에 갱신한 사람의 다음 갱신은 10년 뒤이고, 그때 74세로 갱신하면 그다음부터 5년이 됩니다.</p>
+
+<h3>누가 무엇을 하나</h3>
+<p>운전면허를 받은 사람은 모두 갱신 대상입니다. 2종에는 보통·소형·원동기장치자전거면허가 들어가므로(법 제80조제2항) 원동기 면허만 가진 사람도 갱신해야 합니다.</p>
+<div class="tblx"><table><caption>면허 종류별로 갱신 기간에 할 일 (도로교통법 제87조제2항, 제73조제5항)</caption><thead><tr><th>구분</th><th>갱신 기간에 할 일</th></tr></thead><tbody><tr><th scope="row">1종(대형·보통·소형·특수)</th><td>정기 적성검사, 합격하면 새 면허증</td></tr><tr><th scope="row">2종, 갱신 기간에 70세 미만</th><td>면허증 갱신만(적성검사 없음)</td></tr><tr><th scope="row">2종, 갱신 기간에 70세 이상</th><td>정기 적성검사</td></tr><tr><th scope="row">갱신하는 날 75세 이상</th><td>위에 더해 교통안전교육 2시간을 갱신 기간 안에</td></tr></tbody></table></div>
+<p>법 제87조제3항은 적성검사를 받지 않았거나 불합격한 사람, 75세 이상인데 교통안전교육을 받지 않은 사람은 면허증을 갱신받을 수 없다고 정합니다.</p>
+
+<h3>갱신 기간 — 생일 전후 각각 6개월</h3>
+<p>갱신 연도에 돌아오는 내 생일을 가운데 두고 앞뒤 각각 6개월 안입니다. 이 기준은 2026년 1월 1일부터 시행됐습니다(도로교통법 부칙 제21016호 제1조).</p>
+<p>한국도로교통공단은 생일이 10월 1일인 사람을 예로 들어 기간을 4월 2일부터 다음 해 4월 1일까지로 안내합니다. 법 조문은 &quot;생일 전후 각각 6개월 이내&quot;까지만 정하므로, 29·30·31일 생일처럼 날짜가 애매하면 공단 조회로 확인하는 것이 안전합니다.</p>
+<p><strong>【기간이 한 해 안에 들지 않습니다.】 생일이 1~6월이면 갱신 연도의 전해에 시작하고, 7~12월이면 다음 해에 끝납니다.</strong> 예전(1월 1일~12월 31일)과 가장 크게 다른 점입니다.</p>
+
+<h3>2026년 전에 면허증을 받았다면 두 기간 중 하나</h3>
+<p>도로교통법 부칙 제21016호 제2조입니다. &quot;이 법 시행 전에 운전면허증을 발급받은 사람이 이 법 시행 후 처음 운전면허증을 갱신하여 발급받는 경우&quot; 다음 둘 중 하나에 따릅니다.</p>
+<ul class="blist"><li>새 기준 — 갱신 연도의 생일 전후 각각 6개월 이내</li><li>종전 기준 — 갱신 연도의 1월 1일부터 12월 31일까지</li></ul>
+<p>공단은 이것을 두 기간을 합친 범위로 안내합니다. 생일이 10월 1일인 2026년 대상자라면 2026년 1월 1일부터 2027년 4월 1일까지입니다. <strong>【갱신 연도의 12월 31일 안에 마치면 어느 해석으로도 맞습니다.】</strong></p>
+<p>공단은 2026년 전에 받은 면허증에 적힌 갱신 기간이 실제 법적 기간과 다를 수 있다고도 안내합니다. 면허증에 적힌 날짜만 보고 판단하지 마세요.</p>
+
+<h3>계산 예시 — 생일이 모두 10월 1일일 때</h3>
+<div class="tblx"><table><caption>운전면허 갱신 기간 계산 예시</caption><thead><tr><th>사례</th><th>기준일과 그때 나이</th><th>주기</th><th>갱신 기간</th><th>함께 할 일</th></tr></thead><tbody><tr><th scope="row">2종, 1985년생</th><td>2017년 5월 갱신, 31세</td><td>10년</td><td>2027.1.1.~2028.4.1.(두 기준을 합친 범위)</td><td>갱신만</td></tr><tr><th scope="row">1종 보통, 1958년생</th><td>2021년 3월 적성검사, 62세</td><td>10년</td><td>2031.1.1.~2032.4.1.(합친 범위)</td><td>정기 적성검사</td></tr><tr><th scope="row">2종, 1950년생</th><td>2023년 6월 갱신, 72세</td><td>5년</td><td>2028.1.1.~2029.4.1.(합친 범위)</td><td>정기 적성검사와 교통안전교육</td></tr><tr><th scope="row">2종, 1990년생</th><td>2026년 5월 합격, 35세</td><td>10년</td><td>2036.4.2.~2037.4.1.(새 기준만)</td><td>갱신만</td></tr></tbody></table></div>
+<p>두 번째 사례는 2031년에 72~73세가 되지만 기준일에 65세 미만이었으므로 주기는 10년입니다. 세 번째는 기준일에 72세라 5년이고, 2028년에 갱신하는 날 75세 이상이므로 그다음 주기는 3년이 됩니다. 네 번째는 기준일이 2026년 이후라 종전 기준이 적용되지 않습니다.</p>
+
+<h3>안 하면 — 과태료</h3>
+<div class="tblx"><table><caption>운전면허 갱신·적성검사 과태료 (시행령 별표 6, 시행규칙 별표 39)</caption><thead><tr><th>위반</th><th>과태료</th><th>자진 납부 시</th></tr></thead><tbody><tr><th scope="row">갱신 기간에 면허증을 갱신하지 않음</th><td>2만원</td><td>1만6천원</td></tr><tr><th scope="row">정기 적성검사를 받지 않음</th><td>3만원</td><td>2만4천원</td></tr></tbody></table></div>
+<p>법 제160조제2항의 &quot;20만원 이하&quot;는 상한이고, 실제 부과 기준은 위 금액입니다. 자진 납부 20% 감경은 사전 통지를 받고 의견 제출 기한 안에 스스로 낼 때 적용됩니다(질서위반행위규제법 제18조제1항). 납부 기한을 넘기면 3%의 가산금이 붙고, 그 뒤 1개월이 지날 때마다 1.2%가 더해집니다(같은 법 제24조, 60개월까지).</p>
+
+<h3>안 하면 — 적성검사 대상은 면허 취소</h3>
+<p><strong>【적성검사 기간 만료일 다음 날부터 1년을 넘기면 면허가 취소됩니다.】</strong> 법 제93조제1항제9호와 시행규칙 별표 28 제2호 일련번호 7입니다. 적성검사 대상은 1종 전체와 갱신 기간에 70세 이상인 2종입니다. 법 제93조제4항 단서에 따라 시·도경찰청장은 &quot;기한까지 적성검사를 받지 않으면 취소된다&quot;는 조건부 통지로 처분 전후의 통지를 갈음할 수 있습니다.</p>
+<p>취소된 뒤 운전하면 무면허 운전입니다(법 제43조). 다시 받으려면 시험을 봐야 하는데, 적성검사를 받지 않아 취소된 뒤 5년 안이면 취소된 면허로 운전할 수 있던 범위의 면허에 대해 기능시험과 도로주행시험이 면제됩니다. 도로주행 면제는 1종 보통이나 2종 보통면허를 받으려는 경우에만 해당합니다(시행령 별표 3 제5호).</p>
+<p>적성검사 대상이 아닌 70세 미만 2종이 갱신을 놓친 경우는 취소 사유(적성검사 미수검)가 아니고 과태료 대상입니다. 공단도 갱신을 하지 않은 사유로 정지·취소하는 처분은 2011년 12월 9일부터 없어졌다고 안내합니다.</p>
+
+<h3>어디서, 무엇을 들고</h3>
+<ul class="blist"><li>어디서 — 전국 운전면허시험장 또는 경찰서 교통민원실. 이 업무를 하지 않는 경찰서도 있으니 가기 전에 확인하세요. 2종 면허 갱신은 안전운전 통합민원에서 인터넷으로도 접수할 수 있고, 면허증 수령은 본인만 할 수 있습니다(공단 안내)</li><li>수수료 — 법 제139조가 한국도로교통공단이 경찰청장 승인을 받아 정해 공고하도록 합니다. 신청 전에 공단 누리집에서 확인하세요</li><li>2종 갱신 — 신청서, 사진 1장, 신분증명서(시행규칙 제81조제1항). 원하면 지문 대조로 본인 확인을 할 수 있고, 새 면허증을 받을 때 기존 면허증을 반납합니다</li><li>정기 적성검사 — 신청서, 사진 2장, 신분증명서, 질병·신체에 관한 신고서(1종 보통·2종) 또는 병력신고서(1종 대형·특수·소형), 그리고 신청일부터 2년 이내에 발급된 신체검사서·건강검진 결과 통보서·의사 진단서·병역판정 신체검사 결과 통보서 중 하나(시행규칙 제82조제1항)</li></ul>
+<p><strong>【건강검진을 받았다면 서류를 안 내도 될 수 있습니다.】 시행규칙 제82조제2항은 신청일부터 2년 안에 받은 국가 건강검진의 시력·청력 정보를 공단이 행정정보 공동이용으로 확인하게 합니다.</strong> 공단은 1종 대형·특수는 신체검사를 받아야 한다고 안내합니다.</p>
+<div class="tblx"><table><caption>적성검사 시력 기준 — 교정시력 포함 (시행령 제45조제1항제1호)</caption><thead><tr><th>면허</th><th>기준</th></tr></thead><tbody><tr><th scope="row">1종</th><td>두 눈을 함께 뜨고 0.8 이상, 두 눈 각각 0.5 이상</td></tr><tr><th scope="row">2종</th><td>두 눈을 함께 뜨고 0.5 이상(한쪽 눈을 보지 못하면 다른 쪽 눈 0.6 이상)</td></tr></tbody></table></div>
+
+<h3>75세 이상 교통안전교육</h3>
+<p>법 제73조제5항은 &quot;운전면허증 갱신일에 75세 이상인 사람은 운전면허증 갱신기간 이내에&quot; 교통안전교육을 받게 합니다. 시행규칙 별표 16 제4호가 교육을 2시간으로 정하고, 신체 노화와 안전운전, 약물과 안전운전, 인지능력 자가진단 등을 다룹니다.</p>
+
+<h3>기간 안에 못 할 때 — 미리 받기와 연기</h3>
+<p>시행령 제55조입니다. 해외 체류, 재해·재난, 질병·부상으로 거동 불가, 법령에 따른 신체 구속, 군 복무 등, 그 밖의 부득이한 사유가 있으면 기간 전에 미리 갱신하거나 연기를 신청할 수 있습니다.</p>
+<ul class="blist"><li>연기 신청은 갱신 기간 만료일까지(시행규칙 제83조제1항)</li><li>연기는 3년 이내 범위(시행령 제55조제2항)</li><li>사유가 없어진 날부터 3개월 안에 갱신(같은 조 제3항)</li></ul>
+
+<h3>자주 틀리는 세 가지</h3>
+<p>첫째, 면허증에 적힌 기간이 법적 기간과 다를 수 있습니다. 2026년 전에 받은 면허증에는 종전 방식(연 단위) 기간이 적혀 있을 수 있습니다.</p>
+<p>둘째, 나이를 보는 날이 셋입니다. 주기는 기준일의 나이, 2종 적성검사는 &quot;갱신 기간에&quot; 70세 이상인지, 75세 교육은 &quot;갱신일에&quot; 75세 이상인지로 봅니다. 갱신 기간 도중에 70세가 되는 2종은 공단 조회로 적성검사 대상인지 확인하세요.</p>
+<p>셋째, 2종 갱신을 놓쳤다고 면허가 취소되지는 않습니다. 취소는 적성검사 대상(1종, 70세 이상 2종)이 1년을 넘긴 경우입니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>운전면허 갱신 기간은 언제인가요</dt><dd>도로교통법 제87조제1항에 따라 기준일(직전 갱신일, 처음이면 면허시험 합격일)부터 10년이 되는 해의 생일 전후 각각 6개월 이내입니다. 기준일에 65세 이상 75세 미만이면 5년, 75세 이상이면 3년입니다. 이 생일 기준은 2026년 1월 1일부터 시행됐습니다.</dd><dt>2026년 전에 받은 면허증이면 12월 31일까지 꼭 해야 하나요</dt><dd>도로교통법 부칙(제21016호) 제2조는 새 기준(생일 전후 6개월)과 종전 기준(1월 1일~12월 31일) 중 하나를 따르게 합니다. 한국도로교통공단은 두 기간을 합친 범위를 안내하므로 생일이 7월 이후라면 다음 해로 넘어갈 수 있습니다. 갱신 연도의 12월 31일 안에 마치면 어느 해석으로도 맞습니다.</dd><dt>갱신 기간이 지났는데 지금 운전해도 되나요</dt><dd>기간이 지났다고 바로 취소되지는 않고 과태료 대상입니다(갱신 2만원, 적성검사 3만원). 다만 1종과 70세 이상 2종처럼 적성검사 대상은 기간 만료일 다음 날부터 1년을 넘기면 면허 취소 기준(시행규칙 별표 28 제2호 일련번호 7)에 해당하므로 그 전에 받아야 합니다.</dd><dt>해외에 있어서 기간 안에 못 합니다</dt><dd>갱신 기간 만료일까지 연기를 신청하면 3년 이내에서 연기되고, 귀국 등으로 사유가 없어진 날부터 3개월 안에 갱신하면 됩니다. 출국 전에 미리 갱신할 수도 있습니다(시행령 제55조, 시행규칙 제83조제1항).</dd><dt>건강검진을 받았는데 신체검사를 또 받아야 하나요</dt><dd>신청일부터 2년 안에 받은 국가 건강검진 결과로 신체검사서를 대신할 수 있고, 공단이 시력·청력 정보를 행정정보 공동이용으로 확인합니다(시행규칙 제82조). 공단은 1종 대형·특수는 신체검사를 받아야 한다고 안내합니다.</dd><dt>65세가 넘으면 5년마다 갱신하나요</dt><dd>갱신하는 해의 나이가 아니라 기준일의 나이로 정합니다. 기준일에 65세 이상 75세 미만이었으면 5년, 75세 이상이었으면 3년입니다. 64세에 갱신했다면 다음 갱신은 10년 뒤입니다.</dd><dt>75세 이상이면 무엇이 달라지나요</dt><dd>기준일에 75세 이상이면 다음 갱신까지 3년이고, 갱신일에 75세 이상이면 갱신 기간 안에 2시간 교통안전교육을 받아야 합니다(법 제73조제5항, 시행규칙 별표 16). 2종이어도 갱신 기간에 70세 이상이면 정기 적성검사를 받습니다.</dd></dl>
+<p class="note">정확한 기간은 안전운전 통합민원 마이페이지 또는 경찰청교통민원24에서 조회하세요. 근거 — 법령: 도로교통법 제43조·제73조제5항·제80조제2항·제87조·제93조제1항제9호·제4항·제139조·제160조제2항제7호·제8호, 부칙(제21016호) 제1조·제2조, 같은 법 시행령 제45조·제54조·제55조·제88조제5항·별표 3·별표 6, 같은 법 시행규칙 제81조·제82조·제83조·별표 16·별표 28·별표 39, 질서위반행위규제법 제18조·제24조, 행정기본법 제7조의2(만 나이). 생일 기준의 날짜 경계, 두 기간을 합친 범위, 인터넷 신청은 한국도로교통공단 안내입니다.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/korean-age-calc/">만 나이 계산기</a></li><li><a href="/date-calc-dday/">날짜 계산기</a></li><li><a href="/jadongchase-calc/">자동차세 계산기</a></li></ul>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>건강·공공정보 전체</h2>
+<ul class="illist"><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="../cheongnyeon-jiwongeum/">청년미래적금·청년 지원금</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 되나</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"운전면허 갱신 기간은 언제인가요","acceptedAnswer":{"@type":"Answer","text":"도로교통법 제87조제1항에 따라 기준일(직전 갱신일, 처음이면 면허시험 합격일)부터 10년이 되는 해의 생일 전후 각각 6개월 이내입니다. 기준일에 65세 이상 75세 미만이면 5년, 75세 이상이면 3년입니다. 이 생일 기준은 2026년 1월 1일부터 시행됐습니다."}},{"@type":"Question","name":"2026년 전에 받은 면허증이면 12월 31일까지 꼭 해야 하나요","acceptedAnswer":{"@type":"Answer","text":"도로교통법 부칙(제21016호) 제2조는 새 기준(생일 전후 6개월)과 종전 기준(1월 1일~12월 31일) 중 하나를 따르게 합니다. 한국도로교통공단은 두 기간을 합친 범위를 안내하므로 생일이 7월 이후라면 다음 해로 넘어갈 수 있습니다. 갱신 연도의 12월 31일 안에 마치면 어느 해석으로도 맞습니다."}},{"@type":"Question","name":"갱신 기간이 지났는데 지금 운전해도 되나요","acceptedAnswer":{"@type":"Answer","text":"기간이 지났다고 바로 취소되지는 않고 과태료 대상입니다(갱신 2만원, 적성검사 3만원). 다만 1종과 70세 이상 2종처럼 적성검사 대상은 기간 만료일 다음 날부터 1년을 넘기면 면허 취소 기준(시행규칙 별표 28 제2호 일련번호 7)에 해당하므로 그 전에 받아야 합니다."}},{"@type":"Question","name":"해외에 있어서 기간 안에 못 합니다","acceptedAnswer":{"@type":"Answer","text":"갱신 기간 만료일까지 연기를 신청하면 3년 이내에서 연기되고, 귀국 등으로 사유가 없어진 날부터 3개월 안에 갱신하면 됩니다. 출국 전에 미리 갱신할 수도 있습니다(시행령 제55조, 시행규칙 제83조제1항)."}},{"@type":"Question","name":"건강검진을 받았는데 신체검사를 또 받아야 하나요","acceptedAnswer":{"@type":"Answer","text":"신청일부터 2년 안에 받은 국가 건강검진 결과로 신체검사서를 대신할 수 있고, 공단이 시력·청력 정보를 행정정보 공동이용으로 확인합니다(시행규칙 제82조). 공단은 1종 대형·특수는 신체검사를 받아야 한다고 안내합니다."}},{"@type":"Question","name":"65세가 넘으면 5년마다 갱신하나요","acceptedAnswer":{"@type":"Answer","text":"갱신하는 해의 나이가 아니라 기준일의 나이로 정합니다. 기준일에 65세 이상 75세 미만이었으면 5년, 75세 이상이었으면 3년입니다. 64세에 갱신했다면 다음 갱신은 10년 뒤입니다."}},{"@type":"Question","name":"75세 이상이면 무엇이 달라지나요","acceptedAnswer":{"@type":"Answer","text":"기준일에 75세 이상이면 다음 갱신까지 3년이고, 갱신일에 75세 이상이면 갱신 기간 안에 2시간 교통안전교육을 받아야 합니다(법 제73조제5항, 시행규칙 별표 16). 2종이어도 갱신 기간에 70세 이상이면 정기 적성검사를 받습니다."}}]}</script>
+
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>

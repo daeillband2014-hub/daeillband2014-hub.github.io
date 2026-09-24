@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>기초수급자 자격, 우리 집은 될까? 가구원 수별 기준표(2026년)</title>
+<meta property="og:title" content="기초수급자 자격, 우리 집은 될까? 가구원 수별 기준표(2026년)">
+<meta property="og:description" content="기초수급자 자격은 소득인정액이 가구원 수별 선정기준 이하인지로 정해집니다. 2026년 생계·의료·주거·교육급여 기준표와 우리 집 판정법을 정리했습니다.">
+<meta name="description" content="기초수급자 자격은 소득인정액이 가구원 수별 선정기준 이하인지로 정해집니다. 2026년 생계·의료·주거·교육급여 기준표와 우리 집 판정법을 정리했습니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/gicho-saenghwal-sugeup/">
+<style>
+:root{--p:#1B5E8C;--pd:#14486B;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FB;--lt:#CFE0EC;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+#app .tool select,#app .tool input[type=number],#app .tool input[type=date],#app .tool input[type=text]{border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+#gb-run,#gc-run{background:var(--p);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+#gc-ey-add{background:#fff;color:var(--p);border:1.5px solid var(--lt);border-radius:10px;cursor:pointer}
+.gb-step{border-left:4px solid var(--lt);background:#F9FBFD;border-radius:8px;padding:10px 12px;margin:10px 0}
+.gb-status-pass{border-left-color:#2E9E5B}.gb-status-fail,.gb-status-over{border-left-color:#E63C46}
+.gb-status-conditional,.gb-status-partial{border-left-color:#E0A100}
+.gb-overall{font-weight:800;font-size:17px;padding:12px 14px;border-radius:10px;background:#EEF5FA;color:var(--pd);margin:12px 0}
+.gb-overall-eligible{background:#EAF7EF;color:#1E7A45}.gb-overall-over,.gb-overall-none{background:#FFF0F0;color:#8A1F26}
+.gb-overall-conditional,.gb-overall-partial{background:#FFF6E5;color:#6B5200}
+.gb-warning{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#6B5200}
+.gb-errors{color:#8A1F26;margin:8px 0 8px 18px}.gb-footer{font-size:12.5px;color:var(--mut);margin-top:12px}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+/* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>기초수급자 자격 판정</h1>
+<p class="desc">기초수급자 자격은 소득인정액이 가구원 수별 선정기준 이하인지로 정해집니다. 2026년 생계·의료·주거·교육급여 기준표와 우리 집 판정법을 정리했습니다.</p>
+<div class="tool">
+<div id="gc-tool" style="max-width:100%;box-sizing:border-box;overflow-wrap:anywhere">
+  <p style="margin:0 0 4px"><strong>기초수급자 자격 — 우리 집은 될까</strong> <span id="gc-label"></span></p>
+  <p style="margin:0 0 16px">대략 판정 도구입니다. 금액은 모두 <strong>만원</strong> 단위로 넣으세요(예: 82만 5천원 → 82.5). 없으면 0을 넣습니다.</p>
+
+  <p style="margin:16px 0 8px"><strong>가구</strong></p>
+  <div style="margin:0 0 14px">
+    <label for="gc-n" style="display:block">가구원 수</label>
+    <select id="gc-n" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="1">1인</option>
+      <option value="2">2인</option>
+      <option value="3">3인</option>
+      <option value="4">4인</option>
+      <option value="5">5인</option>
+      <option value="6">6인</option>
+      <option value="7">7인</option>
+      <option value="8">8인</option>
+      <option value="9">9인</option>
+      <option value="10">10인</option>
+    </select>
+    <small style="display:block;margin-top:2px">주민등록 세대원 + 따로 사는 배우자·30세 미만 미혼 자녀 (시행령 제2조)</small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-r" style="display:block">사는 곳</label>
+    <select id="gc-r" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="seoul">서울</option>
+      <option value="gyeonggi">경기</option>
+      <option value="metro">광역·세종·창원</option>
+      <option value="other">그 외 지역</option>
+    </select>
+    <small style="display:block;margin-top:2px">재산에서 빼 주는 기본재산액이 여기에 따라 달라집니다.</small>
+  </div>
+
+  <p style="margin:16px 0 8px"><strong>소득 (한 달, 세전)</strong></p>
+  <div style="margin:0 0 14px">
+    <label for="gc-e" style="display:block">월 근로·사업소득 — 청년 몫 제외 (만원)</label>
+    <input id="gc-e" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+    <small id="gc-hint-e" style="display:block;margin-top:2px"></small>
+  </div>
+  <div style="margin:0 0 14px">
+    <span style="display:block">청년(19~34세) 가구원 월 근로·사업소득</span>
+    <small id="gc-hint-ey" style="display:block;margin-top:2px"></small>
+    <div id="gc-ey-list"></div>
+    <button type="button" id="gc-ey-add" style="margin-top:6px;padding:6px 10px">청년 가구원 칸 추가</button>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-o" style="display:block">그 밖의 월 소득 (만원)</label>
+    <input id="gc-o" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+    <small style="display:block;margin-top:2px">공적연금·정기 지원금 등. 퇴직금·근로장려금·자녀장려금은 넣지 마세요.</small>
+  </div>
+
+  <p style="margin:16px 0 8px"><strong>재산</strong></p>
+  <div style="margin:0 0 14px">
+    <label for="gc-h" style="display:block">주거용재산 — 사는 집 가격 또는 전월세 보증금 (만원)</label>
+    <input id="gc-h" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+    <small style="display:block;margin-top:2px">집은 시가표준액(공시가격) 등을 고려해 정하는 가액, 전월세는 계약서 보증금</small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-g" style="display:block">그 밖의 일반재산 — 토지·다른 건물 등 (만원)</label>
+    <input id="gc-g" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-f" style="display:block">금융재산 — 예금·보험 등 (만원)</label>
+    <input id="gc-f" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-d" style="display:block">인정 부채 — 대출·받은 임대보증금 등 (만원)</label>
+    <input id="gc-d" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+    <small style="display:block;margin-top:2px">공공기관·금융회사 대출, 받은 임대보증금(세 준 집의 보증금, 전세금 포함) 등 (시행령 제5조의4제1항제1호나목). 내가 살면서 낸 보증금은 위 주거용재산 칸에 넣습니다.</small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-c" style="display:block">자동차 가액 (만원)</label>
+    <input id="gc-c" type="number" inputmode="decimal" min="0" step="any" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+    <small style="display:block;margin-top:2px">자동차가 없으면 0</small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-c2" style="display:block">자동차가 배기량 2,000cc 미만 승용차이고, 연식 10년 이상 또는 차량가액 500만원 미만인가요?</label>
+    <select id="gc-c2" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+    <small style="display:block;margin-top:2px">예면 일반재산 환산율로 계산합니다. 자동차가 없으면 고르지 않아도 됩니다.</small>
+  </div>
+
+  <p style="margin:16px 0 8px"><strong>가구 사정</strong></p>
+  <div style="margin:0 0 14px">
+    <label for="gc-s" style="display:block">초·중·고 학생이 있나요?</label>
+    <select id="gc-s" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+    <small style="display:block;margin-top:2px">교육급여 판정에만 씁니다.</small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-p1" id="gc-p1-label" style="display:block"></label>
+    <select id="gc-p1" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+      <option value="unknown">모름</option>
+    </select>
+    <small id="gc-hint-p1" style="display:block;margin-top:2px"></small>
+  </div>
+  <div style="margin:0 0 14px">
+    <label for="gc-p2" style="display:block">따로 사는 부모·자녀(와 그 배우자)가 있나요?</label>
+    <select id="gc-p2" style="display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px">
+      <option value="">고르세요</option>
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+    <small style="display:block;margin-top:2px">의료급여 판정에 씁니다. 함께 사는 가구원은 소득·재산이 이미 소득인정액에 들어가므로 빼고 답하세요.</small>
+  </div>
+
+  <button type="button" id="gc-run" style="display:block;width:100%;box-sizing:border-box;margin:16px 0 8px;padding:10px;font-size:16px">판정하기</button>
+  <div id="gc-msg" role="alert"></div>
+  <div id="gc-result" aria-live="polite"></div>
+  <p id="gc-final" style="margin:16px 0 0">최종 판정은 읍·면·동 주민센터 조사로 정해집니다. 보건복지상담센터 129</p>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /* =====================================================================
+   * 표 값 — 이 객체 한 곳만 고칩니다.
+   *  - median·living·medical: 보건복지부 고시 제2025-135호 1·2·4
+   *  - housing: 국토교통부 고시 제2025-506호 1 (8인 이상은 「7인 − 6인」 차이를 더함)
+   *  - education: 교육부 고시 제2025-34호 1. 1)
+   *  - basicAsset: 보건복지부 고시 제2025-204호 별표3
+   *  - ratePct: 보건복지부 고시 제2019-188호 제2조제1항
+   *  - workDeductPct·youthDeduct·supporterIncome·supporterAsset:
+   *    법령·고시에 금액 없음 → 결과에 「보건복지부 안내 기준」으로 표시
+   *  - borderRatio: 원문 값이 아닌 도구 설계값 → 결과에 「이 부분은 추정」으로 표시
+   * ===================================================================== */
+  var GC = {
+    label: '2026년 기준',
+    // 1인~7인 가구 월 금액(원). 8인 이상은 perExtra로 늘린다.
+    median:    [2564238, 4199292, 5359036, 6494738, 7556719, 8555952, 9515150], // 기준 중위소득(판정엔 안 씀, 시험에서 표 대조용)
+    living:    [820556, 1343773, 1714892, 2078316, 2418150, 2737905, 3044848],
+    medical:   [1025695, 1679717, 2143614, 2597895, 3022688, 3422381, 3806060],
+    housing:   [1230834, 2015660, 2572337, 3117474, 3627225, 4106857, 4567272],
+    education: [1282119, 2099646, 2679518, 3247369, 3778360, 4277976, 4757575],
+    // 8인 이상 1인 증가분(원). null이면 「7인 기준 − 6인 기준」을 1인마다 더한다.
+    perExtra: { median: 959198, living: 306943, medical: 383679, housing: null, education: 479599 },
+    // 기본재산액(원)
+    basicAsset: { seoul: 99000000, gyeonggi: 80000000, metro: 77000000, other: 53000000 },
+    // 월 소득환산율(%)
+    ratePct: { home: 1.04, general: 4.17, financial: 6.26, car: 100 },
+    workDeductPct: 30,          // 근로·사업소득 공제율(%) — 보건복지부 안내 기준
+    youthDeduct: 600000,        // 청년 1명당 먼저 빼는 금액(원) — 보건복지부 안내 기준
+    supporterIncome: 130000000, // 부양의무자 연소득 선(원) — 보건복지부 안내 기준(문구에만 씀)
+    supporterAsset: 1200000000, // 부양의무자 일반재산 선(원) — 보건복지부 안내 기준(문구에만 씀)
+    borderRatio: 1.1            // 경계 폭(기준선의 몇 배까지 경계) — 도구 설계값
+  };
+
+  var MAX_WON = 100000000000; // 한 칸 상한 1,000억원 — 계산을 정수 범위 안에 두기 위한 값(표 값 아님)
+  var REGION = { seoul: '서울', gyeonggi: '경기', metro: '광역·세종·창원', other: '그 외 지역' };
+  var STATUS_LABEL = { pass: '통과', border: '경계', over: '초과', none: '해당 없음' };
+  var TXT = {
+    notFinal: '실제 자격은 신청 후 조사로 정해집니다.',
+    final: '최종 판정은 읍·면·동 주민센터 조사로 정해집니다. 보건복지상담센터 129',
+    border: '선 근처입니다. 신청해서 조사받아 보세요.',
+    estimate: '[이 부분은 추정]',
+    guide: '보건복지부 안내 기준',
+    homeRange: '사는 집 가액이 크면 주거용재산 범위 밖 금액에 더 높은 환산율이 붙을 수 있습니다.',
+    excluded: '도구가 반영하지 않는 것: 장애·질병 등 가구특성 지출(시행령 제5조의2), 65세 이상 등 그 밖의 추가 근로소득 공제, 보건복지부 사업안내(지침)에만 있는 재산 공제·한도, 인정 부채의 세부 요건(고시 제2025-204호 제5조), 보장시설 수급, 외국인 특례, 의료급여 부양의무자 세부 판정.'
+  };
+
+  /* ---------- 숫자 도우미 ---------- */
+  function comma(v) {
+    var neg = v < 0;
+    var parts = String(Math.abs(v)).split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (neg ? '-' : '') + parts.join('.');
+  }
+  function won(v) { return comma(v) + '원'; }
+  function manwon(v) { return comma(v / 10000) + '만원'; }
+  function eok(v) { return comma(v / 100000000) + '억원'; }
+  function bp(pct) { return Math.round(pct * 100); } // 1.04% → 104 (만분율)
+  function ceilDiv(a, b) { var r = a % b; var q = (a - r) / b; return r > 0 ? q + 1 : q; } // 음이 아닌 정수끼리
+  function isBlank(v) { return v === null || v === undefined || (typeof v === 'string' && v.replace(/\s+/g, '') === ''); }
+
+  // 가구원 수 n의 급여 선정기준(원)
+  function lineFor(kind, n) {
+    var t = GC[kind];
+    if (n <= t.length) return t[n - 1];
+    var last = t[t.length - 1];
+    var step = GC.perExtra[kind];
+    if (step === null || step === undefined) step = last - t[t.length - 2];
+    return last + (n - t.length) * step;
+  }
+
+  /* ---------- 판정 핵심 (DOM 없음) ----------
+   * input 금액은 모두 원 단위.
+   * { n, e, ey:[...], o, region:'seoul'|'gyeonggi'|'metro'|'other',
+   *   h, g, f, d, c, c2:'yes'|'no', s:'yes'|'no', p1:'yes'|'no'|'unknown', p2:'yes'|'no' }
+   */
+  function gcJudge(input) {
+    var inp = input || {};
+    var errors = [];
+    function err(field, msg) { errors.push({ field: field, msg: msg }); }
+    function money(field, name, v) {
+      if (isBlank(v)) { err(field, name + ': 칸이 비어 있습니다. 없으면 0을 넣으세요.'); return null; }
+      if (typeof v !== 'number' && typeof v !== 'string') { err(field, name + ': 숫자로 넣어 주세요.'); return null; }
+      var x = Number(v);
+      if (!isFinite(x)) { err(field, name + ': 숫자로 넣어 주세요.'); return null; }
+      if (x < 0) { err(field, name + ': 0보다 작은 값은 넣을 수 없습니다.'); return null; }
+      x = Math.round(x);
+      if (x > MAX_WON) { err(field, name + ': 한 칸에 ' + manwon(MAX_WON) + '(' + eok(MAX_WON) + ')까지 넣을 수 있습니다.'); return null; }
+      return x;
+    }
+    function choice(field, v, allowed, msg) {
+      if (v === true) v = 'yes'; else if (v === false) v = 'no';
+      if (allowed.indexOf(v) < 0) { err(field, msg); return null; }
+      return v;
+    }
+
+    // 입력 확인
+    var n = null;
+    if (isBlank(inp.n)) err('n', '가구원 수를 고르세요.');
+    else {
+      var nx = (typeof inp.n === 'number' || typeof inp.n === 'string') ? Number(inp.n) : NaN;
+      if (isFinite(nx) && nx >= 1 && nx <= 10 && Math.floor(nx) === nx) n = nx;
+      else err('n', '가구원 수는 1~10 사이 정수로 넣으세요.');
+    }
+    var e = money('e', '월 근로·사업소득', inp.e);
+    var eyIn = (inp.ey === undefined || inp.ey === null) ? [] : inp.ey;
+    var ey = [];
+    var i;
+    if (!Array.isArray(eyIn)) err('ey', '청년 가구원 소득 칸을 읽지 못했습니다.');
+    else for (i = 0; i < eyIn.length; i++) ey.push(money('ey' + i, '청년 가구원 ' + (i + 1) + ' 소득', eyIn[i]));
+    if (n !== null && ey.length > n) err('ey', '청년 가구원 칸(' + ey.length + '칸)이 가구원 수(' + n + '인)보다 많습니다.');
+    var o = money('o', '그 밖의 월 소득', inp.o);
+    var region = choice('region', inp.region, ['seoul', 'gyeonggi', 'metro', 'other'], '사는 곳을 고르세요.');
+    var h = money('h', '주거용재산', inp.h);
+    var g = money('g', '그 밖의 일반재산', inp.g);
+    var f = money('f', '금융재산', inp.f);
+    var d = money('d', '인정 부채', inp.d);
+    var c = money('c', '자동차 가액', inp.c);
+    var c2 = 'no';
+    if (c !== null && c > 0) c2 = choice('c2', inp.c2, ['yes', 'no'], '자동차가 2,000cc 미만 승용차이고 연식 10년 이상 또는 차량가액 500만원 미만인지 고르세요.');
+    var s = choice('s', inp.s, ['yes', 'no'], '초·중·고 학생이 있는지 고르세요.');
+    var p1 = choice('p1', inp.p1, ['yes', 'no', 'unknown'], '따로 사는 부모·자녀 중 고소득·고재산인 사람이 있는지 고르세요.');
+    var p2 = choice('p2', inp.p2, ['yes', 'no'], '따로 사는 부모·자녀(와 그 배우자)가 있는지 고르세요.');
+    if (errors.length) return { ok: false, label: GC.label, errors: errors };
+
+    // 1 소득평가액 (원 미만 올림)
+    var keep = 100 - GC.workDeductPct;
+    var incWork = ceilDiv(e * keep, 100);
+    var incYouth = [];
+    var incYouthSum = 0;
+    var anyYouth = false;
+    for (i = 0; i < ey.length; i++) {
+      incYouth.push(ceilDiv(Math.max(ey[i] - GC.youthDeduct, 0) * keep, 100));
+      incYouthSum += incYouth[i];
+      if (ey[i] > 0) anyYouth = true;
+    }
+    var I = incWork + incYouthSum + o;
+    var usesGuideIncome = e > 0 || anyYouth;
+
+    // 2 자동차 분류
+    var carAsGeneral = c > 0 && c2 === 'yes';
+    var gTot = g + (carAsGeneral ? c : 0);
+    var V = carAsGeneral ? 0 : c;
+
+    // 3 기본재산액, 4 공제: 주거용 → 일반 → 금융 순
+    var B = GC.basicAsset[region];
+    var K = B + d;
+    var Hp = Math.max(h - K, 0), K1 = Math.max(K - h, 0);
+    var Gp = Math.max(gTot - K1, 0), K2 = Math.max(K1 - gTot, 0);
+    var Fp = Math.max(f - K2, 0);
+    // 순서 가정이 결과를 바꿀 수 있는 경우: 주거용재산이 있고, 다른 재산도 있고, 다 빼고도 남는 몫이 있을 때
+    var orderAssumed = h > 0 && (gTot > 0 || f > 0) && K < h + gTot + f;
+
+    // 5 재산 환산액 (항목마다 원 미만 올림)
+    var aHome = ceilDiv(Hp * bp(GC.ratePct.home), 10000);
+    var aGen = ceilDiv(Gp * bp(GC.ratePct.general), 10000);
+    var aFin = ceilDiv(Fp * bp(GC.ratePct.financial), 10000);
+    var aCar = ceilDiv(V * bp(GC.ratePct.car), 10000);
+    var A = aHome + aGen + aFin + aCar;
+
+    // 6 소득인정액
+    var X = I + A;
+
+    // 판정
+    var br = Math.round(GC.borderRatio * 100);
+    var ratioText = String(GC.borderRatio) + '배';
+    function band(T) { return X * 100 > T * br ? 'over' : (X > T ? 'border' : 'pass'); }
+    function make(kind, name) {
+      var T = lineFor(kind, n);
+      return { key: kind, name: name, T: T, X: X, diff: T - X, status: null, label: null, reason: null,
+               message: '', amount: null, estimate: false, guide: false, notes: [], head: '', lines: [] };
+    }
+    function bandApply(r) {
+      var b = band(r.T);
+      if (b === 'over') { r.status = 'over'; r.reason = 'income'; r.estimate = true; r.message = '소득인정액이 기준선의 ' + ratioText + '를 넘습니다. 해당 안 됨.'; }
+      else if (b === 'border') { r.status = 'border'; r.reason = 'income'; r.estimate = true; r.message = TXT.border; }
+      else { r.status = 'pass'; r.reason = 'income'; r.message = '소득인정액이 기준선 이하입니다.'; }
+      return b;
+    }
+
+    // 생계급여
+    var L = make('living', '생계급여');
+    if (p1 === 'yes') {
+      L.status = 'over'; L.reason = 'supporter';
+      L.message = '따로 사는 부모·자녀(와 그 배우자) 중 연소득 ' + eok(GC.supporterIncome) + ' 초과 또는 일반재산 ' + eok(GC.supporterAsset) + ' 초과인 사람이 있어 해당 안 됨(부양의무자 기준).';
+    } else if (bandApply(L) === 'pass') {
+      L.amount = L.T - X;
+      if (p1 === 'unknown') { L.status = 'border'; L.reason = 'supporter'; L.message = '부양의무자 확인 필요. 신청해서 조사받아 보세요.'; }
+    } else if (L.status === 'border' && p1 === 'unknown') {
+      L.notes.push('부양의무자 확인도 필요합니다.');
+    }
+    L.guide = true;
+
+    // 의료급여
+    var M = make('medical', '의료급여');
+    var mb = bandApply(M);
+    if (mb === 'pass' && p2 === 'yes') { M.status = 'border'; M.reason = 'supporter'; M.message = '부양의무자 조사 필요. 신청해서 조사받아 보세요.'; }
+    else if (mb === 'border' && p2 === 'yes') M.notes.push('부양의무자 조사도 필요합니다.');
+
+    // 주거급여
+    var Hs = make('housing', '주거급여');
+    bandApply(Hs);
+
+    // 교육급여
+    var Ed = make('education', '교육급여');
+    if (s === 'no') { Ed.status = 'none'; Ed.reason = 'nostudent'; Ed.message = '초·중·고 학생이 없으면 해당 없음'; }
+    else bandApply(Ed);
+
+    var list = [L, M, Hs, Ed];
+    for (i = 0; i < list.length; i++) {
+      var r = list[i];
+      r.label = STATUS_LABEL[r.status];
+      if (r.estimate) r.notes.push(TXT.estimate + ' 경계 폭(기준선의 ' + ratioText + ')은 법령·고시 값이 아니라 도구 설계값입니다.');
+      if (r.guide) r.notes.push('[' + TXT.guide + '] 부양의무자 기준 금액(연소득 ' + eok(GC.supporterIncome) + '·일반재산 ' + eok(GC.supporterAsset) + ')은 법령·고시에 없고 보건복지부 안내 기준입니다.');
+      r.head = r.name + ' — ' + r.label;
+      r.lines = ['기준선(' + n + '인 가구): ' + won(r.T), '우리 집 소득인정액: ' + won(X), diffText(r.diff), r.message];
+      if (r.amount !== null) r.lines.push('예상 생계급여: 월 ' + won(r.amount) + ' (기준선 − 소득인정액)');
+      r.lines = r.lines.concat(r.notes);
+    }
+
+    // 계산 내역
+    var pct = GC.ratePct;
+    var calc = [];
+    calc.push('소득평가액: ' + won(I));
+    calc.push('· 근로·사업소득 ' + won(e) + '의 ' + keep + '%: ' + won(incWork));
+    for (i = 0; i < ey.length; i++) calc.push('· 청년 ' + (i + 1) + ': ' + won(ey[i]) + '에서 ' + manwon(GC.youthDeduct) + '을 빼고 ' + keep + '%: ' + won(incYouth[i]));
+    calc.push('· 그 밖의 소득: ' + won(o));
+    if (usesGuideIncome) calc.push('[' + TXT.guide + '] 근로·사업소득 ' + GC.workDeductPct + '% 공제' + (anyYouth ? '와 청년 1명당 ' + manwon(GC.youthDeduct) + ' 추가 공제' : '') + '는 법령·고시에 금액이 없고 보건복지부 안내 기준입니다.');
+    calc.push('재산 환산액: ' + won(A));
+    calc.push('· 빼 주는 금액: 기본재산액(' + REGION[region] + ') ' + won(B) + ' + 인정 부채 ' + won(d) + ' = ' + won(K));
+    calc.push('· 주거용재산 남는 몫 ' + won(Hp) + ' × ' + pct.home + '% = ' + won(aHome));
+    calc.push('· 일반재산' + (carAsGeneral ? '(자동차 포함)' : '') + ' 남는 몫 ' + won(Gp) + ' × ' + pct.general + '% = ' + won(aGen));
+    calc.push('· 금융재산 남는 몫 ' + won(Fp) + ' × ' + pct.financial + '% = ' + won(aFin));
+    calc.push('· 승용차 ' + won(V) + ' × ' + pct.car + '% = ' + won(aCar));
+    if (orderAssumed) calc.push(TXT.estimate + ' 빼 주는 금액을 주거용재산에서 먼저 빼고, 남으면 일반재산 → 금융재산 순으로 뺐습니다. 주거용재산을 먼저 빼는 순서는 원문에서 확인하지 못한 가정입니다.');
+    calc.push('소득인정액: ' + won(X) + ' (소득평가액 + 재산 환산액, 원 미만 올림)');
+
+    var notes = [];
+    if (Hp > 0) notes.push(TXT.homeRange);
+    notes.push(TXT.excluded);
+
+    return {
+      ok: true,
+      label: GC.label,
+      n: n,
+      region: region,
+      income: { I: I, work: incWork, youth: incYouth, other: o, usesGuide: usesGuideIncome },
+      assets: { B: B, D: d, K: K, G: gTot, V: V, Hp: Hp, Gp: Gp, Fp: Fp, home: aHome, general: aGen, financial: aFin, car: aCar,
+                A: A, carAsGeneral: carAsGeneral, orderAssumed: orderAssumed },
+      X: X,
+      benefits: { living: L, medical: M, housing: Hs, education: Ed },
+      view: {
+        title: '결과 · ' + GC.label + ' · 대략 판정',
+        intro: TXT.notFinal,
+        benefits: list,
+        calc: calc,
+        notes: notes,
+        final: TXT.final
+      }
+    };
+  }
+
+  function diffText(diff) {
+    if (diff > 0) return '차액: 기준선보다 ' + won(diff) + ' 낮습니다';
+    if (diff < 0) return '차액: 기준선보다 ' + won(-diff) + ' 높습니다';
+    return '차액: 0원 (기준선과 같습니다)';
+  }
+
+  /* ---------- 화면 (브라우저에서만) ---------- */
+  function initDom(doc) {
+    function $(id) { return doc.getElementById(id); }
+    if (!$('gc-tool')) return;
+    var FIELD_CSS = 'display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;font-size:16px';
+    var EY_MAX = 10;
+
+    $('gc-label').textContent = '(' + GC.label + ')';
+    $('gc-hint-e').textContent = '청년(19~34세) 가구원 소득은 아래 청년 칸에 따로 넣으세요. ' + GC.workDeductPct + '%를 빼고 계산합니다(' + TXT.guide + ').';
+    $('gc-hint-ey').textContent = '청년 1명마다 칸을 하나씩 추가하세요(만원). 1명마다 ' + manwon(GC.youthDeduct) + '을 먼저 빼고 나머지의 ' + GC.workDeductPct + '%를 더 뺍니다(' + TXT.guide + ' · 법령·고시에 금액 없음). 청년 가구원이 없으면 추가하지 않습니다.';
+    $('gc-p1-label').textContent = '따로 사는 부모·자녀(와 그 배우자) 중 연소득 ' + eok(GC.supporterIncome) + ' 초과 또는 일반재산 ' + eok(GC.supporterAsset) + ' 초과인 사람이 있나요?';
+    $('gc-hint-p1').textContent = '생계급여 판정에 씁니다. ' + eok(GC.supporterIncome) + '·' + eok(GC.supporterAsset) + '은 ' + TXT.guide + '입니다(법령·고시에 금액 없음).';
+
+    // 청년 칸
+    var eyList = $('gc-ey-list');
+    var eyRows = [];
+    var eySeq = 0;
+    function eyRelabel() {
+      for (var k = 0; k < eyRows.length; k++) eyRows[k].label.textContent = '청년 가구원 ' + (k + 1) + ' 월 근로·사업소득 (만원)';
+      $('gc-ey-add').disabled = eyRows.length >= EY_MAX;
+    }
+    function eyAdd() {
+      if (eyRows.length >= EY_MAX) return;
+      eySeq += 1;
+      var row = doc.createElement('div');
+      row.id = 'gc-ey-row-' + eySeq;
+      row.style.cssText = 'margin:8px 0 0';
+      var label = doc.createElement('label');
+      label.htmlFor = 'gc-ey-' + eySeq;
+      label.style.cssText = 'display:block';
+      var input = doc.createElement('input');
+      input.id = 'gc-ey-' + eySeq;
+      input.type = 'number';
+      input.setAttribute('inputmode', 'decimal');
+      input.setAttribute('min', '0');
+      input.setAttribute('step', 'any');
+      input.style.cssText = FIELD_CSS;
+      var del = doc.createElement('button');
+      del.type = 'button';
+      del.id = 'gc-ey-del-' + eySeq;
+      del.textContent = '이 칸 빼기';
+      del.style.cssText = 'margin-top:4px;padding:4px 8px';
+      var rec = { row: row, label: label, input: input };
+      del.addEventListener('click', function () {
+        var at = eyRows.indexOf(rec);
+        if (at >= 0) eyRows.splice(at, 1);
+        if (row.parentNode) row.parentNode.removeChild(row);
+        eyRelabel();
+      });
+      row.appendChild(label);
+      row.appendChild(input);
+      row.appendChild(del);
+      eyList.appendChild(row);
+      eyRows.push(rec);
+      eyRelabel();
+      if (input.focus) input.focus();
+    }
+
+    // 만원 칸 → 원 (빈칸 null, 숫자 아님 NaN, 음수는 그대로 넘겨 gcJudge가 막게 함)
+    function readMan(el) {
+      if (el.validity && el.validity.badInput) return NaN;
+      var s = String(el.value === null || el.value === undefined ? '' : el.value).replace(/\s+/g, '');
+      if (s === '') return null;
+      var x = Number(s);
+      if (!isFinite(x)) return NaN;
+      if (x < 0) return x * 10000;
+      return Math.round(x * 10000);
+    }
+    function pick(id) { var v = $(id).value; return v === '' ? null : v; }
+    function collect() {
+      var eyVals = [];
+      for (var k = 0; k < eyRows.length; k++) eyVals.push(readMan(eyRows[k].input));
+      return {
+        n: pick('gc-n'), e: readMan($('gc-e')), ey: eyVals, o: readMan($('gc-o')), region: pick('gc-r'),
+        h: readMan($('gc-h')), g: readMan($('gc-g')), f: readMan($('gc-f')), d: readMan($('gc-d')), c: readMan($('gc-c')),
+        c2: pick('gc-c2'), s: pick('gc-s'), p1: pick('gc-p1'), p2: pick('gc-p2')
+      };
+    }
+    var FIELD_ID = { n: 'gc-n', e: 'gc-e', o: 'gc-o', region: 'gc-r', h: 'gc-h', g: 'gc-g', f: 'gc-f', d: 'gc-d',
+                     c: 'gc-c', c2: 'gc-c2', s: 'gc-s', p1: 'gc-p1', p2: 'gc-p2', ey: 'gc-ey-add' };
+    function fieldEl(field) {
+      var m = /^ey(\d+)$/.exec(field);
+      if (m) return eyRows[+m[1]] ? eyRows[+m[1]].input : null;
+      return FIELD_ID[field] ? $(FIELD_ID[field]) : null;
+    }
+    function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+    function add(parent, tag, text, css, cls) {
+      var x = doc.createElement(tag);
+      if (text !== null && text !== undefined) x.textContent = text;
+      if (css) x.style.cssText = css;
+      if (cls) x.className = cls;
+      parent.appendChild(x);
+      return x;
+    }
+    function run() {
+      var msg = $('gc-msg');
+      var out = $('gc-result');
+      clear(msg);
+      clear(out);
+      var r = gcJudge(collect());
+      var k;
+      if (!r.ok) {
+        add(msg, 'p', '계산하지 않았습니다. 아래 칸을 확인해 주세요.', 'margin:8px 0 4px;font-weight:bold', 'gc-err-title');
+        var ul = add(msg, 'ul', null, 'margin:0 0 8px;padding-left:20px', 'gc-err-list');
+        for (k = 0; k < r.errors.length; k++) add(ul, 'li', r.errors[k].msg);
+        var first = fieldEl(r.errors[0].field);
+        if (first && first.focus) first.focus();
+        return;
+      }
+      var v = r.view;
+      add(out, 'p', v.title, 'margin:16px 0 4px;font-weight:bold', 'gc-res-title');
+      add(out, 'p', v.intro, 'margin:0 0 8px', 'gc-res-intro');
+      for (k = 0; k < v.benefits.length; k++) {
+        var b = v.benefits[k];
+        var box = add(out, 'div', null, 'border:1px solid #999;border-radius:6px;padding:8px 10px;margin:8px 0', 'gc-box gc-status-' + b.status);
+        box.id = 'gc-res-' + b.key;
+        add(box, 'p', b.head, 'margin:0 0 4px;font-weight:bold', 'gc-box-head');
+        for (var j = 0; j < b.lines.length; j++) add(box, 'p', b.lines[j], 'margin:2px 0');
+      }
+      var calc = add(out, 'div', null, 'margin:12px 0', 'gc-calc');
+      calc.id = 'gc-res-calc';
+      add(calc, 'p', '계산 내역', 'margin:0 0 4px;font-weight:bold');
+      for (k = 0; k < v.calc.length; k++) add(calc, 'p', v.calc[k], 'margin:2px 0');
+      for (k = 0; k < v.notes.length; k++) add(out, 'p', v.notes[k], 'margin:6px 0', 'gc-note');
+    }
+
+    $('gc-ey-add').addEventListener('click', eyAdd);
+    $('gc-run').addEventListener('click', run);
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.getElementById('gc-tool')) initDom(document);
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', function () { initDom(document); });
+  }
+  if (typeof module!=='undefined') module.exports={gcJudge};
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031250,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>기초수급자 자격 판정</h2>
+<h3>10초 요약</h3>
+<p><strong>【기초수급자 자격은 우리 집 소득인정액이 가구원 수별 급여 선정기준 이하인지로 정해집니다.】 급여는 생계·의료·주거·교육 네 가지이고, 선이 각각 다릅니다. 하나라도 받으면 수급자입니다.</strong></p>
+<p>1인 가구라면 2026년 기준으로 소득인정액이 월 820,556원 이하일 때 생계급여, 1,025,695원 이하일 때 의료급여, 1,230,834원 이하일 때 주거급여, 1,282,119원 이하일 때 교육급여(초·중·고 학생이 있을 때) 기준에 듭니다. 생계급여와 의료급여는 부양의무자 기준도 따로 봅니다.</p>
+<p>정부는 기준표를 줍니다. 이 쪽은 그 표에 우리 집을 대 보는 순서를 적었습니다. 가구원 수를 세고, 소득인정액을 대략 내고, 표의 우리 집 줄과 비교하면 됩니다.</p>
+
+<h3>급여 네 가지와 기준</h3>
+<div class="tblx"><table><caption>기초생활보장 급여별 선정기준 (2026년)</caption><thead><tr><th>급여</th><th>선정기준</th><th>법이 정한 하한</th><th>부양의무자 기준</th><th>받는 것</th></tr></thead><tbody><tr><th scope="row">생계급여</th><td>기준 중위소득의 32%</td><td>30% 이상(법 제8조제2항)</td><td>고소득·고재산일 때만</td><td>선정기준 − 소득인정액, 매월 현금</td></tr><tr><th scope="row">의료급여</th><td>기준 중위소득의 40%</td><td>40% 이상(법 제12조의3제2항)</td><td>적용</td><td>의료비(의료급여법에 따름)</td></tr><tr><th scope="row">주거급여</th><td>기준 중위소득의 48%</td><td>43% 이상(주거급여법 제5조제1항)</td><td>없음</td><td>임차료 또는 집수리비</td></tr><tr><th scope="row">교육급여</th><td>기준 중위소득의 50%</td><td>50% 이상(법 제12조제3항)</td><td>없음</td><td>교육활동지원비 등</td></tr></tbody></table></div>
+<p>고시에는 금액만 적혀 있습니다. 32%·40%·48%·50%는 그 금액을 기준 중위소득으로 나눈 비율이고, 보건복지부 발표 비율과도 같습니다.</p>
+<p><strong>【생계급여는 정액이 아닙니다.】 보건복지부 고시 제2025-135호가 생계급여 최저보장수준을 &quot;생계급여와 소득인정액을 포함하여 생계급여 선정기준 이상&quot;이 되도록 정합니다. 선정기준에서 소득인정액을 뺀 만큼 받습니다.</strong></p>
+<p>주거급여 임차가구는 지역·가구원 수별 기준임대료 안에서 받습니다. 1인 가구 기준임대료는 1급지(서울) 369,000원, 2급지(경기·인천) 300,000원, 3급지(광역시·세종시·수도권 외 특례시) 247,000원, 4급지(그 외 지역) 212,000원입니다. 자가가구 수선비용은 경보수 590만원, 중보수 1,095만원, 대보수 1,601만원입니다(국토교통부 고시 제2025-506호).</p>
+<p>교육활동지원비는 연 1회 초등학생 502,000원, 중학생 699,000원, 고등학생 860,000원이고, 고등학생은 교과서와 입학금·수업료도 받습니다(교육부 고시 제2025-34호).</p>
+
+<h3>가구원 수별 선정기준 (2026년 기준, 월)</h3>
+<div class="tblx"><table><caption>2026년 기준 중위소득과 급여별 선정기준 (월, 원)</caption><thead><tr><th>가구원 수</th><th>기준 중위소득</th><th>생계급여</th><th>의료급여</th><th>주거급여</th><th>교육급여</th></tr></thead><tbody><tr><th scope="row">1인</th><td>2,564,238</td><td>820,556</td><td>1,025,695</td><td>1,230,834</td><td>1,282,119</td></tr><tr><th scope="row">2인</th><td>4,199,292</td><td>1,343,773</td><td>1,679,717</td><td>2,015,660</td><td>2,099,646</td></tr><tr><th scope="row">3인</th><td>5,359,036</td><td>1,714,892</td><td>2,143,614</td><td>2,572,337</td><td>2,679,518</td></tr><tr><th scope="row">4인</th><td>6,494,738</td><td>2,078,316</td><td>2,597,895</td><td>3,117,474</td><td>3,247,369</td></tr><tr><th scope="row">5인</th><td>7,556,719</td><td>2,418,150</td><td>3,022,688</td><td>3,627,225</td><td>3,778,360</td></tr><tr><th scope="row">6인</th><td>8,555,952</td><td>2,737,905</td><td>3,422,381</td><td>4,106,857</td><td>4,277,976</td></tr><tr><th scope="row">7인</th><td>9,515,150</td><td>3,044,848</td><td>3,806,060</td><td>4,567,272</td><td>4,757,575</td></tr></tbody></table></div>
+<p>기준 중위소득·생계급여·의료급여는 보건복지부 고시 제2025-135호, 주거급여는 국토교통부 고시 제2025-506호, 교육급여는 교육부 고시 제2025-34호입니다.</p>
+<p>8인 이상은 한 사람 늘 때마다 기준 중위소득 959,198원, 생계급여 306,943원, 의료급여 383,679원, 교육급여 479,599원씩 더합니다. 주거급여 8인은 7인 기준에 「7인 기준 − 6인 기준」을 더해 셉니다.</p>
+
+<h3>우리 집 판정은 세 단계입니다</h3>
+<ul class="blist"><li>1. 가구원 수를 셉니다 — 시행령 제2조입니다. 주민등록표에 함께 올라 있는 사람(동거인 제외)에, 주소가 달라도 배우자와 30세 미만 미혼 자녀를 더합니다. 군 복무 등으로 다른 곳에서 생계를 보장받는 사람, 교도소 등에 수용 중인 사람 등은 뺍니다</li><li>2. 소득인정액을 대략 냅니다 — 아래 절</li><li>3. 표의 우리 집 줄과 비교합니다 — 소득인정액이 그 금액 이하이면 그 급여의 소득 기준을 채운 것입니다. 생계·의료급여는 부양의무자 기준도 봅니다</li></ul>
+
+<h3>소득인정액은 소득만이 아닙니다</h3>
+<p>법 제2조제9호와 제6조의3입니다. <strong>【소득인정액 = 소득평가액 + 재산의 소득환산액】</strong></p>
+<p>소득평가액은 근로·사업·재산·이전소득을 더한 실제소득에서 장애·질병·양육 등 가구 특성에 따른 지출과 근로를 돕기 위한 공제를 뺀 금액입니다.</p>
+<ul class="blist"><li>근로·사업소득 공제 — 시행령 제5조의2제11호가 &quot;100분의 30의 범위에서&quot; 장관이 정하는 비율만큼 빼게 합니다. 보건복지부 발표로는 일반 수급자 30%이고, 34세 이하 청년은 60만원을 먼저 빼고 나머지의 30%를 더 뺍니다(법령·고시에는 금액 없음)</li><li>빼는 것 — 장애수당, 한부모 아동양육비, 만성질환 등으로 계속 드는 의료비 등(시행령 제5조의2)</li><li>소득으로 보지 않는 것 — 퇴직금·현상금·보상금, 근로장려금·자녀장려금처럼 정기적이지 않은 금품(시행령 제5조제2항제1호)</li></ul>
+<p>재산의 소득환산액은 (재산 − 기본재산액 − 부채) × 소득환산율입니다(법 제6조의3제2항).</p>
+<div class="tblx"><table><caption>기본재산액 (보건복지부 고시 제2025-204호 별표3)</caption><thead><tr><th>사는 곳</th><th>기본재산액</th></tr></thead><tbody><tr><th scope="row">서울</th><td>9,900만원</td></tr><tr><th scope="row">경기</th><td>8,000만원</td></tr><tr><th scope="row">광역·세종·창원</th><td>7,700만원</td></tr><tr><th scope="row">그 외 지역</th><td>5,300만원</td></tr></tbody></table></div>
+<div class="tblx"><table><caption>재산의 월 소득환산율 — 수급권자 (보건복지부 고시 제2019-188호 제2조)</caption><thead><tr><th>재산 종류</th><th>월 환산율</th></tr></thead><tbody><tr><th scope="row">주거용재산</th><td>1.04%</td></tr><tr><th scope="row">일반재산</th><td>4.17%</td></tr><tr><th scope="row">금융재산</th><td>6.26%</td></tr><tr><th scope="row">승용차</th><td>100%</td></tr></tbody></table></div>
+<p>주거용재산에는 사는 집뿐 아니라 전·월세 임차보증금도 들어갑니다. 수급권자의 주거용재산은 실제 사는 1호 또는 1세대만 인정합니다(같은 고시 제2조제1항).</p>
+<p><strong>【자동차는 원칙적으로 차량가액이 그대로 한 달 소득이 됩니다.】</strong> 승용차 환산율이 월 100%이기 때문입니다. 다만 고시 제2025-204호 별표2가 일반재산 환산율(4.17%)을 쓰는 자동차를 정합니다. 배기량 2,000cc 미만 승용차로서 연식 10년 이상이거나 차량가액 500만원 미만인 차, 가구원이 6인 이상이거나 자녀가 2명 이상인 가구의 배기량 2,500cc 미만 7인승 이상 차로서 같은 연식·가액 요건을 채운 차, 장애인사용자동차 등입니다. 차가 있다면 가장 먼저 확인할 자리입니다.</p>
+
+<h3>부양의무자 기준 — 급여마다 다릅니다</h3>
+<p>법 제2조제5호가 부양의무자를 &quot;1촌의 직계혈족 및 그 배우자&quot;로 정합니다. 부모, 아들·딸과 그 배우자입니다. 사망한 1촌 직계혈족의 배우자는 빠집니다.</p>
+<div class="tblx"><table><caption>급여별 부양의무자 기준</caption><thead><tr><th>급여</th><th>부양의무자 기준</th></tr></thead><tbody><tr><th scope="row">생계급여</th><td>따로 사는 1촌과 그 배우자가 연소득 1.3억원 초과 또는 일반재산 12억원 초과일 때만 제외(보건복지부 수급자 선정기준 안내, 법령·고시에는 금액 없음)</td></tr><tr><th scope="row">의료급여</th><td>적용(법 제12조의3제2항)</td></tr><tr><th scope="row">주거급여</th><td>없음(주거급여법 제5조제1항)</td></tr><tr><th scope="row">교육급여</th><td>없음(법 제12조의2)</td></tr></tbody></table></div>
+<p>교육급여는 법 제12조제3항에 부양의무자 문구가 있지만, 제12조의2가 &quot;제12조제3항에도 불구하고&quot; 소득인정액만으로 수급권자로 봅니다.</p>
+<p>의료급여는 부양의무자가 없거나, 있어도 부양능력이 없거나 부양을 받을 수 없어야 합니다. 시행령 제5조의6이 부양능력이 없는 경우를 정합니다.</p>
+<ul class="blist"><li>부양의무자가 수급자인 경우</li><li>부양의무자의 차감된 소득이 그 가구 기준 중위소득 미만이고, 재산의 소득환산액이 고시 금액 미만인 경우</li><li>소득이 그보다 많아도 「수급권자 가구 기준 중위소득의 40% + 부양의무자 가구 기준 중위소득」 미만이고 재산 기준을 채우며, 장관이 정하는 금액을 정기적으로 지원하는 경우</li></ul>
+<p>법 제8조의2제2항은 부양의무자가 징집·소집, 해외이주, 교도소 등 수용, 가출·행방불명 신고 후 1개월 경과, 부양 기피·거부 등에 해당하면 &quot;부양을 받을 수 없는 것&quot;으로 봅니다.</p>
+
+<h3>어디서, 어떻게 신청하나</h3>
+<ul class="blist"><li>누가 — 본인, 친족, 그 밖의 관계인이 신청할 수 있고, 사회복지 전담공무원이 동의를 받아 대신 신청할 수도 있습니다(법 제21조)</li><li>어디서 — 거주지를 관할하는 시장·군수·구청장에게 냅니다(시행규칙 제34조제1항). 정부24 생계급여 안내는 읍면동 주민센터 방문 신청으로 안내합니다</li><li>서류 — 급여신청서와 금융정보 등 제공 동의서입니다. 동의서는 신청인과 부양의무자가 냅니다(법 제21조제3항)</li><li>결과 — 신청일부터 30일 안에 서면으로 알립니다. 부양의무자 조사에 시일이 걸리는 등 특별한 사유가 있으면 60일까지입니다(법 제26조제4항)</li><li>언제부터 — 급여는 신청한 날부터 시작합니다(법 제27조제1항)</li><li>교육급여 — 초·중등교육법의 교육비 지원 절차를 따릅니다(법 제12조제4항)</li></ul>
+<p><strong>【해가 바뀌면 다시 대 보세요.】 법 제27조제1항 단서는 해마다 선정기준이 바뀌어 1월에 새로 수급자로 결정되는 사람의 급여를 그해 1월 1일부터 시작하게 합니다.</strong> 작년 표로 떨어졌던 집이 새해 표로는 들어갈 수 있습니다.</p>
+
+<h3>자주 틀리는 다섯 가지</h3>
+<p>첫째, 기준 중위소득은 선정기준이 아닙니다. 1인 가구 기준 중위소득 2,564,238원은 잣대이고, 생계급여 선은 820,556원입니다.</p>
+<p>둘째, 월급이 적어도 재산 때문에 떨어질 수 있습니다. 소득인정액에는 재산 환산액이 들어가고, 승용차는 원칙적으로 월 100%입니다.</p>
+<p>셋째, 급여마다 선이 다릅니다. 생계급여에서 떨어져도 의료·주거·교육급여는 될 수 있습니다. 표의 네 칸을 모두 보세요.</p>
+<p>넷째, 「조건부수급」은 자격 조건이 아닙니다. 18세 이상 64세 이하로 근로능력이 있는 수급자가 자활사업 참가를 조건으로 생계급여를 받는 것입니다(시행령 제7조제1항·제8조제1항).</p>
+<p>다섯째, 차상위계층은 수급자와 다릅니다. 수급권자가 아니면서 소득인정액이 기준 중위소득의 50% 이하인 계층입니다(시행령 제3조).</p>
+<p>이 쪽의 표는 2026년 기준입니다. 2027년 기준은 보건복지부 고시 제2026-157호 등으로 이미 나와 있고 2027년 1월 1일부터 적용됩니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>기초수급자 자격 조건은 무엇인가요</dt><dd>우리 집 소득인정액이 가구원 수별 급여 선정기준 이하여야 합니다. 2026년 1인 가구라면 생계급여 820,556원, 의료급여 1,025,695원, 주거급여 1,230,834원, 교육급여 1,282,119원입니다. 생계·의료급여는 부양의무자 기준도 봅니다. 네 급여 중 하나라도 받으면 수급자입니다.</dd><dt>혼자 살고 근로소득이 월 100만원입니다. 받을 수 있나요</dt><dd>재산이 없다고 두고 계산 예시를 보면, 보건복지부가 밝힌 근로소득 공제 30%를 빼 소득평가액은 70만원입니다. 생계급여 선 820,556원보다 낮으므로 생계급여는 820,556원 − 700,000원 = 120,556원입니다. 34세 이하 청년이면 60만원을 먼저 빼고 나머지의 30%를 더 빼 소득평가액이 28만원이 되고, 생계급여는 540,556원입니다. 주거급여 기준에도 들고, 의료급여는 부양의무자 기준을 따로 봅니다. 실제 금액은 조사로 정해집니다.</dd><dt>자녀가 돈을 잘 벌면 못 받나요</dt><dd>주거급여와 교육급여는 부양의무자를 보지 않습니다. 생계급여는 따로 사는 자녀 가구가 연소득 1.3억원 또는 일반재산 12억원을 넘을 때만 문제가 됩니다(보건복지부 안내, 법령·고시에는 금액 없음). 의료급여는 시행령 제5조의6의 부양능력 기준을 봅니다.</dd><dt>집이 있으면 안 되나요</dt><dd>집이 있다고 바로 떨어지지는 않습니다. 재산에서 사는 지역의 기본재산액(서울 9,900만원, 경기 8,000만원, 광역·세종·창원 7,700만원, 그 외 5,300만원)과 인정 부채를 빼고 남은 금액만 환산합니다. 실제 사는 집 한 채는 주거용재산 월 1.04%로 환산합니다.</dd><dt>차가 있으면 수급자가 될 수 없나요</dt><dd>승용차는 원칙적으로 차량가액의 월 100%가 소득으로 잡혀 크게 불리합니다. 다만 배기량 2,000cc 미만 승용차로서 연식 10년 이상이거나 차량가액 500만원 미만이면 일반재산 환산율 월 4.17%를 씁니다. 다자녀·6인 이상 가구의 2,500cc 미만 7인승 이상 차, 장애인사용자동차 등 예외도 있습니다(보건복지부 고시 제2025-204호 별표2).</dd><dt>신청하면 언제 결과가 나오나요</dt><dd>법 제26조제4항에 따라 신청일부터 30일 안에 통지하고, 부양의무자 조사 등으로 늦어지면 60일까지입니다. 받게 되면 법 제27조제1항에 따라 신청일부터 계산합니다.</dd><dt>이미 수급자인지 확인하려면요</dt><dd>수급자는 수급자 증명서를 정부24 같은 정보통신망이나 무인민원발급기에서 직접 발급받을 수 있습니다. 창구 신청은 시장·군수·구청장에게, 교육급여는 시·도교육감에게 합니다(시행규칙 제40조).</dd></dl>
+<p class="note">실제 자격은 신청 뒤 조사로 정해집니다. 근거 — 법령: 국민기초생활 보장법 제2조·제6조의3·제8조·제8조의2·제12조·제12조의2·제12조의3·제21조·제26조·제27조, 같은 법 시행령 제2조·제3조·제5조·제5조의2·제5조의4·제5조의6·제7조·제8조, 같은 법 시행규칙 제34조·제40조, 주거급여법 제5조. 고시: 보건복지부 고시 제2025-135호(2026년 기준 중위소득 및 생계·의료급여 선정기준), 국토교통부 고시 제2025-506호(2026년 주거급여 선정기준), 교육부 고시 제2025-34호(2026년 교육급여 선정기준), 보건복지부 고시 제2025-204호(자동차 재산가액·기본재산액·부채), 제2019-188호(재산의 소득환산율). 부양의무자 금액과 청년 공제액은 보건복지부 안내입니다. 문의: 보건복지상담센터 129.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="/geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="/cheongnyeon-jiwongeum/">청년 지원금 고르기</a></li></ul>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../cheongnyeon-jiwongeum/">청년미래적금·청년 지원금</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 되나</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"기초수급자 자격 조건은 무엇인가요","acceptedAnswer":{"@type":"Answer","text":"우리 집 소득인정액이 가구원 수별 급여 선정기준 이하여야 합니다. 2026년 1인 가구라면 생계급여 820,556원, 의료급여 1,025,695원, 주거급여 1,230,834원, 교육급여 1,282,119원입니다. 생계·의료급여는 부양의무자 기준도 봅니다. 네 급여 중 하나라도 받으면 수급자입니다."}},{"@type":"Question","name":"혼자 살고 근로소득이 월 100만원입니다. 받을 수 있나요","acceptedAnswer":{"@type":"Answer","text":"재산이 없다고 두고 계산 예시를 보면, 보건복지부가 밝힌 근로소득 공제 30%를 빼 소득평가액은 70만원입니다. 생계급여 선 820,556원보다 낮으므로 생계급여는 820,556원 − 700,000원 = 120,556원입니다. 34세 이하 청년이면 60만원을 먼저 빼고 나머지의 30%를 더 빼 소득평가액이 28만원이 되고, 생계급여는 540,556원입니다. 주거급여 기준에도 들고, 의료급여는 부양의무자 기준을 따로 봅니다. 실제 금액은 조사로 정해집니다."}},{"@type":"Question","name":"자녀가 돈을 잘 벌면 못 받나요","acceptedAnswer":{"@type":"Answer","text":"주거급여와 교육급여는 부양의무자를 보지 않습니다. 생계급여는 따로 사는 자녀 가구가 연소득 1.3억원 또는 일반재산 12억원을 넘을 때만 문제가 됩니다(보건복지부 안내, 법령·고시에는 금액 없음). 의료급여는 시행령 제5조의6의 부양능력 기준을 봅니다."}},{"@type":"Question","name":"집이 있으면 안 되나요","acceptedAnswer":{"@type":"Answer","text":"집이 있다고 바로 떨어지지는 않습니다. 재산에서 사는 지역의 기본재산액(서울 9,900만원, 경기 8,000만원, 광역·세종·창원 7,700만원, 그 외 5,300만원)과 인정 부채를 빼고 남은 금액만 환산합니다. 실제 사는 집 한 채는 주거용재산 월 1.04%로 환산합니다."}},{"@type":"Question","name":"차가 있으면 수급자가 될 수 없나요","acceptedAnswer":{"@type":"Answer","text":"승용차는 원칙적으로 차량가액의 월 100%가 소득으로 잡혀 크게 불리합니다. 다만 배기량 2,000cc 미만 승용차로서 연식 10년 이상이거나 차량가액 500만원 미만이면 일반재산 환산율 월 4.17%를 씁니다. 다자녀·6인 이상 가구의 2,500cc 미만 7인승 이상 차, 장애인사용자동차 등 예외도 있습니다(보건복지부 고시 제2025-204호 별표2)."}},{"@type":"Question","name":"신청하면 언제 결과가 나오나요","acceptedAnswer":{"@type":"Answer","text":"법 제26조제4항에 따라 신청일부터 30일 안에 통지하고, 부양의무자 조사 등으로 늦어지면 60일까지입니다. 받게 되면 법 제27조제1항에 따라 신청일부터 계산합니다."}},{"@type":"Question","name":"이미 수급자인지 확인하려면요","acceptedAnswer":{"@type":"Answer","text":"수급자는 수급자 증명서를 정부24 같은 정보통신망이나 무인민원발급기에서 직접 발급받을 수 있습니다. 창구 신청은 시장·군수·구청장에게, 교육급여는 시·도교육감에게 합니다(시행규칙 제40조)."}}]}</script>
+
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>

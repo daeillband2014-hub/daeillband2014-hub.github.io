@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>청년미래적금·청년 지원금, 내 나이에 지금 신청할 수 있는 것</title>
+<meta property="og:title" content="청년미래적금·청년 지원금, 내 나이에 지금 신청할 수 있는 것">
+<meta property="og:description" content="청년미래적금 2차 신청은 10월 7~16일로 공고됐습니다. 지금 되는 청년 지원금을 나이·소득·취업 여부로 고르고, 끝난 사업도 갈랐습니다.">
+<meta name="description" content="청년미래적금 2차 신청은 10월 7~16일로 공고됐습니다. 지금 되는 청년 지원금을 나이·소득·취업 여부로 고르고, 끝난 사업도 갈랐습니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/cheongnyeon-jiwongeum/">
+<style>
+:root{--p:#1B5E8C;--pd:#14486B;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F7FB;--lt:#CFE0EC;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.webseo ul{margin:0 0 10px 18px}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+#app .tool select,#app .tool input[type=number],#app .tool input[type=date],#app .tool input[type=text]{border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+#gb-run,#gc-run{background:var(--p);color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+#gc-ey-add{background:#fff;color:var(--p);border:1.5px solid var(--lt);border-radius:10px;cursor:pointer}
+.gb-step{border-left:4px solid var(--lt);background:#F9FBFD;border-radius:8px;padding:10px 12px;margin:10px 0}
+.gb-status-pass{border-left-color:#2E9E5B}.gb-status-fail,.gb-status-over{border-left-color:#E63C46}
+.gb-status-conditional,.gb-status-partial{border-left-color:#E0A100}
+.gb-overall{font-weight:800;font-size:17px;padding:12px 14px;border-radius:10px;background:#EEF5FA;color:var(--pd);margin:12px 0}
+.gb-overall-eligible{background:#EAF7EF;color:#1E7A45}.gb-overall-over,.gb-overall-none{background:#FFF0F0;color:#8A1F26}
+.gb-overall-conditional,.gb-overall-partial{background:#FFF6E5;color:#6B5200}
+.gb-warning{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#6B5200}
+.gb-errors{color:#8A1F26;margin:8px 0 8px 18px}.gb-footer{font-size:12.5px;color:var(--mut);margin-top:12px}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+/* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>청년미래적금·청년 지원금 고르기</h1>
+<p class="desc">청년미래적금 2차 신청은 10월 7~16일로 공고됐습니다. 지금 되는 청년 지원금을 나이·소득·취업 여부로 고르고, 끝난 사업도 갈랐습니다.</p>
+<div class="tool">
+<div id="cj-tool" style="max-width:640px;margin:1.5em auto;padding:14px;border:1px solid #d0d7de;border-radius:10px;font-size:15px;line-height:1.6;box-sizing:border-box;word-break:keep-all;overflow-wrap:anywhere">
+  <p id="cj-title" style="margin:0 0 4px;font-weight:700;font-size:17px">청년 지원금 — 내 나이에 지금 신청할 수 있는 것</p>
+  <p id="cj-lead" style="margin:0 0 12px;font-size:13px;color:#57606a">전국 공통 사업만 고릅니다. 생년월일과 지금 상황을 넣으면 사업마다 신청 상태와 이유를 보여 드립니다.</p>
+
+  <div id="cj-form">
+    <div id="cj-birth-row" style="margin:0 0 12px">
+      <div id="cj-birth-label" style="font-weight:600">생년월일</div>
+      <input id="cj-by" type="number" inputmode="numeric" min="1" placeholder="출생연도 4자리" aria-label="출생연도" style="width:8em;padding:6px;font-size:15px;box-sizing:border-box">년
+      <select id="cj-bm" aria-label="태어난 달" style="padding:6px;font-size:15px"></select>월
+      <select id="cj-bd" aria-label="태어난 날" style="padding:6px;font-size:15px"></select>일
+      <label style="display:block;margin-top:6px;font-size:14px"><input id="cj-mil" type="checkbox"> 병역을 이행했다(현역·사회복무요원 등)</label>
+    </div>
+
+    <fieldset id="cj-work" style="margin:0 0 12px;padding:0;border:0">
+      <legend style="font-weight:600;padding:0">지금 하는 일</legend>
+      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-full" value="full"> 일한다 — 주 30시간 이상</label>
+      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-part" value="part"> 일한다 — 주 30시간 미만</label>
+      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-seek" value="seek"> 일하지 않는다 — 최근 6개월 안에 일·교육·직업훈련을 한 적 있다</label>
+      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-rest" value="rest"> 일하지 않는다 — 최근 6개월 동안 일·교육·직업훈련을 한 적 없다</label>
+    </fieldset>
+
+    <fieldset id="cj-sme" style="display:none;margin:0 0 12px;padding:0;border:0">
+      <legend style="font-weight:600;padding:0">다니는 곳이 중소기업인가요?</legend>
+      <label style="display:inline-block;margin-right:12px"><input type="radio" name="cj-sme" id="cj-sme-y" value="y"> 예</label>
+      <label style="display:inline-block;margin-right:12px"><input type="radio" name="cj-sme" id="cj-sme-n" value="n"> 아니다</label>
+      <label style="display:inline-block"><input type="radio" name="cj-sme" id="cj-sme-u" value=""> 모름</label>
+    </fieldset>
+
+    <label style="display:block;margin:0 0 12px"><input id="cj-ben" type="checkbox"> 지금 실업급여나 생계급여를 받고 있다</label>
+
+    <div id="cj-hh-row" style="margin:0 0 12px">
+      <label for="cj-hh" style="display:block;font-weight:600">가구 소득(기준 중위소득 대비)</label>
+      <select id="cj-hh" style="width:100%;padding:6px;font-size:15px;box-sizing:border-box"></select>
+      <div id="cj-hh-help" style="font-size:13px;color:#57606a">모르면 「모름」을 고르세요. 복지로(bokjiro.go.kr) 모의계산에서 가늠할 수 있습니다.</div>
+    </div>
+
+    <fieldset id="cj-pinc" style="margin:0 0 12px;padding:0;border:0">
+      <legend id="cj-pinc-label" style="font-weight:600;padding:0">본인 소득</legend>
+      <div id="cj-pinc-opts"></div>
+    </fieldset>
+
+    <button id="cj-go" type="button" style="width:100%;padding:10px;font-size:16px;font-weight:700;border:0;border-radius:8px;background:#1f6feb;color:#fff;cursor:pointer">내 결과 보기</button>
+  </div>
+
+  <div id="cj-msg" role="alert" style="color:#cf222e;font-size:14px;margin-top:8px"></div>
+  <div id="cj-out" aria-live="polite"></div>
+
+  <p id="cj-foot" style="margin:14px 0 0;font-size:13px;color:#57606a">이 도구는 전국 공통 사업만 다룹니다. 시·도와 시·군·구 사업은 온통청년(youthcenter.go.kr)과 사는 지역의 청년 포털에서 찾으세요.</p>
+  <p id="cj-final" style="margin:6px 0 0;font-weight:700">최종 자격은 각 사업 운영기관이 심사합니다.</p>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /* ================================================================
+   * 사업 목록 — 신청 날짜·조건·근거 링크는 전부 이 배열에만 둔다.
+   *   start / end : 신청 시작·끝(로컬 날짜 'YYYY-MM-DD', 끝 날짜 포함)
+   *                 end가 null이면 상시, start가 null이면 이미 열려 있음
+   *   회차가 바뀌면 날짜와 함께 slots·birthFrom·birthTo·birthYears·pinc.year도 본다.
+   *   문구 안의 {age} {max} {mil} {years} {start} {end}는 이 배열의 값으로 채운다.
+   * ================================================================ */
+  var CJ_PROGRAMS = [
+    {
+      id: 'mirae',
+      name: '청년미래적금 2차 가입',
+      short: '청년미래적금',
+      start: '2026-10-07',
+      end: '2026-10-16',
+      slots: [
+        { from: '2026-10-07', to: '2026-10-07', who: 'odd' },
+        { from: '2026-10-08', to: '2026-10-08', who: 'even' },
+        { from: '2026-10-12', to: '2026-10-16', who: 'all' }
+      ],
+      birthFrom: '1991-11-17',
+      birthTo: '2007-11-27',
+      milYears: 6,
+      milWhy: '병역 이행 기간(최대 {mil}년)을 나이 계산에서 빼면 대상일 수 있습니다. 복무 기간을 운영기관에 확인하세요.',
+      hhMax: 200,
+      hhAlt: 250,
+      hhAltWho: '맞벌이 2인 가구',
+      pinc: { year: 2025, rule: '총급여 7,500만원(종합소득 6,300만원) 이하이거나 연매출 3억원 이하 소상공인' },
+      ask: '서민금융진흥원(1397)',
+      yesWhy: '생년월일과 소득이 이번 회차 가입 조건에 맞습니다.',
+      note: '청년도약계좌와 함께 가입할 수 없고, 청년도약계좌를 만기까지 유지한 사람은 대상이 아닙니다. 지금 청년도약계좌 가입자는 갈아타기로 신청합니다. 문의 서민금융진흥원 1397.',
+      gives: '3년간 매월 1천원~50만원 납입, 납입액의 6% 또는 12% 정부 기여금과 이자 비과세',
+      src: '금융위원회 보도자료',
+      url: 'https://www.fsc.go.kr/no010101/87726'
+    },
+    {
+      id: 'kukchwi',
+      name: '국민취업지원제도',
+      start: null,
+      end: null,
+      openWhen: '상시 신청합니다.',
+      ageMin: 15,
+      ageMax: 34,
+      milYears: 3,
+      milWhy: '병역 이행 기간을 {mil}년 범위에서 나이에 더해 주므로 청년 기준에 들 수 있습니다. 복무 기간을 고용센터에 확인하세요.',
+      ageOver: ['check', '청년 기준({age}) 밖입니다. 청년이 아닌 사람의 참여 조건은 이 도구가 다루지 않으니 고용24나 1350에서 확인하세요.'],
+      work: {
+        full: ['no', '주 30시간 이상 일하는 근로자는 참여할 수 없습니다.'],
+        part: ['check', '주 30시간 미만으로 일하면 제외 대상(주 30시간 이상 근로자)에는 들지 않지만, 참여할 수 있는지는 고용센터(1350)에 확인하세요.'],
+        seek: ['yes'],
+        rest: ['yes']
+      },
+      benefitNo: '실업급여나 생계급여를 받고 있으면 참여할 수 없다고 안내돼 있습니다.',
+      hhInfo: [
+        [60, '가구 소득이 기준 중위소득 60% 이하라 1유형(구직촉진수당) 소득 기준 안입니다. 재산 등 다른 요건도 봅니다.'],
+        [120, '청년은 가구 소득 기준 중위소득 120% 이하·재산 5억원 이하까지 1유형을 예산 범위에서 점수로 선발합니다.'],
+        [null, '가구 소득이 기준 중위소득 120%를 넘으면 청년은 2유형(소득 무관)으로 참여합니다.']
+      ],
+      hhInfoUnknown: '가구 소득에 따라 1유형(청년은 기준 중위소득 120% 이하에서 선발) 또는 2유형(소득 무관)으로 나뉩니다.',
+      yesWhy: '청년 나이({age})이고 지금 일하지 않고 있습니다.',
+      note: '고용24에 구직 등록하고 제도 안내 영상을 본 뒤 온라인으로 신청하거나 거주지 고용센터를 찾아갑니다. 결과는 보통 1개월 안에 알려 줍니다. 문의 1350.',
+      gives: '1유형 월 60만원×6개월(부양가족 1명당 월 10만원, 월 최대 40만원 추가) / 2유형 취업활동비용',
+      src: '고용24 국민취업지원제도 안내',
+      url: 'https://www.work24.go.kr/cm/c/f/1100/selecSystInfo.do?systId=SI00000316'
+    },
+    {
+      id: 'dojeon',
+      name: '청년도전지원사업',
+      start: null,
+      end: null,
+      openWhen: '고용24에 신청 기간이 따로 표시돼 있지 않습니다. 지역 운영기관에 모집 중인지 확인하세요.',
+      ageMin: 18,
+      ageMax: 34,
+      work: {
+        full: ['no', '최근 6개월 동안 취업·교육·직업훈련 이력이 없어야 합니다.'],
+        part: ['no', '최근 6개월 동안 취업·교육·직업훈련 이력이 없어야 합니다.'],
+        seek: ['no', '최근 6개월 동안 취업·교육·직업훈련 이력이 없어야 합니다.'],
+        rest: ['yes']
+      },
+      yesWhy: '나이({age})가 맞고 최근 6개월 동안 취업·교육·직업훈련 이력이 없습니다.',
+      note: '구직단념청년 문답표 21점(30점 만점) 이상이어야 합니다. 자립준비청년·북한이탈청년 등도 대상에 들어갑니다. 지역 운영기관에 직접 가거나 고용24에서 온라인으로 신청합니다.',
+      gives: '참여수당 최대 250만원(과정 길이에 따라 다름)',
+      src: '고용24 청년도전지원사업',
+      url: 'https://www.work24.go.kr/wk/g/b/1100/busiIntro.do'
+    },
+    {
+      id: 'pass',
+      name: '청년문화예술패스 추가 발급',
+      start: '2026-08-10',
+      startTime: '오전 10시',
+      end: '2026-11-30',
+      earlyClose: true,
+      birthYears: [2006, 2007],
+      yesWhy: '출생연도가 대상({years}년생)에 듭니다.',
+      note: '상반기에 발급받고 7월 31일까지 한 번도 쓰지 않아 전액 회수된 사람은 빠집니다. 누리집 youthculturepass.or.kr에서 신청순으로 발급합니다.',
+      gives: '신청 당시 주민등록 기준 수도권 15만원, 비수도권 20만원(12월 31일까지 공연·전시·영화 예매와 도서 구매에 사용)',
+      src: '문화체육관광부 보도자료',
+      url: 'https://www.mcst.go.kr/site/s_notice/press/pressView.jsp?pSeq=22640'
+    },
+    {
+      id: 'sotax',
+      name: '중소기업 취업자 소득세 감면',
+      start: null,
+      end: '2026-12-31',
+      openWhen: '{end}까지 중소기업에 취업하면 대상입니다.',
+      lastDayWhen: '오늘까지 중소기업에 취업하면 대상입니다.',
+      endedWhy: '취업 기한({end})이 지났습니다. 그 뒤에 취업한 사람도 되는지는 법 개정 여부를 확인하세요. 기한 안에 취업한 사람은 취업일부터 5년간 감면 대상입니다.',
+      ageMin: 15,
+      ageMax: 34,
+      ageAtContract: true,
+      contractWhy: '나이는 근로계약 체결일 기준입니다. 입사할 때 만 {max}세 이하(병역 이행 기간은 {mil}년 한도로 뺌)였다면 대상일 수 있습니다.',
+      milYears: 6,
+      milWhy: '병역 이행 기간({mil}년 한도)을 나이에서 빼면 대상일 수 있습니다. 회사에 확인하세요.',
+      work: {
+        full: ['yes'],
+        part: ['yes'],
+        seek: ['no', '취업한 사람이 대상입니다.'],
+        rest: ['no', '취업한 사람이 대상입니다.']
+      },
+      needSme: true,
+      yesWhy: '중소기업에 다니고 나이({age})가 맞습니다. 감면은 취업일부터 5년간이며 회사(원천징수의무자)에 신청합니다.',
+      note: '시행령에 열거된 업종만 해당하고 국가·지자체·공공기관은 빠집니다. 임원, 최대주주와 그 가족, 일용근로자 등은 제외됩니다. 이미 퇴직했다면 주소지 관할 세무서장에게 신청할 수 있습니다.',
+      gives: '취업일부터 5년간 소득세 90% 감면(과세기간마다 200만원 한도)',
+      src: '조세특례제한법 제30조',
+      url: 'https://www.law.go.kr/법령/조세특례제한법/제30조'
+    },
+    {
+      id: 'wolse',
+      name: '청년월세 지원(국토교통부)',
+      start: '2026-03-30',
+      startTime: '09시',
+      end: '2026-05-29',
+      endTime: '16시',
+      ageMin: 19,
+      ageMax: 34,
+      unasked: '부모와 따로 사는 무주택 청년이고 청년가구 기준 중위소득 60% 이하·원가구 100% 이하여야 합니다. 이 도구는 이 조건을 묻지 않습니다.',
+      gives: '월 최대 20만원, 최대 24회(생애 1회)',
+      src: '복지로 공지',
+      url: 'https://m.bokjiro.go.kr/ssis-tem/cms/mob/customer/notice/1309500_1155.html'
+    },
+    {
+      id: 'naeil',
+      name: '청년내일저축계좌(보건복지부)',
+      start: '2026-05-04',
+      end: '2026-05-20',
+      ageUnknown: '나이 기준은 이 도구가 본 출처에 따로 적혀 있지 않습니다. 운영기관 확인이 필요합니다.',
+      work: {
+        full: ['yes'],
+        part: ['yes'],
+        seek: ['no', '일하는 청년이 대상입니다.'],
+        rest: ['no', '일하는 청년이 대상입니다.']
+      },
+      hhMax: 50,
+      gives: '본인이 월 10만~50만원을 저축하면 정부가 월 30만원을 더함',
+      src: '정책브리핑(보건복지부)',
+      url: 'https://www.korea.kr/news/policyNewsView.do?newsId=148963836'
+    },
+    {
+      id: 'doyak',
+      name: '청년도약계좌',
+      start: null,
+      end: '2025-12-31',
+      openWhen: '{end}까지 신규 가입을 받습니다.',
+      lastDayWhen: '오늘까지 신규 가입을 받습니다.',
+      endedWhy: '신규 가입은 {end}에 끝났습니다.',
+      ageUnknown: '가입 조건은 이 도구가 다루지 않습니다. 운영기관 확인이 필요합니다.',
+      switchTo: 'mirae',
+      switchNote: '지금 청년도약계좌 가입자는 청년미래적금 2차 때 갈아탈 수 있습니다. 청년미래적금 계좌를 연 다음 청년도약계좌를 특별중도해지하는 순서이고, 이미 넣은 돈의 기여금과 비과세는 유지됩니다.',
+      gives: '신규 가입 끝(기존 가입자는 유지)',
+      src: '조세특례제한법 제91조의22 · 금융위원회 보도자료',
+      url: 'https://www.fsc.go.kr/no010101/87726'
+    }
+  ];
+  /* ======================= 사업 목록 끝 ======================= */
+
+  var STATUS_LABEL = { open: '신청 중', soon: '곧 열림', ended: '이번 회차 끝남' };
+  var FIT_LABEL = { yes: '입력한 조건에 맞음', check: '운영기관 확인 필요', no: '입력한 조건으로는 안 맞음' };
+  var FIT_RANK = { yes: 0, check: 1, no: 2 };
+  var WHO = { odd: '출생연도 끝자리 홀수', even: '출생연도 끝자리 짝수', all: '누구나' };
+  var GROUPS = [
+    ['now', '지금 신청할 수 있는 것'],
+    ['check', '신청 중 · 확인이 더 필요한 것'],
+    ['soon', '곧 열리는 것'],
+    ['no', '입력한 조건으로는 맞지 않는 것'],
+    ['ended', '이번 회차가 끝난 것']
+  ];
+
+  /* ---------- 날짜: 로컬 연·월·일 정수로만 다룬다 ---------- */
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+  function daysIn(y, m) { return [31, isLeap(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]; }
+  function mk(y, m, d) {
+    if (y % 1 || m % 1 || d % 1) return null;
+    if (!(y >= 1000 && y <= 9999) || !(m >= 1 && m <= 12) || !(d >= 1 && d <= daysIn(y, m))) return null;
+    return { y: y, m: m, d: d };
+  }
+  function toYMD(v) {
+    if (v === null || v === undefined || v === '') return null;
+    if (typeof v === 'string') {
+      var r = /^\s*(\d{4})-(\d{1,2})-(\d{1,2})\s*$/.exec(v);
+      return r ? mk(+r[1], +r[2], +r[3]) : null;
+    }
+    if (typeof v === 'object' && typeof v.getFullYear === 'function') {
+      if (isNaN(v.getTime())) return null;
+      return mk(v.getFullYear(), v.getMonth() + 1, v.getDate());
+    }
+    if (typeof v === 'object') return mk(+v.y, +v.m, +v.d);
+    return null;
+  }
+  function num(o) { return o.y * 10000 + o.m * 100 + o.d; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function iso(o) { return o.y + '-' + pad(o.m) + '-' + pad(o.d); }
+  function ageOn(b, t) {
+    var a = t.y - b.y;
+    if (t.m < b.m || (t.m === b.m && t.d < b.d)) a -= 1;
+    return a;
+  }
+  function fullDate(o) { return o.y + '년 ' + o.m + '월 ' + o.d + '일'; }
+  function dateText(o, t) { return (t && o.y === t.y ? '' : o.y + '년 ') + o.m + '월 ' + o.d + '일'; }
+
+  /* ---------- 문구 채우기 ---------- */
+  function fill(s, p, t) {
+    if (!s) return '';
+    return String(s)
+      .replace(/\{age\}/g, '만 ' + p.ageMin + '~' + p.ageMax + '세')
+      .replace(/\{max\}/g, String(p.ageMax))
+      .replace(/\{mil\}/g, String(p.milYears))
+      .replace(/\{years\}/g, p.birthYears ? p.birthYears.join('·') : '')
+      .replace(/\{start\}/g, p.start ? dateText(toYMD(p.start), t) : '')
+      .replace(/\{end\}/g, p.end ? dateText(toYMD(p.end), t) : '');
+  }
+
+  /* ---------- 신청 상태: 오늘 날짜만 본다 ---------- */
+  function statusOf(p, t) {
+    var T = num(t);
+    if (p.start && T < num(toYMD(p.start))) return 'soon';
+    if (p.end && T > num(toYMD(p.end))) return 'ended';
+    return 'open';
+  }
+
+  function slotRange(s, t) {
+    var f = toYMD(s.from), e = toYMD(s.to);
+    if (num(f) === num(e)) return dateText(f, t);
+    if (f.y === e.y && f.m === e.m) return (t && f.y === t.y ? '' : f.y + '년 ') + f.m + '월 ' + f.d + '~' + e.d + '일';
+    return dateText(f, t) + '~' + dateText(e, t);
+  }
+  function slotAll(p, t) {
+    var a = [], i;
+    for (i = 0; i < p.slots.length; i++) a.push(slotRange(p.slots[i], t) + '(' + WHO[p.slots[i].who] + ')');
+    return a.join(', ');
+  }
+  function mySlots(p, b) {
+    if (!b) return null;
+    var par = b.y % 2 ? 'odd' : 'even', a = [], i;
+    for (i = 0; i < p.slots.length; i++) if (p.slots[i].who === 'all' || p.slots[i].who === par) a.push(p.slots[i]);
+    return a;
+  }
+  function slotPlan(p, t, b) {
+    var ms = mySlots(p, b), a = [], i;
+    if (!ms) return '공고된 신청일은 ' + slotAll(p, t) + '입니다.';
+    for (i = 0; i < ms.length; i++) a.push(slotRange(ms[i], t));
+    return '출생연도 끝자리가 ' + (b.y % 2 ? '홀수' : '짝수') + '라 공고된 신청일 중 ' + a.join(', ') + '에 신청할 수 있습니다.';
+  }
+  function slotToday(p, t, b) {
+    var T = num(t), cur = null, i, ms, nx = null, lead;
+    for (i = 0; i < p.slots.length; i++) {
+      if (T >= num(toYMD(p.slots[i].from)) && T <= num(toYMD(p.slots[i].to))) { cur = p.slots[i]; break; }
+    }
+    ms = mySlots(p, b);
+    if (!ms) return '공고된 신청일은 ' + slotAll(p, t) + '입니다.' + (cur ? ' 오늘은 ' + WHO[cur.who] + ' 신청일입니다.' : '');
+    if (cur && (cur.who === 'all' || ms.indexOf(cur) >= 0)) return '오늘 신청할 수 있는 날입니다.';
+    for (i = 0; i < ms.length; i++) if (num(toYMD(ms[i].to)) >= T) { nx = ms[i]; break; }
+    lead = cur ? '오늘은 ' + WHO[cur.who] + ' 신청일입니다.' : '공고된 신청일은 ' + slotAll(p, t) + '입니다.';
+    return lead + (nx ? ' 다음 공고된 신청일은 ' + dateText(toYMD(nx.from), t) + '입니다.' : '');
+  }
+
+  function whenText(p, st, t, b) {
+    var S = p.start ? toYMD(p.start) : null, E = p.end ? toYMD(p.end) : null, T = num(t), parts = [];
+    if (st === 'soon') {
+      parts.push(dateText(S, t) + (p.startTime ? ' ' + p.startTime : '') + '부터 신청합니다.');
+      if (p.slots) parts.push(slotPlan(p, t, b));
+    } else if (st === 'open') {
+      if (p.slots) parts.push(slotToday(p, t, b));
+      if (S && T === num(S) && p.startTime) parts.push('오늘 ' + p.startTime + '부터 신청을 받습니다.');
+      if (E && T === num(E)) parts.push(p.lastDayWhen ? fill(p.lastDayWhen, p, t) : '오늘이 마지막 날입니다' + (p.endTime ? '(' + p.endTime + ' 마감)' : '') + '.');
+      else if (p.openWhen) parts.push(fill(p.openWhen, p, t));
+      else if (E) parts.push(dateText(E, t) + (p.endTime ? ' ' + p.endTime : '') + '까지 신청합니다.');
+      else parts.push('상시 신청합니다.');
+    }
+    if (p.earlyClose && st !== 'ended') parts.push('신청자가 많으면 일찍 마감될 수 있습니다.');
+    return parts.join(' ');
+  }
+
+  /* ---------- 조건 판정: 초안에 적힌 조건만 본다 ---------- */
+  function judge(p, inp, t) {
+    var out = [], b = inp.birth, working = inp.work === 'full' || inp.work === 'part', a, w, h, lim, i, worst, why, list;
+    function add(level, s) { out.push([level, fill(s, p, t)]); }
+
+    if (p.birthFrom || p.birthYears || p.ageMin != null) {
+      if (!b) add('check', '생년월일을 넣으면 나이 조건을 가립니다.');
+      else if (p.birthFrom) {
+        var F = toYMD(p.birthFrom), To = toYMD(p.birthTo);
+        if (num(b) > num(To)) add('no', '이번 회차는 ' + fullDate(To) + '생까지 가입할 수 있습니다.');
+        else if (num(b) < num(F)) {
+          if (inp.mil && p.milYears && num({ y: b.y + p.milYears, m: b.m, d: b.d }) >= num(F)) add('check', p.milWhy);
+          else add('no', '이번 회차는 ' + fullDate(F) + '생부터 가입할 수 있습니다.');
+        }
+      } else if (p.birthYears) {
+        if (p.birthYears.indexOf(b.y) < 0) add('no', '{years}년생만 대상입니다.');
+      } else {
+        a = ageOn(b, t);
+        if (a < p.ageMin) add('no', '{age}가 대상입니다.');
+        else if (a > p.ageMax) {
+          if (p.ageAtContract && working) add('check', p.contractWhy);
+          else if (inp.mil && p.milYears && a <= p.ageMax + p.milYears) add('check', p.milWhy);
+          else if (p.ageOver) add(p.ageOver[0], p.ageOver[1]);
+          else add('no', '{age}가 대상입니다.');
+        }
+      }
+    } else {
+      add('check', p.ageUnknown || '나이 기준은 운영기관에 확인하세요.');
+    }
+
+    if (p.work) {
+      w = p.work[inp.work];
+      if (!w) add('check', '지금 하는 일을 고르면 가려집니다.');
+      else if (w[0] !== 'yes') add(w[0], w[1]);
+    }
+
+    if (p.needSme && working) {
+      if (inp.sme === 'n') add('no', '중소기업 취업자가 대상입니다(국가·지자체·공공기관은 빠집니다).');
+      else if (inp.sme !== 'y') add('check', '다니는 곳이 중소기업이고 대상 업종인지 회사에 확인하세요.');
+    }
+
+    if (p.benefitNo && inp.benefit) add('no', p.benefitNo);
+
+    if (p.hhMax != null) {
+      h = inp.hh;
+      lim = '기준 중위소득 ' + p.hhMax + '%' + (p.hhAlt ? '(' + p.hhAltWho + ' ' + p.hhAlt + '%)' : '') + ' 이하';
+      if (h === null) add('check', '가구 소득이 ' + lim + '인지 확인하세요.');
+      else if (h <= p.hhMax) { /* 맞음 */ }
+      else if (p.hhAlt && h <= p.hhAlt) add('check', p.hhAltWho + '라면 기준 중위소득 ' + p.hhAlt + '% 이하까지 됩니다.');
+      else add('no', '가구 소득이 ' + lim + '여야 합니다.');
+    }
+
+    if (p.pinc) {
+      if (inp.pinc === 'over') add('no', p.pinc.rule + '이어야 합니다.');
+      else if (inp.pinc === 'none') add('check', p.pinc.year + '년 소득으로 심사합니다. 그해 소득이 없었다면 ' + p.ask + '에 확인하세요.');
+      else if (inp.pinc !== 'in') add('check', p.pinc.year + '년 본인 소득이 ' + p.pinc.rule + '인지 확인하세요.');
+    }
+
+    if (p.unasked) add('check', p.unasked);
+
+    worst = 'yes';
+    for (i = 0; i < out.length; i++) if (FIT_RANK[out[i][0]] > FIT_RANK[worst]) worst = out[i][0];
+    if (worst === 'yes') {
+      why = fill(p.yesWhy || '입력한 조건에 맞습니다.', p, t);
+      if (p.hhInfo) {
+        if (inp.hh === null) why += ' ' + p.hhInfoUnknown;
+        else for (i = 0; i < p.hhInfo.length; i++) {
+          if (p.hhInfo[i][0] === null || inp.hh <= p.hhInfo[i][0]) { why += ' ' + p.hhInfo[i][1]; break; }
+        }
+      }
+    } else {
+      list = [];
+      for (i = 0; i < out.length; i++) if (out[i][0] === worst) list.push(out[i][1]);
+      why = list.join(' ');
+    }
+    return { fit: worst, why: why };
+  }
+
+  function normInput(x) {
+    x = x || {};
+    var hh = x.hh;
+    if (hh === '' || hh === null || hh === undefined) hh = null;
+    else if (hh === 'over') hh = Infinity;
+    else { hh = +hh; if (isNaN(hh)) hh = null; }
+    return {
+      birth: toYMD(x.birth),
+      mil: !!x.mil,
+      work: x.work || '',
+      sme: x.sme || '',
+      benefit: !!x.benefit,
+      hh: hh,
+      pinc: x.pinc || ''
+    };
+  }
+
+  /* ---------- 핵심: 순수 함수. 오늘 날짜는 인자로 받는다 ---------- */
+  function cjPick(input, today) {
+    var t = toYMD(today), inp, err = '', items = [], groups = {}, stat = {}, i, g, p, st, j, it, note, sw;
+    if (!t) throw new Error('cjPick: today는 YYYY-MM-DD 문자열, {y,m,d} 객체, Date 중 하나여야 합니다.');
+    inp = normInput(input);
+    if (input && input.birth !== undefined && input.birth !== null && input.birth !== '' && !inp.birth) err = '생년월일이 올바른 날짜가 아닙니다.';
+    else if (inp.birth && num(inp.birth) > num(t)) { err = '생년월일이 오늘보다 늦습니다.'; inp.birth = null; }
+
+    for (g = 0; g < GROUPS.length; g++) groups[GROUPS[g][0]] = [];
+    for (i = 0; i < CJ_PROGRAMS.length; i++) stat[CJ_PROGRAMS[i].id] = statusOf(CJ_PROGRAMS[i], t);
+
+    for (i = 0; i < CJ_PROGRAMS.length; i++) {
+      p = CJ_PROGRAMS[i];
+      st = stat[p.id];
+      j = judge(p, inp, t);
+      sw = p.switchTo && stat[p.switchTo] && stat[p.switchTo] !== 'ended' ? p.switchNote : '';
+      note = (st === 'ended' ? '' : fill(p.note, p, t));
+      if (sw) note = note ? note + ' ' + sw : sw;
+      it = {
+        id: p.id,
+        name: p.name,
+        status: st,
+        statusLabel: st === 'soon' ? STATUS_LABEL.soon + ' · ' + dateText(toYMD(p.start), t) + ' 시작' : STATUS_LABEL[st],
+        fit: j.fit,
+        fitLabel: FIT_LABEL[j.fit],
+        why: st === 'ended' ? fill(p.endedWhy || '이번 회차 신청은 {end}에 끝났습니다.', p, t) : j.why,
+        when: st === 'ended' ? '' : whenText(p, st, t, inp.birth),
+        note: note,
+        gives: p.gives || '',
+        src: p.src,
+        url: p.url,
+        start: p.start,
+        end: p.end,
+        canApply: st === 'open' && j.fit === 'yes'
+      };
+      if (st === 'ended') it.group = 'ended';
+      else if (j.fit === 'no') it.group = 'no';
+      else if (st === 'soon') it.group = 'soon';
+      else it.group = j.fit === 'yes' ? 'now' : 'check';
+      groups[it.group].push(p.id);
+      items.push(it);
+    }
+    return { today: iso(t), error: err, items: items, groups: groups };
+  }
+
+  /* ---------- 화면 ---------- */
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  var BADGE = {
+    open: 'background:#dafbe1;color:#116329',
+    soon: 'background:#ddf4ff;color:#0a3069',
+    ended: 'background:#eaeef2;color:#57606a'
+  };
+  var FIT_COLOR = { yes: '#116329', check: '#9a6700', no: '#cf222e' };
+
+  function card(it) {
+    var h = '<div style="border:1px solid #d0d7de;border-radius:8px;padding:10px 12px;margin:8px 0">';
+    h += '<div style="display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;justify-content:space-between">';
+    h += '<strong>' + esc(it.name) + '</strong>';
+    h += '<span style="font-size:13px;font-weight:700;padding:1px 8px;border-radius:10px;' + BADGE[it.status] + '">' + esc(it.statusLabel) + '</span></div>';
+    if (it.status !== 'ended') h += '<div style="font-size:13px;font-weight:700;color:' + FIT_COLOR[it.fit] + '">' + esc(it.fitLabel) + '</div>';
+    h += '<p style="margin:4px 0 0">' + esc(it.why) + '</p>';
+    if (it.when) h += '<p style="margin:4px 0 0;font-size:14px">' + esc(it.when) + '</p>';
+    if (it.gives && it.status !== 'ended') h += '<p style="margin:4px 0 0;font-size:13px;color:#57606a">받는 것: ' + esc(it.gives) + '</p>';
+    if (it.note) h += '<p style="margin:4px 0 0;font-size:13px;color:#57606a">' + esc(it.note) + '</p>';
+    h += '<p style="margin:6px 0 0;font-size:13px"><a href="' + esc(it.url) + '" target="_blank" rel="noopener">원문: ' + esc(it.src) + '</a></p>';
+    return h + '</div>';
+  }
+
+  function initUI() {
+    function $(id) { return document.getElementById(id); }
+    function radio(name, values) {
+      for (var k = 0; k < values.length; k++) { var e = $(name + '-' + values[k]); if (e && e.checked) return e.value; }
+      return '';
+    }
+    var bm = $('cj-bm'), bd = $('cj-bd'), hh = $('cj-hh'), out = $('cj-out'), msg = $('cj-msg'), shown = false, i, h, cuts = [], mp = null;
+
+    h = '<option value="">월</option>';
+    for (i = 1; i <= 12; i++) h += '<option value="' + i + '">' + i + '</option>';
+    bm.innerHTML = h;
+    h = '<option value="">일</option>';
+    for (i = 1; i <= 31; i++) h += '<option value="' + i + '">' + i + '</option>';
+    bd.innerHTML = h;
+
+    // 가구 소득 구간은 사업 목록의 기준선에서 만든다(기준선이 바뀌면 칸도 따라 바뀐다)
+    function addCut(c) { if (c !== null && c !== undefined && cuts.indexOf(c) < 0) cuts.push(c); }
+    for (i = 0; i < CJ_PROGRAMS.length; i++) {
+      var q = CJ_PROGRAMS[i];
+      addCut(q.hhMax); addCut(q.hhAlt);
+      if (q.hhInfo) for (var k = 0; k < q.hhInfo.length; k++) addCut(q.hhInfo[k][0]);
+      if (q.pinc && !mp) mp = q;
+    }
+    cuts.sort(function (x, y) { return x - y; });
+    h = '<option value="">모름</option>';
+    for (i = 0; i < cuts.length; i++) h += '<option value="' + cuts[i] + '">' + (i ? cuts[i - 1] + '% 초과 ' : '') + cuts[i] + '% 이하</option>';
+    if (cuts.length) h += '<option value="over">' + cuts[cuts.length - 1] + '% 초과</option>';
+    hh.innerHTML = h;
+    if (!cuts.length) $('cj-hh-row').style.display = 'none';
+
+    // 본인 소득 칸은 청년미래적금 심사 기준에서 만든다
+    if (mp) {
+      $('cj-pinc-label').textContent = '본인 ' + mp.pinc.year + '년 소득(' + (mp.short || mp.name) + ' 심사 기준)';
+      var po = [['in', '기준 안 — ' + mp.pinc.rule], ['over', '그보다 많았다'], ['none', '그해 소득이 없었다'], ['u', '모름']];
+      h = '';
+      for (i = 0; i < po.length; i++) {
+        h += '<label style="display:block"><input type="radio" name="cj-pinc" id="cj-pinc-' + po[i][0] + '" value="' + (po[i][0] === 'u' ? '' : po[i][0]) + '"> ' + esc(po[i][1]) + '</label>';
+      }
+      $('cj-pinc-opts').innerHTML = h;
+    } else {
+      $('cj-pinc').style.display = 'none';
+    }
+
+    function read() {
+      var y = String($('cj-by').value || '').replace(/\s/g, ''), m = bm.value, d = bd.value;
+      return {
+        filled: !!(y && m && d),
+        input: {
+          birth: y && m && d ? y + '-' + m + '-' + d : '',
+          mil: !!$('cj-mil').checked,
+          work: radio('cj-work', ['full', 'part', 'seek', 'rest']),
+          sme: radio('cj-sme', ['y', 'n', 'u']),
+          benefit: !!$('cj-ben').checked,
+          hh: hh.value,
+          pinc: radio('cj-pinc', ['in', 'over', 'none', 'u'])
+        }
+      };
+    }
+
+    function render() {
+      var r0 = read(), w = r0.input.work, now = new Date(), t, r, html, g, k, it;
+      $('cj-sme').style.display = (w === 'full' || w === 'part') ? 'block' : 'none';
+      if (!r0.filled) { msg.textContent = '생년월일을 연·월·일 모두 넣어 주세요.'; out.innerHTML = ''; return; }
+      if (!w) { msg.textContent = '지금 하는 일을 골라 주세요.'; out.innerHTML = ''; return; }
+      t = { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+      r = cjPick(r0.input, t);
+      if (r.error) { msg.textContent = r.error; out.innerHTML = ''; return; }
+      msg.textContent = '';
+      html = '<p style="margin:14px 0 4px;font-size:13px;color:#57606a">기준일 ' + t.y + '년 ' + t.m + '월 ' + t.d + '일(오늘). 신청 상태는 이 날짜로 가립니다.</p>';
+      for (g = 0; g < GROUPS.length; g++) {
+        var ids = r.groups[GROUPS[g][0]];
+        if (!ids.length) continue;
+        html += '<p style="margin:14px 0 0;font-weight:700;font-size:16px">' + esc(GROUPS[g][1]) + ' (' + ids.length + ')</p>';
+        for (k = 0; k < r.items.length; k++) { it = r.items[k]; if (it.group === GROUPS[g][0]) html += card(it); }
+      }
+      out.innerHTML = html;
+      shown = true;
+    }
+
+    $('cj-go').addEventListener('click', render);
+    $('cj-form').addEventListener('change', function () {
+      var w = read().input.work;
+      $('cj-sme').style.display = (w === 'full' || w === 'part') ? 'block' : 'none';
+      if (shown) render();
+    });
+  }
+
+  if (typeof document !== 'undefined') {
+    var boot = function () {
+      var root = document.getElementById('cj-tool');
+      if (!root || root.getAttribute('data-cj-ready')) return;
+      root.setAttribute('data-cj-ready', '1');
+      initUI();
+    };
+    if (document.getElementById('cj-tool')) boot();
+    else document.addEventListener('DOMContentLoaded', boot);
+  }
+
+  if (typeof module !== 'undefined') module.exports = { cjPick: cjPick };
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031250,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>청년미래적금·청년 지원금 고르기</h2>
+<h3>10초 요약</h3>
+<p><strong>【청년미래적금 2차 가입 신청은 10월 7일부터 16일까지로 공고됐습니다.】 금융위원회가 2026년 9월 16일 발표했습니다. 만 19~34세이고 총급여 7,500만원 이하 등 소득 요건을 채우면 신청할 수 있습니다.</strong></p>
+<p>그 밖에 전국 공통으로 창구가 열려 있는 청년 지원은 국민취업지원제도(상시), 청년도전지원사업, 중소기업 취업자 소득세 감면입니다. 2006·2007년생은 청년문화예술패스도 11월 30일까지로 공고돼 있습니다(조기 마감 가능). 반대로 청년월세 지원과 청년내일저축계좌의 2026년 접수, 청년도약계좌 신규 가입은 끝났습니다.</p>
+<p>정부 포털은 사업 목록을 보여 주지만 &quot;나는 뭐가 되나&quot;는 한눈에 보여 주지 않습니다. 아래 표에서 내 나이·소득·취업 여부에 맞는 줄부터 보세요.</p>
+
+<h3>한눈에 보는 표</h3>
+<div class="tblx"><table><caption>전국 공통 청년 지원금 — 나이·조건·신청 상태</caption><thead><tr><th>사업</th><th>나이</th><th>소득·조건</th><th>받는 것</th><th>신청</th></tr></thead><tbody><tr><th scope="row">청년미래적금</th><td>19~34세</td><td>총급여 7,500만원 이하 등, 가구 중위소득 200% 이하</td><td>납입액의 6% 또는 12% 기여금, 이자 비과세</td><td>2차 10.7~10.16로 공고</td></tr><tr><th scope="row">국민취업지원제도</th><td>청년 15~34세</td><td>1유형: 청년은 가구 중위소득 120% 이하·재산 5억원 이하 / 2유형: 청년은 소득 무관</td><td>1유형 월 60만원 × 6개월</td><td>상시</td></tr><tr><th scope="row">청년도전지원사업</th><td>18~34세</td><td>최근 6개월 취업·교육 이력 없음 등</td><td>참여수당 최대 250만원</td><td>고용24(기간 표시 없음)</td></tr><tr><th scope="row">청년문화예술패스</th><td>2006·2007년생</td><td>상반기 전액 회수자 제외</td><td>수도권 15만원, 비수도권 20만원</td><td>11.30까지로 공고, 조기 마감 가능</td></tr><tr><th scope="row">중소기업 취업자 소득세 감면</th><td>15~34세</td><td>대상 업종 중소기업에 취업</td><td>소득세 90% 감면, 5년, 연 200만원 한도</td><td>2026.12.31까지 취업하면</td></tr><tr><th scope="row">청년월세 지원</th><td>19~34세</td><td>무주택, 청년가구 중위 60%·원가구 100% 이하</td><td>월 최대 20만원, 최대 24회</td><td>2026년 접수 5.29 끝</td></tr><tr><th scope="row">청년내일저축계좌</th><td>–</td><td>가구 중위소득 50% 이하, 일하는 청년</td><td>정부 월 30만원 매칭</td><td>2026년 접수 5.20 끝</td></tr><tr><th scope="row">청년도약계좌</th><td>–</td><td>–</td><td>–</td><td>신규 가입 2025.12.31 끝</td></tr></tbody></table></div>
+<p>&quot;–&quot;는 출처에 그 조건이 따로 적혀 있지 않다는 뜻입니다.</p>
+<ul class="blist"><li>일하고 있고 19~34세라면 — 청년미래적금 2차 일정부터 확인합니다. 중소기업에 다닌다면 소득세 감면을 신청했는지도 봅니다</li><li>일자리를 찾는 중이라면 — 국민취업지원제도</li><li>6개월 넘게 쉬었다면 — 청년도전지원사업. 이수하면 국민취업지원제도·일경험·직업훈련으로 이어 줍니다</li><li>2006·2007년생이라면 — 청년문화예술패스</li></ul>
+
+<h3>청년미래적금 — 2차 신청 10월 7~16일로 공고</h3>
+<p>금융위원회 2026년 9월 16일 보도자료입니다.</p>
+<ul class="blist"><li>대상 — 만 19~34세. 계좌를 여는 날(11월 16~27일) 기준이라 이번에는 1991년 11월 17일생부터 2007년 11월 27일생까지입니다. 병역 이행 기간(최대 6년)은 나이 계산에서 뺍니다</li><li>소득 — 총급여 7,500만원(종합소득 6,300만원) 이하이거나 연매출 3억원 이하 소상공인이면서, 가구 중위소득 200% 이하(맞벌이 2인 가구 250% 이하). 심사는 2025년 소득으로 합니다</li><li>일정 — 10월 7일은 출생연도 끝자리 홀수, 8일은 짝수, 12~16일은 누구나. 심사는 10월 19일~11월 13일, 통과하면 11월 16~27일에 취급기관 14곳에서 계좌를 엽니다</li></ul>
+<div class="tblx"><table><caption>청년미래적금 기여금 비율 (금융위원회 보도자료)</caption><thead><tr><th>유형</th><th>조건</th><th>기여금</th></tr></thead><tbody><tr><th scope="row">일반형</th><td>총급여 6천만원(종합소득 4,800만원) 이하, 또는 연매출 3억원 이하 소상공인</td><td>납입액의 6%</td></tr><tr><th scope="row">우대형</th><td>중소기업 신규 취업자, 총급여 3,600만원(종합소득 2,600만원) 이하 중소기업 재직자, 연매출 1억원 이하 소상공인. 재직자·소상공인은 가구 중위소득 150%(맞벌이 200%) 이하</td><td>납입액의 12%</td></tr><tr><th scope="row">세제 혜택만</th><td>총급여 6천만원 초과 ~ 7,500만원 이하</td><td>없음, 이자 비과세</td></tr></tbody></table></div>
+<p>3년간 매월 1천원~50만원을 자유롭게 넣습니다. 이자 비과세의 법 근거는 조세특례제한법 제91조의25입니다. 2028년 12월 31일까지 가입해야 하고, 1인 1계좌, 납입한도 연 600만원, 계약기간 3년이 요건입니다.</p>
+<p><strong>【청년도약계좌 가입자도 갈아탈 수 있습니다.】</strong> 두 상품은 함께 가입할 수 없지만, 2차 모집에서 청년미래적금 계좌를 연 뒤 청년도약계좌를 해지하는 갈아타기 기회를 줍니다. 조세특례제한법 제91조의22제3항제2호가 이렇게 해지하면 비과세 세액을 추징하지 않는다고 정합니다.</p>
+<p>금융위는 2027년 예산안이 국회를 통과하면 우대형 비율을 12%에서 15%(지방 중소기업 25%)로 올리고 기존 가입자에게도 소급하겠다고 밝혔습니다. 국회 심의 전이라 확정된 내용은 아닙니다. 문의는 서민금융진흥원 1397입니다.</p>
+
+<h3>국민취업지원제도 — 상시 신청</h3>
+<ul class="blist"><li>청년 기준 — 만 15~34세이고, 병역 이행 기간은 3년 범위에서 나이 기준에 더해 줍니다(구직자취업촉진법 제6조, 같은 법 시행령 제2조)</li><li>1유형 — 가구·본인 소득이 중위소득 60% 이하가 원칙이고, 청년은 가구 소득 120% 이하·재산 5억원 이하까지 봅니다. 월 60만원씩 6개월, 부양가족 1명당 월 10만원(최대 40만원) 추가(고용24 안내)</li><li>2유형 — 청년은 소득과 상관없이 참여하고 취업활동비용을 받습니다</li><li>참여할 수 없는 사람 — 주 30시간 이상 일하는 근로자, 실업급여나 생계급여를 받고 있는 사람 등</li><li>방법 — 고용24에 구직 등록하고 온라인으로 신청하거나 거주지 고용센터를 찾아갑니다. 문의 1350</li></ul>
+
+<h3>청년도전지원사업 — 쉬고 있는 청년</h3>
+<p>만 18~34세 구직단념청년 등이 대상입니다. 최근 6개월간 취업·교육·직업훈련 이력이 없고 구직단념청년 문답표가 21점(30점 만점) 이상이어야 합니다. 자립준비청년, 북한이탈청년 등도 들어갑니다(고용24 안내).</p>
+<div class="tblx"><table><caption>청년도전지원사업 과정별 지원 (고용24)</caption><thead><tr><th>과정</th><th>참여수당</th><th>인센티브</th></tr></thead><tbody><tr><th scope="row">단기(5주 이상)</th><td>이수 시 50만원</td><td>없음</td></tr><tr><th scope="row">중기(15주 이상)</th><td>150만원</td><td>이수 20만원, 취업 50만원</td></tr><tr><th scope="row">장기(25주 이상)</th><td>250만원</td><td>이수 20만원, 구직활동 30만원, 취업 50만원</td></tr></tbody></table></div>
+<p>취업 인센티브는 이수 후 6개월 안에 취업해 3개월 근속하면 받습니다. 지역 운영기관에 직접 가거나 고용24에서 신청합니다.</p>
+
+<h3>청년문화예술패스 — 2006·2007년생</h3>
+<p>문화체육관광부 2026년 8월 10일 보도자료입니다. 신청 당시 주민등록 기준 수도권 거주자 15만원, 비수도권 거주자 20만원이고, 공연·전시·영화 예매와 도서 구매에 씁니다. 8월 10일 오전 10시부터 11월 30일까지 누리집(youthculturepass.or.kr)에서 신청순으로 발급하며, 신청자가 많으면 일찍 마감될 수 있다고 공고됐습니다. 상반기에 발급받고 한 번도 쓰지 않아 전액 회수된 사람은 이번 추가 발급에서 빠집니다.</p>
+
+<h3>중소기업 취업자 소득세 감면 — 취업했다면 회사에 신청</h3>
+<p>조세특례제한법 제30조입니다. <strong>【2026년 12월 31일까지 중소기업에 취업한 청년은 취업일부터 5년간 소득세의 90%를 감면받습니다.】</strong> 과세기간마다 200만원이 한도입니다.</p>
+<ul class="blist"><li>청년 — 근로계약 체결일에 15~34세. 현역병·사회복무요원·장교 등으로 복무한 기간은 6년 한도로 나이에서 뺍니다(시행령 제27조제1항)</li><li>제외 — 임원, 최대주주와 그 배우자·가족, 일용근로자 등(같은 조 제2항)</li><li>업종 — 시행령에 열거된 업종의 중소기업만 해당합니다</li><li>방법 — 회사(원천징수의무자)에 감면을 신청합니다. 이미 퇴직했다면 주소지 관할 세무서장에게 신청할 수 있습니다(법 제30조제2항)</li></ul>
+
+<h3>올해 접수가 끝났거나 가입이 끝난 사업</h3>
+<p>이름이 자주 검색되지만 지금은 신청할 수 없는 사업입니다.</p>
+<ul class="blist"><li>청년월세 지원(국토교통부) — 2026년 신청은 3월 30일~5월 29일로 공고됐고 끝났습니다. 부모와 따로 사는 19~34세 무주택 청년, 청년가구 중위소득 60% 이하·원가구 100% 이하가 대상이었고, 월 최대 20만원씩 최대 24회 지원합니다(복지로 공지)</li><li>청년내일저축계좌(보건복지부) — 2026년 신규 모집은 5월 4~20일로 공고됐고 끝났습니다. 기준 중위소득 50% 이하의 일하는 청년이 월 10만~50만원을 저축하면 정부가 월 30만원을 더합니다</li><li>청년도약계좌 — 조세특례제한법 제91조의22제1항의 비과세가 &quot;2025년 12월 31일까지 가입하는 경우&quot;로 정해져 있습니다. 기존 가입자는 청년미래적금 2차 때 갈아탈 수 있습니다</li></ul>
+
+<h3>지역 사업은 어디서 찾나</h3>
+<p>시·도와 시·군·구가 따로 운영하는 청년 지원은 지역마다 대상·금액·기간이 다릅니다. 이름이 국가 사업과 같아도 조건이 다를 수 있습니다. 서울시는 국토교통부 청년월세 지원과 별도로 서울시 청년월세지원을 운영하고, 국토교통부 지원을 받고 있는 사람은 서울시 사업에서 제외합니다(서울주거포털). 그래서 이 쪽은 지역 사업의 금액을 적지 않았습니다.</p>
+<ul class="blist"><li>온통청년(youthcenter.go.kr) — 중앙부처·지자체 청년정책을 한곳에서 검색</li><li>복지로(bokjiro.go.kr) — 복지서비스 검색과 모의계산</li><li>사는 시·도의 청년 포털 — 그 지역에만 있는 사업은 여기서 공고합니다</li></ul>
+<h3>자주 묻는 질문</h3>
+<dl><dt>청년미래적금 2차 신청은 언제인가요</dt><dd>금융위원회는 2026년 9월 16일 2차 가입 신청을 10월 7일부터 16일까지 받는다고 발표했습니다. 10월 7일은 출생연도 끝자리 홀수, 8일은 짝수, 12~16일은 누구나 신청합니다. 심사는 10월 19일~11월 13일이고, 통과하면 11월 16~27일에 계좌를 엽니다.</dd><dt>청년 나이는 몇 살까지인가요</dt><dd>사업마다 다릅니다. 청년미래적금·청년월세는 19~34세, 국민취업지원제도·중소기업 취업자 소득세 감면은 15~34세, 청년도전지원사업은 18~34세입니다. 병역 기간을 나이에서 빼 주는 한도도 청년미래적금·소득세 감면은 6년, 국민취업지원제도는 3년으로 다릅니다.</dd><dt>청년도약계좌가 있는데 청년미래적금도 들 수 있나요</dt><dd>두 상품은 함께 가입할 수 없습니다. 대신 2차 모집에서 청년미래적금 계좌를 연 뒤 청년도약계좌를 해지하는 갈아타기 기회를 줍니다. 조세특례제한법 제91조의22제3항제2호가 이렇게 해지하면 비과세 세액을 추징하지 않는다고 정합니다.</dd><dt>6개월 넘게 쉬었는데 받을 수 있는 게 있나요</dt><dd>청년도전지원사업이 만 18~34세로 최근 6개월간 취업·교육·직업훈련 이력이 없는 청년을 대상으로 참여수당을 최대 250만원까지 줍니다. 이수하면 국민취업지원제도·일경험·직업훈련으로 이어 줍니다.</dd><dt>중소기업에 들어가면 따로 받는 게 있나요</dt><dd>조세특례제한법 제30조에 따라 2026년 12월 31일까지 중소기업에 취업한 15~34세 청년은 5년간 소득세의 90%를 감면받습니다(연 200만원 한도). 회사에 감면 신청을 하면 됩니다. 청년미래적금에서도 중소기업 재직자·신규 취업자는 우대형 12%를 받을 수 있습니다.</dd><dt>실업급여를 받는 중인데 국민취업지원제도도 할 수 있나요</dt><dd>고용24 안내는 실업급여를 받고 있는 사람은 참여할 수 없고, 1유형은 실업급여 등이 끝난 뒤 6개월이 지나지 않은 사람이 참여할 수 없다고 적습니다.</dd></dl>
+<p class="note">최종 자격은 각 사업 운영기관이 심사합니다. 근거 — 법령: 조세특례제한법 제30조·제91조의22·제91조의25, 같은 법 시행령 제27조, 구직자 취업촉진 및 생활안정지원에 관한 법률 제6조·제7조와 같은 법 시행령 제2조. 공고·안내: 금융위원회 보도자료(2026.6.15, 2026.9.16), 고용24 국민취업지원제도·청년도전지원사업 안내, 문화체육관광부 보도자료(2026.8.10), 복지로 공지(2026.3.20), 보건복지부 정책브리핑(2026.5.4), 고용노동부 보도자료(2026.1.26). 신청 기간은 공고 기준이며 바뀔 수 있습니다.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="/gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li></ul>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 되나</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"청년미래적금 2차 신청은 언제인가요","acceptedAnswer":{"@type":"Answer","text":"금융위원회는 2026년 9월 16일 2차 가입 신청을 10월 7일부터 16일까지 받는다고 발표했습니다. 10월 7일은 출생연도 끝자리 홀수, 8일은 짝수, 12~16일은 누구나 신청합니다. 심사는 10월 19일~11월 13일이고, 통과하면 11월 16~27일에 계좌를 엽니다."}},{"@type":"Question","name":"청년 나이는 몇 살까지인가요","acceptedAnswer":{"@type":"Answer","text":"사업마다 다릅니다. 청년미래적금·청년월세는 19~34세, 국민취업지원제도·중소기업 취업자 소득세 감면은 15~34세, 청년도전지원사업은 18~34세입니다. 병역 기간을 나이에서 빼 주는 한도도 청년미래적금·소득세 감면은 6년, 국민취업지원제도는 3년으로 다릅니다."}},{"@type":"Question","name":"청년도약계좌가 있는데 청년미래적금도 들 수 있나요","acceptedAnswer":{"@type":"Answer","text":"두 상품은 함께 가입할 수 없습니다. 대신 2차 모집에서 청년미래적금 계좌를 연 뒤 청년도약계좌를 해지하는 갈아타기 기회를 줍니다. 조세특례제한법 제91조의22제3항제2호가 이렇게 해지하면 비과세 세액을 추징하지 않는다고 정합니다."}},{"@type":"Question","name":"6개월 넘게 쉬었는데 받을 수 있는 게 있나요","acceptedAnswer":{"@type":"Answer","text":"청년도전지원사업이 만 18~34세로 최근 6개월간 취업·교육·직업훈련 이력이 없는 청년을 대상으로 참여수당을 최대 250만원까지 줍니다. 이수하면 국민취업지원제도·일경험·직업훈련으로 이어 줍니다."}},{"@type":"Question","name":"중소기업에 들어가면 따로 받는 게 있나요","acceptedAnswer":{"@type":"Answer","text":"조세특례제한법 제30조에 따라 2026년 12월 31일까지 중소기업에 취업한 15~34세 청년은 5년간 소득세의 90%를 감면받습니다(연 200만원 한도). 회사에 감면 신청을 하면 됩니다. 청년미래적금에서도 중소기업 재직자·신규 취업자는 우대형 12%를 받을 수 있습니다."}},{"@type":"Question","name":"실업급여를 받는 중인데 국민취업지원제도도 할 수 있나요","acceptedAnswer":{"@type":"Answer","text":"고용24 안내는 실업급여를 받고 있는 사람은 참여할 수 없고, 1유형은 실업급여 등이 끝난 뒤 6개월이 지나지 않은 사람이 참여할 수 없다고 적습니다."}}]}</script>
+
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+</body>
+</html>
