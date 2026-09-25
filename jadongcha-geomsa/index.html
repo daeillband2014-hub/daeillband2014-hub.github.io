@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>자동차검사 기간 계산기 — 정기검사 만료일·검사 기간(전 90일~후 31일)</title>
+<meta property="og:title" content="자동차검사 기간 계산기 — 정기검사 만료일·검사 기간(전 90일~후 31일)">
+<meta property="og:description" content="비사업용(자가용) 승용차는 2년(신차 첫 5년, 2024년까지 등록 4년), 사업용(영업용) 승용차는 1년(신차 첫 2년)마다 검사합니다. 최초등록일로 검사 유효기간 만료일과 검사 받는 기간(만료일 전 90일~후 31일), 과태료 기준을 계산합니다.">
+<meta name="description" content="비사업용(자가용) 승용차는 2년(신차 첫 5년, 2024년까지 등록 4년), 사업용(영업용) 승용차는 1년(신차 첫 2년)마다 검사합니다. 최초등록일로 검사 유효기간 만료일과 검사 받는 기간(만료일 전 90일~후 31일), 과태료 기준을 계산합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/jadongcha-geomsa/">
+<style>
+:root{--p:#2B59C3;--pd:#1D3F8F;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F6FC;--lt:#CAD8F2;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+.wt{font-size:16px;line-height:1.6;color:var(--ink)}
+.wt-h{font-weight:800;font-size:18px;margin:0 0 4px}
+.wt label{display:block;font-weight:700;margin:12px 0 4px;font-size:15px}
+.wt select,.wt input[type=number],.wt input[type=date],.wt input[type=text]{width:100%;font-size:16px;padding:10px;border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+.wt .ck{display:flex;gap:8px;align-items:flex-start;font-weight:600;margin-top:12px}
+.wt .ck input{width:18px;height:18px;margin-top:3px;flex:none}
+.wt-s{font-size:13.5px;color:var(--sub);margin:4px 0 0;line-height:1.6}
+.wt-btn{display:block;width:100%;margin-top:14px;padding:13px;font-size:16px;font-weight:800;color:#fff;background:var(--p);border:0;border-radius:12px;cursor:pointer;font-family:inherit}
+.wt-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wt-chips button{border:1.5px solid var(--lt);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--pd)}
+.wr{margin-top:14px;padding:14px;border-radius:12px;background:#F7F9FB;border:1px solid #E1E8EF}
+.wr-st{font-weight:800;font-size:18px;margin:0}
+.wr-st.ok{color:#1E7A45}.wr-st.no{color:#B42331}.wr-st.mid{color:#8A6100}
+.wr-big{font-size:28px;font-weight:800;margin:6px 0 2px;color:var(--pd)}
+.wr-big small{font-size:16px;margin-left:2px}
+.wr p{margin:8px 0 0;font-size:15px}
+.wr table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;line-height:1.5}
+.wr th,.wr td{border:1px solid #E5E8EB;padding:6px 7px;text-align:left;vertical-align:top}
+.wr th{background:#fff}
+.wr ul{margin:6px 0 0 18px;font-size:15px}
+.wr .warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:8px 10px;color:#6B5200;font-size:14px}
+.wr-err{color:#B42331;font-weight:700}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>자동차검사 기간 계산기</h1>
+<p class="desc">자동차등록증의 최초등록일로 다음 정기검사 만료일과 검사 받는 기간(만료일 전 90일 ~ 후 31일)을 계산합니다. 승용자동차 기준입니다.</p>
+<div class="tool">
+<div id="jc-tool" class="wt">
+<p class="wt-h">자동차 정기검사 기간 계산</p>
+<label for="jc-use">용도(승용자동차)</label>
+<select id="jc-use"><option value="">고르세요</option><option value="own">자가용(비사업용)</option><option value="biz">영업용(사업용)</option></select>
+<label for="jc-reg">최초등록일</label>
+<input type="date" id="jc-reg">
+<p class="wt-s">자동차등록증에 적힌 최초등록일입니다.</p>
+<label for="jc-last">마지막 검사 받은 날(선택)</label>
+<input type="date" id="jc-last">
+<p class="wt-s">비워 두면 매번 기간 안에 받았다고 보고 셉니다. 기간보다 일찍 또는 늦게 받은 적이 있으면 넣으세요.</p>
+<label for="jc-day">확인일</label>
+<input type="date" id="jc-day">
+<button type="button" id="jc-go" class="wt-btn">계산하기</button>
+<div id="jc-out" aria-live="polite"></div>
+<p class="wt-s" style="margin-top:12px">자동차관리법 시행규칙 제74조·제77조·별표 15의2 기준으로 승용자동차만 계산합니다. 차량번호 조회나 검사 예약은 하지 않습니다. 입력값은 저장하지 않습니다.</p>
+</div>
+<script>
+(function(){
+'use strict';
+/* 자동차관리법 시행규칙 제74조·제77조, 별표 15의2 <개정 2024.12.17>, 부칙 <제1415호> 제1조 단서·제2조·제3조
+   민법 제160조제2항·제3항 — 2026-09-25 법제처 오픈 API 원문 조회(조사\_자동차검사_기간_원문확인.md) */
+var RULE_2025 = new Date(2025, 0, 1);
+function D(y, m, d){ return new Date(y, m - 1, d); }
+function addDays(dt, n){ return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + n); }
+function dayDiff(a, b){ return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000); }
+function fmt(dt){ return dt.getFullYear() + '년 ' + (dt.getMonth() + 1) + '월 ' + dt.getDate() + '일'; }
+function endOf(start, years){
+  var Y = start.getFullYear() + years, M = start.getMonth(), d = start.getDate();
+  var last = new Date(Y, M + 1, 0).getDate();
+  if (d > last) return new Date(Y, M, last);
+  return addDays(new Date(Y, M, d), -1);
+}
+function winOf(E, rule2025){ return { s: addDays(E, rule2025 ? -90 : -31), e: addDays(E, 31) }; }
+function jcJudge(s, last, T){
+  var reg = s.reg, biz = s.use === 'biz';
+  var newReg = reg >= RULE_2025;
+  var firstY = biz ? 2 : (newReg ? 5 : 4), cyc = biz ? 1 : 2;
+  function nextEnd(E){ return endOf(addDays(E, 1), cyc); }
+  var E1 = endOf(reg, firstY), E = E1, basis = 'chain', late = false, lastInfo = null;
+  if (last) {
+    var L = last, k = E1, hit = null, guard = 0;
+    while (guard++ < 200) {
+      var w = winOf(k, L >= RULE_2025);
+      if (L >= w.s && L <= w.e) { hit = k; break; }
+      if (w.s > L) break;
+      k = nextEnd(k);
+    }
+    if (hit) { E = nextEnd(hit); basis = 'in'; lastInfo = { L: L, prev: hit }; }
+    else { E = endOf(addDays(L, 1), cyc); basis = 'out'; lastInfo = { L: L, prev: null }; }
+    late = addDays(E, 31) < T;
+  } else {
+    var g2 = 0;
+    while (addDays(E, 31) < T && g2++ < 200) E = nextEnd(E);
+  }
+  var w2 = winOf(E, true);
+  var ph = late ? 'late' : (T < w2.s ? 'before' : 'in');
+  return { reg: reg, biz: biz, newReg: newReg, firstY: firstY, cyc: cyc, E1: E1, E: E, ws: w2.s, we: w2.e, ph: ph,
+    dStart: dayDiff(T, w2.s), dEnd: dayDiff(T, w2.e), seq: [E, nextEnd(E), nextEnd(nextEnd(E))], basis: basis, lastInfo: lastInfo };
+}
+function parseD(v){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); return m ? D(+m[1], +m[2], +m[3]) : null; }
+function run(){
+  var out = document.getElementById('jc-out');
+  var use = document.getElementById('jc-use').value;
+  var reg = parseD(document.getElementById('jc-reg').value);
+  var lastV = document.getElementById('jc-last').value;
+  var last = lastV ? parseD(lastV) : null;
+  var T = parseD(document.getElementById('jc-day').value);
+  var err = [];
+  if (!use) err.push('용도를 고르세요.');
+  if (!reg) err.push('최초등록일을 날짜로 넣으세요.');
+  if (lastV && !last) err.push('마지막 검사 받은 날을 날짜로 넣으세요.');
+  if (!T) err.push('확인일을 날짜로 넣으세요.');
+  if (reg && T && reg > T) err.push('최초등록일이 확인일보다 뒤입니다.');
+  if (reg && last && last < reg) err.push('마지막 검사 받은 날이 최초등록일보다 앞입니다.');
+  if (last && T && last > T) err.push('마지막 검사 받은 날이 확인일보다 뒤입니다.');
+  if (err.length) { out.innerHTML = '<div class="wr"><p class="wr-err">입력을 확인하세요</p><ul><li>' + err.join('</li><li>') + '</li></ul></div>'; return; }
+  var r = jcJudge({ use: use, reg: reg }, last, T);
+  var st = r.ph === 'late' ? ['no', '검사 기간이 지났습니다'] : (r.ph === 'in' ? ['mid', '지금 검사 받을 기간입니다'] : ['ok', '아직 검사 기간 전입니다']);
+  var h = '<div class="wr"><p class="wr-st ' + st[0] + '">' + st[1] + '</p>';
+  h += '<p>' + (r.ph === 'late' ? '지난 검사 유효기간 만료일' : '다음 검사 유효기간 만료일') + '</p><p class="wr-big">' + fmt(r.E) + '</p>';
+  h += '<p>검사 받는 기간: <b>' + fmt(r.ws) + ' ~ ' + fmt(r.we) + '</b> (만료일 전 90일 ~ 후 31일)</p>';
+  if (r.ph === 'before') h += '<p>기간 시작까지 ' + r.dStart + '일 남았습니다.</p>';
+  else if (r.ph === 'in') h += '<p>' + (r.dEnd === 0 ? '오늘이 검사 기간 마지막 날입니다.' : '검사 기간 마지막 날까지 ' + r.dEnd + '일 남았습니다.') + '</p>';
+  else h += '<p>검사 기간이 끝난 지 ' + (-r.dEnd) + '일 지났습니다. 과태료 기준은 아래 본문 표를 보세요.</p>';
+  h += '<table><tr><th>구분</th><th>값</th></tr>'
+    + '<tr><td>첫 유효기간</td><td>' + r.firstY + '년 (' + (r.biz ? '영업용 신조차' : (r.newReg ? '2025년 이후 신규등록 신조차' : '2024년까지 신규등록 신조차')) + ')</td></tr>'
+    + '<tr><td>그 뒤</td><td>' + r.cyc + '년마다</td></tr>'
+    + '<tr><td>첫 만료일</td><td>' + fmt(r.E1) + '</td></tr>'
+    + '<tr><td>앞으로의 만료일</td><td>' + fmt(r.seq[0]) + ' → ' + fmt(r.seq[1]) + ' → ' + fmt(r.seq[2]) + '</td></tr></table>';
+  if (r.basis === 'chain') h += '<p>매번 검사 기간 안에 받았다고 보고 셌습니다. 기간보다 일찍 또는 늦게 받은 적이 있으면 「마지막 검사 받은 날」을 넣으세요.</p>';
+  else if (r.basis === 'in') h += '<p>' + fmt(r.lastInfo.L) + ' 검사는 ' + fmt(r.lastInfo.prev) + ' 만료일의 검사 기간 안이었습니다. 그래서 다음 유효기간은 그 만료일 다음 날부터 셉니다(시행규칙 제74조제3항).</p>';
+  else h += '<p>' + fmt(r.lastInfo.L) + ' 검사는 검사 기간 밖이었습니다. 그래서 다음 유효기간은 검사 받은 다음 날부터 셉니다(시행규칙 제74조제2항).</p>';
+  if (r.basis === 'chain' && reg.getFullYear() < 2006) h += '<p class="warn">2006년 전에 등록한 차는 예전 규정(차령 10년 초과 자가용 승용 1년)이 적용된 때가 있어 날짜가 실제와 다를 수 있습니다. 마지막 검사 받은 날을 넣어 다시 보세요.</p>';
+  h += '<p class="wt-s">승용자동차만 계산합니다. 실제 만료일은 한국교통안전공단과 관할 관청의 기록을 따릅니다.</p>';
+  out.innerHTML = h + '</div>';
+}
+if (typeof document !== 'undefined' && document.getElementById('jc-go')) {
+  var n = new Date(), p = function(x){ return (x < 10 ? '0' : '') + x; };
+  document.getElementById('jc-day').value = n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate());
+  document.getElementById('jc-go').onclick = run;
+}
+if (typeof module !== 'undefined') module.exports = { jcJudge: jcJudge, endOf: endOf, winOf: winOf, D: D, fmt: fmt, addDays: addDays };
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031249,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>자동차검사 기간 계산기</h2>
+<h3>10초 요약</h3>
+<p><strong>【자가용 승용차는 2년마다, 영업용 승용차는 1년마다 정기검사를 받습니다.】</strong> 새 차는 첫 유효기간이 더 깁니다. 비사업용(자가용) 승용차는 2025년 1월 1일 이후 신규등록한 새 차가 5년, 그 전에 등록한 새 차가 4년이고, 사업용(영업용) 승용차는 2년입니다.</p>
+<p><strong>【검사 받는 기간은 유효기간 만료일 전 90일부터 후 31일까지입니다.】</strong> 이 기간 안에 적합 판정을 받으면 만료일에 검사를 받은 것으로 봅니다. 그래서 기간 안에서 일찍 받아도 다음 유효기간은 종전 만료일 다음 날부터 셉니다.</p>
+<figure><svg viewBox="0 0 440 120" width="100%" role="img" aria-label="검사 기간: 만료일 전 90일부터 후 31일까지" style="display:block;background:#fff;border-radius:10px"><rect x="30" y="50" width="290" height="16" rx="8" fill="#BFD2F5"/><rect x="320" y="50" width="100" height="16" rx="8" fill="#F5C6BF"/><line x1="320" y1="36" x2="320" y2="80" stroke="#191F28" stroke-width="2"/><text x="30" y="36" font-size="13" fill="#2B59C3" font-family="sans-serif">90일 전부터</text><text x="320" y="30" font-size="13" fill="#191F28" text-anchor="middle" font-family="sans-serif" font-weight="700">유효기간 만료일</text><text x="420" y="36" font-size="13" fill="#B42331" text-anchor="end" font-family="sans-serif">31일 뒤까지</text><text x="175" y="100" font-size="12.5" fill="#4E5968" text-anchor="middle" font-family="sans-serif">여기서 받으면 만료일에 받은 것으로 봄</text><text x="370" y="100" font-size="12.5" fill="#4E5968" text-anchor="middle" font-family="sans-serif">여기도 기간 안</text></svg><figcaption>정기검사 기간 — 만료일 전 90일부터 후 31일까지(시행규칙 제77조제2항)</figcaption></figure>
+<h3>이 계산기로 보는 것</h3>
+<ul class="blist"><li>다음 검사 유효기간 만료일 — 최초등록일과 용도로 셉니다</li><li>검사 받는 기간 — 만료일 전 90일부터 후 31일까지의 날짜</li><li>지금 기간 안인지 — 시작까지, 또는 마지막 날까지 며칠 남았는지</li><li>앞으로의 만료일 세 번 — 매번 기간 안에 받는다고 볼 때</li><li>마지막 검사일 기준 다시 세기 — 기간 밖에서 받은 적이 있을 때</li></ul>
+<p>자동차등록증에서 최초등록일만 찾으면 됩니다. 차량번호로 공단 기록을 조회하는 도구는 아니므로, 실제 만료일은 한국교통안전공단과 관할 관청의 기록이 기준입니다.</p>
+<h3>검사 유효기간 — 시행규칙 별표 15의2</h3>
+<div class="tblx"><table><caption>승용자동차 검사 유효기간 (자동차관리법 시행규칙 별표 15의2 <개정 2024.12.17>)</caption><thead><tr><th>구분</th><th>신차 첫 유효기간</th><th>그 뒤</th></tr></thead><tbody><tr><th scope="row">자가용(비사업용) 승용, 2025. 1. 1. 이후 신규등록</th><td>5년</td><td>2년</td></tr><tr><th scope="row">자가용(비사업용) 승용, 2024. 12. 31. 이전 신규등록</th><td>4년</td><td>2년</td></tr><tr><th scope="row">영업용(사업용) 승용</th><td>2년</td><td>1년</td></tr></tbody></table></div>
+<p>경형·소형·중형·대형 모두 같고 차령에 따라 달라지지 않습니다. 첫 유효기간이 긴 것은 「신조차로서 법 제43조제5항에 따라 신규검사를 받은 것으로 보는 자동차」, 곧 새로 만든 차에만 적용됩니다. 그렇지 않은 차는 처음부터 자가용 2년, 영업용 1년입니다.</p>
+<p><strong>【첫 유효기간 5년은 비사업용 승용자동차에만 적용됩니다.】</strong> 2025년 1월 1일 이후 신규등록한 새 차가 대상이고, 말소등록 후 다시 신규등록한 차는 빠집니다(부칙 제3조).</p>
+<figure><img src="/img/blog/car-inspection-period-2.png" alt="자동차 정기검사 기간과 유효기간 — 만료일 90일 전~31일 후, 비사업용 승용차 2년, 사업용 승용차 1년, 과태료 4만원부터" width="1200" height="1010" loading="lazy"><figcaption>승용차 정기검사 기간과 유효기간 한눈에</figcaption></figure>
+<p>별표 비고는 피견인자동차에도 비사업용 승용자동차의 검사 유효기간을 적용하게 합니다. 승합·화물·특수자동차는 차령과 규모에 따라 갈리므로 이 계산기로 세지 않습니다.</p>
+<h3>2025년에 바뀐 두 가지</h3>
+<div class="tblx"><table><caption>2024년 12월 17일 개정(시행 2025. 1. 1.)</caption><thead><tr><th>항목</th><th>예전</th><th>지금</th><th>적용 대상</th></tr></thead><tbody><tr><th scope="row">비사업용(자가용) 승용 신차 첫 유효기간</th><td>4년</td><td>5년</td><td>2025. 1. 1. 이후 신규등록 차(말소 후 다시 신규등록한 차 제외) — 부칙 제3조</td></tr><tr><th scope="row">정기검사 기간</th><td>만료일 전후 각각 31일</td><td>만료일 전 90일 ~ 후 31일</td><td>2025. 1. 1. 이후 정기검사를 받는 차 — 부칙 제2조</td></tr></tbody></table></div>
+<p><strong>【「전후 31일」은 옛 규정입니다.】</strong> 2024년까지 받은 검사에 쓰던 규정이고, 2025년부터는 앞쪽이 90일로 넓어졌습니다. 뒤쪽 31일은 그대로입니다.</p>
+<h3>만료일 세는 법 — 민법 제160조</h3>
+<p>시행규칙 제74조제2항은 유효기간을 신규등록하는 차는 신규등록일부터, 정기검사를 받는 차는 검사를 받은 날의 다음 날부터 센다고 정합니다. 연으로 정한 기간은 민법 제160조제2항에 따라 마지막 해에서 기산일에 해당한 날의 전날에 끝납니다.</p>
+<p>그래서 2022년 7월 1일 등록한 자가용 신차(첫 4년)는 2026년 7월 1일의 전날인 2026. 6. 30.에 첫 유효기간이 끝납니다. 마지막 달에 그 날짜가 없으면(2월 29일처럼) 그 달 말일에 끝납니다(민법 제160조제3항).</p>
+<h3>계산 예시</h3>
+<div class="tblx"><table><caption>최초등록일로 본 첫 만료일과 검사 기간</caption><thead><tr><th>차</th><th>첫 유효기간</th><th>첫 만료일</th><th>검사 받는 기간</th></tr></thead><tbody><tr><th scope="row">자가용, 2025. 3. 10. 등록 신차</th><td>5년</td><td>2030. 3. 9.</td><td>2029. 12. 9. ~ 2030. 4. 9.</td></tr><tr><th scope="row">자가용, 2022. 7. 1. 등록 신차</th><td>4년</td><td>2026. 6. 30.</td><td>2026. 4. 1. ~ 2026. 7. 31.</td></tr><tr><th scope="row">영업용, 2024. 5. 20. 등록 신차</th><td>2년</td><td>2026. 5. 19.</td><td>2026. 2. 18. ~ 2026. 6. 19.</td></tr></tbody></table></div>
+<p>두 번째 차가 기간 안에 검사를 받으면 다음 만료일은 2028. 6. 30.입니다. 그 뒤로는 2년마다 같은 날짜가 돌아옵니다. 세 번째 영업용 차는 첫 만료일 뒤로 1년마다 검사합니다.</p>
+<h3>2월 29일에 등록한 차</h3>
+<p>민법 제160조제3항 때문에 윤년 2월 29일에 등록한 차는 날짜가 한 번 어긋납니다. 2020년 2월 29일 등록한 자가용 신차(첫 4년)는 2024년 2월 29일의 전날인 2024. 2. 28.에 첫 유효기간이 끝납니다. 기간 안에 검사를 받으면 다음 유효기간은 2024년 2월 29일부터 2년인데, 2026년에는 2월 29일이 없으므로 그 달 말일인 2026. 2. 28.에 끝납니다.</p>
+<h3>결과 세 가지 읽는 법</h3>
+<ul class="blist"><li>아직 검사 기간 전 — 기간 시작일(만료일 90일 전)까지 며칠 남았는지 보여 줍니다. 이때 받으면 기간 밖이라 다음 유효기간이 받은 날부터 새로 시작합니다</li><li>지금 검사 받을 기간 — 마지막 날(만료일 31일 뒤)까지 며칠 남았는지 보여 줍니다. 이 사이에 받으면 다음 만료일이 밀리지도 당겨지지도 않습니다</li><li>검사 기간이 지남 — 마지막 날에서 며칠 지났는지 보여 줍니다. 아래 과태료 표의 지연기간과 함께 보세요</li></ul>
+<h3>기간 안에 받으면, 기간 밖에서 받으면</h3>
+<p>시행규칙 제74조제3항은 정기검사 기간 중에 받아 합격한 차의 유효기간을 「종전 검사유효기간만료일의 다음날부터」 센다고 정합니다. 기간 밖에서 받으면 제2항으로 돌아가 검사를 받은 날의 다음 날부터 셉니다.</p>
+<div class="tblx"><table><caption>2022. 7. 1. 등록 자가용(첫 만료일 2026. 6. 30.)이 검사를 받은 날에 따라</caption><thead><tr><th>검사 받은 날</th><th>기간 안인가</th><th>다음 만료일</th></tr></thead><tbody><tr><th scope="row">2026. 5. 10.</th><td>안(2026. 4. 1. ~ 2026. 7. 31.)</td><td>2028. 6. 30.</td></tr><tr><th scope="row">2026. 9. 1.</th><td>밖(31일 뒤를 넘김)</td><td>2028. 9. 1.</td></tr></tbody></table></div>
+<p>늦게 받으면 과태료와 별개로 다음 만료일도 받은 날 기준으로 밀립니다. 계산기에서 「마지막 검사 받은 날」을 넣으면 이 규칙대로 다시 셉니다.</p>
+<p>연장이나 유예를 받은 차는 그 연장·유예된 만료일을 기준으로 검사 기간을 셉니다(제77조제2항 괄호). 튜닝 등으로 차의 규모가 바뀌어도 유효기간은 신규등록한 때의 규모를 기준으로 합니다(제74조제4항).</p>
+<h3>정기검사와 종합검사</h3>
+<p>「대기환경보전법」 제63조제1항에 따른 지역에 등록된 차는 정기검사 대신 종합검사를 받습니다(자동차종합검사의 시행 등에 관한 규칙 별표 1 비고). 승용차는 자가용이 차령 4년 초과, 영업용이 차령 2년 초과부터 종합검사 대상입니다.</p>
+<p><strong>【승용차는 종합검사도 유효기간과 기간이 정기검사와 같습니다.】</strong> 유효기간은 자가용 2년, 영업용 1년이고, 종합검사기간도 유효기간 마지막 날 전 90일부터 후 31일까지입니다(같은 규칙 제9조제2항). 처음 종합검사를 받는 날은 적용 차령이 지난 뒤 처음 돌아오는 정기검사 유효기간 만료일입니다. 그래서 이 계산기의 날짜는 두 검사 모두에 맞습니다.</p>
+<h3>안 받으면 — 과태료</h3>
+<div class="tblx"><table><caption>정기검사·종합검사를 받지 않은 경우 과태료 (자동차관리법 시행령 별표 2, 개정 2026. 6. 2.)</caption><thead><tr><th>검사 지연기간</th><th>과태료</th></tr></thead><tbody><tr><th scope="row">30일 이내</th><td>4만원</td></tr><tr><th scope="row">30일 초과 114일 이내</th><td>4만원에 31일째부터 계산하여 3일 초과 시마다 2만원을 더한 금액</td></tr><tr><th scope="row">115일 이상</th><td>60만원</td></tr></tbody></table></div>
+<p>자동차관리법 제84조제4항은 정기검사나 종합검사를 받지 않은 사람에게 100만원 이하의 과태료를 매기게 하고, 실제 금액은 시행령 별표 2가 위 표처럼 지연기간에 따라 정합니다.</p>
+<p>검사기간이 온 뒤 폐차 같은 사유로 연장·유예를 받았다면 그 기간은 지연기간에서 뺍니다. 사소한 부주의 같은 사유가 있으면 부과권자가 2분의 1 범위에서 줄일 수 있지만, 과태료를 체납하고 있으면 줄이지 않습니다. 지연기간을 어디서부터 세는지 짐작하지 않으려고 이 계산기는 사람별 과태료 금액을 계산하지 않고 표만 보여 줍니다.</p>
+<h3>알림 문자와 검사명령</h3>
+<ul class="blist"><li>정기검사 기간이 지나면 시·도지사가 지난 날부터 10일 이내와 20일 이내에 우편이나 문자로 알립니다. 경과 사실, 유예 사유, 과태료를 적어 보냅니다(시행규칙 제77조의2)</li><li>기간이 끝난 뒤 30일이 지난 날까지 받지 않으면 시장·군수·구청장이 9일 이상의 이행기간을 주고 검사를 명합니다. 이때 운행정지가 될 수 있다는 사실도 알립니다(시행규칙 제63조의2)</li></ul>
+<h3>기간 안에 받기 어려울 때 — 연장과 유예</h3>
+<p>시행규칙 제75조제1항은 시·도지사가 검사유효기간을 연장하거나 검사를 유예할 수 있는 경우를 다섯 가지로 정합니다.</p>
+<ul class="blist"><li>전시·사변 등</li><li>도난·사고발생·폐차·압류 또는 장기간의 정비 기타 부득이한 사유(소유자가 신청)</li><li>섬 지역 출장검사</li><li>매매용 자동차</li><li>제작결함 시정조치에 시간이 오래 걸리는 경우</li></ul>
+<p>신청은 별지 제45호서식에 자동차등록증과 사유를 증명하는 서류를 붙여 시·도지사에게 냅니다(같은 조 제2항). 유효기간 안에 운행정지명령, 번호판 영치, 휴업신고, 사업정지로 차를 못 움직여 검사를 못 받았다면 그 사유가 끝난 날까지 연장된 것으로 보고, 연장된 만료일 후 31일 안에 받으면 됩니다(같은 조 제3항).</p>
+<h3>중고차를 샀는데 검사 기간이 지났다면</h3>
+<p>시행규칙 제77조제3항입니다. 검사 유효기간 만료일이 지난 뒤에 소유권이 바뀐 차는 정기검사 기간이 이전등록을 한 날부터 31일 이내입니다. 산 날이 아니라 이전등록한 날이 기준입니다.</p>
+<h3>검사 받으러 갈 때</h3>
+<p>정기검사를 신청할 때는 자동차손해배상 보장법 제5조에 따른 의무보험 가입증명서를 냅니다. 전산으로 가입 사실이 확인되면 낸 것으로 봅니다(시행규칙 제77조제1항).</p>
+<h3>오래된 차는 마지막 검사일로 다시 보세요</h3>
+<p>2004년 12월 6일 개정된 옛 별표 15의2는 자가용 승용차를 차령 10년 이하 2년, 차령 10년 초과 1년으로 나눴습니다. 2006년 3월 15일 개정 판부터 차령 구분 없이 2년이 됐습니다. 그래서 2006년 전에 등록한 차는 등록일부터 이어서 센 날짜가 실제 기록과 다를 수 있습니다. 계산기에 마지막 검사 받은 날을 넣으면 그날부터 다시 셉니다.</p>
+<h3>이 계산기가 답하지 않는 것</h3>
+<p>승합·화물·특수자동차와 이륜자동차, 튜닝·임시·수리검사는 다루지 않습니다. 내 차가 종합검사 지역에 등록돼 있는지도 판정하지 않습니다. 검사 예약이나 신청을 대신하지 않으며, 차량번호로 공단 기록을 불러오지 않습니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>자동차 정기검사는 몇 년마다 받나요?</dt><dd>자가용 승용차는 2년, 영업용 승용차는 1년마다 받습니다. 새 차의 첫 유효기간은 비사업용(자가용) 승용차가 5년(2024년 12월 31일 이전 등록은 4년), 사업용(영업용) 승용차가 2년입니다(자동차관리법 시행규칙 별표 15의2).</dd><dt>자동차검사 기간은 언제부터 언제까지인가요?</dt><dd>검사 유효기간 만료일 전 90일부터 만료일 후 31일까지입니다(시행규칙 제77조제2항). 2025년 1월 1일 이후 받는 검사부터 적용되며, 그 전에는 만료일 전후 각각 31일이었습니다.</dd><dt>신차는 언제 첫 검사를 받나요?</dt><dd>비사업용(자가용) 승용 신차는 2025년 1월 1일 이후 신규등록했으면 등록일부터 5년, 그 전에 등록했으면 4년이 첫 유효기간입니다. 첫 만료일 전 90일부터 후 31일 사이에 첫 정기검사를 받습니다.</dd><dt>검사 기간 안에 일찍 받으면 다음 검사가 당겨지나요?</dt><dd>당겨지지 않습니다. 기간 안에 적합 판정을 받으면 만료일에 받은 것으로 보고, 다음 유효기간은 종전 만료일 다음 날부터 셉니다(시행규칙 제74조제3항·제77조제2항).</dd><dt>검사 기간을 넘겨서 받으면 어떻게 되나요?</dt><dd>과태료가 붙고, 다음 유효기간도 검사를 받은 날의 다음 날부터 새로 셉니다(시행규칙 제74조제2항).</dd><dt>자동차검사를 안 받으면 과태료는 얼마인가요?</dt><dd>검사 지연기간이 30일 이내면 4만원, 30일 초과 114일 이내면 4만원에 31일째부터 3일 초과 시마다 2만원을 더한 금액, 115일 이상이면 60만원입니다(자동차관리법 시행령 별표 2).</dd><dt>정기검사와 종합검사는 무엇이 다른가요?</dt><dd>대기환경보전법 제63조제1항에 따른 지역에 등록된 차는 종합검사를 받습니다. 승용차는 자가용 차령 4년 초과, 영업용 차령 2년 초과부터 대상이고, 유효기간과 검사 기간은 정기검사와 같습니다.</dd><dt>중고차를 샀는데 검사 기간이 이미 지났으면 어떻게 하나요?</dt><dd>만료일이 지난 뒤 소유권이 바뀐 차는 이전등록을 한 날부터 31일 이내에 정기검사를 받으면 됩니다(시행규칙 제77조제3항).</dd><dt>사고로 차를 고치느라 검사를 못 받으면 어떻게 하나요?</dt><dd>도난·사고·폐차·압류·장기간 정비 같은 부득이한 사유가 있으면 소유자가 시·도지사에게 검사유효기간 연장이나 검사 유예를 신청할 수 있습니다(시행규칙 제75조제1항제2호).</dd><dt>튜닝으로 차 크기가 바뀌면 검사 주기도 바뀌나요?</dt><dd>바뀌지 않습니다. 튜닝 등으로 규모별 세부기준이 바뀐 차도 신규등록한 때의 규모를 기준으로 검사 유효기간을 정합니다(시행규칙 제74조제4항).</dd><dt>2월 29일에 등록한 차는 만료일이 어떻게 되나요?</dt><dd>연으로 정한 기간은 마지막 해에서 기산일에 해당한 날의 전날에 끝나고, 그 달에 해당일이 없으면 그 달 말일에 끝납니다(민법 제160조). 그래서 2월 29일부터 센 유효기간은 평년에는 2월 28일에 끝납니다.</dd><dt>검사 기간이 지나면 알림이 오나요?</dt><dd>시·도지사가 정기검사 기간이 지난 날부터 10일 이내와 20일 이내에 우편이나 문자로 경과 사실과 과태료를 알립니다(시행규칙 제77조의2).</dd></dl>
+<p class="note">실제 만료일은 한국교통안전공단과 관할 관청의 기록을 따릅니다. 근거 — 자동차관리법 시행규칙(시행 2026. 9. 15.) 제63조의2·제74조·제75조·제77조·제77조의2·별표 15의2 <개정 2024.12.17>·부칙 <제1415호> 제1조~제3조, 옛 별표 15의2 <개정 2004.12.6>·<개정 2006.3.15>, 자동차종합검사의 시행 등에 관한 규칙 제9조제2항·별표 1, 자동차관리법 시행령 별표 2, 민법 제160조. 법제처 국가법령정보센터 원문 2026-09-25 확인.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="/jadongchase-calc/">자동차세 계산기</a></li><li><a href="/chwideukse-calc/">취득세 계산기</a></li><li><a href="/date-calc-dday/">날짜 계산기</a></li></ul>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>건강·공공정보 전체</h2>
+<ul class="illist"><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="../cheongnyeon-jiwongeum/">청년미래적금·청년 지원금</a></li><li><a href="../munhwa-nuri-card/">문화누리카드 대상·금액 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../gohyang-sarang-gibu/">고향사랑기부제 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 되나</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"자동차 정기검사는 몇 년마다 받나요?","acceptedAnswer":{"@type":"Answer","text":"자가용 승용차는 2년, 영업용 승용차는 1년마다 받습니다. 새 차의 첫 유효기간은 비사업용(자가용) 승용차가 5년(2024년 12월 31일 이전 등록은 4년), 사업용(영업용) 승용차가 2년입니다(자동차관리법 시행규칙 별표 15의2)."}},{"@type":"Question","name":"자동차검사 기간은 언제부터 언제까지인가요?","acceptedAnswer":{"@type":"Answer","text":"검사 유효기간 만료일 전 90일부터 만료일 후 31일까지입니다(시행규칙 제77조제2항). 2025년 1월 1일 이후 받는 검사부터 적용되며, 그 전에는 만료일 전후 각각 31일이었습니다."}},{"@type":"Question","name":"신차는 언제 첫 검사를 받나요?","acceptedAnswer":{"@type":"Answer","text":"비사업용(자가용) 승용 신차는 2025년 1월 1일 이후 신규등록했으면 등록일부터 5년, 그 전에 등록했으면 4년이 첫 유효기간입니다. 첫 만료일 전 90일부터 후 31일 사이에 첫 정기검사를 받습니다."}},{"@type":"Question","name":"검사 기간 안에 일찍 받으면 다음 검사가 당겨지나요?","acceptedAnswer":{"@type":"Answer","text":"당겨지지 않습니다. 기간 안에 적합 판정을 받으면 만료일에 받은 것으로 보고, 다음 유효기간은 종전 만료일 다음 날부터 셉니다(시행규칙 제74조제3항·제77조제2항)."}},{"@type":"Question","name":"검사 기간을 넘겨서 받으면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"과태료가 붙고, 다음 유효기간도 검사를 받은 날의 다음 날부터 새로 셉니다(시행규칙 제74조제2항)."}},{"@type":"Question","name":"자동차검사를 안 받으면 과태료는 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"검사 지연기간이 30일 이내면 4만원, 30일 초과 114일 이내면 4만원에 31일째부터 3일 초과 시마다 2만원을 더한 금액, 115일 이상이면 60만원입니다(자동차관리법 시행령 별표 2)."}},{"@type":"Question","name":"정기검사와 종합검사는 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"대기환경보전법 제63조제1항에 따른 지역에 등록된 차는 종합검사를 받습니다. 승용차는 자가용 차령 4년 초과, 영업용 차령 2년 초과부터 대상이고, 유효기간과 검사 기간은 정기검사와 같습니다."}},{"@type":"Question","name":"중고차를 샀는데 검사 기간이 이미 지났으면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"만료일이 지난 뒤 소유권이 바뀐 차는 이전등록을 한 날부터 31일 이내에 정기검사를 받으면 됩니다(시행규칙 제77조제3항)."}},{"@type":"Question","name":"사고로 차를 고치느라 검사를 못 받으면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"도난·사고·폐차·압류·장기간 정비 같은 부득이한 사유가 있으면 소유자가 시·도지사에게 검사유효기간 연장이나 검사 유예를 신청할 수 있습니다(시행규칙 제75조제1항제2호)."}},{"@type":"Question","name":"튜닝으로 차 크기가 바뀌면 검사 주기도 바뀌나요?","acceptedAnswer":{"@type":"Answer","text":"바뀌지 않습니다. 튜닝 등으로 규모별 세부기준이 바뀐 차도 신규등록한 때의 규모를 기준으로 검사 유효기간을 정합니다(시행규칙 제74조제4항)."}},{"@type":"Question","name":"2월 29일에 등록한 차는 만료일이 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"연으로 정한 기간은 마지막 해에서 기산일에 해당한 날의 전날에 끝나고, 그 달에 해당일이 없으면 그 달 말일에 끝납니다(민법 제160조). 그래서 2월 29일부터 센 유효기간은 평년에는 2월 28일에 끝납니다."}},{"@type":"Question","name":"검사 기간이 지나면 알림이 오나요?","acceptedAnswer":{"@type":"Answer","text":"시·도지사가 정기검사 기간이 지난 날부터 10일 이내와 20일 이내에 우편이나 문자로 경과 사실과 과태료를 알립니다(시행규칙 제77조의2)."}}]}</script>
+</body>
+</html>

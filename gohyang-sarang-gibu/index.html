@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>고향사랑기부제 세액공제 계산기 2026 — 10만원 넘으면 얼마 돌려받나</title>
+<meta property="og:title" content="고향사랑기부제 세액공제 계산기 2026 — 10만원 넘으면 얼마 돌려받나">
+<meta property="og:description" content="고향사랑기부 10만원까지는 소득세·지방소득세로 전액 돌려받고, 2026년 기부분부터 10만원 초과 20만원까지 40%, 그 위는 15%(특별재난지역 30%)를 공제합니다. 기부액별 세액공제와 답례품 한도를 계산합니다.">
+<meta name="description" content="고향사랑기부 10만원까지는 소득세·지방소득세로 전액 돌려받고, 2026년 기부분부터 10만원 초과 20만원까지 40%, 그 위는 15%(특별재난지역 30%)를 공제합니다. 기부액별 세액공제와 답례품 한도를 계산합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/gohyang-sarang-gibu/">
+<style>
+:root{--p:#2F6B4F;--pd:#1F4A36;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F3F8F4;--lt:#CFE3D6;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+.wt{font-size:16px;line-height:1.6;color:var(--ink)}
+.wt-h{font-weight:800;font-size:18px;margin:0 0 4px}
+.wt label{display:block;font-weight:700;margin:12px 0 4px;font-size:15px}
+.wt select,.wt input[type=number],.wt input[type=date],.wt input[type=text]{width:100%;font-size:16px;padding:10px;border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+.wt .ck{display:flex;gap:8px;align-items:flex-start;font-weight:600;margin-top:12px}
+.wt .ck input{width:18px;height:18px;margin-top:3px;flex:none}
+.wt-s{font-size:13.5px;color:var(--sub);margin:4px 0 0;line-height:1.6}
+.wt-btn{display:block;width:100%;margin-top:14px;padding:13px;font-size:16px;font-weight:800;color:#fff;background:var(--p);border:0;border-radius:12px;cursor:pointer;font-family:inherit}
+.wt-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wt-chips button{border:1.5px solid var(--lt);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--pd)}
+.wr{margin-top:14px;padding:14px;border-radius:12px;background:#F7F9FB;border:1px solid #E1E8EF}
+.wr-st{font-weight:800;font-size:18px;margin:0}
+.wr-st.ok{color:#1E7A45}.wr-st.no{color:#B42331}.wr-st.mid{color:#8A6100}
+.wr-big{font-size:28px;font-weight:800;margin:6px 0 2px;color:var(--pd)}
+.wr-big small{font-size:16px;margin-left:2px}
+.wr p{margin:8px 0 0;font-size:15px}
+.wr table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;line-height:1.5}
+.wr th,.wr td{border:1px solid #E5E8EB;padding:6px 7px;text-align:left;vertical-align:top}
+.wr th{background:#fff}
+.wr ul{margin:6px 0 0 18px;font-size:15px}
+.wr .warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:8px 10px;color:#6B5200;font-size:14px}
+.wr-err{color:#B42331;font-weight:700}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>고향사랑기부제 세액공제 계산기</h1>
+<p class="desc">10만원까지는 전액, 10만원 초과 20만원까지 40%, 그 위는 15%(특별재난지역 30%)를 소득세에서 공제하고 지방소득세 10%를 더 뺍니다. 2026년 1월 1일 이후 기부분 기준입니다.</p>
+<div class="tool">
+<div id="gh-tool" class="wt">
+<p class="wt-h">고향사랑기부제 세액공제 계산</p>
+<label for="gh-amt">기부할 금액(원)</label>
+<input type="number" id="gh-amt" inputmode="numeric" min="1" max="20000000" placeholder="예: 100000">
+<div class="wt-chips" id="gh-chips"><button type="button" data-v="100000">10만원</button><button type="button" data-v="200000">20만원</button><button type="button" data-v="300000">30만원</button><button type="button" data-v="500000">50만원</button><button type="button" data-v="1000000">100만원</button></div>
+<label class="ck"><input type="checkbox" id="gh-dis"> 특별재난지역으로 선포된 지방자치단체에 선포일부터 3개월 안에 기부</label>
+<button type="button" id="gh-go" class="wt-btn">계산하기</button>
+<div id="gh-out" aria-live="polite"></div>
+<p class="wt-s" style="margin-top:12px">조세특례제한법 제58조(2026년 1월 1일 이후 기부분)와 지방세특례제한법 제167조의2 기준입니다. 특정 지역이나 답례품을 권하지 않습니다. 입력값은 저장하지 않습니다.</p>
+</div>
+<script>
+(function(){
+'use strict';
+/* 조세특례제한법 제58조제1항(2026.1.1 이후 기부분, 부칙 법률 제21223호 제13조) · 같은 법 시행령 제53조의2(3개월)
+   지방세특례제한법 제167조의2제1항(소득세 공제액의 100분의 10, 부칙 법률 제12955호 제2조 2026.12.31까지)
+   고향사랑 기부금에 관한 법률 제8조제3항(연 2천만원) · 제9조제1항 + 시행령 제5조제1항(답례품 100분의 30) */
+var MAX_YEAR = 20000000, T1 = 100000, T2 = 200000, GIFT_RATE = 0.30;
+function credit(d, disaster){
+  var a = Math.min(d, T1) * 100 / 110;
+  var b = Math.max(0, Math.min(d, T2) - T1) * 0.40;
+  var c = Math.max(0, Math.min(d, MAX_YEAR) - T2) * (disaster ? 0.30 : 0.15);
+  var nat = a + b + c;
+  var natR = Math.round(nat), locR = Math.round(nat * 0.10);
+  return { a: a, b: b, c: c, nat: natR, loc: locR, total: natR + locR };
+}
+function won(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원'; }
+function man(n){
+  n = Math.round(n);
+  var m = Math.floor(n / 10000), r = n % 10000;
+  if (!m) return won(n);
+  return String(m).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '만' + (r ? ' ' + String(r).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '') + '원';
+}
+function pct(x){ return Math.round(x * 1000) / 10 + '%'; }
+function run(){
+  var out = document.getElementById('gh-out');
+  var d = Math.floor(Number(String(document.getElementById('gh-amt').value).replace(/[^0-9]/g, '')) || 0);
+  var dis = document.getElementById('gh-dis').checked;
+  if (d <= 0) { out.innerHTML = '<div class="wr"><p class="wr-err">기부할 금액을 원 단위로 넣으세요(예: 100000).</p></div>'; return; }
+  if (d > MAX_YEAR) { out.innerHTML = '<div class="wr"><p class="wr-err">한 사람이 1년에 기부할 수 있는 금액은 2천만원까지입니다(고향사랑 기부금에 관한 법률 제8조제3항).</p></div>'; return; }
+  var C = credit(d, dis), gift = Math.floor(d * GIFT_RATE), net = d - C.total, netG = net - gift;
+  var in1 = Math.min(d, T1), in2 = Math.max(0, Math.min(d, T2) - T1), in3 = Math.max(0, d - T2);
+  var h = '<div class="wr">';
+  h += '<p class="wr-st ok">' + man(d) + ' 기부' + (dis ? ' · 특별재난지역' : '') + '면 돌려받는 세금</p>';
+  h += '<p class="wr-big">' + won(C.total).replace('원', '') + '<small>원</small></p>';
+  h += '<p>소득세 ' + won(C.nat) + ' + 지방소득세 ' + won(C.loc) + ' · 기부액의 ' + pct(C.total / d) + '</p>';
+  h += '<table><tr><th>구간</th><th>들어간 금액</th><th>소득세 공제</th></tr>'
+    + '<tr><td>10만원까지 × 110분의 100</td><td>' + won(in1) + '</td><td>' + won(C.a) + '</td></tr>'
+    + '<tr><td>10만원 초과 20만원까지 × 40%</td><td>' + won(in2) + '</td><td>' + won(C.b) + '</td></tr>'
+    + '<tr><td>20만원 초과 × ' + (dis ? '30%(특별재난지역)' : '15%') + '</td><td>' + won(in3) + '</td><td>' + won(C.c) + '</td></tr>'
+    + '<tr><th>소득세 공제 합계</th><td></td><th>' + won(C.nat) + '</th></tr>'
+    + '<tr><td>지방소득세(소득세 공제의 10%)</td><td></td><td>' + won(C.loc) + '</td></tr></table>';
+  h += '<table><tr><th>내 돈 흐름</th><th>금액</th></tr>'
+    + '<tr><td>기부액</td><td>' + won(d) + '</td></tr>'
+    + '<tr><td>돌려받는 세금</td><td>−' + won(C.total) + '</td></tr>'
+    + '<tr><td>세금만 빼면 내 부담</td><td>' + won(net) + '</td></tr>'
+    + '<tr><td>답례품 한도(기부액의 30%)</td><td>' + won(gift) + '</td></tr>'
+    + '<tr><th>답례품까지 받으면</th><th>' + (netG < 0 ? won(-netG) + ' 더 받는 셈' : won(netG) + ' 부담') + '</th></tr></table>';
+  var rows = [100000, 200000, 300000, 500000, 1000000];
+  if (rows.indexOf(d) < 0) { rows.push(d); rows.sort(function(x, y){ return x - y; }); }
+  var tb = '<table><tr><th>기부액</th><th>돌려받는 세금</th><th>비율</th></tr>';
+  for (var i = 0; i < rows.length; i++) { var cc = credit(rows[i], dis); tb += '<tr' + (rows[i] === d ? ' style="font-weight:800"' : '') + '><td>' + man(rows[i]) + '</td><td>' + won(cc.total) + '</td><td>' + pct(cc.total / rows[i]) + '</td></tr>'; }
+  h += tb + '</table>';
+  var y = new Date().getFullYear();
+  h += '<p>' + y + '년 12월 31일까지 기부한 금액이 ' + y + '년 소득에서 공제됩니다(「지출한 해당 과세연도」).</p>';
+  h += '<p class="warn">공제액은 그해 종합소득산출세액이 한도입니다(제58조제2항). 사업자는 10만원을 넘는 부분을 세액공제 대신 손금에 넣습니다(제1항 단서). 지방소득세 공제 조항(지방세특례제한법 제167조의2제1항)은 부칙상 2026년 12월 31일까지 적용됩니다' + (y > 2026 ? ' — 올해 기부분에 연장됐는지 확인하세요.' : '.') + '</p>';
+  out.innerHTML = h + '</div>';
+}
+if (typeof document !== 'undefined' && document.getElementById('gh-go')) {
+  document.getElementById('gh-go').onclick = run;
+  var cs = document.querySelectorAll('#gh-chips button');
+  for (var i = 0; i < cs.length; i++) cs[i].onclick = function(){ document.getElementById('gh-amt').value = this.getAttribute('data-v'); run(); };
+}
+if (typeof module !== 'undefined') module.exports = { credit: credit };
+})();
+</script>
+</div>
+</div>
+
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031249,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>고향사랑기부제 세액공제 계산기</h2>
+<h3>10초 요약</h3>
+<p><strong>【고향사랑기부 10만원까지는 낸 돈을 전부 세금으로 돌려받습니다.】</strong> 소득세에서 기부액의 110분의 100을 공제하고, 지방소득세에서 그 공제액의 10%를 더 빼 주기 때문입니다. 10만원을 내면 소득세 90,909원과 지방소득세 9,091원, 합쳐 100,000원이 줄어듭니다.</p>
+<p><strong>【2026년 기부분부터 10만원 초과 20만원 이하 부분은 40%를 공제합니다.】</strong> 20만원을 넘는 부분은 15%(특별재난지역에 선포일부터 3개월 안에 기부하면 30%)입니다. 한 사람이 1년에 낼 수 있는 한도는 2천만원이고, 답례품은 기부액의 30%까지 받을 수 있습니다.</p>
+<figure><img src="/img/blog/hometown-donation-tax-credit-2.png" alt="고향사랑기부 세액공제 구간별 비율 — 10만원 이하 110분의 100, 10만원 초과 20만원 40%, 20만원 초과 15%, 답례품 30%" width="1200" height="1010" loading="lazy"><figcaption>고향사랑기부 세액공제 구간별 비율(2026년 기부분)</figcaption></figure>
+<h3>이 계산기로 보는 것</h3>
+<ul class="blist"><li>돌려받는 세금 — 소득세 공제와 지방소득세 공제를 나눠서 보여 줍니다</li><li>구간별 공제 — 10만원까지, 10만원 초과 20만원까지, 20만원 초과 부분을 따로 계산합니다</li><li>실제로 내 돈이 얼마 드나 — 세금과 답례품 한도를 빼고 남는 부담을 봅니다</li><li>기부액별 비교 — 10만원·20만원·30만원·50만원·100만원을 한 표에 놓습니다</li></ul>
+<h3>계산식 — 조세특례제한법 제58조제1항</h3>
+<p>법은 거주자가 「고향사랑 기부금에 관한 법률」에 따라 지방자치단체에 기부하면 다음 계산식으로 구한 금액을 「이를 지출한 해당 과세연도의 종합소득산출세액에서 공제한다」고 정합니다.</p>
+<div class="tblx"><table><caption>고향사랑 기부금 세액공제 계산식 (조세특례제한법 제58조제1항, 2026. 1. 1. 이후 기부분)</caption><thead><tr><th>기부금</th><th>소득세 공제액</th></tr></thead><tbody><tr><th scope="row">10만원 이하</th><td>기부금 × 110분의 100</td></tr><tr><th scope="row">10만원 초과 20만원 이하</th><td>10만원 × 110분의 100 + (기부금 − 10만원) × 100분의 40</td></tr><tr><th scope="row">20만원 초과 2천만원 이하</th><td>10만원 × 110분의 100 + 10만원 × 100분의 40 + (기부금 − 20만원) × 100분의 15(특별재난지역 기부는 100분의 30)</td></tr></tbody></table></div>
+<p>여기에 지방세특례제한법 제167조의2제1항이 붙습니다. 조세특례제한법에 따라 소득세가 세액공제되면 그 공제액의 100분의 10에 해당하는 개인지방소득세를 공제합니다. 그래서 돌려받는 세금은 소득세 공제액의 1.1배가 됩니다.</p>
+<h3>왜 10만원이 딱 100%인가</h3>
+<p>10만원 × 110분의 100 = 90,909원이 소득세 공제입니다. 여기에 10%인 9,091원이 지방소득세 공제로 붙어 합계가 정확히 100,000원이 됩니다. 기부액의 110분의 100에 그 10%를 더하면 정확히 기부액과 같아집니다.</p>
+<p>10만원을 넘는 부분부터는 돌려받는 비율이 100%보다 낮아집니다. 10만원 초과 20만원까지는 소득세 40%에 지방소득세를 더해 44%, 20만원 초과 부분은 15%에 더해 16.5%입니다.</p>
+<h3>기부액별 돌려받는 세금</h3>
+<div class="tblx"><table><caption>기부액별 세액공제 (일반 지역, 2026년 기부분, 원 미만 반올림)</caption><thead><tr><th>기부액</th><th>소득세</th><th>지방소득세</th><th>합계</th><th>비율</th><th>답례품 한도</th></tr></thead><tbody><tr><th scope="row">10만원</th><td>90,909원</td><td>9,091원</td><td>100,000원</td><td>100%</td><td>30,000원</td></tr><tr><th scope="row">15만원</th><td>110,909원</td><td>11,091원</td><td>122,000원</td><td>81.3%</td><td>45,000원</td></tr><tr><th scope="row">20만원</th><td>130,909원</td><td>13,091원</td><td>144,000원</td><td>72%</td><td>60,000원</td></tr><tr><th scope="row">30만원</th><td>145,909원</td><td>14,591원</td><td>160,500원</td><td>53.5%</td><td>90,000원</td></tr><tr><th scope="row">50만원</th><td>175,909원</td><td>17,591원</td><td>193,500원</td><td>38.7%</td><td>150,000원</td></tr><tr><th scope="row">100만원</th><td>250,909원</td><td>25,091원</td><td>276,000원</td><td>27.6%</td><td>300,000원</td></tr><tr><th scope="row">500만원</th><td>850,909원</td><td>85,091원</td><td>936,000원</td><td>18.7%</td><td>1,500,000원</td></tr><tr><th scope="row">2,000만원</th><td>3,100,909원</td><td>310,091원</td><td>3,411,000원</td><td>17.1%</td><td>6,000,000원</td></tr></tbody></table></div>
+<p>표의 합계는 종합소득산출세액이 충분할 때의 값입니다. 낼 세금이 이보다 적으면 그만큼만 공제됩니다(제58조제2항). 지방소득세는 소득세 공제액의 10%를 원 단위에서 반올림했습니다.</p>
+<h3>2025년까지와 무엇이 달라졌나</h3>
+<p>2025년 11월 11일 시행본 조세특례제한법 제58조는 10만원 초과 2천만원 이하 부분을 한 구간으로 묶어 100분의 15를 공제했습니다. 10만원 초과 20만원 이하 40% 구간은 2025년 12월 23일 개정(법률 제21223호)으로 생겼고, 부칙 제13조가 2026년 1월 1일 이후 기부하는 경우부터 적용하게 했습니다.</p>
+<div class="tblx"><table><caption>같은 금액, 옛 계산과 새 계산 (일반 지역, 지방소득세 포함)</caption><thead><tr><th>기부액</th><th>2025년 기부분(옛 식)</th><th>2026년 기부분</th><th>차이</th></tr></thead><tbody><tr><th scope="row">20만원</th><td>116,500원</td><td>144,000원</td><td>27,500원</td></tr><tr><th scope="row">50만원</th><td>166,000원</td><td>193,500원</td><td>27,500원</td></tr></tbody></table></div>
+<p>10만원 초과 20만원 이하 10만원에 대한 공제율이 15%에서 40%로 올라, 20만원 이상 기부하는 사람은 누구나 소득세 기준 25,000원(지방소득세 포함 27,500원) 더 돌려받습니다.</p>
+<h3>특별재난지역에 기부하면</h3>
+<p>「재난 및 안전관리 기본법」 제60조에 따라 특별재난지역으로 선포된 지방자치단체에 선포일부터 대통령령으로 정하는 기간 안에 기부하면 20만원 초과 부분의 공제율이 15%에서 30%가 됩니다. 그 기간은 조세특례제한법 시행령 제53조의2가 3개월로 정합니다(2026년 2월 27일 개정).</p>
+<p>50만원을 기부하면 일반 지역은 193,500원, 특별재난지역은 243,000원을 돌려받습니다. 20만원까지는 두 경우가 같습니다. 계산기에서 특별재난지역 칸을 누르면 30%로 계산합니다.</p>
+<h3>답례품 — 기부액의 30%까지</h3>
+<p>지방자치단체는 기부자에게 답례품을 줄 수 있는데, 한도는 고향사랑 기부금에 관한 법률 시행령 제5조제1항이 정한 「매회 기부되는 고향사랑 기부금액의 100분의 30」입니다. 10만원이면 3만원, 50만원이면 15만원까지입니다.</p>
+<p><strong>【현금은 답례품이 될 수 없습니다.】</strong> 같은 법 제9조제3항제1호가 막습니다. 답례품은 그 지역 특산품이나 지역 상품권 같은 물품이고, 한도 안에서 지방자치단체가 정합니다.</p>
+<div class="tblx"><table><caption>세금과 답례품을 합친 내 부담 (일반 지역, 답례품을 한도까지 받는 경우)</caption><thead><tr><th>기부액</th><th>돌려받는 세금</th><th>답례품 한도</th><th>결과</th></tr></thead><tbody><tr><th scope="row">10만원</th><td>100,000원</td><td>30,000원</td><td>30,000원 더 받는 셈</td></tr><tr><th scope="row">20만원</th><td>144,000원</td><td>60,000원</td><td>4,000원 더 받는 셈</td></tr><tr><th scope="row">30만원</th><td>160,500원</td><td>90,000원</td><td>49,500원 부담</td></tr><tr><th scope="row">50만원</th><td>193,500원</td><td>150,000원</td><td>156,500원 부담</td></tr></tbody></table></div>
+<p>답례품은 시장 가격이 아니라 한도 금액으로 셌습니다. 실제로 받는 물건의 값은 지방자치단체와 품목마다 다릅니다.</p>
+<h3>기부할 수 없는 곳 — 내가 사는 지역</h3>
+<p>고향사랑 기부금에 관한 법률 제4조제1항은 지방자치단체가 「해당 지방자치단체의 주민이 아닌 사람에 대해서만」 기부금을 모금·접수할 수 있다고 정합니다. 지방자치법 제16조는 지방자치단체의 구역에 주소를 가진 사람을 그 지방자치단체의 주민으로 봅니다.</p>
+<p>두 조문을 합쳐 보면, 주소가 있는 시·군·구와 그 시·군·구가 속한 시·도에는 기부할 수 없습니다. 고향이 아니어도 주소지가 아닌 지역이면 어디든 기부할 수 있습니다.</p>
+<h3>한도 두 가지</h3>
+<ul class="blist"><li>기부 한도 — 한 사람이 1년에 2천만원까지입니다(고향사랑 기부금에 관한 법률 제8조제3항)</li><li>공제 한도 — 공제액은 해당 과세기간의 종합소득산출세액을 넘지 못합니다(조세특례제한법 제58조제2항). 소득세를 내지 않는 사람은 공제받을 세금도 없습니다</li></ul>
+<p>공제 계산식도 2천만원 이하까지만 정해져 있습니다. 계산기는 2천만원을 넘는 금액을 받지 않습니다.</p>
+<h3>사업자는 10만원 넘는 부분이 다릅니다</h3>
+<p>제58조제1항 단서입니다. 사업자인 거주자는 10만원 이하는 제1호(110분의 100 세액공제)를 따르고, 10만원을 넘는 금액은 이월결손금을 뺀 후의 소득금액 범위에서 손금에 산입합니다. 사업소득이 있는 사람은 10만원 초과분을 이 계산기 결과대로 세액공제받지 않으니 세무 신고 때 따로 봐야 합니다.</p>
+<h3>다른 기부금 공제와 겹치지 않습니다</h3>
+<p>제58조제3항은 고향사랑 기부금에 소득세법 제34조제2항과 제59조의4제4항을 적용하지 않는다고 정합니다. 제34조는 「기부금의 필요경비 불산입」, 제59조의4제4항은 기부금 세액공제 조항입니다. 고향사랑 기부금은 일반 기부금 규정이 아니라 제58조로만 공제합니다.</p>
+<h3>지방소득세 공제의 근거 조항에는 기한이 있습니다</h3>
+<p><strong>【지방세특례제한법 부칙(법률 제12955호, 2014. 12. 31.) 제2조는 「제167조의2제1항 및 제2항의 개정규정은 2026년 12월 31일까지 적용한다」고 정합니다.】</strong> 이 조항은 2016년, 2020년(두 번), 2021년, 2023년에 개정됐습니다. 조세특례제한법 쪽이 아니라 지방세특례제한법 부칙에 있는 기한이라 고향사랑기부제 조항만 봐서는 보이지 않습니다.</p>
+<p>2026년에 기부한 금액은 이 기한 안이라 지방소득세 10% 공제가 붙습니다. 2027년 이후 기부분에 지방소득세 공제가 계속되는지는 그 전에 부칙이 다시 개정되는지에 달려 있습니다.</p>
+<h3>언제까지 기부해야 올해 공제받나</h3>
+<p>법은 「지출한 해당 과세연도」의 종합소득산출세액에서 공제한다고 정합니다. 12월 31일까지 기부한 금액이 그해 소득에서 공제되고, 1월 1일에 기부하면 다음 해 몫이 됩니다.</p>
+<h3>계산 예시 — 30만원을 기부하면</h3>
+<ul class="blist"><li>10만원까지: 100,000 × 100/110 = 90,909원</li><li>10만원 초과 20만원까지: 100,000 × 40% = 40,000원</li><li>20만원 초과 부분: 100,000 × 15% = 15,000원</li><li>소득세 공제 합계: 145,909원 · 지방소득세(10%): 14,591원</li><li>돌려받는 세금: 160,500원 · 답례품 한도: 90,000원</li></ul>
+<p>30만원을 내고 160,500원을 돌려받으니 세금만 빼면 139,500원이 내 부담이고, 답례품을 한도까지 받으면 부담이 49,500원으로 줄어듭니다.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>첫째, 「10만원까지 전액」은 소득세만의 이야기가 아닙니다. 소득세 공제는 90,909원이고, 지방소득세 9,091원을 더해야 100,000원이 됩니다.</p>
+<p>둘째, 40% 구간은 2026년 기부분부터입니다. 2025년에 기부한 금액은 10만원 초과분 전체가 15%였습니다.</p>
+<p>셋째, 주소지에는 기부할 수 없습니다. 시·군·구뿐 아니라 그 시·군·구가 속한 시·도도 주소지로 봅니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>고향사랑기부 10만원을 하면 얼마를 돌려받나요?</dt><dd>소득세 90,909원(10만원 × 110분의 100)과 지방소득세 9,091원(소득세 공제액의 10%)을 합쳐 100,000원을 돌려받습니다. 종합소득산출세액이 그보다 적으면 그만큼만 공제됩니다.</dd><dt>고향사랑기부 20만원이면 세액공제가 얼마인가요?</dt><dd>2026년 기부분은 소득세 130,909원(90,909원 + 10만원 × 40%)와 지방소득세 13,091원를 합쳐 144,000원입니다. 10만원 초과 20만원 이하 40% 구간은 2026년 1월 1일 이후 기부분부터 적용됩니다.</dd><dt>20만원을 넘는 금액은 몇 퍼센트 공제되나요?</dt><dd>20만원 초과 2천만원 이하 부분은 100분의 15를 소득세에서 공제하고, 지방소득세에서 그 10%를 더 공제합니다. 특별재난지역으로 선포된 지방자치단체에 선포일부터 3개월 안에 기부하면 100분의 30입니다.</dd><dt>1년에 얼마까지 기부할 수 있나요?</dt><dd>고향사랑 기부금에 관한 법률 제8조제3항에 따라 한 사람이 1년에 2천만원까지입니다.</dd><dt>내가 사는 지역에도 기부할 수 있나요?</dt><dd>할 수 없습니다. 지방자치단체는 그 지역 주민이 아닌 사람에게서만 고향사랑 기부금을 받을 수 있습니다(기부금법 제4조제1항). 주소가 있는 시·군·구와 그 시·도가 여기에 해당합니다(지방자치법 제16조).</dd><dt>답례품은 얼마까지 받을 수 있나요?</dt><dd>매회 기부금액의 100분의 30까지입니다(기부금법 시행령 제5조제1항). 10만원이면 3만원까지이고, 현금은 답례품으로 줄 수 없습니다(기부금법 제9조제3항제1호).</dd><dt>소득세를 내지 않아도 공제받을 수 있나요?</dt><dd>공제액은 그해 종합소득산출세액이 한도라(조세특례제한법 제58조제2항) 낼 소득세가 없으면 공제받을 세금도 없습니다.</dd><dt>사업자도 같은 방식으로 공제받나요?</dt><dd>10만원 이하는 같게 세액공제받지만, 10만원을 넘는 금액은 이월결손금을 뺀 후의 소득금액 범위에서 손금에 산입합니다(조세특례제한법 제58조제1항 단서).</dd><dt>지방소득세 10% 공제는 언제까지인가요?</dt><dd>근거인 지방세특례제한법 제167조의2제1항은 같은 법 부칙(법률 제12955호) 제2조에 따라 2026년 12월 31일까지 적용됩니다. 부칙 제2조는 2016년부터 2023년까지 다섯 번 개정됐습니다.</dd><dt>12월에 기부해도 올해 공제되나요?</dt><dd>됩니다. 법은 기부금을 지출한 해당 과세연도의 종합소득산출세액에서 공제한다고 정하므로 12월 31일까지 기부한 금액은 그해 소득에서 공제됩니다.</dd></dl>
+<p class="note">근거 — 조세특례제한법 제58조(시행 2026. 9. 18. 현행본)·부칙(법률 제21223호) 제13조, 같은 법 시행령 제53조의2, 지방세특례제한법 제167조의2제1항·부칙(법률 제12955호) 제2조, 고향사랑 기부금에 관한 법률 제4조제1항·제8조제3항·제9조, 같은 법 시행령 제5조제1항, 지방자치법 제16조. 법제처 국가법령정보센터 원문 2026-09-25 확인.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="/wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="/jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="/geunro-jangryeogeum-calc/">근로장려금 계산기</a></li></ul>
+</section>
+
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="../cheongnyeon-jiwongeum/">청년미래적금·청년 지원금</a></li><li><a href="../munhwa-nuri-card/">문화누리카드 대상·금액 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="../jadongcha-geomsa/">자동차검사 기간 계산기</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 되나</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"고향사랑기부 10만원을 하면 얼마를 돌려받나요?","acceptedAnswer":{"@type":"Answer","text":"소득세 90,909원(10만원 × 110분의 100)과 지방소득세 9,091원(소득세 공제액의 10%)을 합쳐 100,000원을 돌려받습니다. 종합소득산출세액이 그보다 적으면 그만큼만 공제됩니다."}},{"@type":"Question","name":"고향사랑기부 20만원이면 세액공제가 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"2026년 기부분은 소득세 130,909원(90,909원 + 10만원 × 40%)와 지방소득세 13,091원를 합쳐 144,000원입니다. 10만원 초과 20만원 이하 40% 구간은 2026년 1월 1일 이후 기부분부터 적용됩니다."}},{"@type":"Question","name":"20만원을 넘는 금액은 몇 퍼센트 공제되나요?","acceptedAnswer":{"@type":"Answer","text":"20만원 초과 2천만원 이하 부분은 100분의 15를 소득세에서 공제하고, 지방소득세에서 그 10%를 더 공제합니다. 특별재난지역으로 선포된 지방자치단체에 선포일부터 3개월 안에 기부하면 100분의 30입니다."}},{"@type":"Question","name":"1년에 얼마까지 기부할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"고향사랑 기부금에 관한 법률 제8조제3항에 따라 한 사람이 1년에 2천만원까지입니다."}},{"@type":"Question","name":"내가 사는 지역에도 기부할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"할 수 없습니다. 지방자치단체는 그 지역 주민이 아닌 사람에게서만 고향사랑 기부금을 받을 수 있습니다(기부금법 제4조제1항). 주소가 있는 시·군·구와 그 시·도가 여기에 해당합니다(지방자치법 제16조)."}},{"@type":"Question","name":"답례품은 얼마까지 받을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"매회 기부금액의 100분의 30까지입니다(기부금법 시행령 제5조제1항). 10만원이면 3만원까지이고, 현금은 답례품으로 줄 수 없습니다(기부금법 제9조제3항제1호)."}},{"@type":"Question","name":"소득세를 내지 않아도 공제받을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"공제액은 그해 종합소득산출세액이 한도라(조세특례제한법 제58조제2항) 낼 소득세가 없으면 공제받을 세금도 없습니다."}},{"@type":"Question","name":"사업자도 같은 방식으로 공제받나요?","acceptedAnswer":{"@type":"Answer","text":"10만원 이하는 같게 세액공제받지만, 10만원을 넘는 금액은 이월결손금을 뺀 후의 소득금액 범위에서 손금에 산입합니다(조세특례제한법 제58조제1항 단서)."}},{"@type":"Question","name":"지방소득세 10% 공제는 언제까지인가요?","acceptedAnswer":{"@type":"Answer","text":"근거인 지방세특례제한법 제167조의2제1항은 같은 법 부칙(법률 제12955호) 제2조에 따라 2026년 12월 31일까지 적용됩니다. 부칙 제2조는 2016년부터 2023년까지 다섯 번 개정됐습니다."}},{"@type":"Question","name":"12월에 기부해도 올해 공제되나요?","acceptedAnswer":{"@type":"Answer","text":"됩니다. 법은 기부금을 지출한 해당 과세연도의 종합소득산출세액에서 공제한다고 정하므로 12월 31일까지 기부한 금액은 그해 소득에서 공제됩니다."}}]}</script>
+</body>
+</html>
