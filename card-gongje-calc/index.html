@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>연말정산 카드공제 계산기 2026 — 총급여 25% 문턱, 신용 15%·체크 30% 남은 석 달 비교</title>
+<meta property="og:title" content="연말정산 카드공제 계산기 2026 — 총급여 25% 문턱, 신용 15%·체크 30% 남은 석 달 비교">
+<meta property="og:description" content="연말정산 신용카드 소득공제를 계산합니다. 총급여의 25%를 넘게 쓴 금액부터 신용카드 15%, 체크카드·현금영수증 30%, 전통시장·대중교통 40%. 지금까지 쓴 금액과 남은 달 지출로 결제수단별 공제액을 비교합니다.">
+<meta name="description" content="연말정산 신용카드 소득공제를 계산합니다. 총급여의 25%를 넘게 쓴 금액부터 신용카드 15%, 체크카드·현금영수증 30%, 전통시장·대중교통 40%. 지금까지 쓴 금액과 남은 달 지출로 결제수단별 공제액을 비교합니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/card-gongje-calc/">
+<style>
+:root{--p:#1B64DA;--pd:#124AA8;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F2F6FC;--lt:#C9DAF5;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+#app .tool{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 2px 12px rgba(20,60,90,.07);font-size:15px;line-height:1.6}
+.wt{font-size:16px;line-height:1.6;color:var(--ink)}
+.wt-h{font-weight:800;font-size:18px;margin:0 0 4px}
+.wt label{display:block;font-weight:700;margin:12px 0 4px;font-size:15px}
+.wt select,.wt input[type=number],.wt input[type=date],.wt input[type=text]{width:100%;font-size:16px;padding:10px;border:1.5px solid var(--lt);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit}
+.wt .ck{display:flex;gap:8px;align-items:flex-start;font-weight:600;margin-top:12px}
+.wt .ck input{width:18px;height:18px;margin-top:3px;flex:none}
+.wt-s{font-size:13.5px;color:var(--sub);margin:4px 0 0;line-height:1.6}
+.wt-btn{display:block;width:100%;margin-top:14px;padding:13px;font-size:16px;font-weight:800;color:#fff;background:var(--p);border:0;border-radius:12px;cursor:pointer;font-family:inherit}
+.wt-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wt-chips button{border:1.5px solid var(--lt);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--pd)}
+.wr{margin-top:14px;padding:14px;border-radius:12px;background:#F7F9FB;border:1px solid #E1E8EF}
+.wr-st{font-weight:800;font-size:18px;margin:0}
+.wr-st.ok{color:#1E7A45}.wr-st.no{color:#B42331}.wr-st.mid{color:#8A6100}
+.wr-big{font-size:28px;font-weight:800;margin:6px 0 2px;color:var(--pd)}
+.wr-big small{font-size:16px;margin-left:2px}
+.wr p{margin:8px 0 0;font-size:15px}
+.wr table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;line-height:1.5}
+.wr th,.wr td{border:1px solid #E5E8EB;padding:6px 7px;text-align:left;vertical-align:top}
+.wr th{background:#fff}
+.wr ul{margin:6px 0 0 18px;font-size:15px}
+.wr .warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:8px 10px;color:#6B5200;font-size:14px}
+.wr-err{color:#B42331;font-weight:700}
+#webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}
+@media(min-width:768px){#webad{min-height:280px}}
+.adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
+.webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+</style>
+<!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
+<!--cpcss--><style>
+.cpbanner{max-width:360px;margin:18px auto 22px;padding:0 20px;text-align:center}
+/* 구글 공식 허용 - support.google.com/adsense/answer/10762946
+   빈 광고 자리를 접는다. 처음부터 숨기는 것이 아니라 unfilled 가 붙은 뒤에 접히므로
+   광고 요청은 정상으로 나간다.
+   ★2026-09-19 22:40 실측 - 실제로 먹는다. slot 9210893101 이 unfilled·display:none·0x0 이 되고
+     #webad 높이가 301px -> 21px 로 줄었다(「광고」 라벨만 남음). 쿠팡이 1,330 -> 999 로 올라왔다.
+   ★한때 「null 이라 아직 효과가 없다」고 적었는데 틀렸다. 그때 내가 본 것은 CSS 가 아직 안 올라간
+     옛 CDN 판이었다. 2팀이 0·3·6·11·16초 다섯 번을 재서 내내 unfilled 임을 보여 줘 잡혔다.
+     ★라이브를 잴 때는 내가 방금 올린 것이 실제로 내려왔는지부터 확인할 것. [[github-pages-cdn-edge-lag]]
+   ★콘솔에서 「Fill empty in-page ads」를 켜면 status 가 unfill-optimized 가 되어 이 줄이 안 먹는다. */
+ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important}
+.cplabel{margin:0 0 6px;font-size:11px;color:#B0B8C1;letter-spacing:.02em}
+.cpnote{margin:8px 0 0;font-size:11px;color:#8B95A1;line-height:1.6;
+ font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+</style><!--/cpcss-->
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>연말정산 카드공제 계산기</h1>
+<p class="desc">카드공제는 한 해 사용액이 총급여의 25%를 넘은 부분에만 붙습니다. 지금까지 쓴 금액과 남은 달 지출을 넣으면 문턱까지 얼마 남았는지, 결제수단을 바꾸면 공제가 얼마나 느는지 계산합니다.</p>
+<div class="tool">
+<div id="cg-tool" class="wt">
+<p class="wt-h">연말정산 카드공제 계산 (2026년 사용분)</p>
+<label for="cg-g">올해 총급여(연봉에서 비과세 빼기 전 근사값도 됩니다, 만 원)</label>
+<input type="number" id="cg-g" inputmode="numeric" min="0" placeholder="예: 4000">
+<p class="wt-s">금액은 모두 만 원 단위로 넣습니다. 4천만 원이면 4000.</p>
+<p class="wt-h" style="margin-top:16px;font-size:16px">1월부터 지금까지 쓴 금액(만 원)</p>
+<label for="cg-k">신용카드</label>
+<input type="number" id="cg-k" inputmode="numeric" min="0" placeholder="예: 800">
+<label for="cg-d">체크카드·현금영수증·간편결제 등</label>
+<input type="number" id="cg-d" inputmode="numeric" min="0" placeholder="예: 0">
+<label for="cg-t">전통시장(결제수단 무관)</label>
+<input type="number" id="cg-t" inputmode="numeric" min="0" placeholder="0">
+<label for="cg-b">대중교통(결제수단 무관)</label>
+<input type="number" id="cg-b" inputmode="numeric" min="0" placeholder="0">
+<label for="cg-c">도서·신문·공연·박물관·미술관·영화·수영장·헬스장</label>
+<input type="number" id="cg-c" inputmode="numeric" min="0" placeholder="0">
+<p class="wt-s">총급여 7천만 원 초과면 이 칸은 따로 공제되지 않아 신용카드 칸에 더해 계산합니다.</p>
+<p class="wt-h" style="margin-top:16px;font-size:16px">남은 기간</p>
+<label for="cg-m">남은 달 수</label>
+<input type="number" id="cg-m" inputmode="numeric" min="0" max="12">
+<label for="cg-x">남은 달에 한 달 평균 쓸 금액(만 원)</label>
+<input type="number" id="cg-x" inputmode="numeric" min="0" placeholder="예: 100">
+<label for="cg-kids">20세 이하 자녀(기본공제 대상 요건을 갖춘) 수</label>
+<select id="cg-kids"><option value="0">없음</option><option value="1">1명</option><option value="2">2명 이상</option></select>
+<button type="button" id="cg-go" class="wt-btn">계산하기</button>
+<div id="cg-out" aria-live="polite"></div>
+<p class="wt-s" style="margin-top:12px">조세특례제한법 제126조의2(2026년 1월 1일 이후 사용분)와 같은 법 시행령 제121조의2 원문 기준입니다(2026-09-28 법제처 조회). 공제 대상이 아닌 지출(세금·공과금·아파트관리비·보험료·상품권 등)은 빼고 넣으세요. 입력값은 저장하지 않습니다.</p>
+</div>
+<script>
+(function(){
+'use strict';
+/* 조세특례제한법 제126조의2 ②·⑩·⑪ (법률 제21223호 부칙 제47조: 2026. 1. 1. 이후 사용분) */
+var MAN = 10000;
+function cgDeduct(g, K, D, T, B, C, kids){
+  var u7 = g <= 7000 * MAN;
+  if (!u7) { K = K + C; C = 0; }
+  var S = K + D + T + B + C, M = g * 0.25;
+  var r = { M: M, S: S, u7: u7, pre: 0, lim: 0, add: 0, fin: 0 };
+  r.lim = (u7 ? [300, 350, 400] : [250, 275, 300])[kids] * MAN;
+  if (S <= M) return r;
+  var gross = T * 0.4 + B * 0.4 + D * 0.3 + K * 0.15 + (u7 ? C * 0.3 : 0);
+  var X = u7 ? K + D + C : K + D, sub;
+  if (M <= K) sub = M * 0.15;
+  else if (M <= X) sub = K * 0.15 + (M - K) * 0.3;
+  else sub = u7 ? K * 0.15 + (D + C) * 0.3 + (M - K - D - C) * 0.4 : K * 0.15 + D * 0.3 + (M - K - D) * 0.4;
+  r.pre = Math.max(0, gross - sub);
+  var addCap = (u7 ? 300 : 200) * MAN, addBase = Math.min(addCap, T * 0.4 + B * 0.4 + (u7 ? C * 0.3 : 0));
+  r.add = Math.min(Math.max(0, r.pre - r.lim), addBase);
+  r.fin = Math.min(r.pre, r.lim) + r.add;
+  return r;
+}
+function wonM(n){ n = Math.round(n); return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원'; }
+function num(id){ var v = document.getElementById(id).value; return v === '' ? 0 : Number(v); }
+function run(){
+  var out = document.getElementById('cg-out'), err = [];
+  var gV = document.getElementById('cg-g').value, g = Number(gV) * MAN;
+  var K = num('cg-k') * MAN, D = num('cg-d') * MAN, T = num('cg-t') * MAN, B = num('cg-b') * MAN, C = num('cg-c') * MAN;
+  var m = num('cg-m'), X = num('cg-x') * MAN, kids = Number(document.getElementById('cg-kids').value);
+  if (!gV || !(g > 0)) err.push('총급여를 만 원 단위로 넣으세요(예: 4000).');
+  if ([K, D, T, B, C, X].some(function(v){ return !(v >= 0); })) err.push('금액은 0 이상의 숫자로 넣으세요.');
+  if (!(m >= 0 && m <= 12)) err.push('남은 달 수는 0~12 사이로 넣으세요.');
+  if (err.length) { out.innerHTML = '<div class="wr"><p class="wr-err">입력을 확인하세요</p><ul><li>' + err.join('</li><li>') + '</li></ul></div>'; return; }
+  var R = m * X, now = cgDeduct(g, K, D, T, B, C, kids);
+  var S0 = now.S, M = now.M, need = Math.max(0, M - S0);
+  var A = cgDeduct(g, K + R, D, T, B, C, kids);
+  var kPart = Math.min(R, need), Bp = cgDeduct(g, K + kPart, D + (R - kPart), T, B, C, kids);
+  var h = '<div class="wr">';
+  h += '<p class="wr-st ' + (S0 > M ? 'ok' : 'mid') + '">' + (S0 > M ? '이미 25% 문턱을 넘었습니다' : '아직 25% 문턱 아래입니다') + '</p>';
+  h += '<table><tr><th>25% 문턱(최저사용금액)</th><td>' + wonM(M) + '</td></tr><tr><th>지금까지 쓴 금액</th><td>' + wonM(S0) + '</td></tr>'
+    + '<tr><th>' + (S0 > M ? '문턱 넘은 금액' : '문턱까지 남은 금액') + '</th><td>' + wonM(Math.abs(S0 - M)) + '</td></tr>'
+    + '<tr><th>지금 기준 공제액</th><td>' + wonM(now.fin) + '</td></tr></table>';
+  h += '<p class="wr-big">' + wonM(Bp.fin) + '</p><p>남은 ' + m + '달 동안 한 달 ' + wonM(X) + '씩 쓰고, <b>문턱까지는 신용카드, 넘은 뒤부터는 체크카드·현금영수증</b>으로 냈을 때 올해 카드공제 예상액입니다.</p>';
+  h += '<table><tr><th>남은 기간 결제</th><th>연간 사용</th><th>예상 공제액</th></tr>'
+    + '<tr><td>전부 신용카드</td><td>' + wonM(A.S) + '</td><td>' + wonM(A.fin) + '</td></tr>'
+    + '<tr><td>문턱까지 신용 → 이후 체크</td><td>' + wonM(Bp.S) + '</td><td><b>' + wonM(Bp.fin) + '</b></td></tr></table>';
+  var diff = Bp.fin - A.fin;
+  if (Bp.S <= M) h += '<p class="warn">올해 쓸 금액을 다 더해도 문턱(' + wonM(M) + ')을 넘지 못해 카드공제는 0원입니다. 이 경우 결제수단을 바꿔도 공제는 늘지 않으니 혜택이 큰 카드를 쓰는 편이 낫습니다.</p>';
+  else if (diff > 0) h += '<p>결제수단만 바꿔도 공제액이 <b>' + wonM(diff) + '</b> 늘어납니다. 줄어드는 세금은 이 공제액에 본인 세율(지방소득세 포함 6.6~49.5%)을 곱한 만큼입니다. 16.5% 구간이면 약 ' + wonM(diff * 0.165) + '입니다.</p>';
+  else if (A.fin >= A.lim && A.add >= 0 && Bp.fin === A.fin) h += '<p>이미 한도(' + wonM(A.lim) + ')에 닿아 결제수단을 바꿔도 공제액이 같습니다. 남은 기간은 혜택이 큰 카드를 쓰셔도 됩니다.</p>';
+  h += '<p class="wt-s">기본 한도 ' + wonM(now.lim) + (now.u7 ? ' · 전통시장·대중교통·문화체육 추가 한도 최대 300만 원' : ' · 전통시장·대중교통 추가 한도 최대 200만 원') + '. 실제 금액은 국세청 연말정산 간소화 자료로 확정됩니다.</p>';
+  out.innerHTML = h + '</div>';
+}
+if (typeof document !== 'undefined' && document.getElementById('cg-go')) {
+  document.getElementById('cg-m').value = 12 - (new Date().getMonth() + 1);
+  document.getElementById('cg-go').onclick = run;
+}
+if (typeof module !== 'undefined') module.exports = { cgDeduct: cgDeduct };
+})();
+</script>
+</div>
+</div>
+<!--coupang--><div class="cpbanner"><p class="cplabel">쿠팡 파트너스 광고</p><script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+new PartnersCoupang.G({"id":1031250,"template":"carousel","trackingCode":"AF9196099","width":"320","height":"100","tsource":""});
+</script>
+<p class="cpnote">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p></div><!--/coupang-->
+<div id="webad"><p class="adlabel">광고</p>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2782310558764343" data-ad-slot="9210893101" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<section class="webseo">
+<h2>연말정산 카드공제 계산기</h2>
+<h3>10초 요약</h3>
+<p><strong>【카드공제는 한 해 카드·현금영수증 사용액이 총급여의 25%를 넘은 부분에만 붙습니다.】</strong> 총급여 4천만 원이면 1천만 원까지는 얼마를 어떤 수단으로 쓰든 공제가 0원이고, 그 위로 쓴 금액부터 신용카드 15%, 체크카드·현금영수증 30%, 전통시장·대중교통 40%가 소득에서 빠집니다.</p>
+<p><strong>【그래서 남은 석 달의 요령은 하나입니다 — 문턱까지는 신용카드, 넘은 뒤로는 체크카드.】</strong> 법이 25% 문턱을 공제율이 가장 낮은 신용카드 사용분부터 채우도록 셈하기 때문입니다. 위 계산기에 지금까지 쓴 금액과 남은 달 지출을 넣으면 두 방법의 공제액 차이를 보여 줍니다.</p>
+<h3>이 계산기로 보는 것</h3>
+<ul class="blist"><li>내 25% 문턱이 얼마인지 — 총급여 × 25%</li><li>지금까지 쓴 금액이 문턱을 넘었는지, 얼마 남았는지</li><li>남은 달을 전부 신용카드로 냈을 때와 문턱 뒤 체크카드로 바꿨을 때의 공제액</li><li>기본 한도와 자녀·전통시장·대중교통 추가 한도까지 넣은 올해 예상 공제액</li></ul>
+<p>2026년 1월 1일 이후 사용분에 붙는 조세특례제한법 제126조의2 개정 규정으로 셉니다. 2027년 1~2월에 하는 연말정산(2026년 귀속)이 이 규정을 따릅니다.</p>
+<h3>25% 문턱 — 최저사용금액</h3>
+<p>법은 신용카드등사용금액의 연간합계액이 「총급여액의 100분의 25」를 초과하는 경우에만 공제한다고 적었습니다. 이 25%를 법은 「최저사용금액」이라고 부릅니다.</p>
+<div class="tblx"><table><caption>총급여별 25% 문턱 (조세특례제한법 제126조의2 ①)</caption><thead><tr><th>총급여</th><th>최저사용금액</th><th>한 달 평균으로 보면</th></tr></thead><tbody><tr><th scope="row">3,000만 원</th><td>750만 원</td><td>약 62.5만 원</td></tr><tr><th scope="row">4,000만 원</th><td>1,000만 원</td><td>약 83.3만 원</td></tr><tr><th scope="row">5,000만 원</th><td>1,250만 원</td><td>약 104.2만 원</td></tr><tr><th scope="row">6,000만 원</th><td>1,500만 원</td><td>125만 원</td></tr><tr><th scope="row">7,000만 원</th><td>1,750만 원</td><td>약 145.8만 원</td></tr><tr><th scope="row">8,000만 원</th><td>2,000만 원</td><td>약 166.7만 원</td></tr></tbody></table></div>
+<p>총급여는 연봉에서 식대 같은 비과세 소득을 뺀 금액입니다. 원천징수영수증의 「총급여」 칸이 정확한 값이고, 모르면 연봉을 넣어도 문턱이 조금 높게 잡힐 뿐 방향은 같습니다. 월급 기준 실수령액이 궁금하다면 <a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a>를 함께 보세요.</p>
+<h3>결제수단별 공제율</h3>
+<div class="tblx"><table><caption>2026년 사용분 공제율 (조세특례제한법 제126조의2 ②)</caption><thead><tr><th>사용분</th><th>공제율</th><th>비고</th></tr></thead><tbody><tr><th scope="row">신용카드</th><td>15%</td><td>아래 항목에 들지 않는 신용카드 사용액</td></tr><tr><th scope="row">체크카드·현금영수증·직불전자지급수단·기명식 선불카드</th><td>30%</td><td>간편결제 중 직불·기명식 선불 수단 포함</td></tr><tr><th scope="row">전통시장</th><td>40%</td><td>결제수단과 상관없이(신용·체크·현금영수증)</td></tr><tr><th scope="row">대중교통</th><td>40%</td><td>결제수단과 상관없이</td></tr><tr><th scope="row">도서·신문·공연·박물관·미술관·영화상영관·수영장·체력단련장</th><td>30%</td><td>총급여 7천만 원 이하만 따로 셈</td></tr></tbody></table></div>
+<p>전통시장·대중교통은 신용카드로 내도 40%입니다. 결제수단보다 어디서 썼는지가 먼저입니다. 문화체육사용분은 문화체육관광부장관이 지정한 사업자에게 낸 금액만 들어가고, 수영장·체력단련장은 2025년 7월 1일 이후 이용료부터이며 개인강습비·회원 입회금은 빠집니다.</p>
+<h3>왜 문턱은 신용카드로 채우는 게 유리한가</h3>
+<p>법 제126조의2 제2항 제6호는 공제액을 계산할 때 최저사용금액만큼을 빼는 순서를 정해 두었습니다. 최저사용금액이 신용카드사용분보다 작거나 같으면 「최저사용금액 × 15%」를 빼고, 신용카드사용분보다 크면 신용카드사용분 × 15%에 모자라는 부분 × 30%를 더해 뺍니다.</p>
+<p><strong>【곧 문턱은 공제율이 낮은 신용카드 사용분부터 먹어 들어갑니다.】</strong> 문턱 아래에서 쓴 돈은 어느 수단이든 공제가 0이므로, 그 구간은 포인트·할인 같은 카드 혜택이 큰 신용카드로 쓰는 것이 손해가 없습니다. 문턱을 넘은 뒤부터 쓰는 돈은 신용카드면 15%, 체크카드면 30%가 공제되므로 그때부터 체크카드·현금영수증으로 바꾸면 같은 돈으로 공제가 두 배가 됩니다.</p>
+<h3>남은 석 달 — 지금 할 일</h3>
+<p>9월 말이면 1~9월 사용액을 카드사 앱의 이용내역이나 국세청 홈택스에서 대략 확인할 수 있습니다. 그 합계를 계산기의 「지금까지 쓴 금액」에 넣고, 10~12월에 한 달 평균 얼마를 쓸지 넣으세요.</p>
+<ul class="blist"><li>이미 문턱을 넘었다 — 오늘부터 체크카드·현금영수증으로 바꿉니다</li><li>석 달 안에 문턱을 넘는다 — 문턱까지는 신용카드, 넘는 달부터 체크카드로 바꿉니다</li><li>석 달을 다 써도 문턱을 못 넘는다 — 공제가 0이므로 혜택 큰 신용카드를 그대로 씁니다</li><li>이미 한도에 닿았다 — 결제수단을 바꿔도 공제가 늘지 않습니다</li></ul>
+<p>공제를 받겠다고 필요 없는 물건을 사는 것은 계산이 맞지 않습니다. 100만 원을 더 써서 30만 원을 공제받아도, 16.5% 세율 구간이라면 줄어드는 세금은 49,500원입니다.</p>
+<h3>공제 한도 — 250만~400만 원</h3>
+<div class="tblx"><table><caption>기본 한도 (조세특례제한법 제126조의2 ⑩, 2026년 사용분)</caption><thead><tr><th>총급여</th><th>자녀 없음</th><th>자녀 1명</th><th>자녀 2명 이상</th></tr></thead><tbody><tr><th scope="row">7천만 원 이하</th><td>300만 원</td><td>350만 원</td><td>400만 원</td></tr><tr><th scope="row">7천만 원 초과</th><td>250만 원</td><td>275만 원</td><td>300만 원</td></tr></tbody></table></div>
+<p>2025년 12월 23일 개정 법률 부칙 제47조는 공제율(제2항)·한도(제10항)·추가 한도(제11항)의 개정 규정을 2026년 1월 1일 이후 사용분부터 적용하고, 그 전 사용분은 종전 규정을 따르게 했습니다. 올해 초 한 연말정산(2025년 사용분)과 내년 초 연말정산의 계산이 다를 수 있다는 뜻입니다. 여기서 자녀는 시행령이 정한 직계비속(입양자·위탁아동 포함)으로, 소득금액 100만 원 이하(또는 총급여 500만 원 이하 근로소득만), 20세 이하(장애인은 나이 제한 없음), 다른 사람의 기본공제를 받지 않을 것 세 가지를 모두 채워야 합니다.</p>
+<p><strong>【한도를 넘은 공제는 전통시장·대중교통 몫만큼 더 받습니다.】</strong> 제11항은 한도 초과분과 「전통시장 공제액 + 대중교통 공제액(7천만 원 이하는 문화체육 공제액까지)」 가운데 작은 금액을 추가로 공제합니다. 추가 한도는 7천만 원 이하 300만 원, 초과 200만 원입니다.</p>
+<h3>공제에 안 들어가는 지출</h3>
+<p>카드로 냈어도 시행령 제121조의2 제6항이 사용금액에서 빼는 것들이 있습니다. 계산기에 넣기 전에 이 금액은 빼세요.</p>
+<ul class="blist"><li>건강보험·고용보험·노인장기요양보험료, 국민연금 보험료, 보험계약 보험료</li><li>학교·어린이집 수업료·입학금·보육비용 같은 공납금</li><li>국세·지방세, 전기료·수도료·가스료·전화료·인터넷이용료, 아파트관리비, TV 시청료, 도로통행료</li><li>상품권 등 유가증권 구입비, 리스료·렌터카 대여료</li><li>취득세가 붙는 재산 구입비(자동차 등), 금융·보험 수수료, 가상자산 거래 대가</li><li>세액공제를 받은 정치자금·고향사랑 기부금·월세, 면세점 구입비</li><li>해외에서 쓴 금액</li></ul>
+<p>자동차를 카드로 사면 공제 대상이 아니지만 중고자동차는 구입금액의 10%를 사용금액에 넣습니다. 고향사랑 기부금은 카드공제 대신 세액공제로 받으니 <a href="/gohyang-sarang-gibu/">고향사랑기부제 세액공제 계산기</a>를, 월세는 <a href="/wolse-gongje-calc/">월세 세액공제 계산기</a>를 보세요. 병원비는 카드공제와 <a href="/uiryobi-calc/">의료비 세액공제</a>를 함께 받을 수 있습니다.</p>
+<h3>가족 카드도 합칠 수 있나</h3>
+<p>배우자와 생계를 같이하는 직계존비속(배우자의 부모 포함)이 쓴 금액은 소득 요건을 채우면 내 사용액에 넣을 수 있습니다. 요건은 연간 소득금액 100만 원 이하(총급여 500만 원 이하 근로소득만 있는 경우 포함)이고, 다른 사람의 기본공제를 받은 가족은 빠집니다. 시행령 명단에 형제자매는 없습니다.</p>
+<p>맞벌이 부부는 각자 소득이 있으므로 서로의 카드를 합칠 수 없습니다. 이때는 총급여가 낮아 문턱이 낮은 쪽이 문턱을 먼저 넘으니, 공용 지출을 그쪽 카드로 모으는 방법이 흔히 쓰입니다. 다만 세율 구간이 높은 쪽의 공제가 세금을 더 줄이므로 두 사람 모두 계산기에 넣어 비교해 보세요.</p>
+<h3>계산 예시</h3>
+<div class="tblx"><table><caption>2026년 사용분 카드공제 예시 (자녀 없음)</caption><thead><tr><th>사례</th><th>문턱</th><th>공제액</th></tr></thead><tbody><tr><th scope="row">총급여 4천만 원, 신용카드 1,600만 원</th><td>1,000만 원</td><td>90만 원</td></tr><tr><th scope="row">총급여 4천만 원, 신용 1,000만 원 + 체크 600만 원</th><td>1,000만 원</td><td>180만 원</td></tr><tr><th scope="row">총급여 4천만 원, 신용 1,600만 원 + 대중교통 100만 원</th><td>1,000만 원</td><td>130만 원</td></tr><tr><th scope="row">총급여 6천만 원, 신용 1,200만 원 + 체크 500만 원</th><td>1,500만 원</td><td>60만 원</td></tr><tr><th scope="row">총급여 8천만 원, 신용카드 3,000만 원</th><td>2,000만 원</td><td>150만 원</td></tr></tbody></table></div>
+<p>첫째와 둘째 사례는 연간 사용액이 1,600만 원으로 같습니다. 문턱 뒤 600만 원을 체크카드로 낸 둘째가 공제 90만 원을 더 받습니다. 넷째 사례는 문턱(1,500만 원)이 신용카드 1,200만 원보다 커서 체크카드 300만 원까지 문턱에 들어가고, 남은 체크 200만 원의 30%인 60만 원만 공제됩니다.</p>
+<p><strong>【석 달 예시】</strong> 총급여 4천만 원인 사람이 1~9월에 신용카드로 800만 원을 쓰고 10~12월에 한 달 100만 원씩 쓴다고 합시다. 전부 신용카드로 내면 공제가 15만 원이고, 10·11월 200만 원을 신용카드로 내 문턱을 채운 뒤 12월 100만 원을 체크카드로 내면 30만 원입니다. 같은 돈으로 공제 15만 원이 늘고, 16.5% 구간이면 세금이 24,750원 줄어듭니다.</p>
+<h3>공제액이 세금을 얼마나 줄이나</h3>
+<p>카드공제는 소득공제라 공제액만큼 세금이 주는 것이 아니라 공제액에 내 세율을 곱한 만큼 줄어듭니다. 소득세법 제55조의 세율은 과세표준 1,400만 원 이하 6%, 5,000만 원 이하 15%, 8,800만 원 이하 24%, 1억 5천만 원 이하 35%이고, 지방소득세가 소득세의 10%만큼 붙습니다.</p>
+<div class="tblx"><table><caption>카드공제 100만 원이 줄이는 세금 (지방소득세 포함)</caption><thead><tr><th>과세표준 구간</th><th>세율</th><th>줄어드는 세금</th></tr></thead><tbody><tr><th scope="row">1,400만 원 이하</th><td>6.6%</td><td>66,000원</td></tr><tr><th scope="row">1,400만~5,000만 원</th><td>16.5%</td><td>165,000원</td></tr><tr><th scope="row">5,000만~8,800만 원</th><td>26.4%</td><td>264,000원</td></tr></tbody></table></div>
+<p>다른 공제로 이미 결정세액이 0이 된 사람은 카드공제를 더 받아도 돌려받을 세금이 없습니다. 연봉이 낮아 세금을 거의 안 내는 해라면 결제수단보다 카드 혜택을 챙기는 편이 낫습니다. 4대보험을 빼고 실제 내는 세금이 얼마인지는 <a href="/4dae-boheom-calc/">4대보험 계산기</a>와 <a href="/jonghap-sodeukse-calc/">종합소득세 계산기</a>로 볼 수 있습니다.</p>
+<h3>12월 31일 전에 챙길 것</h3>
+<p>현금으로 낸 돈은 현금영수증을 받아야 사용금액에 들어갑니다. 법은 현금영수증에 「기재된 금액」을 공제 대상으로 적었으므로, 영수증 없이 낸 현금은 셈에 들어가지 않습니다. 문턱을 넘은 뒤라면 현금 결제 때마다 휴대전화 번호로 현금영수증을 받는 것만으로 30%가 붙습니다.</p>
+<p>사용금액은 「해당 과세기간에 사용한 금액」을 합칩니다. 12월 31일에 결제한 금액은 올해 몫이고, 1월 1일에 결제하면 내년 몫입니다. 연말에 큰 지출을 앞두고 있다면 올해 문턱을 넘겼는지를 먼저 보고 날짜를 정하세요.</p>
+<h3>자주 틀리는 세 가지</h3>
+<p>첫째, 25%는 공제율이 아니라 문턱입니다. 총급여의 25%까지 쓴 금액에는 공제가 없습니다.</p>
+<p>둘째, 체크카드가 언제나 유리한 것은 아닙니다. 문턱 아래 구간은 수단과 상관없이 공제가 0이라 그 구간은 신용카드 혜택을 챙기는 것이 낫습니다.</p>
+<p>셋째, 아파트관리비·통신비·보험료·세금은 카드로 내도 공제 대상 금액이 아닙니다. 이것까지 더해 문턱을 넘었다고 계산하면 공제를 과대평가합니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>카드공제는 얼마부터 받을 수 있나요?</dt><dd>한 해 신용카드·체크카드·현금영수증 등 사용액이 총급여의 25%(최저사용금액)를 넘은 부분부터 받습니다. 총급여 4천만 원이면 1천만 원을 넘게 쓴 금액부터입니다.</dd>
+<dt>신용카드와 체크카드 공제율은 얼마인가요?</dt><dd>신용카드 15%, 체크카드·현금영수증·직불전자지급수단 30%입니다. 전통시장과 대중교통은 결제수단과 상관없이 40%, 총급여 7천만 원 이하의 도서·공연·박물관·영화·수영장·헬스장 사용분은 30%입니다.</dd>
+<dt>남은 석 달은 무엇으로 결제해야 하나요?</dt><dd>25% 문턱까지는 혜택이 큰 신용카드, 문턱을 넘은 뒤부터는 체크카드나 현금영수증이 유리합니다. 법이 문턱을 신용카드 사용분부터 채우도록 계산하기 때문입니다.</dd>
+<dt>카드공제 한도는 얼마인가요?</dt><dd>2026년 사용분은 총급여 7천만 원 이하 300만 원(자녀 1명 350만 원, 2명 이상 400만 원), 7천만 원 초과 250만 원(자녀 1명 275만 원, 2명 이상 300만 원)입니다. 전통시장·대중교통(7천만 원 이하는 문화체육 포함) 공제분으로 최대 300만 원(초과자는 200만 원)까지 더 받을 수 있습니다.</dd>
+<dt>아파트관리비나 통신비를 카드로 내면 공제되나요?</dt><dd>안 됩니다. 시행령은 국세·지방세, 전기·수도·가스·전화·인터넷 요금, 아파트관리비, 보험료, 상품권 구입비 등을 사용금액에서 뺍니다.</dd>
+<dt>헬스장이나 수영장도 공제되나요?</dt><dd>총급여 7천만 원 이하라면 2025년 7월 1일 이후 문화체육관광부장관이 지정한 수영장·체력단련장에 낸 이용료가 30%로 공제됩니다. 개인강습비와 회원 입회금은 빠집니다.</dd>
+<dt>부모님이나 배우자 카드도 합칠 수 있나요?</dt><dd>연간 소득금액 100만 원 이하(총급여 500만 원 이하 근로소득만 있는 경우 포함)인 배우자와 생계를 같이하는 직계존비속의 사용액은 합칠 수 있습니다. 형제자매의 사용액은 넣을 수 없습니다.</dd>
+<dt>해외에서 쓴 카드도 공제되나요?</dt><dd>안 됩니다. 법은 연간합계액에서 국외에서 사용한 금액을 뺀다고 적었습니다.</dd>
+<dt>카드공제는 언제까지 있는 제도인가요?</dt><dd>현행 조세특례제한법은 2028년 12월 31일까지 사용한 금액에 적용한다고 정해 두었습니다.</dd>
+<dt>공제액만큼 세금을 돌려받나요?</dt><dd>아닙니다. 소득공제이므로 공제액에 본인 세율(지방소득세 포함 6.6~49.5%)을 곱한 만큼 세금이 줄어듭니다. 16.5% 구간에서 공제 100만 원이면 약 16만 5천 원입니다.</dd></dl>
+<p class="note">근거 — 조세특례제한법 제126조의2(법률 제21467호, 2026-09-18 시행본)·부칙(법률 제21223호) 제47조, 같은 법 시행령 제121조의2, 소득세법 제55조 (법제처 국가법령정보센터 오픈 API, 2026-09-28 조회). 이 계산기는 참고용이며 실제 공제액은 국세청 연말정산 간소화 자료와 회사의 연말정산으로 확정됩니다.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="/uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="/wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="/gohyang-sarang-gibu/">고향사랑기부제 세액공제 계산기</a></li><li><a href="/jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="/4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="/energy-voucher-check/">에너지바우처 대상 확인</a></li></ul>
+</section>
+<!--interlink-->
+<nav class="ilnav" aria-label="관련 페이지">
+<h2>세금·급여·노무 계산기 전체</h2>
+<ul class="illist"><li><a href="../toejikgum-calc/">퇴직금 계산기</a></li><li><a href="../unemployment-benefit-calc/">실업급여 계산기</a></li><li><a href="../4dae-boheom-calc/">4대보험 계산기</a></li><li><a href="../yeonbong-silsuryeong/">연봉 실수령액 계산기</a></li><li><a href="../alba-wage-check/">알바 급여 계산기</a></li><li><a href="../yeoncha-calc/">연차휴가 계산기</a></li><li><a href="../yuka-hyujik-calc/">육아휴직 급여 계산기</a></li><li><a href="../yeongum-jogi-calc/">국민연금 조기수령 감액 계산기</a></li><li><a href="../geunro-jangryeogeum-calc/">근로장려금 계산기</a></li><li><a href="../gingeup-bokji/">긴급생계지원금 대상 확인</a></li><li><a href="../gicho-saenghwal-sugeup/">기초수급자 자격 판정</a></li><li><a href="../cheongnyeon-jiwongeum/">청년미래적금·청년 지원금</a></li><li><a href="../munhwa-nuri-card/">문화누리카드 대상·금액 계산기</a></li><li><a href="../jonghap-sodeukse-calc/">종합소득세 계산기</a></li><li><a href="../vat-calc-kr/">부가세 계산기</a></li><li><a href="../jeungyeose-calc/">증여세 계산기</a></li><li><a href="../chwideukse-calc/">취득세 계산기</a></li><li><a href="../jaesanse-calc/">재산세 계산기</a></li><li><a href="../jongbuse-dday/">종합부동산세 날짜</a></li><li><a href="../jadongchase-calc/">자동차세 계산기</a></li><li><a href="../uiryobi-calc/">의료비 세액공제 계산기</a></li><li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="../gohyang-sarang-gibu/">고향사랑기부제 세액공제 계산기</a></li><li><a href="../loan-interest-calc-kr/">대출이자 계산기</a></li><li><a href="../interest-calc-kr/">이자 계산기</a></li><li><a href="../cheongyak-gajeom-calc/">청약가점 계산기</a></li><li><a href="../jeongi-yogeum-calc/">전기요금 누진제 계산기</a></li><li><a href="../nanbangbi-calc/">지역난방비 계산기</a></li><li><a href="../energy-voucher-check/">에너지바우처 대상 확인</a></li></ul>
+<h2>다른 계산기와 생활정보</h2>
+<ul class="illist wide"><li><a href="../korean-age-calc/">만나이 계산기</a></li><li><a href="../pyeong-calc-kr/">평수 계산기</a></li><li><a href="../percent-calc-kr/">퍼센트 계산기</a></li><li><a href="../date-calc-dday/">날짜 계산기</a></li><li><a href="../char-count-kr/">글자수 세기</a></li><li><a href="../gpa-calc-kr/">학점 계산기</a></li><li><a href="../chugeum-calc/">축의금 계산기</a></li><li><a href="../pet-age-calc-kr/">강아지 고양이 나이 계산기</a></li><li><a href="../health-checkup/">국가건강검진 대상자 조회</a></li><li><a href="../health-checkup-year/">건강검진 대상자</a></li><li><a href="../flu-vaccine-check/">독감 예방접종 무료 대상 확인</a></li><li><a href="../myeonheo-gaengsin/">운전면허 갱신 기간 계산</a></li><li><a href="../jadongcha-geomsa/">자동차검사 기간 계산기</a></li><li><a href="../toilet-map-kr/">전국 화장실 지도</a></li><li><a href="../suneung-dday/">수능 디데이</a></li><li><a href="../jeonyeok-dday/">전역일 계산기</a></li><li><a href="../xmas-dday-kr/">크리스마스 디데이</a></li><li><a href="../chuseok/">추석 인사말 모음</a></li><li><a href="../chuseok-greeting/">추석 인사말</a></li><li><a href="../jibang-writer/">지방 쓰기</a></li><li><a href="../chuseok-yeonhyu/">2026 추석 연휴 며칠 쉬나</a></li><li><a href="../imsi-gonghyuil/">9월 28일 임시공휴일 지정 안 됨</a></li></ul>
+</nav>
+<style>
+.ilnav{max-width:480px;margin:26px auto 0;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.ilnav h2{font-size:14px;color:#191F28;margin:18px 0 10px}
+.ilnav h2:first-child{margin-top:0}
+.illist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.illist li{margin:0}
+.illist a{display:inline-block;font-size:12.5px;color:#4E5968;background:#fff;border:1px solid #E5E8EB;
+border-radius:999px;padding:6px 11px;text-decoration:none;line-height:1.3}
+.illist.wide a{color:#8B95A1;background:transparent}
+</style>
+<!--/interlink-->
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+</div>
+<script id="toss-only-hide">(function(){var RE=/(원 받기|원을 받았|이용권|알림 받기|알림 신청|알림을 받|친구 초대|초대하고|열람권 받기|열람권|토스에서|토스 버전|배너 미지원|토스 앱을 최신)/;var TXT=/[ ]*[(]광고 보고 열기[)]|광고[ ]*보고[ ]*/g;var app=document.getElementById('app')||document.body;if(!app)return;function sweep(){var els=app.querySelectorAll('button,a,p,span,div');for(var i=0;i<els.length;i++){var el=els[i];if(el.children.length>3)continue;var t=(el.textContent||'').trim();if(t.length>0&&t.length<80&&RE.test(t)&&el.style.display!=='none'){el.style.display='none';continue;}if(el.children.length===0&&TXT.test(t)){el.textContent=t.replace(TXT,'');}}}sweep();new MutationObserver(sweep).observe(app,{childList:true,subtree:true,characterData:true});})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"카드공제는 얼마부터 받을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"한 해 신용카드·체크카드·현금영수증 등 사용액이 총급여의 25%(최저사용금액)를 넘은 부분부터 받습니다. 총급여 4천만 원이면 1천만 원을 넘게 쓴 금액부터입니다."}},{"@type":"Question","name":"신용카드와 체크카드 공제율은 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"신용카드 15%, 체크카드·현금영수증·직불전자지급수단 30%입니다. 전통시장과 대중교통은 결제수단과 상관없이 40%, 총급여 7천만 원 이하의 도서·공연·박물관·영화·수영장·헬스장 사용분은 30%입니다."}},{"@type":"Question","name":"남은 석 달은 무엇으로 결제해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"25% 문턱까지는 혜택이 큰 신용카드, 문턱을 넘은 뒤부터는 체크카드나 현금영수증이 유리합니다. 법이 문턱을 신용카드 사용분부터 채우도록 계산하기 때문입니다."}},{"@type":"Question","name":"카드공제 한도는 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"2026년 사용분은 총급여 7천만 원 이하 300만 원(자녀 1명 350만 원, 2명 이상 400만 원), 7천만 원 초과 250만 원(자녀 1명 275만 원, 2명 이상 300만 원)입니다. 전통시장·대중교통(7천만 원 이하는 문화체육 포함) 공제분으로 최대 300만 원(초과자는 200만 원)까지 더 받을 수 있습니다."}},{"@type":"Question","name":"아파트관리비나 통신비를 카드로 내면 공제되나요?","acceptedAnswer":{"@type":"Answer","text":"안 됩니다. 시행령은 국세·지방세, 전기·수도·가스·전화·인터넷 요금, 아파트관리비, 보험료, 상품권 구입비 등을 사용금액에서 뺍니다."}},{"@type":"Question","name":"헬스장이나 수영장도 공제되나요?","acceptedAnswer":{"@type":"Answer","text":"총급여 7천만 원 이하라면 2025년 7월 1일 이후 문화체육관광부장관이 지정한 수영장·체력단련장에 낸 이용료가 30%로 공제됩니다. 개인강습비와 회원 입회금은 빠집니다."}},{"@type":"Question","name":"부모님이나 배우자 카드도 합칠 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"연간 소득금액 100만 원 이하(총급여 500만 원 이하 근로소득만 있는 경우 포함)인 배우자와 생계를 같이하는 직계존비속의 사용액은 합칠 수 있습니다. 형제자매의 사용액은 넣을 수 없습니다."}},{"@type":"Question","name":"해외에서 쓴 카드도 공제되나요?","acceptedAnswer":{"@type":"Answer","text":"안 됩니다. 법은 연간합계액에서 국외에서 사용한 금액을 뺀다고 적었습니다."}},{"@type":"Question","name":"카드공제는 언제까지 있는 제도인가요?","acceptedAnswer":{"@type":"Answer","text":"현행 조세특례제한법은 2028년 12월 31일까지 사용한 금액에 적용한다고 정해 두었습니다."}},{"@type":"Question","name":"공제액만큼 세금을 돌려받나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 소득공제이므로 공제액에 본인 세율(지방소득세 포함 6.6~49.5%)을 곱한 만큼 세금이 줄어듭니다. 16.5% 구간에서 공제 100만 원이면 약 16만 5천 원입니다."}}]}</script>
+</body>
+</html>
