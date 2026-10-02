@@ -6,12 +6,12 @@
 <title>사주팔자 — 생년월일시로 뽑는 여덟 글자, 일간과 오행 분포</title>
 <style>
 :root{--p:#8A5A2B;--pd:#5C3A16;--ink:#241B12;--sub:#5E5044;--mut:#9A8B7C;--bg:#FBF7F1;
---lt:#E2DDFF;--tagbg:#EEEBFF;--tagtx:#4E3FA8;--safe-b:env(safe-area-inset-bottom,0px)}
+--lt:#EFE5D8;--tagbg:#F6EEE3;--tagtx:#6B4420;--line:#EDE4D8;--safe-b:env(safe-area-inset-bottom,0px)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
 background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
 #app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
-padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(20px + var(--safe-b))}
+padding:calc(env(safe-area-inset-top,0px) + 14px) 20px calc(20px + var(--safe-b))}
 .center{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
 h1{font-size:26px;line-height:1.35;margin-bottom:10px}
 .desc{font-size:15px;color:var(--sub);line-height:1.6;margin-bottom:26px}
@@ -28,7 +28,7 @@ background:#fff;color:var(--pd);font-size:15px;font-weight:700;cursor:pointer;ma
 .z .zn{font-size:13px;font-weight:700;margin-top:3px}
 .z .zd{font-size:10.5px;color:var(--mut);margin-top:2px}
 .rcard{background:#fff;border-radius:20px;padding:26px 22px;text-align:center;
-box-shadow:0 4px 20px rgba(124,111,224,.15);margin-bottom:14px}
+box-shadow:0 6px 24px rgba(92,58,22,.09);margin-bottom:14px}
 .rname{font-size:23px;font-weight:800;margin:8px 0 2px}
 .rdate{font-size:12px;color:var(--mut);margin-bottom:14px}
 .score{font-size:44px;font-weight:800;color:var(--p);margin:4px 0}
@@ -47,12 +47,15 @@ box-shadow:0 4px 20px rgba(124,111,224,.15);margin-bottom:14px}
 .tip{background:var(--tagbg);border-radius:12px;padding:14px;margin-top:12px;font-size:13.5px;
 line-height:1.65;color:var(--pd);text-align:left}
 .wcard{background:#fff;border-radius:16px;padding:16px;margin-bottom:10px;text-align:left;
-box-shadow:0 2px 10px rgba(124,111,224,.08)}
+box-shadow:0 2px 12px rgba(92,58,22,.06)}
 .wcard.today{border:2px solid var(--p)}
 .wd{font-size:14px;font-weight:800}
 .wtoday{font-size:11px;color:#fff;background:var(--p);border-radius:8px;padding:2px 8px;margin-left:6px;vertical-align:2px}
 .wt{font-size:13px;color:var(--sub);line-height:1.6;margin-top:5px}
 .foot{font-size:11px;color:var(--mut);text-align:center;margin-top:14px;line-height:1.5}
+/* 배너 자리 (2026-09-24) — 세로 flex 안이라 width:100% 를 둔다 */
+.bannerbox{width:100%;margin:16px 0 4px}
+.bannerbox:empty{display:none;margin:0}
 
 .frm{background:#fff;border-radius:16px;padding:18px 16px;margin:4px 0 14px;
      box-shadow:0 2px 10px rgba(0,0,0,.05)}
@@ -77,8 +80,165 @@ box-shadow:0 2px 10px rgba(124,111,224,.08)}
 .sub2{font-size:15px;color:var(--mut);font-weight:400}
 
 .adnote{font-size:13px;color:var(--mut);text-align:center;margin:2px 0 12px;line-height:1.5}
+
+/* 2026-09-23 큰 버튼이 연달아 붙어 보이던 것(대표님 지적) — 이어질 때만 간격 */
+button.big+button.big,button.big+button.ghost,button.ghost+button.big{margin-top:10px}
+
+/* ───── 2026-09-24 품질 올리기 (로또 번호 추천 수준) ───── */
+.hero{display:flex;justify-content:center;gap:8px;margin:10px 0 18px}
+.hcard{width:52px;height:70px;border-radius:12px;background:linear-gradient(160deg,#9A6A38,#5C3A16);
+  color:#FBEBD2;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 14px rgba(92,58,22,.22),inset 0 0 0 2px rgba(255,236,205,.22);font-family:serif}
+.hcard:nth-child(1){transform:rotate(-7deg) translateY(4px)}
+.hcard:nth-child(2){transform:rotate(-2deg)}
+.hcard:nth-child(3){transform:rotate(3deg)}
+.hcard:nth-child(4){transform:rotate(8deg) translateY(5px)}
+.hero.home-in .hcard{animation:heroIn .5s cubic-bezier(.2,.8,.3,1.2) both}
+.hero.home-in .hcard:nth-child(2){animation-delay:.08s}
+.hero.home-in .hcard:nth-child(3){animation-delay:.16s}
+.hero.home-in .hcard:nth-child(4){animation-delay:.24s}
+@keyframes heroIn{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+.center.top{flex:0 0 auto;padding-top:6px}
+.foot+.rcard{margin-top:14px}
+.center.home{flex:0 0 auto;padding:44px 0 18px}
+.center.home .desc{margin-bottom:6px}
+
+/* 네 기둥 — 한자 카드가 차례로 놓인다 */
+.pgrid{perspective:900px}
+.pcol{position:relative;border-radius:15px;padding:12px 4px 11px;transform-style:preserve-3d}
+.pcol .ph{font-family:serif;font-size:30px}
+.pcol .ph.g{border-bottom:1px dashed var(--line);padding-bottom:4px;margin-bottom:4px}
+.pcol .ohd{display:inline-block;font-size:10px;font-weight:700;color:#fff;border-radius:6px;padding:1px 5px;margin:0 1px}
+.pcol .mebadge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;
+  font-size:10px;font-weight:700;border-radius:8px;padding:2px 7px;white-space:nowrap}
+.deal .pcol{opacity:0;animation:deal .55s cubic-bezier(.2,.75,.3,1.15) both}
+@keyframes deal{0%{opacity:0;transform:translateY(-38px) rotateY(180deg) scale(.86)}
+  60%{opacity:1;transform:translateY(4px) rotateY(0) scale(1.03)}100%{opacity:1;transform:none}}
+.fade{animation:fadeUp .5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.pop{animation:pop .5s cubic-bezier(.2,.8,.3,1.4) both}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:none}}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,240,215,.75),rgba(255,255,255,0));
+  animation:shine 1.1s ease 2.1s both}
+@keyframes shine{from{left:-60%}to{left:130%}}
+
+/* 오행 원형 그래프 */
+.ohcard{background:#fff;border-radius:20px;padding:18px 16px;box-shadow:0 2px 12px rgba(92,58,22,.06);
+  display:flex;align-items:center;gap:16px}
+.donut{position:relative;width:132px;height:132px;flex-shrink:0}
+.donut svg{width:132px;height:132px;transform:rotate(-90deg)}
+.donut .seg{transition:stroke-dasharray .9s cubic-bezier(.3,.7,.3,1)}
+.donut .dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut .dch{font-family:serif;font-size:32px;font-weight:700;line-height:1}
+.donut .dcl{font-size:11px;color:var(--mut);margin-top:4px}
+.oleg{flex:1;display:flex;flex-direction:column;gap:7px}
+.oli{display:flex;align-items:center;gap:8px;font-size:14px}
+.oli i{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.oli b{flex:1}
+.oli span{font-weight:800;font-size:15px;min-width:18px;text-align:right}
+.oli.zero{opacity:.45}
+
+/* 올해 운의 흐름 */
+.yrcard{background:#fff;border-radius:20px;padding:18px 16px 14px;box-shadow:0 2px 12px rgba(92,58,22,.06);text-align:left}
+.yrtop{display:flex;align-items:center;gap:14px}
+.yrh{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:serif;font-size:26px;font-weight:700;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.yrt{font-size:15px;font-weight:800}
+.yrs{font-size:13px;color:var(--sub);line-height:1.55;margin-top:3px}
+.mflow{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:14px}
+.mc{border-radius:11px;padding:7px 0 6px;text-align:center;background:#FAF6F0;border:1.5px solid transparent}
+.mc .mm{font-size:10.5px;color:var(--mut)}
+.mc .mh{font-family:serif;font-size:15px;font-weight:700;margin-top:1px}
+.mc .ms{font-size:10.5px;font-weight:700;margin-top:1px}
+.mc.now{background:#FFF6EA;border-color:var(--p)}
+.mc.past{opacity:.5}
+.flow .mc{animation:fadeUp .35s ease both}
+
+/* 세운 10년 타임라인 */
+.tl{position:relative;padding-left:22px;margin-top:4px}
+.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:1px}
+.tl .wcard{position:relative}
+.tl .dot{position:absolute;left:-21px;top:19px;width:14px;height:14px;border-radius:50%;border:3px solid #fff;
+  box-shadow:0 0 0 1.5px var(--line)}
+
+/* ───── 2026-09-24 그림 장면 — 한지·먹·인주 ─────
+   주제 색 하나: 먹(#221A14). 보조 하나: 인주(#B3261E). 바탕은 한지(#F6F0E4).
+   글꼴 위계: 제목·한자는 명조(붓글씨 쪽), 설명은 고딕. 카드는 둥근 앱 카드가 아니라 모서리가 거의 선 한지 장. */
+:root{--p:#2A2019;--pd:#221A14;--red:#B3261E;--ink:#221A14;--sub:#5B4D40;--mut:#9A8B78;--bg:#F6F0E4;
+  --lt:#E9DDC8;--tagbg:#F3E9D6;--tagtx:#6B4420;--line:#E4D6BE;--paper:#FFFCF5;
+  --serif:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo","Songti SC","Batang",serif}
+body{background:var(--bg)}
+.scene{position:relative;margin:calc(-14px - env(safe-area-inset-top,0px)) -20px 0;height:clamp(250px,37vh,330px);overflow:hidden}
+.scene.result{height:clamp(236px,34vh,306px)}
+.scene canvas{position:absolute;left:0;top:0}
+.hometitle{text-align:center;margin:2px 0 14px}
+.hometitle h1{font-family:var(--serif);font-size:30px;font-weight:800;letter-spacing:.06em;margin-bottom:6px;color:var(--ink)}
+.hometitle .desc{margin-bottom:0;font-size:14.5px}
+h1{font-family:var(--serif)}
+
+/* 사주단자 — 붉은 띠를 두른 한지 한 장. 가운데 접힌 자국이 있다 */
+.danja{position:relative;background:linear-gradient(90deg,rgba(0,0,0,0) 49.6%,rgba(120,90,50,.07) 50%,rgba(0,0,0,0) 50.4%),
+  radial-gradient(ellipse at 30% 20%,#FFFDF6,#F7EEDB);border:1px solid #E1D0B1;border-radius:3px;
+  padding:18px 16px 4px;margin:0 0 12px;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 10px 24px rgba(90,60,30,.10),0 2px 4px rgba(90,60,30,.06)}
+.danja::before{content:'';position:absolute;left:-1px;right:-1px;top:-1px;height:6px;border-radius:3px 3px 0 0;
+  background:linear-gradient(90deg,#8E1D17,#C23A2C 50%,#8E1D17)}
+.djhead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.djseal{width:34px;height:40px;flex-shrink:0;background:var(--red);color:#FBEFE0;border-radius:3px;display:flex;align-items:center;
+  justify-content:center;writing-mode:vertical-rl;font-family:var(--serif);font-weight:800;font-size:13px;letter-spacing:.05em;
+  transform:rotate(-3deg);box-shadow:0 2px 5px rgba(140,30,20,.28),inset 0 0 0 2px rgba(255,235,220,.35)}
+.djt{font-family:var(--serif);font-weight:800;font-size:17px;color:var(--ink);display:flex;flex-direction:column;text-align:left}
+.djt small{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;font-weight:400;font-size:12.5px;color:var(--mut);margin-top:2px}
+.djrow{display:flex;gap:12px;align-items:flex-start;border-top:1px dashed rgba(120,90,50,.28);padding:13px 0 14px}
+.djh{font-family:var(--serif);font-size:24px;font-weight:800;color:var(--ink);opacity:.82;width:28px;text-align:center;line-height:1.1;padding-top:14px}
+.djf{flex:1;min-width:0;text-align:left}
+.djf label{display:block;font-size:12.5px;color:var(--mut);margin:0 0 2px}
+.djf .r3{display:flex;gap:10px}
+.djf .r3 select{flex:1;min-width:0}
+.djf select{width:100%;padding:8px 18px 7px 2px;font-size:17px;font-family:var(--serif);font-weight:700;color:var(--ink);
+  border:none;border-bottom:1.6px solid #3A2E24;border-radius:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23221A14' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 3px center;
+  -webkit-appearance:none;appearance:none}
+.djf select:focus{outline:none;border-bottom-color:var(--red)}
+.djf select#fh{font-size:15px}
+.tip+.wcard{margin-top:12px}
+
+button.big{background:linear-gradient(180deg,#3B2F26,#1F1712);color:#F7EBD3;border-radius:12px;letter-spacing:.02em;
+  box-shadow:0 8px 18px rgba(33,25,18,.25),inset 0 1px 0 rgba(255,240,210,.15)}
+button.ghost{background:var(--paper);border:1.2px solid #CDBB9C;color:var(--ink)}
+.adnote{color:var(--mut)}
+
+.sech{font-family:var(--serif);font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.sech::before{content:'';width:9px;height:9px;background:var(--red);border-radius:1px;transform:rotate(45deg);flex-shrink:0}
+.pcol,.rcard,.wcard,.ohcard,.yrcard,.lbox{background:var(--paper);border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 6px 16px rgba(90,60,30,.06)}
+.pcol.me{background:#FFF7EC;box-shadow:0 0 0 1.5px var(--red) inset,0 6px 16px rgba(140,40,20,.10)}
+.pcol.none{background:#F1EADD}
+.pcol .mebadge{background:var(--red);border-radius:3px;font-family:var(--serif)}
+.rcard{padding:24px 20px}
+.rcard .slabel{letter-spacing:.04em}
+.rname{font-family:var(--serif)}
+.wcard.today{border:1.5px solid var(--red)}
+.wtoday{background:var(--red)}
+.mc{background:#FAF4E8;border-radius:5px}
+.mc.now{background:#FFF4E8;border-color:var(--red)}
+.tip{background:var(--tagbg);border-radius:4px;border-left:3px solid var(--red)}
+.donut .dch{font-family:var(--serif)}
+.yrh{border-radius:6px;font-family:var(--serif)}
+.sealemb{width:66px;height:66px;margin:6px auto 16px;background:var(--red);color:#FBEFE0;border-radius:5px;display:flex;
+  align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:28px;letter-spacing:-.02em;
+  transform:rotate(-4deg);box-shadow:0 6px 14px rgba(140,30,20,.25),inset 0 0 0 3px rgba(255,235,220,.35)}
+
+@media (prefers-reduced-motion:reduce){
+  .deal .pcol,.fade,.pop,.hero.home-in .hcard,.flow .mc{animation:none!important;opacity:1!important}
+  .shine::after{display:none}
+  .donut .seg{transition:none}
+}
+
+/* [웹판 2026-10-02] 웹 머리띠(.webhdr 52px 고정) 아래로 두루마리 장면을 내린다. 토스 앱 번들엔 없는 줄 */
+#app{padding-top:calc(env(safe-area-inset-top,0px) + 66px)}
 </style>
-  <script type="module" crossorigin src="./assets/index-etHpc-Ly.js"></script>
+  <script type="module" crossorigin src="./assets/index-DG4pBTrj.js"></script>
 
 <link rel="canonical" href="https://daeillband2014-hub.github.io/saju-four-pillars/">
 <style>
