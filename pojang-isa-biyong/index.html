@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>포장이사 비용 — 이사비용 계산기, 톤수별 협회 평균·사다리차·손없는날 할증</title>
+<meta property="og:title" content="포장이사 비용 — 이사비용 계산기, 톤수별 협회 평균·사다리차·손없는날 할증">
+<meta property="og:description" content="평수·짐 양·층수·이삿날을 넣으면 허가이사 협회 전국평균(2025년 12월)으로 포장이사 비용 참고 범위와 차량 톤수가 나옵니다. 계약금·취소 위약금 규정도 정리했습니다.">
+<meta name="description" content="평수·짐 양·층수·이삿날을 넣으면 허가이사 협회 전국평균(2025년 12월)으로 포장이사 비용 참고 범위와 차량 톤수가 나옵니다. 계약금·취소 위약금 규정도 정리했습니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/pojang-isa-biyong/">
+<style>
+:root{--p:#4A5AA8;--pd:#37437F;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F4F5FC;--lt:#D6DAF0;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=date],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(40,50,110,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.big.no{color:var(--acc);font-size:21px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EEF0F8;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.ok{background:#EEF0FA;border-left:3px solid #4A5AA8;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#37437F;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+table.plan{width:100%;min-width:320px;border-collapse:collapse;font-size:13.5px}
+table.plan th,table.plan td{padding:7px 6px;border-bottom:1px solid #EEF0F8;text-align:left}
+table.plan th{color:var(--mut);font-weight:400;font-size:12.5px}
+table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+/* 포장이사 비용 쪽 전용 */
+input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.pair{display:flex;gap:8px}.pair input{flex:1 1 0;min-width:0}.pair select{flex:0 1 auto;width:auto;min-width:0}
+label.chk{display:flex;gap:8px;align-items:flex-start;line-height:1.5}label.chk input{width:18px;height:18px;margin-top:1px;flex:0 0 auto}
+.big.rng{font-size:24px;line-height:1.3;word-break:keep-all}.related{padding-left:18px;margin:0 0 10px}</style>
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>포장이사 비용 · 이사비용 계산기</h1>
+<p class="desc">평수와 짐 양, 층수, 이삿날을 넣으면 협회 전국평균으로 참고 범위가 나옵니다</p>
+
+<label for="size">집 크기</label>
+<div class="pair"><input id="size" type="number" inputmode="decimal" min="1" max="1000" step="0.1" value="24"><select id="unit" aria-label="집 크기 단위"><option value="py" selected>평</option><option value="m2">㎡</option></select></div>
+
+<label for="load">짐 양</label>
+<select id="load">
+<option value="low">적음 (큰 가구 적음)</option>
+<option value="mid" selected>보통</option>
+<option value="high">많음 (가구·잔짐 많음)</option>
+</select>
+
+<label for="f1">출발지 층수</label>
+<div class="pair"><input id="f1" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e1" aria-label="출발지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+
+<label for="f2">도착지 층수</label>
+<div class="pair"><input id="f2" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e2" aria-label="도착지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+
+<label for="dist">이동 거리</label>
+<select id="dist">
+<option value="in" selected>10km 이내 (시내)</option>
+<option value="out">10km 넘음</option>
+</select>
+
+<label for="mdate">이사 예정일</label>
+<input id="mdate" type="date">
+
+<label class="chk" for="busy"><input id="busy" type="checkbox">이삿날이 손 없는 날이거나 월말입니다</label>
+<p class="note" style="margin-top:2px">손 없는 날인지는 <a href="/son-eopneun-nal/">손없는날 달력</a>에서 확인할 수 있습니다.</p>
+<label class="chk" for="spec"><input id="spec" type="checkbox">에어컨 설치·피아노 운반·가구 조립 같은 작업이 있습니다</label>
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">비용 범위 보기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<!--tenping-->
+<aside class="tpad" id="tpad" hidden>
+<p class="tpad-l">광고 · 제휴</p>
+<p class="tpad-t">포장이사 견적 — <b>서경석의 이사방</b></p>
+<p class="tpad-d">이사 날짜가 정해졌다면 실제 견적으로 범위를 좁혀 보실 수 있습니다. 한 번 신청하면 서경석의 이사방 우수 지점 2곳의 포장이사 견적을 받아보실 수 있습니다.</p>
+<p class="tpad-c"><b>신청 전에 확인하세요</b><br>· <b>이사 예정일이 신청일로부터 60일 이내</b>여야 합니다<br>· 일정이 정해지지 않았거나 60일을 넘기면 접수가 무효 처리됩니다<br>· 견적은 <b>우수 지점 2곳</b>에서 받습니다</p>
+<p><a class="tpad-b" id="tplink" href="https://iryan.kr/t8g749b937" target="_blank" rel="sponsored nofollow noopener">포장이사 견적 받아보기</a></p>
+<p class="tpad-f">이 링크로 접수가 완료되면 저희가 텐핑으로부터 수수료를 받습니다. 신청하시는 분께 추가 부담은 없습니다. 서비스 내용과 진행 조건은 업체 사정에 따라 바뀔 수 있습니다.</p>
+</aside>
+<style>
+.tpad{max-width:480px;margin:22px auto 0;padding:16px 18px;background:#fff;border:1px solid #E5E8EB;
+border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.tpad-l{font-size:11px;color:#B0B8C1;letter-spacing:.5px;margin:0 0 6px}
+.tpad-t{font-size:15px;color:#191F28;font-weight:700;margin:0 0 8px;line-height:1.45}
+.tpad-d{font-size:13px;color:#4E5968;line-height:1.75;margin:0 0 10px}
+.tpad-c{font-size:12.5px;color:#4E5968;line-height:1.8;margin:0 0 12px;padding:10px 12px;
+background:#F7FBFF;border-radius:11px}
+.tpad-b{display:block;text-align:center;background:#1E6E96;color:#fff;text-decoration:none;
+font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
+.tpad-f{font-size:11.5px;color:#8B95A1;line-height:1.65;margin:10px 0 0}
+</style>
+<!--/tenping-->
+
+<p class="note">허가이사종합정보 「이사비용 정보」의 2025년 12월 전국 평균 금액을 그대로 옮겨 계산합니다. 평수를 톤수로 바꾸는 공식 기준은 없어 이 계산기의 규칙을 아래 본문에 표로 공개했습니다. 입력값은 기기 안에서만 계산되며 어디에도 저장하지 않습니다.</p>
+</div>
+
+<script>
+(function(){
+ /*CORE*/
+ /* 허가이사종합정보(전국화물자동차운송주선사업연합회) 「이사비용 정보」
+    포장이사 전국평균, 「※ 2025년 12월 전국 평균 금액」
+    「시내(10km 이내), 1층 ~ 1층, 평일(손없는날) 기준」
+    「사다리 사용료, 특수작업비(가구조립, 에어컨 설치, 피아노 운반 등) 별도」
+    비용할증 「손 없는 날, 월말 등 약 10~30% 증가」
+    평균 사다리 사용료(서울, 경기지역) 5톤/6톤/7.5톤, 「1회 평균요금」, 2.5톤 칸 없음
+    [확인] 2026-10-08 05:34 FareInquiry.aspx 원문 재조회, 2026-10-03 사본과 숫자 같음. */
+ var TIERS = [
+  {name:'2.5톤 미만', avg:null, lad:null},
+  {name:'2.5톤', avg:845000, lad:null},
+  {name:'5톤',   avg:1128000, lad:[150000,180000,210000,300000,520000]},
+  {name:'6톤',   avg:1328000, lad:[200000,210000,250000,320000,540000]},
+  {name:'7.5톤', avg:1621000, lad:[230000,240000,270000,350000,570000]}
+ ];
+ var LROW = [6,10,15,20,25]; /* 표의 줄: 2~6층, 10층, 15층, 20층, 25층 */
+ var SURGE = [0.10, 0.30];   /* 손 없는 날·월말 등 약 10~30% */
+
+ /* 평수 → 기준 칸. 공식 환산표가 없어 이 계산기가 정한 규칙(본문에 표로 공개).
+    19평 이하 0(2.5톤 미만) · 20~29평 1(2.5톤) · 30~33평 2(5톤) · 34평 이상 3(6톤) */
+ function baseTier(p){ return p < 20 ? 0 : p < 30 ? 1 : p < 34 ? 2 : 3; }
+ /* 짐 양으로 칸 범위를 옮긴다. 적음 [t-1,t] · 보통 [t,t+1] · 많음 [t+1,t+2] (0~4로 자름) */
+ function tierRange(p, load){
+  var t = baseTier(p), lo, hi;
+  if(load === 'low'){ lo = t-1; hi = t; }
+  else if(load === 'high'){ lo = t+1; hi = t+2; }
+  else { lo = t; hi = t+1; }
+  var over = hi > 4;
+  lo = Math.max(0, Math.min(4, lo)); hi = Math.max(0, Math.min(4, hi));
+  return {lo:lo, hi:hi, over:over};
+ }
+ /* 한 곳의 사다리 1회 요금 [최저, 최고]. 1층 이하 0원.
+    표 사이 층은 아래 줄을 최저, 위 줄을 최고로. 25층 초과는 25층 값 + 표 밖 표시. */
+ function ladderAt(tier, floor){
+  if(floor <= 1) return {lo:0, hi:0, none:false, out:false};
+  var L = TIERS[tier].lad;
+  if(!L) return {lo:0, hi:0, none:true, out:false};
+  if(floor > 25) return {lo:L[4], hi:L[4], none:false, out:true};
+  var i = 0; while(LROW[i] < floor) i++;
+  var hi = L[i], lo = (LROW[i] === floor || i === 0) ? L[i] : L[i-1];
+  return {lo:lo, hi:hi, none:false, out:false};
+ }
+ /* 한 곳(출발지 또는 도착지)의 사다리 몫. 엘리베이터가 있으면 최저 0원(엘리베이터로 옮김), 최고는 사다리 요금. */
+ function placeLadder(tierLo, tierHi, floor, elev){
+  var a = ladderAt(tierLo, floor), b = ladderAt(tierHi, floor);
+  return {lo: elev ? 0 : a.lo, hi: b.hi, noneLo: a.none && floor > 1 && !elev, noneHi: b.none && floor > 1, out: b.out};
+ }
+ function r1000(x){ return Math.round(x/1000)*1000; }
+ /* inp: {pyeong, load('low'|'mid'|'high'), f1, e1, f2, e2, busy(bool)} */
+ function estimate(inp){
+  var tr = tierRange(inp.pyeong, inp.load);
+  var res = {tierLo:tr.lo, tierHi:tr.hi, over:tr.over, flags:[]};
+  if(tr.hi === 0){ res.none = true; return res; }
+  var tlo = Math.max(tr.lo, 1), thi = tr.hi;  /* 2.5톤 미만 칸은 평균이 없어 2.5톤부터 셈 */
+  res.openBottom = tr.lo === 0;
+  var s = inp.busy ? SURGE : [0,0];
+  var b1 = TIERS[tlo].avg, b2 = TIERS[thi].avg;
+  var p1 = placeLadder(tlo, thi, inp.f1, inp.e1), p2 = placeLadder(tlo, thi, inp.f2, inp.e2);
+  res.baseLo = b1; res.baseHi = b2;
+  res.surgeLo = b1*s[0]; res.surgeHi = b2*s[1];
+  res.ladLo = p1.lo + p2.lo; res.ladHi = p1.hi + p2.hi;
+  res.lo = r1000(b1*(1+s[0]) + res.ladLo);
+  res.hi = r1000(b2*(1+s[1]) + res.ladHi);
+  res.depLo = Math.round(res.lo*0.1); res.depHi = Math.round(res.hi*0.1); /* 표준약관 제6조 계약금 10% */
+  res.lad25 = p1.noneLo || p2.noneLo || p1.noneHi || p2.noneHi;
+  res.ladOut = p1.out || p2.out;
+  return res;
+ }
+ /* 오늘부터 이사 예정일까지 며칠인지(날짜만 비교). 빈 값이면 null */
+ function daysUntil(dateStr, today){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(dateStr || '')) return null;
+  var d = new Date(dateStr + 'T00:00:00');
+  var t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  return Math.round((d - t) / 86400000);
+ }
+ /* 텐핑 칸: 링크가 있고, 예정일이 오늘부터 60일 이내일 때만 보인다 */
+ function showTp(days, href){ return !!href && days !== null && days >= 0 && days <= 60; }
+ /*/CORE*/
+
+ var $ = function(id){ return document.getElementById(id); };
+ function comma(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+ function won(n){ return comma(n) + '원'; }
+ function man(n){ return (Math.round(n / 1000) / 10) + '만'; }
+ function fmtD(s){ var d = new Date(s + 'T00:00:00'); return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일(' + '일월화수목금토'.charAt(d.getDay()) + ')'; }
+ function rng(a, b){ return a === b ? won(a) : won(a) + ' ~ ' + won(b); }
+ function row(k, v){ return '<div class="row"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
+ function num(id, def){ var v = parseFloat($(id).value); return isFinite(v) ? v : def; }
+
+ var tp = $('tpad'), tl = $('tplink');
+ function tpUpdate(days){
+  if(!tp) return;
+  var href = tl ? (tl.getAttribute('href') || '') : '';
+  tp.hidden = !showTp(days, href);
+ }
+
+ function calc(){
+  var out = $('out');
+  var v = num('size', NaN);
+  var days = daysUntil($('mdate').value, new Date());
+  tpUpdate(days);
+  if(!(v > 0)){ out.innerHTML = '<div class="rcard"><div class="big no">집 크기를 넣어 주십시오</div></div>'; return; }
+  var py = $('unit').value === 'm2' ? v / 3.305785 : v;
+  if(py > 300){ out.innerHTML = '<div class="rcard"><div class="big no">집 크기를 다시 확인해 주십시오</div><div class="sub2">300평이 넘는 값은 계산하지 않습니다</div></div>'; return; }
+  var f1 = Math.max(1, Math.min(80, Math.floor(num('f1', 1))));
+  var f2 = Math.max(1, Math.min(80, Math.floor(num('f2', 1))));
+  var inp = {pyeong:py, load:$('load').value, f1:f1, e1:$('e1').value === '1', f2:f2, e2:$('e2').value === '1', busy:$('busy').checked};
+  var r = estimate(inp);
+  var ds = $('mdate').value;
+  var tn = (r.tierLo === r.tierHi ? TIERS[r.tierHi].name : TIERS[r.tierLo].name + ' ~ ' + TIERS[r.tierHi].name) + (r.over ? ' 이상' : '');
+  var pyTxt = (Math.round(py * 10) / 10) + '평';
+  var h = '<div class="rcard">';
+  var W = [];
+  if(r.none){
+   h += '<div class="big no">협회 평균표 밖입니다</div>';
+   h += '<div class="sub2">' + pyTxt + ' · 추천 차량 톤수 범위 2.5톤 미만</div>';
+   h += '<div class="ok"><b>실제 견적은 업체가 방문해 짐을 확인한 뒤 정해집니다.</b> 협회 전국평균표가 2.5톤부터라 이 집 크기와 짐 양에는 참고 범위를 내지 않습니다. 업체마다 다릅니다.</div>';
+   h += row('추천 톤수', tn);
+  } else {
+   var top = r.over || r.ladOut;
+   h += '<div class="big rng">' + (r.over && r.lo === r.hi ? man(r.lo) + '원 ~' : (r.openBottom ? '' : man(r.lo)) + ' ~ ' + man(r.hi) + '원') + '</div>';
+   h += '<div class="sub2">참고 범위 · 협회 2025년 12월 전국평균 기준' + (top ? ' · 최고값보다 더 나올 수 있음' : '') + '</div>';
+   h += '<div class="ok"><b>실제 견적은 업체가 방문해 짐을 확인한 뒤 정해집니다.</b> 위 범위는 협회 평균으로 만든 참고값이며 확정 가격이 아닙니다.</div>';
+   h += row('추천 톤수', tn);
+   h += row('범위', (r.openBottom ? '평균 없음' : won(r.lo)) + ' ~ ' + (r.over && r.lo === r.hi ? '표 밖' : won(r.hi)));
+   h += row('협회 평균', (r.openBottom ? '2.5톤 미만 없음 ~ ' + won(r.baseHi) : rng(r.baseLo, r.baseHi)));
+   h += row('날짜 할증', inp.busy ? (r.openBottom ? '' : '+' + won(r.surgeLo)) + ' ~ +' + won(r.surgeHi) : '없음');
+   h += row('사다리', rng(r.ladLo, r.ladHi));
+   h += row('계약금 10%', (r.openBottom ? '' : won(r.depLo)) + ' ~ ' + won(r.depHi));
+   if(r.openBottom) W.push('짐이 2.5톤보다 적으면 협회 평균이 없어 최저값을 비웠습니다.');
+   if(r.lad25) W.push('2.5톤 사다리 요금은 협회 표에 없어 빠져 있습니다.');
+   if(r.ladOut) W.push('25층을 넘는 층은 협회 사다리 표 밖이라 25층 값만 넣었습니다.');
+   if(r.over) W.push('짐이 7.5톤을 넘으면 차량이 늘 수 있어 협회 표 밖입니다.');
+  }
+  h += row('집 크기', pyTxt + ($('unit').value === 'm2' ? ' (' + v + '㎡)' : ''));
+  if(ds && days !== null){
+   h += row('이사 예정일', fmtD(ds) + ' · ' + (days >= 0 ? '오늘부터 ' + days + '일' : '지난 날짜'));
+   var wd = new Date(ds + 'T00:00:00').getDay();
+   if(wd === 0 || wd === 6) W.push('토·일요일입니다. 주말 할증 폭은 협회 표에 없어 넣지 않았습니다.');
+  }
+  if($('dist').value === 'out') W.push('이동 거리가 10km를 넘습니다. 협회는 차량운송비가 「운송거리에 따라 증가」한다고만 적어 숫자를 넣지 않았습니다.');
+  if($('spec').checked) W.push('에어컨 설치·피아노 운반·가구 조립 같은 특수작업비는 협회 평균에서 「별도」입니다.');
+  if((inp.e1 && f1 > 1) || (inp.e2 && f2 > 1)) W.push('엘리베이터로 나르는 경우 사다리 요금을 0원으로 잡았습니다. 관리사무소 사용 신청이 필요하고 조건은 단지마다 다릅니다.');
+  if(W.length) h += '<div class="warn"><b>업체마다 다름 — 범위에 숫자를 넣지 않은 것</b><br>· ' + W.join('<br>· ') + '</div>';
+  h += '</div>';
+  out.innerHTML = h;
+ }
+
+ (function(){
+  var t = new Date(), m = ('0' + (t.getMonth()+1)).slice(-2), d = ('0' + t.getDate()).slice(-2);
+  $('mdate').min = t.getFullYear() + '-' + m + '-' + d;
+ })();
+ $('go').addEventListener('click', calc);
+ ['size','unit','load','f1','e1','f2','e2','dist','mdate','busy','spec'].forEach(function(id){
+  $(id).addEventListener('change', calc);
+  $(id).addEventListener('input', calc);
+ });
+ calc();
+})();
+</script>
+
+<section class="webseo">
+<h2>포장이사 비용 계산기 — 협회 평균으로 보는 참고 범위</h2>
+<h3>10초 요약</h3>
+<p><strong>【포장이사 비용은 차량 톤수로 먼저 갈립니다.】 허가이사종합정보가 공개한 2025년 12월 전국평균은 2.5톤 845,000원, 5톤 1,128,000원, 6톤 1,328,000원, 7.5톤 1,621,000원입니다.</strong></p>
+<p>이 평균은 시내 10km 이내에서 1층에서 1층으로 옮기는 조건입니다. 사다리차와 에어컨 설치 같은 특수작업은 따로 붙고, 손 없는 날·월말은 약 10~30% 오른다고 같은 쪽에 적혀 있습니다. 위 이사비용 계산기는 이 숫자들만으로 최저~최고 범위를 냅니다. 견적서가 아니라, 견적을 받기 전에 대략의 자리를 잡아 보는 참고값입니다.</p>
+<h3>협회 전국평균 원문</h3>
+<p>허가이사종합정보는 국토교통부 인가단체인 전국화물자동차운송주선사업연합회가 운영하는 사이트입니다. 「이사비용 정보」 쪽의 포장이사 평균표를 그대로 옮깁니다.</p>
+<div class="tw"><table><caption>포장이사 평균 이사비용 — 전국평균</caption><thead><tr><th>차량</th><th>전국평균</th></tr></thead><tbody><tr><td>2.5톤 기준</td><td>845,000원</td></tr><tr><td>5톤 기준</td><td>1,128,000원</td></tr><tr><td>6톤 기준</td><td>1,328,000원</td></tr><tr><td>7.5톤 기준</td><td>1,621,000원</td></tr></tbody></table></div>
+<p>표 아래에 붙은 조건입니다.</p>
+<ul class="blist"><li>「시내(10km 이내), 1층 ~ 1층, 평일(손없는날) 기준」</li><li>「사다리 사용료, 특수작업비(가구조립, 에어컨 설치, 피아노 운반 등) 별도」</li><li>「※ 2025년 12월 전국 평균 금액」</li><li>「평균 이사비용으로 지역, 날짜, 작업조건 등에 따라 차이가 발생할 수 있음」</li></ul>
+<p>표본 수와 조사 방법은 같은 쪽에 나와 있지 않습니다. 「평일(손없는날) 기준」의 괄호가 손 없는 날을 포함한다는 뜻인지도 원문만으로는 분명하지 않습니다. 같은 쪽 비용 구성표가 손 없는 날을 할증 항목으로 따로 적고 있어, 이 계산기는 평균값을 붐비지 않는 평일 값으로 보고 손 없는 날·월말을 골랐을 때만 할증을 더합니다.</p>
+<h3>이사비용은 여섯 갈래로 나뉩니다</h3>
+<p>같은 쪽의 「이사비용 구성」 표입니다.</p>
+<div class="tw"><table><caption>이사비용 구성 — 허가이사종합정보</caption><thead><tr><th>항목</th><th>내용</th><th>비고</th></tr></thead><tbody><tr><td>차량운송비</td><td>차량톤수 단위로 산정</td><td>운송거리에 따라 증가</td></tr><tr><td>인건비</td><td>포장, 운반, 정리</td><td>통상 5톤 기준 남자 3인, 여자 1인</td></tr><tr><td>사다리 사용료</td><td>저층·고층사다리</td><td>저층 대비 고층(25층) 약 4배 차이</td></tr><tr><td>특수 작업비</td><td>에어컨 설치, 피아노 운반, 장롱조립 등</td><td>—</td></tr><tr><td>기타</td><td>청소·소독 등</td><td>—</td></tr><tr><td>비용할증</td><td>이사날짜</td><td>손 없는 날, 월말 등 약 10~30% 증가</td></tr></tbody></table></div>
+<p>협회 Q&amp;A는 포장이사를 「운송보다는 서비스 비중이 높은 서비스 비용이므로 업체마다 조금씩 차이가 있을 수 있」다고 설명합니다. 업체 사이 가격 차이에 대해서는 「이사 가격은 업체별로 다소의 차이가 있을 수는 있겠으나 대부분 큰 차이가 없습니다」라고 적었습니다.</p>
+<h3>계산식 — 입력에서 범위까지</h3>
+<p>계산기는 아래 순서로 셉니다. 금액은 모두 협회 표에서 가져왔고, 표에 숫자가 없는 항목은 더하지 않고 결과에 「업체마다 다름」으로 표시합니다.</p>
+<ul class="blist"><li>① 집 크기와 짐 양으로 협회 표의 톤수 칸 두 개(아래 칸·위 칸)를 고릅니다. 고르는 규칙은 바로 아래 표입니다</li><li>② 최저 = 아래 칸 평균 × (1 + 날짜 할증 최저) + 사다리 최저</li><li>③ 최고 = 위 칸 평균 × (1 + 날짜 할증 최고) + 사다리 최고</li><li>④ 날짜 할증은 손 없는 날·월말을 체크했을 때 최저 10%, 최고 30%이고, 아니면 0%입니다. 할증은 평균 이사비용에만 곱합니다</li><li>⑤ 사다리는 출발지와 도착지에서 1회씩 셉니다. 1층은 0원입니다. 엘리베이터가 있다고 고르면 그곳의 최저는 0원(엘리베이터로 나르는 경우), 최고는 사다리 요금(업체가 사다리차를 쓰는 경우)입니다</li><li>⑥ 합계는 천 원 단위에서 반올림하고, 계약금은 그 10%로 함께 보여 줍니다</li></ul>
+<h3>평수로 톤수 칸을 고르는 규칙 — 공식 환산표는 없습니다</h3>
+<p>평수를 차량 톤수로 바꾸는 공식 기준은 찾지 못했습니다. 협회 평균표도 톤수별로만 나옵니다. 이사 견적 플랫폼들이 공개한 안내에는 20평대 2.5톤, 30평대 5톤, 34평 이상 6톤 이상으로 짝지은 표가 있고, 같은 안내에 짐이 많을수록 트럭 톤수와 작업 인원이 늘어난다는 설명이 붙어 있습니다. 법제처 찾기쉬운 생활법령정보도 차량비용이 「전체적인 짐의 양으로 결정」된다고 적습니다.</p>
+<p>그래서 이 계산기는 평수로 기준 칸을 정하고, 짐 양으로 범위를 옮깁니다. 공식 기준이 아니라 이 계산기의 규칙이므로 표로 공개합니다.</p>
+<div class="tw"><table><caption>집 크기·짐 양 → 톤수 칸 (이 계산기의 규칙)</caption><thead><tr><th>집 크기</th><th>짐 적음</th><th>짐 보통</th><th>짐 많음</th></tr></thead><tbody><tr><td>20평 미만</td><td>2.5톤 미만</td><td>2.5톤 미만~2.5톤</td><td>2.5톤~5톤</td></tr><tr><td>20평 이상 30평 미만</td><td>2.5톤 미만~2.5톤</td><td>2.5톤~5톤</td><td>5톤~6톤</td></tr><tr><td>30평 이상 34평 미만</td><td>2.5톤~5톤</td><td>5톤~6톤</td><td>6톤~7.5톤</td></tr><tr><td>34평 이상</td><td>5톤~6톤</td><td>6톤~7.5톤</td><td>7.5톤 이상</td></tr></tbody></table></div>
+<p><strong>【2.5톤 미만 칸은 협회 평균이 없습니다.】 그래서 결과의 최저값을 비워 둡니다. 7.5톤을 넘는 짐은 차량이 늘 수 있어 협회 표 밖이고, 결과에 「최고값보다 더 나올 수 있음」을 붙입니다.</strong></p>
+<p>집 크기를 ㎡로만 아신다면 계산기에서 단위를 ㎡로 고르시면 됩니다. 1평을 3.305785㎡로 보고 나눕니다. 전용면적과 공급면적의 차이는 <a href="/pyeong-calc-kr/">평수 계산기</a>에 정리돼 있습니다.</p>
+<h3>사다리차 요금 — 협회 평균표</h3>
+<div class="tw"><table><caption>평균 사다리 사용료 — 1회</caption><thead><tr><th>층</th><th>5톤</th><th>6톤</th><th>7.5톤</th></tr></thead><tbody><tr><td>2~6층</td><td>150,000원</td><td>200,000원</td><td>230,000원</td></tr><tr><td>10층</td><td>180,000원</td><td>210,000원</td><td>240,000원</td></tr><tr><td>15층</td><td>210,000원</td><td>250,000원</td><td>270,000원</td></tr><tr><td>20층</td><td>300,000원</td><td>320,000원</td><td>350,000원</td></tr><tr><td>25층</td><td>520,000원</td><td>540,000원</td><td>570,000원</td></tr></tbody></table></div>
+<p>표 제목은 「평균 사다리 사용료 (서울, 경기지역)」인데 표 아래 각주는 「※ 2025년 12월 기준 전국 평균 금액」이라 적용 지역이 엇갈립니다. 표 밑에는 「1회 평균요금으로 지역, 날짜, 작업조건 등에 따라 차이가 발생할 수 있음」이라고 적혀 있습니다. 1회 요금이므로 출발지와 도착지에서 모두 쓰면 두 번 붙습니다.</p>
+<p>표에 없는 층은 아래 줄을 최저, 위 줄을 최고로 잡습니다. 8층이라면 5톤 기준 150,000원~180,000원입니다. 25층을 넘으면 표 밖이라 25층 값만 넣습니다. 2.5톤 칸은 표에 없어 사다리 요금을 더하지 않고 결과에 따로 표시합니다. 비용 구성표의 「저층 대비 고층(25층) 약 4배 차이」와 견주면, 5톤 기준 2~6층 150,000원과 25층 520,000원은 약 3.5배입니다.</p>
+<h3>무엇이 값을 올리고 내리나</h3>
+<p>협회와 법제처 안내에 나온 요인을 모으면 이렇습니다. 숫자가 있는 것만 계산기에 넣었습니다.</p>
+<div class="tw"><table><caption>이사비용을 움직이는 요인</caption><thead><tr><th>요인</th><th>원문</th><th>계산기</th></tr></thead><tbody><tr><td>짐 양</td><td>「이삿짐의 부피나 무게, 포장박스의 총량 등으로 이사비용을 산출」(협회 Q&amp;A)</td><td>톤수 칸으로 반영</td></tr><tr><td>층수·운반 방법</td><td>사다리 평균표</td><td>5·6·7.5톤만 반영</td></tr><tr><td>이삿날</td><td>「손 없는 날, 월말 등 약 10~30% 증가」</td><td>체크하면 반영</td></tr><tr><td>이동 거리</td><td>차량운송비 「운송거리에 따라 증가」</td><td>숫자 없음 — 업체마다 다름</td></tr><tr><td>특수작업</td><td>「에어컨 설치, 피아노 운반, 장롱조립 등」 별도</td><td>숫자 없음 — 업체마다 다름</td></tr><tr><td>작업 여건</td><td>「특수 이송품(고가의 골동품, 대형금고 등), 부피, 층수, 작업여건, 이송거리(차량진입이 불가능한 골목) 등에 따라 달리 책정」(법제처 생활법령)</td><td>숫자 없음 — 업체마다 다름</td></tr><tr><td>지역</td><td>「지역, 날짜, 작업조건 등에 따라 차이가 발생할 수 있음」</td><td>숫자 없음</td></tr></tbody></table></div>
+<p>줄이는 쪽도 원문에 있습니다. 협회 Q&amp;A는 「불필요한 짐들은 이사하기 전에 미리 처분하시고, 아울러 새로운 가전제품, 가구 등은 이사 후에 구입하시는 것이 비용절감에 도움」이 된다고 적습니다. 짐이 줄어 톤수 칸이 한 칸 내려가면 협회 평균 기준으로 2.5톤과 5톤 사이는 283,000원, 5톤과 6톤 사이는 200,000원, 6톤과 7.5톤 사이는 293,000원 차이입니다.</p>
+<h3>손 없는 날·주말·월말에는 얼마나 오르나</h3>
+<p>협회 비용 구성표의 숫자는 「손 없는 날, 월말 등 약 10~30% 증가」입니다. 계산기는 이 폭을 그대로 씁니다. 5톤 평균 1,128,000원이라면 할증분이 112,800원~338,400원입니다.</p>
+<p>주말 할증 숫자는 협회 표에 없습니다. 협회 Q&amp;A는 「이사는 주로 월말과 손 없는 날, 휴일에 집중되고 있으므로 이러한 날을 피해서 평일에 이사를 하시면 이사비용을 줄일 수 있」다고만 적었습니다. 법제처 찾기쉬운 생활법령정보는 이사 수요가 주말·말일·손 없는 날·연휴 시작 바로 전날에 몰리며 「이런 바쁜 날에는 어느 이사 업체든지 평상시의 이사비용보다 적게는 20%에서 많게는 50% 까지 더 요구한다고 합니다」라고 전합니다. 출처마다 폭이 달라 계산기는 협회 숫자만 쓰고, 주말은 결과에 「업체마다 다름」으로만 표시합니다.</p>
+<p>손 없는 날은 음력 날짜로 정해져 양력 달력만 보고는 알기 어렵습니다. <a href="/son-eopneun-nal/">손없는날 달력</a>에서 이삿날을 확인하신 뒤 계산기 칸을 체크하시면 됩니다. 업체를 정하는 시기에 대해 협회 Q&amp;A는 「월말, 손 없는 날 등은 계약이 일찍 마감되므로 이사 업체는 이삿날을 기준으로 약 한달 정도 전까지는 결정하는 것이 안정적」이라고 적었습니다.</p>
+<h3>계산 예시</h3>
+<p>위 계산기에 넣었을 때 나오는 값입니다. 네 경우 모두 이동 거리 10km 이내로 넣었습니다.</p>
+<ul class="blist"><li><b>24평, 짐 보통, 1층→1층, 평일</b> — 2.5톤~5톤 칸, 845,000원~1,128,000원. 할증과 사다리는 없습니다. 계약금 10%는 84,500원~112,800원</li><li><b>32평, 짐 보통, 출발 8층(엘리베이터 없음)→도착 15층(엘리베이터 있음), 손 없는 날</b> — 5톤~6톤 칸. 평균 1,128,000원~1,328,000원에 할증 112,800원~398,400원, 사다리 150,000원~460,000원을 더해 1,391,000원~2,186,000원. 사다리 최저는 출발 8층 5톤 아래 줄 150,000원과 도착 0원, 최고는 출발 8층 6톤 위 줄 210,000원과 도착 15층 6톤 250,000원입니다</li><li><b>34평, 짐 많음, 출발 3층(엘리베이터 없음)→도착 27층(엘리베이터 있음), 평일</b> — 7.5톤 이상. 1,621,000원에 출발 사다리 230,000원, 도착 0원~570,000원(25층 값)을 더해 1,851,000원~2,421,000원. 7.5톤 초과와 25층 초과가 겹쳐 최고값보다 더 나올 수 있습니다</li><li><b>17평, 짐 보통, 2층(엘리베이터 없음)→1층, 평일</b> — 2.5톤 미만~2.5톤 칸. 최저는 협회 평균이 없어 비우고 최고는 845,000원. 2.5톤 사다리 요금은 표에 없어 빠져 있습니다</li></ul>
+<p><strong>【범위가 넓게 나오는 것이 정상입니다.】 평수만으로는 짐이 몇 톤인지 정해지지 않고, 그 차이가 그대로 금액 차이가 되기 때문입니다. 범위를 좁히는 방법은 방문 견적입니다.</strong></p>
+<h3>견적 받을 때 확인할 것</h3>
+<p>이사화물 표준약관 제4조는 고객의 요청이 있으면 업체가 견적서를 써 주도록 하고, 적을 내용을 정해 둡니다. 비용과 닿는 칸은 이렇습니다.</p>
+<ul class="blist"><li>업체 상호·사업자등록번호·대표자·주소·전화번호와 견적서를 쓴 담당자 성명</li><li>이사화물의 인수·인도 일시, 발송·도착 장소, 주요 내역(종류·무게·부피 등)과 운임단가</li><li>작업조건 — 운송자동차의 종류와 대수, 작업인원, 포장·정리 여부, 장비사용 내역</li><li>운임 등의 합계액과 그 내역</li></ul>
+<p><strong>【차량 톤수와 대수, 작업인원, 사다리 사용 여부가 견적서에 적혀 있어야 합니다.】 이 칸이 비어 있으면 당일에 차량이나 인력이 더 필요하다며 비용이 붙을 여지가 생깁니다.</strong></p>
+<p>견적서 금액은 계약서 금액의 상한입니다. 제5조제3항은 「사업자는 운임 등에 대해 견적서에 기재된 금액을 초과하여 계약서에 기재하지 아니합니다」라고 정하고, 고객 요청으로 짐 내역이나 포장·정리 범위가 바뀌어 초과 금액을 미리 알린 경우만 예외로 둡니다. 제8조제3항은 계약서 금액 외에 「수고비등 어떠한 명목의 금액도 추가로 청구하지 아니합니다」라고 정합니다.</p>
+<p>한국소비자원이 2026년 4월 27일 낸 피해예방주의보도 같은 지점을 짚습니다. 추가 비용 피해는 「이사 당일에 이삿짐의 양이나 건물 구조 등을 이유로 화물차, 인력, 사다리차 등을 추가로 사용해야 한다며 갑작스레 비용을 요구하는 경우가 대부분」이었고, 방문 견적 없이 구두 설명이나 온라인에 입력한 이삿짐 현황만으로 계약하는 경우가 많아 분쟁에 더 취약하다고 했습니다.</p>
+<ul class="blist"><li>허가업체인지 먼저 봅니다. 허가이사종합정보(www.허가이사.org)의 허가업체 검색, 업체 소재지 시·군·구청, 「이사화물」로 표기된 화물운송주선사업 허가증 사본으로 확인할 수 있습니다</li><li>방문 견적으로 짐 양과 주요 물품을 서로 확인합니다. 협회 이용상식은 「반드시 방문견적을 통해 화물량, 주요물품을 쌍방이 확인」하라고 적었습니다</li><li>두세 곳의 견적을 같은 조건으로 받아 비교합니다. 협회 Q&amp;A는 「과도하게 낮은 금액을 제시하는 업체는 가급적 피하는 것이 좋겠습니다」라고 적었습니다</li><li>계약은 서면으로 하고, 견적 직원과 작업팀장의 이름과 전화번호를 받아 둡니다</li><li>프랜차이즈라면 실제로 계약하고 작업하는 가맹점을 확인합니다. 협회 Q&amp;A는 「본사와 가맹점은 각각의 독립된 사업자로써 소비자와의 계약이행과 보상의 주체는 가맹점」이라고 적었습니다</li></ul>
+<h3>계약금과 취소·지연 위약금</h3>
+<p>계약금은 두 기준 모두 운임 등 합계액의 10%입니다. 표준약관 제6조는 「계약금으로 운임 등의 합계액의 10%에 해당하는 금액을 청구할 수 있습니다」라고 정하고, 소비자분쟁해결기준(공정거래위원회 고시, 2025년 12월 18일 시행)의 이사화물취급사업 비고도 「계약금은 운임 등 합계액의 10%에 해당하는 금액으로 함」이라고 적습니다.</p>
+<div class="tw"><table><caption>취소·지연 때 배상 — 두 기준 비교</caption><thead><tr><th>상황</th><th>표준약관</th><th>소비자분쟁해결기준</th></tr></thead><tbody><tr><td>내 사정, 하루 전까지 취소</td><td>계약금</td><td>계약금 배상</td></tr><tr><td>내 사정, 당일 취소</td><td>계약금의 배액</td><td>계약금 및 계약금의 1배액 배상</td></tr><tr><td>업체 사정, 2일 전까지 취소</td><td>계약금의 배액</td><td>계약금 환급 및 2배액 배상</td></tr><tr><td>업체 사정, 1일 전 취소</td><td>계약금의 4배액</td><td>계약금 환급 및 4배액 배상</td></tr><tr><td>업체 사정, 당일 취소</td><td>계약금의 6배액</td><td>계약금 환급 및 6배액 배상</td></tr><tr><td>업체가 당일에도 알리지 않음</td><td>계약금의 10배액</td><td>계약금 환급 및 10배액 배상 또는 실손해액 배상</td></tr><tr><td>업체 탓으로 2시간 이상 늦음</td><td>해제, 계약금 반환 및 6배액</td><td>해제, 계약금 반환 및 2배액 배상</td></tr></tbody></table></div>
+<p>표준약관에서 업체 사정 취소는 손해배상과 별도로 이미 받은 계약금도 돌려줘야 합니다(제9조제2항 단서). 내 사정 취소는 이미 낸 계약금을 손해배상액에서 뺄 수 있습니다(제9조제1항 단서).</p>
+<p><strong>【마지막 줄은 두 기준이 다릅니다.】 업체 탓으로 인수가 2시간 이상 늦은 경우 표준약관 제9조제3항은 6배액, 소비자분쟁해결기준은 2배액입니다. 계약서 뒷면에 어떤 약관이 적혀 있는지 확인해 두십시오.</strong></p>
+<p>견적이 1,128,000원(5톤 협회 평균)인 경우로 계산하면 계약금은 112,800원입니다.</p>
+<ul class="blist"><li>업체가 하루 전에 취소 — 계약금 112,800원을 돌려받고 4배액 451,200원을 배상받습니다</li><li>업체가 당일에 취소 — 계약금 112,800원을 돌려받고 6배액 676,800원을 배상받습니다</li><li>내가 하루 전까지 취소 — 손해배상액이 계약금 112,800원이라 이미 낸 계약금으로 끝납니다</li><li>내가 당일에 취소 — 배액 225,600원에서 낸 계약금 112,800원을 빼고 112,800원을 더 냅니다</li><li>짐이 약속보다 3시간 늦게 도착(연착) — 제14조제2항: 3 × 112,800원 × 1/2 = 169,200원. 계약금의 10배액(1,128,000원)이 한도이고 1시간 미만은 세지 않습니다</li><li>내 사정으로 인수가 1시간 40분 늦어짐 — 제15조제1항: 1시간만 세어 56,400원. 계약금의 배액(225,600원)이 한도입니다</li></ul>
+<h3>짐이 깨지거나 없어졌다면</h3>
+<p>표준약관 제18조제1항은 짐을 받은 날부터 「30일 이내에 그 일부 멸실 또는 훼손의 사실을 사업자에게 통지하지 아니하면」 업체의 배상 책임이 소멸한다고 정합니다. 제2항의 전체 시효는 짐을 받은 날부터 1년입니다. 업체가 알면서 숨기고 넘긴 경우에는 이 기간이 적용되지 않고 5년간 책임이 이어집니다(제3항).</p>
+<p>협회 Q&amp;A는 이사 당일 피해가 생기면 「이사를 담당하는 책임자에게 피해사실을 적은 확인서를 서면으로 받아두시고 물품파손의 경우 사진이나 동영상을 찍어 증거자료로 남겨 두는 게 좋습니다」라고 안내합니다. 한국소비자원도 파손 우려가 있는 물품은 이사 전에 사진을 찍고 이사 후 현장에서 점검하라고 당부했습니다.</p>
+<p>한국소비자원에 접수된 이사(포장·반포장·일반) 피해구제 신청은 2023년 603건, 2024년 785건, 2025년 961건으로 늘었습니다. 2025년 접수분 가운데 총 계약대금 100만원 이하(10만원 미만 제외)인 소규모 이사 241건을 분석했더니 20~30대가 157건이었고, 유형별로는 물품 파손 및 분실 134건, 추가 비용 요구 70건, 이행 거부 또는 계약불이행 39건, 계약 취소·변경 시 과도한 위약금 27건이었습니다. 다툼이 생기면 1372소비자상담센터(국번 없이 1372)에 상담할 수 있습니다.</p>
+<h3>자주 묻는 질문</h3>
+<dl><dt>24평 포장이사 비용은 얼마쯤인가요</dt><dd>이 계산기에서 짐 양을 보통으로 넣으면 2.5톤~5톤 칸이고, 허가이사종합정보의 2025년 12월 전국평균으로 845,000원~1,128,000원입니다. 시내 10km 이내, 1층에서 1층, 평일 기준이라 사다리차와 손 없는 날·월말 할증은 따로 붙습니다. 실제 견적은 업체가 방문해 짐을 확인한 뒤 정해집니다.</dd><dt>30평대 아파트 이사비용은 얼마쯤인가요</dt><dd>30평 이상 34평 미만에 짐 양 보통이면 5톤~6톤 칸으로 1,128,000원~1,328,000원, 34평 이상이면 6톤~7.5톤 칸으로 1,328,000원~1,621,000원입니다. 협회 평균표로 만든 참고값이고, 층수에 따라 사다리 요금이 더해집니다.</dd><dt>손 없는 날에 이사하면 얼마나 비싸지나요</dt><dd>허가이사종합정보의 이사비용 구성표는 「손 없는 날, 월말 등 약 10~30% 증가」라고 적었습니다. 5톤 평균 1,128,000원이면 112,800원~338,400원이 더해지는 셈입니다. 주말 할증 폭은 협회 표에 따로 없습니다.</dd><dt>포장이사 계약금은 얼마인가요</dt><dd>운임 등 합계액의 10%입니다. 이사화물 표준약관 제6조와 소비자분쟁해결기준이 같은 비율을 씁니다. 견적이 1,128,000원이면 계약금은 112,800원입니다.</dd><dt>이사 당일에 추가 요금을 달라고 하면 내야 하나요</dt><dd>이사화물 표준약관 제8조제2항은 계약서에 적힌 금액을 넘겨 청구하지 않는다고 정합니다. 고객 책임으로 짐 내역이나 포장·정리 범위가 바뀌었고 그때 미리 알린 경우만 예외입니다. 제3항은 수고비 등 어떤 명목의 금액도 추가로 청구하지 않는다고 정합니다. 다툼이 생기면 1372소비자상담센터에 상담할 수 있습니다.</dd><dt>이사를 취소하면 위약금은 얼마인가요</dt><dd>내 사정으로 취소하면 하루 전까지는 계약금, 당일에는 계약금의 배액이고 이미 낸 계약금은 뺄 수 있습니다. 업체 사정으로 취소되면 계약금을 돌려받고, 2일 전까지는 배액, 1일 전은 4배액, 당일은 6배액, 당일에도 알리지 않으면 10배액을 배상받습니다(이사화물 표준약관 제9조).</dd><dt>짐이 깨진 걸 나중에 알았는데 언제까지 알려야 하나요</dt><dd>짐을 받은 날부터 30일 안에 업체에 알려야 합니다. 이사화물 표준약관 제18조제1항은 30일 안에 통지하지 않으면 일부 멸실·훼손에 대한 업체 책임이 소멸한다고 정합니다. 사진과 업체 책임자의 확인서를 남겨 두십시오.</dd></dl>
+<p class="note">결과는 협회 평균으로 만든 참고값이며, 실제 견적은 업체가 방문해 짐을 확인한 뒤 정해집니다. 근거 — 허가이사종합정보(전국화물자동차운송주선사업연합회) 「이사비용 정보」의 포장이사 평균 이사비용·평균 사다리 사용료(2025년 12월 전국 평균 금액)·이사비용 구성, 같은 사이트의 이사 Q&amp;A·이사서비스 이용상식·이사 체크리스트, 공정거래위원회 이사화물 표준약관(표준약관 제10035호, 2014. 9. 19. 개정) 제4조·제5조·제6조·제8조·제9조·제14조·제15조·제18조, 소비자분쟁해결기준(공정거래위원회 고시 제2025-14호, 2025. 12. 18. 시행) [별표Ⅱ] 이사화물취급사업, 한국소비자원 피해예방주의보 「방문 견적 없는 소규모 이사 계약, 추가 비용 요구 등 피해 많아」(2026. 4. 27.), 법제처 찾기쉬운 생활법령정보 「이사」. 평수를 톤수 칸으로 고르는 규칙은 공식 기준이 없어 이사 견적 플랫폼들의 공개 안내를 참고해 이 계산기가 정했습니다. 원문은 2026년 10월 8일 다시 확인했습니다. 협회 평균은 조사 시점이 바뀌면 달라집니다.</p>
+<h3>관련 도구</h3>
+<ul class="related"><li><a href="/son-eopneun-nal/">손없는날 달력</a></li><li><a href="/pyeong-calc-kr/">평수 계산기</a></li><li><a href="/chwideukse-calc/">취득세 계산기</a></li><li><a href="/wolse-gongje-calc/">월세 세액공제 계산기</a></li><li><a href="/date-calc-dday/">날짜 계산기</a></li><li><a href="/ipju-cheongso-biyong/">입주청소 비용 계산기</a></li><li><a href="/dobae-jangpan-biyong/">도배·장판 비용 계산기</a></li></ul>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+<br>운영: 에스에이치정보시스템(SH정보시스템)
+</div>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"24평 포장이사 비용은 얼마쯤인가요","acceptedAnswer":{"@type":"Answer","text":"이 계산기에서 짐 양을 보통으로 넣으면 2.5톤~5톤 칸이고, 허가이사종합정보의 2025년 12월 전국평균으로 845,000원~1,128,000원입니다. 시내 10km 이내, 1층에서 1층, 평일 기준이라 사다리차와 손 없는 날·월말 할증은 따로 붙습니다. 실제 견적은 업체가 방문해 짐을 확인한 뒤 정해집니다."}},{"@type":"Question","name":"30평대 아파트 이사비용은 얼마쯤인가요","acceptedAnswer":{"@type":"Answer","text":"30평 이상 34평 미만에 짐 양 보통이면 5톤~6톤 칸으로 1,128,000원~1,328,000원, 34평 이상이면 6톤~7.5톤 칸으로 1,328,000원~1,621,000원입니다. 협회 평균표로 만든 참고값이고, 층수에 따라 사다리 요금이 더해집니다."}},{"@type":"Question","name":"손 없는 날에 이사하면 얼마나 비싸지나요","acceptedAnswer":{"@type":"Answer","text":"허가이사종합정보의 이사비용 구성표는 「손 없는 날, 월말 등 약 10~30% 증가」라고 적었습니다. 5톤 평균 1,128,000원이면 112,800원~338,400원이 더해지는 셈입니다. 주말 할증 폭은 협회 표에 따로 없습니다."}},{"@type":"Question","name":"포장이사 계약금은 얼마인가요","acceptedAnswer":{"@type":"Answer","text":"운임 등 합계액의 10%입니다. 이사화물 표준약관 제6조와 소비자분쟁해결기준이 같은 비율을 씁니다. 견적이 1,128,000원이면 계약금은 112,800원입니다."}},{"@type":"Question","name":"이사 당일에 추가 요금을 달라고 하면 내야 하나요","acceptedAnswer":{"@type":"Answer","text":"이사화물 표준약관 제8조제2항은 계약서에 적힌 금액을 넘겨 청구하지 않는다고 정합니다. 고객 책임으로 짐 내역이나 포장·정리 범위가 바뀌었고 그때 미리 알린 경우만 예외입니다. 제3항은 수고비 등 어떤 명목의 금액도 추가로 청구하지 않는다고 정합니다. 다툼이 생기면 1372소비자상담센터에 상담할 수 있습니다."}},{"@type":"Question","name":"이사를 취소하면 위약금은 얼마인가요","acceptedAnswer":{"@type":"Answer","text":"내 사정으로 취소하면 하루 전까지는 계약금, 당일에는 계약금의 배액이고 이미 낸 계약금은 뺄 수 있습니다. 업체 사정으로 취소되면 계약금을 돌려받고, 2일 전까지는 배액, 1일 전은 4배액, 당일은 6배액, 당일에도 알리지 않으면 10배액을 배상받습니다(이사화물 표준약관 제9조)."}},{"@type":"Question","name":"짐이 깨진 걸 나중에 알았는데 언제까지 알려야 하나요","acceptedAnswer":{"@type":"Answer","text":"짐을 받은 날부터 30일 안에 업체에 알려야 합니다. 이사화물 표준약관 제18조제1항은 30일 안에 통지하지 않으면 일부 멸실·훼손에 대한 업체 책임이 소멸한다고 정합니다. 사진과 업체 책임자의 확인서를 남겨 두십시오."}}]}</script>
+</body>
+</html>

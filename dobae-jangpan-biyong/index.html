@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>도배 비용·장판 비용 계산기 — 벽·천장 ㎡로 보는 인건비 기준선과 시세</title>
+<meta property="og:title" content="도배 비용·장판 비용 계산기 — 벽·천장 ㎡로 보는 인건비 기준선과 시세">
+<meta property="og:description" content="도배 비용·장판 비용을 벽·천장·바닥 ㎡로 넣어 보는 계산기입니다. 2026 표준품셈과 2026.9.1 시중노임단가로 인건비 기준선을, 숨고 공개 가격으로 시세 범위를 보여 줍니다. 재료비·부가세는 별도입니다.">
+<meta name="description" content="도배 비용·장판 비용을 벽·천장·바닥 ㎡로 넣어 보는 계산기입니다. 2026 표준품셈과 2026.9.1 시중노임단가로 인건비 기준선을, 숨고 공개 가격으로 시세 범위를 보여 줍니다. 재료비·부가세는 별도입니다.">
+<link rel="canonical" href="https://daeillband2014-hub.github.io/dobae-jangpan-biyong/">
+<style>
+
+:root{--p:#4A5AA8;--pd:#37437F;--acc:#E63C46;--ink:#191F28;--sub:#4E5968;--mut:#8B95A1;
+--bg:#F4F5FC;--lt:#D6DAF0;--safe-b:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;color:var(--ink);
+background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+#app{flex:1;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;
+padding:calc(env(safe-area-inset-top,0px) + 76px) 20px calc(var(--safe-b) + 28px)}
+h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
+.desc{font-size:14px;color:var(--sub);line-height:1.6;margin-bottom:16px;text-align:center}
+.webhdr{position:fixed;top:0;left:0;right:0;height:52px;background:#fff;border-bottom:1px solid #E5E8EB;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:50}
+.webhdr a{color:#191F28;text-decoration:none;font-weight:800;font-size:15px}
+.webhdr a.all{font-weight:600;color:#4E5968;font-size:13px}
+.webftr{max-width:480px;margin:24px auto 0;padding:16px 20px 32px;font-size:12px;color:#8B95A1;line-height:1.7;text-align:center}
+.webftr a{color:#4E5968}
+.webseo{max-width:480px;margin:0 auto;padding:8px 20px 0;font-size:14.5px;line-height:1.8;color:#333D4B}
+.webseo h2{font-size:19px;margin:18px 0 8px;color:#191F28}
+.webseo h3{font-size:15.5px;margin:18px 0 6px;color:#191F28}
+.webseo p{margin:0 0 10px}.webseo table{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13.5px;line-height:1.55}.webseo th,.webseo td{border:1px solid #E5E8EB;padding:7px 8px;text-align:left;vertical-align:top}.webseo th{background:#F9FAFB;color:#191F28;font-weight:700}.webseo thead th{white-space:nowrap}.webseo caption{caption-side:top;text-align:left;font-weight:700;color:#191F28;padding:0 0 5px}.webseo ul{margin:0 0 12px;padding-left:18px}.webseo li{margin:0 0 4px}.webseo figure{margin:16px 0}.webseo figure img{width:100%;height:auto;border-radius:10px;display:block}.webseo figcaption{margin-top:6px;font-size:12.5px;color:#8B95A1}
+.webseo dt{font-weight:700;margin:14px 0 4px;color:#191F28}
+.webseo dd{margin:0 0 8px;color:#4E5968}
+label{display:block;font-size:13.5px;color:var(--sub);font-weight:600;margin:14px 0 6px}
+input[type=date],select{width:100%;padding:14px;border:1.5px solid var(--lt);
+border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.rcard{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 2px 12px rgba(40,50,110,.07)}
+.big{font-size:30px;font-weight:800;color:var(--pd);text-align:center;margin:2px 0 4px}
+.big.no{color:var(--acc);font-size:21px}
+.sub2{font-size:13px;color:var(--mut);text-align:center;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EEF0F8;font-size:14px}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--sub)}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.warn{background:#FFF6E5;border-left:3px solid #E0A100;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#6B5200;line-height:1.7}
+.ok{background:#EEF0FA;border-left:3px solid #4A5AA8;border-radius:8px;padding:11px 13px;margin-top:12px;font-size:13px;color:#37437F;line-height:1.7}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:14px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+table.plan{width:100%;min-width:320px;border-collapse:collapse;font-size:13.5px}
+table.plan th,table.plan td{padding:7px 6px;border-bottom:1px solid #EEF0F8;text-align:left}
+table.plan th{color:var(--mut);font-weight:400;font-size:12.5px}
+table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
+.two{display:flex;gap:8px}.two>*{flex:1;min-width:0}.two select.u{flex:0 0 84px}
+.helper{margin-top:14px;background:#fff;border:1px solid var(--lt);border-radius:12px;padding:12px 14px}
+.helper summary{font-size:14px;font-weight:700;color:var(--pd);cursor:pointer}
+label.ck{display:flex;align-items:center;gap:6px;font-weight:400}
+.btn2{width:100%;margin-top:12px;padding:12px;border:1.5px solid var(--p);border-radius:12px;background:#fff;color:var(--p);font-size:15px;font-weight:700}
+.rlabel{font-size:12.5px;color:var(--mut);text-align:center;font-weight:700;margin-bottom:4px}
+.big.rng{font-size:23px}
+.webseo{width:100%}</style>
+<!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
+</head>
+<body>
+<div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
+<div id="app">
+<h1>도배·장판 비용 계산기</h1>
+<p class="desc">벽·천장·바닥 면적을 넣으면 표준품셈 인건비 기준선과 숨고 시세 범위를 따로 보여 줍니다</p>
+
+<label for="kind">공사 종류</label>
+<select id="kind">
+<option value="rep" selected>교체 — 기존 벽지·장판을 뜯고 새로 (해체 포함)</option>
+<option value="new">신규 — 바탕면에 처음 바르기·깔기</option>
+</select>
+
+<label for="furn">가구(지장물)</label>
+<select id="furn">
+<option value="0" selected>없음 — 빈 집에서 시공</option>
+<option value="1">있음 — 살면서 시공, 가구가 있음</option>
+</select>
+
+<label for="wall">도배 벽 면적 (㎡)</label>
+<input id="wall" type="number" inputmode="decimal" min="0" step="any" placeholder="바를 벽 전체 넓이">
+
+<label for="ceil">도배 천장 면적 (㎡)</label>
+<input id="ceil" type="number" inputmode="decimal" min="0" step="any" placeholder="천장을 안 하면 비워 두세요">
+
+<details class="helper">
+<summary>방 크기로 벽·천장 면적 재기</summary>
+<div class="two">
+<div><label for="rw">가로 (m)</label><input id="rw" type="number" inputmode="decimal" min="0" step="any"></div>
+<div><label for="rl">세로 (m)</label><input id="rl" type="number" inputmode="decimal" min="0" step="any"></div>
+</div>
+<div class="two">
+<div><label for="rh">천장 높이 (m)</label><input id="rh" type="number" inputmode="decimal" min="0" step="any"></div>
+<div><label for="ro">문·창 빼기 (㎡)</label><input id="ro" type="number" inputmode="decimal" min="0" step="any" placeholder="선택"></div>
+</div>
+<label class="ck"><input id="rfl" type="checkbox" checked> 장판 바닥 칸에도 넣기</label>
+<button id="addroom" type="button" class="btn2">이 방을 위 칸에 더하기</button>
+<p class="note" id="roomnote">벽 = (가로 + 세로) × 2 × 높이 − 문·창, 천장·바닥 = 가로 × 세로입니다. 방마다 한 번씩 누르면 더해집니다. 천장 높이는 그대로 남겨 둡니다.</p>
+</details>
+
+<div id="baseBox" hidden>
+<label for="base">바탕 (신규 도배)</label>
+<select id="base">
+<option value="unk" selected>모름 — 두 경우 모두 보기</option>
+<option value="con">콘크리트·모르타르면</option>
+<option value="brd">합판·석고보드면</option>
+</select>
+</div>
+
+<label for="floor">장판 바닥 면적</label>
+<div class="two">
+<input id="floor" type="number" inputmode="decimal" min="0" step="any" placeholder="장판을 깔 곳만">
+<select id="funit" class="u" aria-label="바닥 면적 단위">
+<option value="m2" selected>㎡</option>
+<option value="py">평</option>
+</select>
+</div>
+
+<div id="jtBox" hidden>
+<label for="jt">장판 붙이는 방식 (신규)</label>
+<select id="jt">
+<option value="unk" selected>모름 — 시트형 두 방식 보기</option>
+<option value="part">시트형 부분접착</option>
+<option value="full">시트형 전면접착</option>
+<option value="tile">타일형</option>
+</select>
+</div>
+
+<label for="when">시공(입주) 예정일 · 선택</label>
+<input id="when" type="date">
+
+<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div id="out" style="margin-top:18px"></div>
+
+<!--tenping-->
+<aside class="tpad" id="tpad" hidden>
+<p class="tpad-l">광고 · 제휴</p>
+<p class="tpad-t">입주·이사 청소 견적 — <b>서경석의 이사방</b></p>
+<p class="tpad-d">이사·입주 전에 도배하신다면 입주청소도 같이 일정에 넣어 보실 수 있습니다. 새집증후군과 묵은 때를 정리하는 입주·이사 청소 서비스입니다. 견적을 받아보실 수 있습니다.</p>
+<p class="tpad-c"><b>신청 전에 확인하세요</b><br>· <b>이사 예정일이 60일 이내</b>여야 합니다<br>· 일정이 정해지지 않았거나 60일을 넘기면 접수가 무효 처리됩니다<br>· <b>이사할 때 하는 청소</b>에 해당합니다</p>
+<p><a class="tpad-b" href="https://iryan.kr/t8g3xbmrt0" target="_blank" rel="sponsored nofollow noopener">이사 청소 견적 받아보기</a></p>
+<p class="tpad-f">이 링크로 접수가 완료되면 저희가 텐핑으로부터 수수료를 받습니다. 신청하시는 분께 추가 부담은 없습니다. 서비스 내용과 진행 조건은 업체 사정에 따라 바뀔 수 있습니다.</p>
+</aside>
+<style>
+.tpad{max-width:480px;margin:22px auto 0;padding:16px 18px;background:#fff;border:1px solid #E5E8EB;
+border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif}
+.tpad-l{font-size:11px;color:#B0B8C1;letter-spacing:.5px;margin:0 0 6px}
+.tpad-t{font-size:15px;color:#191F28;font-weight:700;margin:0 0 8px;line-height:1.45}
+.tpad-d{font-size:13px;color:#4E5968;line-height:1.75;margin:0 0 10px}
+.tpad-c{font-size:12.5px;color:#4E5968;line-height:1.8;margin:0 0 12px;padding:10px 12px;
+background:#F7FBFF;border-radius:11px}
+.tpad-b{display:block;text-align:center;background:#1E6E96;color:#fff;text-decoration:none;
+font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
+.tpad-f{font-size:11.5px;color:#8B95A1;line-height:1.65;margin:10px 0 0}
+</style>
+<!--/tenping-->
+
+<p class="note">인건비 기준선은 공공 공사의 예정가격을 셈하는 표준품셈에서 사람이 일하는 품만 꺼내 2026년 9월 1일 시중노임단가를 곱한 값입니다. 재료비·경비·이윤·부가세가 빠진 참고값이고, 업체 견적은 현장을 본 뒤 정해집니다. 입력값은 기기 안에서만 계산하고 저장하지 않습니다.</p>
+</div>
+
+<script>
+var DJ = (function(){
+ /* 도배·장판 비용 계산기 — 인건비 기준선과 시세 참고 범위를 따로 낸다.
+    ① 인건비 기준선 = 면적(㎡) × 작업조 1일 노임 ÷ 하루 시공량(㎡)
+       · 2026년 건설공사 표준품셈 — 건축 5-3-7 도배바름, 5-1-1 PVC계 바닥재 설치,
+         유지관리 3-4-3 도배 교체, 3-4-4 PVC계바닥재 교체, 공통 1-2-9 소규모(작업물량 제한)
+       · 대한건설협회 2026년 하반기 시중노임단가 — 「2026. 9. 1부터 적용」, 「1일 8시간 기준」
+       ★재료비(벽지·장판지·풀·접착제)·경비·일반관리비·이윤·부가세는 들어 있지 않다.
+    ② 시세 참고 범위 = 숨고 공개 가격(건당 최저·평균·최고). 면적과 무관한 전체 분포.
+       [확인] 2026-10-08 05:30 soomgo.com/prices/도배-시공 · 장판-시공 · 도배-장판-시공
+    ③ 평 → ㎡ 는 평수 계산기(/pyeong-calc-kr/)와 같은 1평 = 3.305785㎡.
+    [확인] 품셈 원문 PDF·노임 보고서 HWP 는 2026-10-03 대한건설협회 게시물에서 받은 것으로 대조,
+           2026-10-08 노임 게시 목록에서 2026년 하반기분이 최신임을 다시 봤다. */
+ var WAGE = {dobae:229833, naejang:258904, botong:172698};      /* 원/일, 2026. 9. 1 적용 */
+ var CREW = {
+  dNew: 2*WAGE.dobae + WAGE.botong,     /* 5-3-7 도배공 2 + 보통인부 1 = 632,364 */
+  dRep: 2*WAGE.naejang,                 /* 3-4-3 내장공 2 = 517,808 */
+  jNew: 2*WAGE.naejang + WAGE.botong,   /* 5-1-1 내장공 2 + 보통인부 1 = 690,506 */
+  jRep: 2*WAGE.naejang                  /* 3-4-4 내장공 2 = 517,808 */
+ };
+ var PY = 3.305785;
+ var MKT = {
+  d:  {n:'도배 시공',      v:[170000, 700000, 2300000]},
+  j:  {n:'장판 시공',      v:[46000, 506000, 1830000]},
+  dj: {n:'도배 장판 시공', v:[250000, 1200000, 2700000]}
+ };
+ var BASE = {con:{n:'콘크리트·모르타르면', b:95}, brd:{n:'합판·석고보드면', b:85}};
+ var JT = {part:{n:'시트형 부분접착', b:140}, full:{n:'시트형 전면접착', b:100}, tile:{n:'타일형', b:40}};
+
+ function num(v){ v = parseFloat(String(v == null ? '' : v).replace(/,/g,'')); return (isFinite(v) && v > 0) ? v : 0; }
+ function r2(v){ return Math.round(v*100)/100; }
+ function comma(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+ function won(n){ return comma(n) + '원'; }
+ /* 큰 글씨용: 천 원 단위 반올림, 「155만 3천」 꼴 */
+ function man(n, unit){
+  var r = Math.round(n/1000)*1000, m = Math.floor(r/10000), c = Math.round((r - m*10000)/1000);
+  var s = (m ? comma(m) + '만' : '') + (c ? (m ? ' ' : '') + c + '천' : '');
+  if(!s) s = '0';
+  return s + (unit === false ? '' : ' 원');
+ }
+ function span(lo, hi){ return (Math.round(lo/1000) === Math.round(hi/1000)) ? man(lo) : man(lo, false) + ' ~ ' + man(hi); }
+
+ /* 1-2-9 소규모(작업물량 제한). specs = [{a:시공량, b:1일시공량}]
+    한 규격: A ≦ B/2 → Q = B/2(반나절), B/2 < A < B → Q = B(하루)
+    여러 규격(벽+천장): 소요일수 합이 1일 미만이면 일수편차(1 − 합)만큼 각 시공량에 요율을 곱한다(③㉱). */
+ function days(specs){
+  var s = 0, i;
+  for(i = 0; i < specs.length; i++) s += specs[i].a / specs[i].b;
+  var adj = s;
+  if(s > 0 && s < 1){
+   if(specs.length === 1) adj = (s <= 0.5) ? 0.5 : 1;
+   else adj = s * (1 + (1 - s));
+  }
+  return {raw:s, adj:adj};
+ }
+
+ function group(crew, specs){
+  specs = specs.filter(function(x){ return x.a > 0; });
+  var d = days(specs), prop = 0;
+  specs.forEach(function(x){ x.cost = x.a * crew / x.b; x.unit = crew / x.b; prop += x.cost; });
+  return {crew:crew, specs:specs, raw:d.raw, adj:d.adj, prop:prop, small:d.adj * crew};
+ }
+ function dobae(kind, furn, wall, ceil, bkey){
+  if(kind === 'rep'){
+   var k = furn ? 0.85 : 1;
+   return group(CREW.dRep, [{n:'벽', a:wall, b:46*k}, {n:'천장', a:ceil, b:35*k}]);
+  }
+  var b = BASE[bkey].b;
+  var g = group(CREW.dNew, [{n:'벽', a:wall, b:b}, {n:'천장', a:ceil, b:b*0.77}]);
+  g.label = BASE[bkey].n; g.bb = b; return g;
+ }
+ function jangpan(kind, furn, floor, jkey){
+  if(kind === 'rep') return group(CREW.jRep, [{n:'바닥', a:floor, b:61*(furn ? 0.85 : 1)}]);
+  var g = group(CREW.jNew, [{n:'바닥', a:floor, b:JT[jkey].b}]);
+  g.label = JT[jkey].n; g.bb = JT[jkey].b; return g;
+ }
+
+ /* o = {kind:'rep'|'new', furn:bool, wall, ceil, floor(㎡), base:'con'|'brd'|'unk', jt:'part'|'full'|'tile'|'unk'} */
+ function estimate(o){
+  var kind = o.kind === 'new' ? 'new' : 'rep', furn = !!o.furn;
+  var wall = num(o.wall), ceil = num(o.ceil), floor = num(o.floor);
+  var D = [], J = [];
+  if(wall + ceil > 0){
+   if(kind === 'new'){
+    var bk = BASE[o.base] ? [o.base] : ['con', 'brd'];
+    bk.forEach(function(k){ D.push(dobae(kind, furn, wall, ceil, k)); });
+   } else D.push(dobae(kind, furn, wall, ceil));
+  }
+  if(floor > 0){
+   if(kind === 'new'){
+    var jk = JT[o.jt] ? [o.jt] : ['part', 'full'];
+    jk.forEach(function(k){ J.push(jangpan(kind, furn, floor, k)); });
+   } else J.push(jangpan(kind, furn, floor));
+  }
+  function mn(a, f){ return a.length ? Math.min.apply(null, a.map(f)) : 0; }
+  function mx(a, f){ return a.length ? Math.max.apply(null, a.map(f)) : 0; }
+  var lo = mn(D, function(g){ return g.prop; }) + mn(J, function(g){ return g.prop; });
+  var hi = mx(D, function(g){ return g.small; }) + mx(J, function(g){ return g.small; });
+  var mk = (D.length && J.length) ? 'dj' : (D.length ? 'd' : (J.length ? 'j' : ''));
+  return {kind:kind, furn:furn, wall:wall, ceil:ceil, floor:floor, D:D, J:J, lo:lo, hi:hi, market:mk};
+ }
+
+ /* 날짜: 오늘(현지 날짜)부터 며칠 뒤인가 */
+ function dayDiff(iso, today){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return null;
+  var p = iso.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
+  if(isNaN(d.getTime())) return null;
+  var t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  return Math.round((d - t) / 86400000);
+ }
+ /* 텐핑 칸: 예정일이 오늘부터 60일 이내(0~60일)일 때만 보인다. 빈 값·지난 날짜·61일 이상은 숨김. */
+ function within60(iso, today){ var n = dayDiff(iso, today); return n !== null && n >= 0 && n <= 60; }
+
+ function row(k, v){ return '<div class="row"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
+
+ function render(o, today){
+  var e = estimate(o), h = '';
+  if(!e.D.length && !e.J.length){
+   return '<div class="rcard"><div class="big no">면적을 넣어 주십시오</div>'
+    + '<div class="sub2">도배 벽·천장 ㎡ 또는 장판 바닥 면적 중 하나 이상</div></div>';
+  }
+  h += '<div class="rcard"><p class="rlabel">인건비 기준선 · 참고값</p>';
+  h += '<div class="big' + (Math.round(e.lo/1000) === Math.round(e.hi/1000) ? '' : ' rng') + '">약 ' + span(e.lo, e.hi) + '</div>';
+  h += '<div class="sub2">표준품셈 × 2026. 9. 1 시중노임단가<br><b>재료비(벽지·장판지)·경비·이윤·부가세는 빠져 있습니다</b></div>';
+
+  function rows(G, name){
+   if(!G.length) return;
+   G[0].specs.forEach(function(s, i){
+    var lo = Math.min.apply(null, G.map(function(g){ return g.specs[i].cost; }));
+    var hi = Math.max.apply(null, G.map(function(g){ return g.specs[i].cost; }));
+    var ulo = Math.min.apply(null, G.map(function(g){ return g.specs[i].unit; }));
+    var uhi = Math.max.apply(null, G.map(function(g){ return g.specs[i].unit; }));
+    var unit = (Math.round(ulo) === Math.round(uhi)) ? comma(ulo) : comma(ulo) + '~' + comma(uhi);
+    h += row(name + ' ' + s.n + ' ' + r2(s.a) + '㎡ <span style="color:#8B95A1;font-weight:400">× ㎡당 약 ' + unit + '원</span>',
+             (Math.round(lo) === Math.round(hi)) ? won(lo) : comma(lo) + ' ~ ' + won(hi));
+   });
+  }
+  rows(e.D, '도배');
+  if(o.funit === 'py' && num(o.floorPy) > 0) h += row('장판 바닥 ' + r2(num(o.floorPy)) + '평 × 3.305785', r2(e.floor) + '㎡');
+  rows(e.J, '장판');
+
+  /* 1-2-9 소규모 — 공종마다 한 줄(바탕·방식을 모를 때는 소요일수를 범위로) */
+  var sm = [];
+  [[e.D, '도배'], [e.J, '장판']].forEach(function(p){
+   var G = p[0].filter(function(g){ return g.adj > g.raw + 1e-9; });
+   if(!G.length) return;
+   var rl = Math.min.apply(null, G.map(function(g){ return g.raw; })), rh = Math.max.apply(null, G.map(function(g){ return g.raw; }));
+   var al = Math.min.apply(null, G.map(function(g){ return g.adj; })), ah = Math.max.apply(null, G.map(function(g){ return g.adj; }));
+   var sl = Math.min.apply(null, G.map(function(g){ return g.small; })), sh = Math.max.apply(null, G.map(function(g){ return g.small; }));
+   function rg(a, b, f){ return (f(a) === f(b)) ? f(a) : f(a) + '~' + f(b); }
+   sm.push(p[1] + ' 소요 ' + rg(rl, rh, r2) + '일 → ' + rg(al, ah, r2) + '일치 ' + rg(sl, sh, comma) + '원');
+  });
+  if(sm.length){
+   h += '<div class="warn"><b>하루 일감이 안 되는 면적입니다.</b> 품셈 1-2-9(소규모)는 하루 시공량에 못 미치는 공사를 반나절이나 하루치로 올려 잡습니다. '
+      + sm.join(' · ') + '. 범위의 위쪽 값에 넣었습니다. 원문은 「복합 공종 시공 시에는 본 할증을 적용하지 않는다」고 덧붙입니다.</div>';
+  }
+
+  /* 식 */
+  var f = [];
+  if(e.D.length){
+   if(e.kind === 'rep') f.push('도배 교체(3-4-3): 내장공 2인 × 258,904원 = 517,808원/일 ÷ 하루 시공량 벽 '
+      + (e.furn ? '39.1㎡·천장 29.75㎡(가구 있음, 15% 감)' : '46㎡·천장 35㎡'));
+   else f.push('도배바름(5-3-7): 도배공 2인 × 229,833원 + 보통인부 1인 × 172,698원 = 632,364원/일 ÷ 하루 시공량 '
+      + e.D.map(function(g){ return g.label + ' ' + g.bb + '㎡'; }).join(' / ')
+      + (e.ceil > 0 ? ', 천장은 23% 감' : ''));
+  }
+  if(e.J.length){
+   if(e.kind === 'rep') f.push('PVC계바닥재 교체(3-4-4): 내장공 2인 = 517,808원/일 ÷ 하루 시공량 '
+      + (e.furn ? '51.85㎡(가구 있음, 15% 감)' : '61㎡'));
+   else f.push('PVC계 바닥재 설치(5-1-1): 내장공 2인 × 258,904원 + 보통인부 1인 × 172,698원 = 690,506원/일 ÷ '
+      + e.J.map(function(g){ return g.label + ' ' + g.bb + '㎡'; }).join(' / '));
+  }
+  h += '<p class="note" style="margin-top:12px"><b>식</b> 면적 × 작업조 1일 노임 ÷ 하루 시공량<br>' + f.join('<br>') + '</p>';
+  if(e.kind === 'rep') h += '<p class="note" style="margin-top:6px">교체 품에는 기존 도배지·바닥재 해체가 들어 있습니다. 가구 운반은 품셈에서도 별도입니다.</p>';
+  if(e.kind === 'new' && e.furn) h += '<p class="note" style="margin-top:6px">신규 품(5-3-7·5-1-1)에는 가구(지장물) 감 규정이 없어 반영하지 않았습니다. 살고 있는 집의 기존 벽지·장판을 뜯고 새로 하는 경우라면 「교체」를 고르십시오.</p>';
+
+  var dd = dayDiff(o.when, today);
+  if(dd !== null){
+   h += row('시공(입주) 예정일', o.when + (dd > 0 ? ' · ' + dd + '일 뒤' : (dd === 0 ? ' · 오늘' : ' · 지난 날짜')));
+   if(+String(o.when).slice(0, 4) >= 2027) h += '<p class="note" style="margin-top:6px">예정일이 2027년입니다. 시중노임단가는 해마다 1월과 9월에 새로 적용되므로 그때 단가로 다시 보십시오. 이 계산은 2026. 9. 1 적용 단가입니다.</p>';
+  }
+  h += '</div>';
+
+  /* 시세 */
+  var m = MKT[e.market];
+  h += '<div class="rcard" style="margin-top:12px"><p class="rlabel">시세 참고 범위 · 숨고 공개 가격</p>';
+  h += '<div class="big rng">' + man(m.v[0], false) + ' ~ ' + man(m.v[2]) + '</div>';
+  h += '<div class="sub2">「' + m.n + '」 건당 최저~최고 · 평균 ' + man(m.v[1]) + '<br>2026년 10월 8일 확인</div>';
+  if(e.market === 'dj'){
+   h += row('도배 시공만 <span style="color:#8B95A1;font-weight:400">평균 ' + man(MKT.d.v[1]) + '</span>', man(MKT.d.v[0], false) + ' ~ ' + man(MKT.d.v[2]));
+   h += row('장판 시공만 <span style="color:#8B95A1;font-weight:400">평균 ' + man(MKT.j.v[1]) + '</span>', man(MKT.j.v[0], false) + ' ~ ' + man(MKT.j.v[2]));
+  }
+  h += '<p class="note">면적과 상관없이 숨고에서 오간 견적 전체의 분포입니다. 숨고는 「고수가 책정하는 견적 데이터를 기반으로 산출」했다고만 밝히고 기준 시점과 표본 수는 적지 않았습니다.</p></div>';
+
+  h += '<p class="warn"><b>실제 견적은 업체 방문 확인 뒤 정해집니다.</b> 위 두 숫자는 모두 참고값입니다. 벽지·장판 제품, 바탕 상태, 가구 옮기기, 폐기물 처리, 부가세 포함 여부를 견적서에서 확인하십시오.</p>';
+  return h;
+ }
+
+ return {WAGE:WAGE, CREW:CREW, PY:PY, MKT:MKT, num:num, r2:r2, comma:comma, man:man,
+         days:days, estimate:estimate, dayDiff:dayDiff, within60:within60, render:render};
+})();
+
+(function(){
+ if(typeof document === 'undefined' || !document.getElementById('go')) return;
+ var $ = function(id){ return document.getElementById(id); };
+ function iso(d){ return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+ function sync(){
+  var nw = $('kind').value === 'new';
+  $('baseBox').hidden = !nw; $('jtBox').hidden = !nw;
+ }
+ function input(){
+  var py = $('funit').value === 'py';
+  var fv = DJ.num($('floor').value);
+  return {kind:$('kind').value, furn:$('furn').value === '1', wall:$('wall').value, ceil:$('ceil').value,
+          floor: py ? fv * DJ.PY : fv, floorPy: py ? fv : 0, funit:$('funit').value,
+          base:$('base').value, jt:$('jt').value, when:$('when').value};
+ }
+ function calc(){
+  sync();
+  var o = input(), today = new Date();
+  if(!(DJ.num(o.wall) + DJ.num(o.ceil) + DJ.num(o.floor) > 0)){ $('out').innerHTML = ''; }
+  else $('out').innerHTML = DJ.render(o, today);
+  /* 텐핑 칸은 예정일이 오늘부터 60일 이내일 때만 */
+  $('tpad').hidden = !DJ.within60(o.when, today);
+ }
+ function addRoom(){
+  var w = DJ.num($('rw').value), l = DJ.num($('rl').value), ht = DJ.num($('rh').value), op = DJ.num($('ro').value);
+  if(!(w > 0 && l > 0)){ $('roomnote').innerHTML = '<b>가로와 세로를 넣어 주십시오.</b> 벽까지 구하려면 천장 높이도 필요합니다.'; return; }
+  var wall = ht > 0 ? Math.max(0, 2 * (w + l) * ht - op) : 0, flr = w * l;
+  function add(id, v){ $(id).value = DJ.r2(DJ.num($(id).value) + v); }
+  if(wall > 0) add('wall', wall);
+  add('ceil', flr);
+  if($('rfl').checked) add('floor', $('funit').value === 'py' ? flr / DJ.PY : flr);
+  $('roomnote').innerHTML = '더했습니다: 벽 ' + DJ.r2(wall) + '㎡, 천장 ' + DJ.r2(flr) + '㎡' + ($('rfl').checked ? ', 바닥 ' + DJ.r2(flr) + '㎡' : '')
+    + '. 다른 방도 같은 방법으로 더하십시오.';
+  ['rw', 'rl', 'ro'].forEach(function(id){ $(id).value = ''; });
+  calc();
+ }
+ $('when').min = iso(new Date());
+ $('go').addEventListener('click', calc);
+ $('addroom').addEventListener('click', addRoom);
+ ['kind', 'furn', 'wall', 'ceil', 'floor', 'funit', 'base', 'jt', 'when'].forEach(function(id){
+  $(id).addEventListener('change', calc);
+  $(id).addEventListener('input', calc);
+ });
+ calc();
+})();
+</script>
+
+<section class="webseo">
+<h2>도배 비용·장판 비용, 무엇으로 셈하나</h2>
+<h3>10초 요약</h3>
+<p><strong>벽 1㎡ 인건비 기준선은 새로 바르면 약 6,656~7,440원, 기존 벽지를 뜯고 다시 바르면 약 11,257원입니다.</strong> 장판(PVC 시트)은 새로 깔면 ㎡당 약 4,932~6,905원, 뜯고 다시 깔면 약 8,489원입니다.</p>
+<p>2026년 건설공사 표준품셈의 하루 시공량과 대한건설협회 2026년 하반기 시중노임단가(2026년 9월 1일 적용)를 곱한 값입니다. <strong>벽지·장판지 같은 재료비와 경비·이윤·부가세는 빠져 있습니다.</strong></p>
+<p>시세는 숨고가 공개한 건당 가격으로 따로 봅니다. 「도배 시공」 17만~230만 원(평균 70만 원), 「장판 시공」 4만 6천~183만 원(평균 50만 6천 원), 「도배 장판 시공」 25만~270만 원(평균 120만 원)입니다. 2026년 10월 8일에 확인한 값입니다.</p>
+
+<h3>이 도배 견적 계산기가 쓰는 식</h3>
+<p>입력한 면적을 하루 시공량으로 나눠 며칠 일감인지 구하고, 거기에 작업조 하루 노임을 곱합니다.</p>
+<p><strong>인건비 기준선 = 면적(㎡) × 작업조 1일 노임 ÷ 하루 시공량(㎡)</strong></p>
+<p>작업조 하루 노임은 품셈의 인원에 2026년 9월 1일 적용 시중노임단가를 곱한 값입니다.</p>
+<ul>
+<li>도배 신규(5-3-7): 도배공 2인 × 229,833원 + 보통인부 1인 × 172,698원 = <b>632,364원</b></li>
+<li>도배 교체(3-4-3)·장판 교체(3-4-4): 내장공 2인 × 258,904원 = <b>517,808원</b></li>
+<li>장판 신규(5-1-1): 내장공 2인 × 258,904원 + 보통인부 1인 × 172,698원 = <b>690,506원</b></li>
+</ul>
+<div class="tw"><table><caption>공종별 하루 시공량과 ㎡당 기준선</caption><thead><tr><th>공종 · 품셈</th><th>하루 시공량</th><th>㎡당</th></tr></thead><tbody>
+<tr><td>도배 신규 벽 · 5-3-7</td><td>콘크리트·모르타르면 95㎡ / 합판·석고보드면 85㎡</td><td>약 6,656원 / 약 7,440원</td></tr>
+<tr><td>도배 신규 천장 · 5-3-7</td><td>위 시공량의 23% 감 (73.15㎡ / 65.45㎡)</td><td>약 8,645원 / 약 9,662원</td></tr>
+<tr><td>도배 교체 벽 · 3-4-3</td><td>46㎡ (가구 있으면 39.1㎡)</td><td>약 11,257원 (약 13,243원)</td></tr>
+<tr><td>도배 교체 천장 · 3-4-3</td><td>35㎡ (가구 있으면 29.75㎡)</td><td>약 14,795원 (약 17,405원)</td></tr>
+<tr><td>장판 신규 · 5-1-1</td><td>시트형 부분접착 140㎡ / 전면접착 100㎡ / 타일형 40㎡</td><td>약 4,932원 / 약 6,905원 / 약 17,263원</td></tr>
+<tr><td>장판 교체 · 3-4-4</td><td>61㎡ (가구 있으면 51.85㎡)</td><td>약 8,489원 (약 9,987원)</td></tr>
+</tbody></table></div>
+<p>교체 품에는 기존 도배지와 바닥재를 뜯는 일이 이미 들어 있습니다. 그래서 「교체」를 고르면 해체 품(3-2-7·3-2-8)을 따로 더하지 않습니다. 해체만 하는 품을 같은 노임으로 셈하면 도배 벽 ㎡당 약 2,702원, 천장 약 3,507원, PVC 바닥재 약 2,244원입니다.</p>
+
+<h3>표준품셈 원문 그대로</h3>
+<ul>
+<li><b>건축부문 5-3-7 도배바름('15, '24년 보완)</b> — 일당 도배공 2인, 보통인부 1인. 시공량 「합판･석고보드면 85」, 「콘크리트･모르타르면 95」(㎡). 비고 「천장은 본 시공량의 23%를 감한다.」 주 「본 품은 바탕 벽면에 초배지와 정배지를 바르는 기준이다.」, 「본 품은 풀먹임, 초배 바름, 정배 바름이 포함된 것이다.」</li>
+<li><b>유지관리부문 3-4-3 도배 교체('22년 신설)</b> — 일당 내장공 2인. 시공량 벽 46, 천장 35(㎡). 비고 「사용중인 세대로 가구 등의 지장물이 있는 경우 시공량의 15%를 감한다.」 주 「본 품은 도배지 해체, 바탕정리, 풀먹임, 초배 및 정배 바름 작업을 포함한다.」, 「가구 등 지장물의 운반은 별도 계상한다.」</li>
+<li><b>유지관리부문 3-2-7 도배 해체('22년 신설)</b> — ㎡당 벽 도배공 0.008인·보통인부 0.005인, 천장 0.010인·0.007인. 주 「폐기물 처리비용은 별도 계상한다.」</li>
+<li><b>건축부문 5-1-1 PVC계 바닥재 설치('15, '24년 보완)</b> — 일당 내장공 2인, 보통인부 1인. 시공량 타일형 40, 시트형(전면접착 방식) 100, 시트형(부분접착 방식) 140(㎡). 주 「본 품은 접착제 바르기, 바닥재 절단 및 붙이기, 보양재 덮기 및 제거 작업을 포함한다.」</li>
+<li><b>유지관리부문 3-4-4 PVC계바닥재 교체('22년 신설)</b> — 일당 내장공 2인, 시공량 61㎡, 가구 등 지장물이 있으면 15% 감. 주 「본 품은 바닥재 해체, 바탕정리, 접착제(부분접합 방식) 바름, 바닥재 설치 작업을 포함한다.」</li>
+<li><b>공통부문 1-2-9 소규모(작업물량 제한)('23년 신설, '25년 보완)</b> — 「A ≦ B/2 일 경우 Q = B/2」, 「B/2 &lt; A &lt; B 일 경우 Q = B」(A 시공량, B 1일시공량, Q 적용시공량). 규격이 섞이면 「규격별 소요일수의 합이 1일 미만일 경우 소규모(작업물량 제한) 적용」하고, 「복합 공종 시공 시에는 본 할증을 적용하지 않는다.」</li>
+</ul>
+<p>표준품셈 첫머리는 목적을 「정부 등 공공기관에서 시행하는 건설공사의 적정한 예정가격을 산정하기 위한 일반적인 기준을 제공하는 데 있다」고 적고, 품은 「일일 작업시간 8시간을 기준한 것」이라고 밝힙니다. 집 도배를 맡는 업체가 이 표대로 값을 매겨야 하는 것은 아닙니다. 이 쪽이 결과를 가격이 아니라 「기준선」이라고 부르는 까닭입니다.</p>
+
+<h3>시중노임단가 — 2026년 9월 1일부터</h3>
+<p>대한건설협회 「2026년 하반기 적용 건설업 임금실태조사 보고서」는 「본 조사 보고서는 2026. 9. 1부터 적용하시기 바랍니다」, 「본 조사임금은 1일 8시간 기준」이라고 적습니다. 이 계산기에 들어간 세 직종은 다음과 같습니다.</p>
+<div class="tw"><table><caption>시중노임단가 (원/일)</caption><thead><tr><th>직종</th><th>2026. 9. 1 적용</th><th>2026. 1. 1 적용</th></tr></thead><tbody><tr><td>도배공</td><td>229,833</td><td>227,614</td></tr><tr><td>내장공</td><td>258,904</td><td>256,883</td></tr><tr><td>보통인부</td><td>172,698</td><td>172,068</td></tr></tbody></table></div>
+<p>보고서의 직종 해설은 도배공을 「실내의 벽체, 천정, 바닥, 창호 등 실내표면에 종이나 장판지 등 도배재료를 부착시키는 사람」, 내장공을 「건물의 내부에 수장재를 사용하여 마무리하는 사람」으로 풀이합니다. 신규 도배바름은 도배공이, 유지관리부문의 도배 교체는 내장공이 작업조로 잡혀 있어 같은 벽이라도 ㎡당 값이 달라집니다.</p>
+<p>단가는 해마다 1월과 9월 두 번 새로 적용됩니다. 시공 예정일이 2027년으로 넘어가면 그때 나온 단가로 다시 보십시오.</p>
+
+<h3>계산 예시</h3>
+<p><strong>예시 1 — 사는 집 방 하나, 교체, 가구 있음.</strong> 가로 3.3m, 세로 3.0m, 높이 2.3m로 잰 방이면 벽은 (3.3 + 3.0) × 2 × 2.3 = 28.98㎡, 천장은 3.3 × 3.0 = 9.9㎡입니다. 가구가 있어 하루 시공량이 벽 39.1㎡, 천장 29.75㎡로 줄어듭니다. 28.98 × 517,808 ÷ 39.1 = 383,787원, 9.9 × 517,808 ÷ 29.75 = 172,313원을 더해 <strong>약 55만 6천 원</strong>입니다. 소요일수가 약 1.07일이라 소규모 조정은 걸리지 않습니다.</p>
+<p><strong>예시 2 — 빈 집 전체, 교체.</strong> 벽 120㎡, 천장 50㎡, 장판 60㎡입니다. 도배는 120 × 517,808 ÷ 46 = 1,350,803원과 50 × 517,808 ÷ 35 = 739,726원을 더한 2,090,529원, 장판은 60 × 517,808 ÷ 61 = 509,319원입니다. 장판은 하루 시공량 61㎡에 조금 못 미쳐 1-2-9를 따르면 하루치 517,808원이 됩니다. 기준선은 <strong>약 260만~260만 8천 원</strong>입니다.</p>
+<p><strong>예시 3 — 새로 바르기, 바탕 모름.</strong> 벽 100㎡, 천장 30㎡입니다. 콘크리트·모르타르면이면 665,646원 + 259,343원 = 924,989원, 합판·석고보드면이면 743,958원 + 289,854원 = 1,033,811원으로 <strong>약 92만 5천~103만 4천 원</strong>입니다.</p>
+<p>세 예시 모두 재료비와 업체 경비·이윤·부가세가 빠진 값입니다. 숨고 시세 범위는 면적과 상관없는 건당 분포라서 예시마다 따로 바뀌지 않습니다.</p>
+
+<h3>평수로는 왜 바로 안 나오나 — 도배 평수 계산기 대신 벽 면적 재기</h3>
+<p>「24평 도배 비용」처럼 집 평형으로 찾는 분이 많지만, 평형에서 벽 면적을 내는 공식 환산식은 찾지 못했습니다. 같은 평형이라도 방 개수, 천장 높이, 창과 붙박이장 크기에 따라 바를 벽이 달라집니다. 그래서 이 계산기는 벽과 천장을 ㎡로 직접 넣게 했고, 평형 어림은 쓰지 않습니다.</p>
+<ul>
+<li>벽: (가로 + 세로) × 2 × 천장 높이. 문과 창 넓이는 빼도 되고, 빼지 않으면 그만큼 넉넉하게 잡힙니다.</li>
+<li>천장: 평평한 천장이면 가로 × 세로로, 그 방 바닥 넓이와 같습니다.</li>
+<li>바닥(장판): 장판을 깔 곳만 잽니다. 전용면적 숫자를 그대로 넣으면 욕실·현관처럼 장판을 깔지 않는 곳까지 들어갈 수 있습니다.</li>
+</ul>
+<p>평으로 알고 있는 바닥 넓이는 1평 = 3.305785㎡로 바꿉니다. <a href="../pyeong-calc-kr/">평수 계산기</a>와 같은 계수입니다. 분양 광고의 평형은 공급면적이라 전용면적과 다르니, 그 차이는 평수 계산기에서 먼저 확인하십시오.</p>
+
+<h3>무엇이 값을 올리고 내리나</h3>
+<ul>
+<li><b>신규냐 교체냐.</b> 같은 벽이라도 교체(해체 포함)는 ㎡당 약 11,257원으로, 콘크리트면 신규(약 6,656원)의 약 1.7배입니다.</li>
+<li><b>천장.</b> 신규는 하루 시공량을 23% 줄이고, 교체는 벽 46㎡ 대 천장 35㎡로 따로 둡니다. 어느 쪽이든 ㎡당 약 1.3배가 됩니다.</li>
+<li><b>가구(지장물).</b> 교체 품은 가구가 있으면 하루 시공량을 15% 줄입니다. 같은 면적이면 기준선이 약 17.6% 올라가고, 가구 운반은 따로 계상합니다.</li>
+<li><b>바탕.</b> 신규 도배는 합판·석고보드면(85㎡)이 콘크리트·모르타르면(95㎡)보다 ㎡당 약 11.8% 높습니다.</li>
+<li><b>장판 붙이는 방식.</b> 시트형 부분접착(140㎡)에 견주면 전면접착(100㎡)은 1.4배, 타일형(40㎡)은 3.5배입니다.</li>
+<li><b>작은 면적.</b> 하루 일감이 안 되면 1-2-9에 따라 반나절이나 하루치로 올려 잡습니다. 방 하나만 할 때 ㎡당 값이 커지는 까닭입니다.</li>
+<li><b>재료.</b> 품셈은 신규 도배 ㎡당 정배지 1.2㎡, 풀 0.3㎏(할증 포함)을 재료량으로 적지만 값은 정하지 않습니다. 숨고 설명문은 실크 벽지를 「평당 약 6,000원 수준」, 합지를 「평당 약 3~4,000원」으로 적었는데 근거와 시점은 밝히지 않았습니다.</li>
+<li><b>폐기물.</b> 해체 품(3-2-7·3-2-8)은 「폐기물 처리비용은 별도 계상한다」고 적습니다. 견적에 철거 쓰레기 처리가 들어 있는지 보십시오.</li>
+</ul>
+
+<h3>견적 받을 때 확인할 것</h3>
+<ul>
+<li><b>면적</b> — 벽과 천장을 ㎡로 따로 적었는지, 「평당」이 집 평형 기준인지 벽 면적 기준인지.</li>
+<li><b>제품</b> — 벽지와 장판의 제품명·종류(합지·실크, 장판 두께), 재료비가 금액에 들어 있는지.</li>
+<li><b>범위</b> — 기존 벽지·장판 철거, 폐기물 처리, 가구 옮기기가 포함인지 별도인지.</li>
+<li><b>부가세</b> — 금액이 부가세 포함인지 별도인지. 별도라면 <a href="../vat-calc-kr/">부가세 계산기</a>로 합계를 보십시오.</li>
+<li><b>상세견적서</b> — 자재명·단가·수량을 적은 상세견적서는 분쟁해결기준이 계약서로 봅니다(아래).</li>
+<li><b>일정</b> — 시공일과 하자 보수 연락처. 이사 날짜에 맞춘다면 <a href="../son-eopneun-nal/">손없는 날</a> 달력도 함께 보십시오.</li>
+</ul>
+
+<h3>분쟁·취소 규정 — 소비자분쟁해결기준</h3>
+<p>공정거래위원회 고시 「소비자분쟁해결기준」(제2025-14호, 2025년 12월 18일 시행)은 실내건축공사업 기준을 따로 둡니다. 이 업종의 품목별 하자 표에 <b>벽지</b>가 들어 있습니다. 장판은 그 표에 품목 이름으로 나오지 않습니다.</p>
+<div class="tw"><table><caption>실내건축공사업 해결기준 (원문 요약)</caption><thead><tr><th>분쟁 유형</th><th>해결기준</th></tr></thead><tbody>
+<tr><td>시공 상 하자(균열, 누수, 파손 등)</td><td>하자담보책임기간 이내 무상수리, 이후 유상수리</td></tr>
+<tr><td>소비자의 요청에 의한 변경시공</td><td>추가비용 소비자 부담</td></tr>
+<tr><td>사업자 책임 해제 · 계약 또는 실측만 한 경우</td><td>선급금 전액 환급 및 총 시공비의 10% 배상</td></tr>
+<tr><td>사업자 책임 해제 · 공사에 착수한 후</td><td>대금정산 후 총 시공비의 10% 배상</td></tr>
+<tr><td>소비자 책임 해제 · 계약 또는 실측만 한 경우</td><td>계약금을 위약금으로 하되 총시공비의 10%를 한도로 배상</td></tr>
+<tr><td>소비자 책임 해제 · 제작 또는 공사에 착수한 경우</td><td>실손해액 배상(사업자가 입증)</td></tr>
+<tr><td>공사기간 지연 · 착수 전 / 착수 후</td><td>계약해제 / 실손해액 배상</td></tr>
+<tr><td>계약서 미교부 · 착수 전 / 착수 후</td><td>계약해제 및 선급금 전액 환급 / 대금정산 후 계약해제</td></tr>
+</tbody></table></div>
+<p>벽지의 하자 기준은 품질불량 「변·퇴색, 색채불량, 기준규격 미달 등」, 시공상의 하자 「변·퇴색, 보풀현상」입니다. 하자담보책임기간은 「「건설산업기본법」시행령 별표4의 15. 전문공사 기준을 준용」한다고 적혀 있습니다.</p>
+<p>비고에는 두 가지가 더 있습니다. 「시공 항목별 자재명, 단가, 수량 등이 구체적으로 기재된 상세견적서는 계약서로 간주함」, 그리고 지연에 따른 실손해를 소비자가 입증하지 못하면 공사완료 전까지 지급한 금액에 대해 「공사지연일로부터 최종 공사완공일까지 기간에 연체이율(민법상 법정이율5%)을 적용한 지연손해금 배상」입니다. 참고 법령으로 공정거래위원회 「실내건축 표준계약서(제10079호)」가 걸려 있습니다.</p>
+
+<h3>입주 전에 도배·장판과 청소를 함께 잡는다면</h3>
+<p>도배와 장판은 기존 것을 뜯고 새것을 재단하는 동안 먼지와 자투리가 나옵니다. 입주청소를 같은 주에 잡는다면 시공이 끝난 뒤로 날짜를 두어야 두 번 치우는 일을 줄일 수 있습니다. 계산기에 시공(입주) 예정일을 넣으면, 오늘부터 60일 안일 때만 결과 아래에 입주청소 견적 안내가 보입니다.</p>
+
+<h3>자주 묻는 질문</h3>
+<dl>
+<dt>도배 비용 평당 얼마로 보면 되나요?</dt><dd>표준품셈은 평이 아니라 실제로 바르는 벽·천장의 ㎡로 셉니다. 벽 1㎡ 인건비 기준선은 콘크리트면 신규 약 6,656원, 교체(해체 포함) 약 11,257원이고, 1평(3.305785㎡)으로 바꾸면 각각 약 22,005원, 약 37,212원입니다. 견적서의 「평당」이 집 평형 기준인지 벽 면적 기준인지 먼저 물어보십시오.</dd>
+<dt>평수만 알면 도배 면적을 알 수 있나요?</dt><dd>집 평형에서 벽 면적을 내는 공식 환산식은 찾지 못했습니다. 같은 평형이라도 방 개수, 천장 높이, 창과 붙박이장 크기에 따라 벽 면적이 달라집니다. 방마다 (가로 + 세로) × 2 × 높이로 벽을, 가로 × 세로로 천장을 재는 것이 가장 정확합니다.</dd>
+<dt>도배 장판 비용을 같이 보면 얼마인가요?</dt><dd>이 계산기는 도배와 장판의 인건비 기준선을 따로 낸 뒤 더합니다. 시세는 숨고가 공개한 「도배 장판 시공」 건당 가격이 최저 25만 원, 평균 120만 원, 최고 270만 원입니다(2026년 10월 8일 확인, 기준 시점·표본 수 표기 없음). 재료와 작업 범위가 업체마다 달라 실제 견적은 현장을 본 뒤 정해집니다.</dd>
+<dt>인건비 기준선에 재료비가 빠진 이유는 무엇인가요?</dt><dd>표준품셈은 공공 공사의 예정가격을 산정하는 기준이고, 이 계산기는 그중 사람이 일하는 품만 시중노임단가로 곱했습니다. 벽지·장판지·풀 같은 재료비와 경비, 일반관리비, 이윤, 부가세는 들어 있지 않습니다. 인건비만 따진 기준선으로만 보십시오.</dd>
+<dt>가구가 있는 집에서 하면 비용이 달라지나요?</dt><dd>유지관리부문 3-4-3 도배 교체와 3-4-4 PVC계바닥재 교체는 사용 중인 세대에 가구 등 지장물이 있으면 하루 시공량을 15% 줄입니다. 같은 면적이면 인건비 기준선이 약 17.6% 올라갑니다. 가구 운반은 별도로 계상한다고 적혀 있으니 견적에 가구 옮기는 비용이 따로 붙는지도 확인하십시오.</dd>
+<dt>방 하나만 도배하면 면적만큼만 내면 되나요?</dt><dd>품셈 1-2-9(소규모)는 하루 시공량에 못 미치는 공사를 따로 정합니다. 한 가지 규격이면 하루 시공량의 절반 이하는 반나절치, 절반을 넘으면 하루치로 잡습니다. 예를 들어 벽 20㎡ 교체는 면적대로 225,134원이지만 소요가 약 0.43일이라 반나절치 258,904원이 됩니다.</dd>
+<dt>천장 도배는 왜 ㎡당 더 비싼가요?</dt><dd>신규 도배바름(5-3-7)은 「천장은 본 시공량의 23%를 감한다」고 적고, 도배 교체(3-4-3)는 하루 시공량을 벽 46㎡, 천장 35㎡로 따로 둡니다. 하루에 바를 수 있는 넓이가 줄어드니 ㎡당 인건비가 약 1.3배가 됩니다.</dd>
+<dt>시공 뒤 벽지가 변색되거나 보풀이 일면 어떻게 하나요?</dt><dd>소비자분쟁해결기준의 실내건축공사업 품목표는 벽지의 시공상 하자로 「변·퇴색, 보풀현상」을 듭니다. 하자담보책임기간 이내면 무상수리, 지나면 유상수리이고, 기간은 건설산업기본법 시행령 별표4의 전문공사 기준을 준용합니다. 시공일, 계약서, 상세견적서를 남겨 두십시오.</dd>
+<dt>계약을 취소하면 위약금은 얼마인가요?</dt><dd>소비자 사정으로 계약 또는 실측만 한 상태에서 해제하면 계약금을 위약금으로 하되 총시공비의 10%를 한도로 배상합니다. 공사에 착수한 뒤라면 사업자가 입증한 실손해액을 배상합니다. 사업자 사정으로 해제되면 계약·실측 단계는 선급금 전액 환급과 총 시공비의 10% 배상, 착수 뒤는 대금정산 후 총 시공비의 10% 배상입니다.</dd>
+</dl>
+
+<h3>관련 계산기</h3>
+<ul>
+<li><a href="../pyeong-calc-kr/">평수 계산기</a> — ㎡와 평 바꾸기, 전용면적과 공급면적</li>
+<li><a href="../vat-calc-kr/">부가세 계산기</a> — 견적서가 부가세 별도일 때</li>
+<li><a href="../son-eopneun-nal/">손없는 날</a> — 이사·입주 날짜 고르기</li>
+<li><a href="../chwideukse-calc/">취득세 계산기</a> — 집을 사서 들어갈 때</li>
+<li><a href="../wolse-gongje-calc/">월세 세액공제 계산기</a> — 세 들어 사는 집</li>
+<li><a href="../ipju-cheongso-biyong/">입주청소 비용 계산기 — 평수별 참고 범위</a></li>
+<li><a href="../pojang-isa-biyong/">포장이사 비용 — 이사비용 계산기</a></li>
+</ul>
+
+<h3>근거와 기준일</h3>
+<p>2026년 건설공사 표준품셈(대한건설협회 「건설적산기준 &gt; 표준품셈」 게시 공고자료 원문, 2026-01-05 게시) 공통부문 1-1-1·1-1-3·1-2-9, 건축부문 5-1-1·5-3-7, 유지관리부문 3-2-7·3-2-8·3-4-3·3-4-4. 대한건설협회 「2026년 하반기 적용 건설업 임금실태조사 보고서」(2026-09-01 게시, 2026. 9. 1 적용). 공정거래위원회 고시 「소비자분쟁해결기준」 제2025-14호(2025-12-18 시행) 별표 실내건축공사업. 숨고 공개 가격 「도배 시공」·「장판 시공」·「도배 장판 시공」. 원문 파일은 2026-10-03에 내려받아 대조했고, 노임단가 게시 목록과 숨고 가격은 2026-10-08에 다시 확인했습니다. 1평 = 3.305785㎡는 평수 계산기와 같은 계수입니다.</p>
+</section>
+
+<div class="webftr">
+<a href="../">생활 계산기 · 운세 모음 전체 보기 →</a>
+<br><a href="../about.html">사이트 소개</a> · <a href="../contact.html">문의</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="../terms.html">이용약관</a>
+<br>운영: 에스에이치정보시스템(SH정보시스템)
+</div>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"도배 비용 평당 얼마로 보면 되나요?","acceptedAnswer":{"@type":"Answer","text":"표준품셈은 평이 아니라 실제로 바르는 벽·천장의 ㎡로 셉니다. 벽 1㎡ 인건비 기준선은 콘크리트면 신규 약 6,656원, 교체(해체 포함) 약 11,257원이고, 1평(3.305785㎡)으로 바꾸면 각각 약 22,005원, 약 37,212원입니다. 견적서의 「평당」이 집 평형 기준인지 벽 면적 기준인지 먼저 물어보십시오."}},{"@type":"Question","name":"평수만 알면 도배 면적을 알 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"집 평형에서 벽 면적을 내는 공식 환산식은 찾지 못했습니다. 같은 평형이라도 방 개수, 천장 높이, 창과 붙박이장 크기에 따라 벽 면적이 달라집니다. 방마다 (가로 + 세로) × 2 × 높이로 벽을, 가로 × 세로로 천장을 재는 것이 가장 정확합니다."}},{"@type":"Question","name":"도배 장판 비용을 같이 보면 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"이 계산기는 도배와 장판의 인건비 기준선을 따로 낸 뒤 더합니다. 시세는 숨고가 공개한 「도배 장판 시공」 건당 가격이 최저 25만 원, 평균 120만 원, 최고 270만 원입니다(2026년 10월 8일 확인, 기준 시점·표본 수 표기 없음). 재료와 작업 범위가 업체마다 달라 실제 견적은 현장을 본 뒤 정해집니다."}},{"@type":"Question","name":"인건비 기준선에 재료비가 빠진 이유는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"표준품셈은 공공 공사의 예정가격을 산정하는 기준이고, 이 계산기는 그중 사람이 일하는 품만 시중노임단가로 곱했습니다. 벽지·장판지·풀 같은 재료비와 경비, 일반관리비, 이윤, 부가세는 들어 있지 않습니다. 인건비만 따진 기준선으로만 보십시오."}},{"@type":"Question","name":"가구가 있는 집에서 하면 비용이 달라지나요?","acceptedAnswer":{"@type":"Answer","text":"유지관리부문 3-4-3 도배 교체와 3-4-4 PVC계바닥재 교체는 사용 중인 세대에 가구 등 지장물이 있으면 하루 시공량을 15% 줄입니다. 같은 면적이면 인건비 기준선이 약 17.6% 올라갑니다. 가구 운반은 별도로 계상한다고 적혀 있으니 견적에 가구 옮기는 비용이 따로 붙는지도 확인하십시오."}},{"@type":"Question","name":"방 하나만 도배하면 면적만큼만 내면 되나요?","acceptedAnswer":{"@type":"Answer","text":"품셈 1-2-9(소규모)는 하루 시공량에 못 미치는 공사를 따로 정합니다. 한 가지 규격이면 하루 시공량의 절반 이하는 반나절치, 절반을 넘으면 하루치로 잡습니다. 예를 들어 벽 20㎡ 교체는 면적대로 225,134원이지만 소요가 약 0.43일이라 반나절치 258,904원이 됩니다."}},{"@type":"Question","name":"천장 도배는 왜 ㎡당 더 비싼가요?","acceptedAnswer":{"@type":"Answer","text":"신규 도배바름(5-3-7)은 「천장은 본 시공량의 23%를 감한다」고 적고, 도배 교체(3-4-3)는 하루 시공량을 벽 46㎡, 천장 35㎡로 따로 둡니다. 하루에 바를 수 있는 넓이가 줄어드니 ㎡당 인건비가 약 1.3배가 됩니다."}},{"@type":"Question","name":"시공 뒤 벽지가 변색되거나 보풀이 일면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"소비자분쟁해결기준의 실내건축공사업 품목표는 벽지의 시공상 하자로 「변·퇴색, 보풀현상」을 듭니다. 하자담보책임기간 이내면 무상수리, 지나면 유상수리이고, 기간은 건설산업기본법 시행령 별표4의 전문공사 기준을 준용합니다. 시공일, 계약서, 상세견적서를 남겨 두십시오."}},{"@type":"Question","name":"계약을 취소하면 위약금은 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"소비자 사정으로 계약 또는 실측만 한 상태에서 해제하면 계약금을 위약금으로 하되 총시공비의 10%를 한도로 배상합니다. 공사에 착수한 뒤라면 사업자가 입증한 실손해액을 배상합니다. 사업자 사정으로 해제되면 계약·실측 단계는 선급금 전액 환급과 총 시공비의 10% 배상, 착수 뒤는 대금정산 후 총 시공비의 10% 배상입니다."}}]}</script>
+</body>
+</html>
