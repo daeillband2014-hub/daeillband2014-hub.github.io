@@ -57,6 +57,33 @@ h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
 @media(min-width:768px){#webad{min-height:280px}}
 .adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 .webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+/* 2026-11-07 4팀 화면 손질 — hero · 질문 단계 · 자녀 수 단추 · 결과 카드 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:6px;text-align:center}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
+.wt-h{text-wrap:balance}
+.q{display:flex;align-items:flex-start;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.45;margin:22px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.wt .q label{display:inline;font-size:inherit;font-weight:inherit;color:inherit;margin:0;cursor:pointer}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px;white-space:nowrap}
+.wt label{font-size:14px;color:var(--sub);margin:10px 0 5px}
+.wt .q+.wt-s{margin:-3px 0 0}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips.c3{grid-template-columns:repeat(3,1fr)}
+.chips button{min-height:46px;padding:10px 6px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35}
+.chips button.on{border-color:var(--p);background:#EAF1FC;color:var(--pd);box-shadow:inset 0 0 0 1px var(--p)}
+.krw{font-size:13px;color:var(--p);font-weight:700;text-align:right;margin-top:6px}
+.krw:empty{display:none}
+.basis{margin-top:12px;font-size:13px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:8px 0}
+.basis .wt-s{margin-top:2px}
+#cg-out{scroll-margin-top:64px}
+#cg-out .wr-st{margin:0;font-size:16px}
+#cg-out .wr-l{font-size:13px;color:var(--mut);margin:10px 0 0}
+#cg-out .wr-big{font-size:30px;line-height:1.3;margin:0 0 2px;white-space:nowrap;letter-spacing:-.5px}
+.wr td{white-space:nowrap;text-align:right}
+.wr td:first-child{white-space:normal;text-align:left}
+.wr tr:first-child th+th{text-align:right;white-space:nowrap}
 </style>
 <!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
 <!--cpcss--><style>
@@ -82,15 +109,18 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">💳</div>
 <h1>연말정산 카드공제 계산기</h1>
 <p class="desc">카드공제는 한 해 사용액이 총급여의 25%를 넘은 부분에만 붙습니다. 지금까지 쓴 금액과 남은 달 지출을 넣으면 문턱까지 얼마 남았는지, 결제수단을 바꾸면 공제가 얼마나 느는지 계산합니다.</p>
 <div class="tool">
 <div id="cg-tool" class="wt">
 <p class="wt-h">연말정산 카드공제 계산 (2026년 사용분)</p>
-<label for="cg-g">올해 총급여(연봉에서 비과세 빼기 전 근사값도 됩니다, 만 원)</label>
+<div class="q"><span class="n">1</span><span><label for="cg-g">올해 총급여는 얼마인가요?</label> <small>(만 원)</small></span></div>
 <input type="number" id="cg-g" inputmode="numeric" min="0" placeholder="예: 4000">
-<p class="wt-s">금액은 모두 만 원 단위로 넣습니다. 4천만 원이면 4000.</p>
-<p class="wt-h" style="margin-top:16px;font-size:16px">1월부터 지금까지 쓴 금액(만 원)</p>
+<p class="krw" id="cg-gkr" aria-live="polite"></p>
+<p class="wt-s">금액은 모두 만 원 단위로 넣습니다. 4천만 원이면 4000. 연봉에서 비과세 빼기 전 근사값도 됩니다.</p>
+<div class="q"><span class="n">2</span><span>1월부터 지금까지 얼마 썼나요? <small>(만 원)</small></span></div>
+<p class="wt-s">공제 대상이 아닌 지출(세금·공과금·아파트관리비·보험료·상품권 등)은 빼고 넣으세요.</p>
 <label for="cg-k">신용카드</label>
 <input type="number" id="cg-k" inputmode="numeric" min="0" placeholder="예: 800">
 <label for="cg-d">체크카드·현금영수증·간편결제 등</label>
@@ -102,16 +132,23 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <label for="cg-c">도서·신문·공연·박물관·미술관·영화·수영장·헬스장</label>
 <input type="number" id="cg-c" inputmode="numeric" min="0" placeholder="0">
 <p class="wt-s">총급여 7천만 원 초과면 이 칸은 따로 공제되지 않아 신용카드 칸에 더해 계산합니다.</p>
-<p class="wt-h" style="margin-top:16px;font-size:16px">남은 기간</p>
-<label for="cg-m">남은 달 수</label>
+<div class="q"><span class="n">3</span><span><label for="cg-m">올해 남은 달은 몇 달인가요?</label></span></div>
 <input type="number" id="cg-m" inputmode="numeric" min="0" max="12">
-<label for="cg-x">남은 달에 한 달 평균 쓸 금액(만 원)</label>
+<div class="q"><span class="n">4</span><span><label for="cg-x">한 달 평균 얼마를 쓸까요?</label> <small>(남은 달, 만 원)</small></span></div>
 <input type="number" id="cg-x" inputmode="numeric" min="0" placeholder="예: 100">
-<label for="cg-kids">20세 이하 자녀(기본공제 대상 요건을 갖춘) 수</label>
-<select id="cg-kids"><option value="0">없음</option><option value="1">1명</option><option value="2">2명 이상</option></select>
-<button type="button" id="cg-go" class="wt-btn">계산하기</button>
+<div class="q"><span class="n">5</span><span>20세 이하 자녀는 몇 명인가요?</span></div>
+<div class="chips c3" id="cg-kidschips" role="group" aria-label="20세 이하 자녀 수">
+<button type="button" data-i="0">없음</button>
+<button type="button" data-i="1">1명</button>
+<button type="button" data-i="2">2명 이상</button>
+</div>
+<select id="cg-kids" hidden aria-hidden="true" tabindex="-1"><option value="0">없음</option><option value="1">1명</option><option value="2">2명 이상</option></select>
+<p class="wt-s">기본공제 대상 요건을 갖춘 자녀만 셉니다.</p>
+<button type="button" id="cg-go" class="wt-btn" style="margin-top:20px">계산하기</button>
 <div id="cg-out" aria-live="polite"></div>
-<p class="wt-s" style="margin-top:12px">조세특례제한법 제126조의2(2026년 1월 1일 이후 사용분)와 같은 법 시행령 제121조의2 원문 기준입니다(2026-09-28 법제처 조회). 공제 대상이 아닌 지출(세금·공과금·아파트관리비·보험료·상품권 등)은 빼고 넣으세요. 입력값은 저장하지 않습니다.</p>
+<details class="basis"><summary>계산 근거 보기 (조세특례제한법 제126조의2)</summary>
+<p class="wt-s">조세특례제한법 제126조의2(2026년 1월 1일 이후 사용분)와 같은 법 시행령 제121조의2 원문 기준입니다(2026-09-28 법제처 조회). 입력값은 저장하지 않습니다.</p>
+</details>
 </div>
 <script>
 (function(){
@@ -153,10 +190,11 @@ function run(){
   var kPart = Math.min(R, need), Bp = cgDeduct(g, K + kPart, D + (R - kPart), T, B, C, kids);
   var h = '<div class="wr">';
   h += '<p class="wr-st ' + (S0 > M ? 'ok' : 'mid') + '">' + (S0 > M ? '이미 25% 문턱을 넘었습니다' : '아직 25% 문턱 아래입니다') + '</p>';
+  h += '<p class="wr-l">올해 카드공제 예상액</p>';
+  h += '<p class="wr-big">' + wonM(Bp.fin) + '</p><p>남은 ' + m + '달 동안 한 달 ' + wonM(X) + '씩 쓰고, <b>문턱까지는 신용카드, 넘은 뒤부터는 체크카드·현금영수증</b>으로 냈을 때 올해 카드공제 예상액입니다.</p>';
   h += '<table><tr><th>25% 문턱(최저사용금액)</th><td>' + wonM(M) + '</td></tr><tr><th>지금까지 쓴 금액</th><td>' + wonM(S0) + '</td></tr>'
     + '<tr><th>' + (S0 > M ? '문턱 넘은 금액' : '문턱까지 남은 금액') + '</th><td>' + wonM(Math.abs(S0 - M)) + '</td></tr>'
     + '<tr><th>지금 기준 공제액</th><td>' + wonM(now.fin) + '</td></tr></table>';
-  h += '<p class="wr-big">' + wonM(Bp.fin) + '</p><p>남은 ' + m + '달 동안 한 달 ' + wonM(X) + '씩 쓰고, <b>문턱까지는 신용카드, 넘은 뒤부터는 체크카드·현금영수증</b>으로 냈을 때 올해 카드공제 예상액입니다.</p>';
   h += '<table><tr><th>남은 기간 결제</th><th>연간 사용</th><th>예상 공제액</th></tr>'
     + '<tr><td>전부 신용카드</td><td>' + wonM(A.S) + '</td><td>' + wonM(A.fin) + '</td></tr>'
     + '<tr><td>문턱까지 신용 → 이후 체크</td><td>' + wonM(Bp.S) + '</td><td><b>' + wonM(Bp.fin) + '</b></td></tr></table>';
@@ -170,6 +208,20 @@ function run(){
 if (typeof document !== 'undefined' && document.getElementById('cg-go')) {
   document.getElementById('cg-m').value = 12 - (new Date().getMonth() + 1);
   document.getElementById('cg-go').onclick = run;
+}
+/* 2026-11-07 4팀 화면 손질 — 자녀 수 단추(숨긴 select 를 그대로 쓰므로 계산은 같다) · 총급여 한글 금액 · 계산하면 결과로 이동 */
+if (typeof document !== 'undefined' && document.getElementById('cg-kidschips')) {
+  var kidsSel = document.getElementById('cg-kids'), kidsBtns = document.querySelectorAll('#cg-kidschips button'), gEl = document.getElementById('cg-g');
+  var krM = function(v){ var n = Math.round((Number(v) || 0) * MAN); if (!(n > 0)) return ''; var e = Math.floor(n / 100000000), w = Math.floor((n % 100000000) / 10000), r = n % 10000, s = ''; if (e) s += e.toLocaleString('ko-KR') + '억 '; if (w) s += w.toLocaleString('ko-KR') + '만'; if (r) s += (w || e ? ' ' : '') + r.toLocaleString('ko-KR'); return '= ' + s.trim() + '원'; };
+  var syncUi = function(){
+    [].forEach.call(kidsBtns, function(b){ var on = Number(b.getAttribute('data-i')) === kidsSel.selectedIndex; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    document.getElementById('cg-gkr').textContent = krM(gEl.value);
+  };
+  [].forEach.call(kidsBtns, function(b){ b.addEventListener('click', function(){ kidsSel.selectedIndex = Number(b.getAttribute('data-i')); kidsSel.dispatchEvent(new Event('change')); }); });
+  kidsSel.addEventListener('change', syncUi);
+  gEl.addEventListener('input', syncUi);
+  document.getElementById('cg-go').addEventListener('click', function(){ var o = document.getElementById('cg-out'); if (o.innerHTML && o.scrollIntoView) o.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  syncUi();
 }
 if (typeof module !== 'undefined') module.exports = { cgDeduct: cgDeduct };
 })();

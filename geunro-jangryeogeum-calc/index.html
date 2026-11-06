@@ -50,6 +50,30 @@ input[type=number]{text-align:right;font-size:17px}
 .adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 /* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
 .webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+/* 2026-11-07 4팀 화면 손질 — hero · 질문 단계 · 단추형 선택 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:6px;text-align:center}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
+.q{display:flex;align-items:flex-start;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.45;margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;margin-top:0;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q label{display:inline;font-size:inherit;font-weight:inherit;color:inherit;margin:0;cursor:pointer}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px;white-space:nowrap}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips.c1{grid-template-columns:1fr}
+.chips.c3{grid-template-columns:repeat(3,1fr)}
+.chips button{min-height:48px;padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips.c1 button{text-align:left;padding:11px 14px}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#EAF3FA;color:var(--pd);box-shadow:inset 0 0 0 1px var(--p)}
+.chips button.on small{color:var(--p)}
+.krw{font-size:13px;color:var(--p);font-weight:700;text-align:right;margin-top:6px;min-height:18px}
+.basis{margin-top:14px;font-size:12.5px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:8px 0}
+.basis .note{margin-top:4px}
+.big{white-space:nowrap;letter-spacing:-.5px}
+.row .k{text-align:left;word-break:keep-all}
+.row .v{white-space:nowrap;text-align:right}
+#out{scroll-margin-top:64px}
 </style>
 <!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
 <!--cpcss--><style>
@@ -75,38 +99,60 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">💵</div>
 <h1>근로장려금 계산기</h1>
 <p class="desc">총급여액과 가구 유형을 넣으면 산정액을 계산합니다</p>
 
-<label for="gagu">가구 유형</label>
-<select id="gagu">
+<div class="q"><span class="n">1</span><span>어떤 가구인가요?</span></div>
+<div class="chips c1" id="gaguchips" role="group" aria-label="가구 유형">
+<button type="button" data-i="0">단독가구<small>배우자·부양자녀·70세 이상 직계존속 없음</small></button>
+<button type="button" data-i="1">홑벌이 가구<small>배우자 총급여 300만원 미만 등</small></button>
+<button type="button" data-i="2">맞벌이 가구<small>배우자 총급여 300만원 이상</small></button>
+</div>
+<select id="gagu" hidden aria-hidden="true" tabindex="-1">
 <option value="single">단독가구 (배우자·부양자녀·70세 이상 직계존속 없음)</option>
 <option value="hot" selected>홑벌이 가구 (배우자 총급여 300만원 미만 등)</option>
 <option value="mat">맞벌이 가구 (배우자 총급여 300만원 이상)</option>
 </select>
 
-<label for="pay">총급여액 등 (연간, 원)</label>
-<input id="pay" type="number" step="1000000" value="20000000">
+<div class="q"><span class="n">2</span><span><label for="pay">총급여액 등은 얼마인가요?</label> <small id="payunit">(연간, 원)</small></span></div>
+<input id="pay" type="number" inputmode="numeric" step="1000000" value="20000000">
+<p class="krw" id="paykr" aria-live="polite"></p>
 
-<label for="jaesan">가구원 재산 합계액 (원)</label>
-<input id="jaesan" type="number" step="10000000" value="100000000">
+<div class="q"><span class="n">3</span><span><label for="jaesan">가구원 재산은 모두 얼마인가요?</label> <small>(합계액, 원)</small></span></div>
+<input id="jaesan" type="number" inputmode="numeric" step="10000000" value="100000000">
+<p class="krw" id="jaesankr" aria-live="polite"></p>
 
-<label for="ban">신청 구분</label>
-<select id="ban">
+<div class="q"><span class="n">4</span><span>어떻게 신청하나요?</span></div>
+<div class="chips" id="banchips" role="group" aria-label="신청 구분">
+<button type="button" data-i="0">정기신청<small>한 해치 전체</small></button>
+<button type="button" data-i="1">반기 상반기분<small>9월 1~15일 신청</small></button>
+</div>
+<select id="ban" hidden aria-hidden="true" tabindex="-1">
 <option value="0" selected>정기신청 (한 해치 전체)</option>
 <option value="1">반기 상반기분 (9월 1~15일 신청)</option>
 </select>
 
 <div id="monthsWrap" style="display:none">
-<label for="months">상반기 근무월수 (월 15일 이상 일한 달)</label>
-<select id="months"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option></select>
+<div class="q"><span class="n">5</span><span>상반기에 몇 달 일했나요? <small>(월 15일 이상 일한 달)</small></span></div>
+<div class="chips c3" id="monthschips" role="group" aria-label="상반기 근무월수">
+<button type="button" data-i="0">1개월</button>
+<button type="button" data-i="1">2개월</button>
+<button type="button" data-i="2">3개월</button>
+<button type="button" data-i="3">4개월</button>
+<button type="button" data-i="4">5개월</button>
+<button type="button" data-i="5">6개월</button>
+</div>
+<select id="months" hidden aria-hidden="true" tabindex="-1"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option></select>
 <p class="note">일용직이거나 6월 30일 전에 퇴사했다면 6을 고르십시오(시행령 제100조의6제3항 단서).</p>
 </div>
 
 <button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#1B5E8C;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 
+<details class="basis"><summary>실제 지급액과 차이가 날 수 있습니다 (근거 보기)</summary>
 <p class="note">조세특례제한법 제100조의3·제100조의5의 계산식을 그대로 옮긴 것입니다. 실제 지급액은 같은 조 제5항에 따라 시행령의 <b>근로장려금산정표</b>(구간별 표)로 정해지므로 이 값과 차이가 날 수 있습니다. 별표11 447개 구간을 전부 떠서 재 보니 <b>최대 차이는 6만원대</b>(단독 42,000원 · 홑벌이 62,142원 · 맞벌이 42,000원)이고, <b>총급여액 등이 1,000만원 이상이면 2만원 안쪽</b>입니다. 최종 금액은 국세청 안내를 확인하십시오.</p>
+</details>
 </div>
 
 <script>
@@ -261,10 +307,30 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   var on = document.getElementById('ban').value === '1';
   document.getElementById('monthsWrap').style.display = on ? '' : 'none';
   var lb = document.querySelector('label[for="pay"]');
-  if(lb) lb.textContent = on ? '상반기 근로소득 (1~6월, 원)' : '총급여액 등 (연간, 원)';
+  if(lb) lb.textContent = on ? '상반기 근로소득은 얼마인가요?' : '총급여액 등은 얼마인가요?';
+  var un = document.getElementById('payunit');
+  if(un) un.textContent = on ? '(1~6월, 원)' : '(연간, 원)';
  }
  document.getElementById('ban').addEventListener('change', syncBan);
  syncBan();
+ /* 2026-11-07 4팀 화면 손질 — 단추형 선택(숨긴 select 를 그대로 쓰므로 계산은 같다) · 한글 금액 · 계산하면 결과로 이동 */
+ function kr(n){n=Math.round(n);if(n<=0)return '';var e=Math.floor(n/100000000),m=Math.floor((n%100000000)/10000),w=n%10000,s='';if(e)s+=e.toLocaleString('ko-KR')+'억 ';if(m)s+=m.toLocaleString('ko-KR')+'만';if(w)s+=(m||e?' ':'')+w.toLocaleString('ko-KR');return '= '+s.trim()+'원';}
+ var CHIPS = [['gagu','gaguchips'],['ban','banchips'],['months','monthschips']];
+ function syncUi(){
+  ['pay','jaesan'].forEach(function(id){ document.getElementById(id+'kr').textContent = kr(Number(document.getElementById(id).value)||0); });
+  CHIPS.forEach(function(p){
+   var sel = document.getElementById(p[0]);
+   [].forEach.call(document.querySelectorAll('#'+p[1]+' button'), function(b){ var on = Number(b.getAttribute('data-i')) === sel.selectedIndex; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  });
+ }
+ CHIPS.forEach(function(p){
+  var sel = document.getElementById(p[0]);
+  [].forEach.call(document.querySelectorAll('#'+p[1]+' button'), function(b){ b.addEventListener('click', function(){ sel.selectedIndex = Number(b.getAttribute('data-i')); sel.dispatchEvent(new Event('change')); }); });
+  sel.addEventListener('change', syncUi);
+ });
+ ['pay','jaesan'].forEach(function(id){ document.getElementById(id).addEventListener('input', syncUi); });
+ document.getElementById('go').addEventListener('click', function(){ var o = document.getElementById('out'); if(o.innerHTML && o.scrollIntoView) o.scrollIntoView({behavior:'smooth', block:'start'}); });
+ syncUi();
  calc();
 })();
 </script>

@@ -48,6 +48,27 @@ table.plan{width:100%;min-width:320px;border-collapse:collapse;font-size:13.5px}
 table.plan th,table.plan td{padding:7px 6px;border-bottom:1px solid #EEF0F8;text-align:left}
 table.plan th{color:var(--mut);font-weight:400;font-size:12.5px}
 table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+/* 2026-11-07 4팀 화면 손질 — hero · 질문 단계 · 출근율 단추 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+#app{word-break:keep-all;overflow-wrap:break-word}
+h1,.desc{text-wrap:balance}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.q label{display:inline;margin:0;font-size:inherit;font-weight:inherit;color:inherit}
+input[type=date]{display:block;min-width:0;min-height:52px}
+.hint{font-size:12px;color:var(--mut);line-height:1.6;margin-top:6px;text-wrap:balance}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#EEF0FA;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+#out{scroll-margin-top:64px}
+.big:not(.no){white-space:nowrap}
+.big.no,.sub2{text-wrap:balance}
+.row .k{flex:0 0 auto}.row .v{text-align:right;text-wrap:balance}
+.ok,.warn,.note{text-wrap:pretty}
+table.plan{min-width:0}table.plan td{white-space:nowrap}
 #webad{max-width:480px;width:100%;margin:30px auto 0;padding:0 20px;min-height:250px}/*빈 광고 상자 접기 11/6*/#webad:has(ins.adsbygoogle[data-ad-status="unfilled"]){display:none}
 @media(min-width:768px){#webad{min-height:280px}}
 .adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}</style>
@@ -75,22 +96,28 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🏖️</div>
 <h1>연차계산기 · 연차 개수와 연차수당</h1>
 <p class="desc">입사일을 넣으면 지금까지 생긴 연차와 앞으로 늘어나는 일수가 나옵니다</p>
 
-<label for="join">입사일</label>
+<div class="q"><span class="n">1</span><label for="join">입사일이 언제인가요?</label></div>
 <input id="join" type="date" value="2023-03-02" min="1960-01-01">
 
-<label for="base">기준일 (이 날짜에 몇 개인지 봅니다)</label>
+<div class="q"><span class="n">2</span><label for="base">어느 날 기준으로 셀까요?</label> <small>(기준일)</small></div>
 <input id="base" type="date">
+<p class="hint">이 날짜에 몇 개인지 봅니다. 처음에는 오늘 날짜가 들어 있습니다.</p>
 
-<label for="att">직전 1년 출근율</label>
-<select id="att">
+<div class="q"><span class="n">3</span>직전 1년 출근율은 어느 쪽인가요?</div>
+<div class="chips" id="attchips" role="group" aria-label="직전 1년 출근율">
+<button type="button" data-i="0" class="on" aria-pressed="true">80퍼센트 이상<small>대부분 여기입니다</small></button>
+<button type="button" data-i="1" aria-pressed="false">80퍼센트 미만</button>
+</div>
+<select id="att" hidden aria-hidden="true" tabindex="-1">
 <option value="1" selected>80퍼센트 이상 (대부분 여기입니다)</option>
 <option value="0">80퍼센트 미만</option>
 </select>
 
-<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<button id="go" style="width:100%;margin-top:18px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 
 <p class="note">근로기준법 제60조를 그대로 옮긴 것입니다. 회사가 취업규칙이나 노사합의로 회계연도(1월 1일) 기준으로 운영하는 경우가 많은데, 그때는 날짜가 달라집니다. 이 계산기는 <b>입사일 기준</b>입니다.</p>
@@ -217,11 +244,16 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   document.getElementById('base').value = iso(new Date(t.getFullYear(), t.getMonth(), t.getDate()));
  })();
 
- document.getElementById('go').addEventListener('click', calc);
+ /* 2026-11-07 화면 손질 — 출근율 단추는 숨긴 select 를 그대로 바꾼다(값이 아니라 순번으로). 계산하기를 누르면 결과로 내려간다. */
+ var attSel = document.getElementById('att'), attB = document.querySelectorAll('#attchips button');
+ function syncAtt(){ [].forEach.call(attB, function(b){ var on = Number(b.getAttribute('data-i')) === attSel.selectedIndex; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+ [].forEach.call(attB, function(b){ b.addEventListener('click', function(){ attSel.selectedIndex = Number(b.getAttribute('data-i')); attSel.dispatchEvent(new Event('change')); }); });
+ attSel.addEventListener('change', syncAtt); window.addEventListener('pageshow', syncAtt);
+ document.getElementById('go').addEventListener('click', function(){ calc(); var o = document.getElementById('out'); if(o.innerHTML && o.scrollIntoView) o.scrollIntoView({behavior:'smooth', block:'start'}); });
  ['join','base','att'].forEach(function(id){
   document.getElementById(id).addEventListener('change', calc);
  });
- calc();
+ calc(); syncAtt();
 })();
 </script>
 
