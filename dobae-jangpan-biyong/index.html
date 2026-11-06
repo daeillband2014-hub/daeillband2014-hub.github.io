@@ -57,6 +57,23 @@ label.ck{display:flex;align-items:center;gap:6px;font-weight:400}
 .btn2{width:100%;margin-top:12px;padding:12px;border:1.5px solid var(--p);border-radius:12px;background:#fff;color:var(--p);font-size:15px;font-weight:700}
 .rlabel{font-size:12.5px;color:var(--mut);text-align:center;font-weight:700;margin-bottom:4px}
 .big.rng{font-size:23px}
+/* 2026-11-06 4팀 화면 손질 — 그림 hero · 질문 단계 · 단추형 선택 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:22px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:12px 8px;border:1.5px solid var(--lt);border-radius:13px;background:#fff;font-size:15px;font-weight:700;color:var(--sub);font-family:inherit;line-height:1.35;word-break:keep-all;cursor:pointer}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:3px}
+.chips button.on{border-color:var(--p);background:#EEF0FA;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+label.sublbl{display:block;font-size:12.5px;color:var(--mut);font-weight:600;margin:0 0 6px}
+.row .k{min-width:0}.row .v{white-space:nowrap}
+.basis{margin-top:12px;background:#F7F8FC;border-radius:12px;padding:10px 12px}
+.basis summary{font-size:13px;font-weight:700;color:var(--pd);cursor:pointer}
+.basis .note{margin-top:8px}
+#out{scroll-margin-top:64px}
+#app{word-break:keep-all;overflow-wrap:break-word}
 .webseo{width:100%}</style>
 <!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
@@ -65,26 +82,35 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🖌️</div>
 <h1>도배·장판 비용 계산기</h1>
 <p class="desc">벽·천장·바닥 면적을 넣으면 표준품셈 인건비 기준선과 숨고 시세 범위를 따로 보여 줍니다</p>
 
-<label for="kind">공사 종류</label>
-<select id="kind">
+<p class="q"><span class="n">1</span>어떤 공사인가요?</p>
+<div class="chips" data-for="kind">
+<button type="button" data-v="rep" class="on" aria-pressed="true">교체<small>기존 벽지·장판을 뜯고 새로 (해체 포함)</small></button>
+<button type="button" data-v="new" aria-pressed="false">신규<small>바탕면에 처음 바르기·깔기</small></button>
+</div>
+<select id="kind" hidden aria-label="공사 종류">
 <option value="rep" selected>교체 — 기존 벽지·장판을 뜯고 새로 (해체 포함)</option>
 <option value="new">신규 — 바탕면에 처음 바르기·깔기</option>
 </select>
 
-<label for="furn">가구(지장물)</label>
-<select id="furn">
+<p class="q"><span class="n">2</span>가구가 있는 집인가요?</p>
+<div class="chips" data-for="furn">
+<button type="button" data-v="0" class="on" aria-pressed="true">빈 집<small>가구 없이 시공</small></button>
+<button type="button" data-v="1" aria-pressed="false">살면서 시공<small>가구(지장물)가 있음</small></button>
+</div>
+<select id="furn" hidden aria-label="가구(지장물)">
 <option value="0" selected>없음 — 빈 집에서 시공</option>
 <option value="1">있음 — 살면서 시공, 가구가 있음</option>
 </select>
 
-<label for="wall">도배 벽 면적 (㎡)</label>
-<input id="wall" type="number" inputmode="decimal" min="0" step="any" placeholder="바를 벽 전체 넓이">
-
-<label for="ceil">도배 천장 면적 (㎡)</label>
-<input id="ceil" type="number" inputmode="decimal" min="0" step="any" placeholder="천장을 안 하면 비워 두세요">
+<p class="q"><span class="n">3</span>도배할 면적은요? <small>㎡ · 안 하면 비워 두세요</small></p>
+<div class="two">
+<div><label for="wall" class="sublbl">벽</label><input id="wall" type="number" inputmode="decimal" min="0" step="any" placeholder="바를 벽 넓이"></div>
+<div><label for="ceil" class="sublbl">천장</label><input id="ceil" type="number" inputmode="decimal" min="0" step="any" placeholder="천장 넓이"></div>
+</div>
 
 <details class="helper">
 <summary>방 크기로 벽·천장 면적 재기</summary>
@@ -102,7 +128,7 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 </details>
 
 <div id="baseBox" hidden>
-<label for="base">바탕 (신규 도배)</label>
+<label for="base">바탕은 무엇인가요? (신규 도배)</label>
 <select id="base">
 <option value="unk" selected>모름 — 두 경우 모두 보기</option>
 <option value="con">콘크리트·모르타르면</option>
@@ -110,7 +136,7 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 </select>
 </div>
 
-<label for="floor">장판 바닥 면적</label>
+<label for="floor" class="q"><span class="n">4</span>장판 깔 면적은요? <small>안 하면 비워 두세요</small></label>
 <div class="two">
 <input id="floor" type="number" inputmode="decimal" min="0" step="any" placeholder="장판을 깔 곳만">
 <select id="funit" class="u" aria-label="바닥 면적 단위">
@@ -120,7 +146,7 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 </div>
 
 <div id="jtBox" hidden>
-<label for="jt">장판 붙이는 방식 (신규)</label>
+<label for="jt">장판은 어떻게 붙이나요? (신규)</label>
 <select id="jt">
 <option value="unk" selected>모름 — 시트형 두 방식 보기</option>
 <option value="part">시트형 부분접착</option>
@@ -129,7 +155,7 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 </select>
 </div>
 
-<label for="when">시공(입주) 예정일 · 선택</label>
+<label for="when" class="q"><span class="n">5</span>언제 시공(입주)하나요? <small>선택</small></label>
 <input id="when" type="date">
 
 <button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
@@ -333,8 +359,10 @@ var DJ = (function(){
    else f.push('PVC계 바닥재 설치(5-1-1): 내장공 2인 × 258,904원 + 보통인부 1인 × 172,698원 = 690,506원/일 ÷ '
       + e.J.map(function(g){ return g.label + ' ' + g.bb + '㎡'; }).join(' / '));
   }
-  h += '<p class="note" style="margin-top:12px"><b>식</b> 면적 × 작업조 1일 노임 ÷ 하루 시공량<br>' + f.join('<br>') + '</p>';
+  h += '<details class="basis"><summary>계산 근거 보기 (품셈·노임)</summary>';
+  h += '<p class="note" style="margin-top:8px"><b>식</b> 면적 × 작업조 1일 노임 ÷ 하루 시공량<br>' + f.join('<br>') + '</p>';
   if(e.kind === 'rep') h += '<p class="note" style="margin-top:6px">교체 품에는 기존 도배지·바닥재 해체가 들어 있습니다. 가구 운반은 품셈에서도 별도입니다.</p>';
+  h += '</details>';
   if(e.kind === 'new' && e.furn) h += '<p class="note" style="margin-top:6px">신규 품(5-3-7·5-1-1)에는 가구(지장물) 감 규정이 없어 반영하지 않았습니다. 살고 있는 집의 기존 벽지·장판을 뜯고 새로 하는 경우라면 「교체」를 고르십시오.</p>';
 
   var dd = dayDiff(o.when, today);
@@ -400,7 +428,23 @@ var DJ = (function(){
   calc();
  }
  $('when').min = iso(new Date());
- $('go').addEventListener('click', calc);
+ /* 단추형 선택(1·2번 질문) → 숨긴 select 값을 바꾸고 change 를 보낸다 */
+ [].forEach.call(document.querySelectorAll('.chips[data-for]'), function(g){
+  var sel = $(g.getAttribute('data-for'));
+  function mark(v){ [].forEach.call(g.querySelectorAll('button'), function(x){ var on = x.getAttribute('data-v') === v; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+  mark(sel.value);
+  g.addEventListener('click', function(ev){
+   var b = ev.target.closest('button'); if(!b) return;
+   sel.value = b.getAttribute('data-v'); mark(sel.value);
+   sel.dispatchEvent(new Event('change'));
+  });
+ });
+ /* 계산하기: 면적이 비었으면 안내 카드를 띄우고, 결과로 내려간다 */
+ $('go').addEventListener('click', function(){
+  calc();
+  if(!$('out').innerHTML) $('out').innerHTML = DJ.render(input(), new Date());
+  $('out').scrollIntoView({behavior:'smooth', block:'start'});
+ });
  $('addroom').addEventListener('click', addRoom);
  ['kind', 'furn', 'wall', 'ceil', 'floor', 'funit', 'base', 'jt', 'when'].forEach(function(id){
   $(id).addEventListener('change', calc);
