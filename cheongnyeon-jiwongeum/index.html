@@ -48,6 +48,33 @@ h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
 .adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 /* 2026-09-24 넓은 표가 390px 화면을 밀어내지 않게 표만 가로로 넘긴다 */
 .webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+/* 2026-11-07 4팀 화면 손질 — hero · 질문 단계 · 선택 칸 · 결과로 이동 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+#app{word-break:keep-all;overflow-wrap:break-word}
+h1,.desc{text-wrap:balance}
+#cj-tool fieldset{min-width:0}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:18px 0 9px;padding:0;line-height:1.45}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px;white-space:nowrap}
+#cj-title,.opt small{text-wrap:balance}.nw{white-space:nowrap}
+.q.sub{font-size:14.5px;color:var(--pd);margin:4px 0 8px}
+#cj-birth-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#cj-birth-row>.q,#cj-birth-row>.opt{flex:1 0 100%}
+#cj-by::placeholder{font-size:14px}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--lt);border-radius:12px;padding:11px 14px;margin:0 0 8px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.45}
+.opt input{width:20px;height:20px;flex:0 0 20px;margin:0;accent-color:var(--p)}
+.opt small{display:block;font-size:12.5px;font-weight:500;color:var(--sub);margin-top:1px}
+.opt:has(input:checked){border-color:var(--p);background:#EAF3FA}
+#cj-pinc-opts .opt{font-size:14px;font-weight:600}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:12px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35}
+.chips button.on{border-color:var(--p);background:#EAF3FA;color:var(--pd)}
+.rchips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rchips label{position:relative;display:block;padding:11px 6px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;text-align:center;cursor:pointer}
+.rchips input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.rchips label:has(input:checked){border-color:var(--p);background:#EAF3FA;color:var(--pd)}
+.rchips label:has(input:focus-visible),.opt:has(input:focus-visible){outline:2px solid var(--p);outline-offset:2px}
+#cj-out{scroll-margin-top:64px}
 </style>
 <!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
 <!--cpcss--><style>
@@ -73,51 +100,61 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">💰</div>
 <h1>청년미래적금·청년 지원금 고르기</h1>
 <p class="desc">청년미래적금 2차 신청은 10월 16일 마감됐습니다(68.8만명 신청). 계좌 개설은 11월 16~27일입니다. 지금 되는 청년 지원금을 나이·소득·취업 여부로 고르고, 끝난 사업도 갈랐습니다.</p>
 <div class="tool">
-<div id="cj-tool" style="max-width:640px;margin:1.5em auto;padding:14px;border:1px solid #d0d7de;border-radius:10px;font-size:15px;line-height:1.6;box-sizing:border-box;word-break:keep-all;overflow-wrap:anywhere">
+<div id="cj-tool" style="max-width:640px;margin:0 auto;padding:0;border:0;font-size:15px;line-height:1.6;box-sizing:border-box;word-break:keep-all;overflow-wrap:anywhere">
   <p id="cj-title" style="margin:0 0 4px;font-weight:700;font-size:17px">청년 지원금 — 내 나이에 지금 신청할 수 있는 것</p>
   <p id="cj-lead" style="margin:0 0 12px;font-size:13px;color:#57606a">전국 공통 사업만 고릅니다. 생년월일과 지금 상황을 넣으면 사업마다 신청 상태와 이유를 보여 드립니다.</p>
 
   <div id="cj-form">
     <div id="cj-birth-row" style="margin:0 0 12px">
-      <div id="cj-birth-label" style="font-weight:600">생년월일</div>
-      <input id="cj-by" type="number" inputmode="numeric" min="1" placeholder="출생연도 4자리" aria-label="출생연도" style="width:8em;padding:6px;font-size:15px;box-sizing:border-box">년
-      <select id="cj-bm" aria-label="태어난 달" style="padding:6px;font-size:15px"></select>월
-      <select id="cj-bd" aria-label="태어난 날" style="padding:6px;font-size:15px"></select>일
-      <label style="display:block;margin-top:6px;font-size:14px"><input id="cj-mil" type="checkbox"> 병역을 이행했다(현역·사회복무요원 등)</label>
+      <div id="cj-birth-label" class="q"><span class="n">1</span><span>언제 태어났나요? <small>(생년월일)</small></span></div>
+      <input id="cj-by" type="number" inputmode="numeric" min="1" placeholder="출생연도 4자리" aria-label="출생연도" style="flex:1 1 90px;min-width:0;height:44px;padding:0 10px;font-size:16px;box-sizing:border-box">년
+      <select id="cj-bm" aria-label="태어난 달" style="flex:0 0 62px;height:44px;padding:0 4px;font-size:16px"></select>월
+      <select id="cj-bd" aria-label="태어난 날" style="flex:0 0 62px;height:44px;padding:0 4px;font-size:16px"></select>일
+      <label class="opt" style="margin-top:4px"><input id="cj-mil" type="checkbox"><span>병역을 이행했다<small>현역·사회복무요원 등</small></span></label>
     </div>
 
     <fieldset id="cj-work" style="margin:0 0 12px;padding:0;border:0">
-      <legend style="font-weight:600;padding:0">지금 하는 일</legend>
-      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-full" value="full"> 일한다 — 주 30시간 이상</label>
-      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-part" value="part"> 일한다 — 주 30시간 미만</label>
-      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-seek" value="seek"> 일하지 않는다 — 최근 6개월 안에 일·교육·직업훈련을 한 적 있다</label>
-      <label style="display:block"><input type="radio" name="cj-work" id="cj-work-rest" value="rest"> 일하지 않는다 — 최근 6개월 동안 일·교육·직업훈련을 한 적 없다</label>
+      <legend class="q"><span class="n">2</span><span>지금 일을 하고 있나요?</span></legend>
+      <label class="opt"><input type="radio" name="cj-work" id="cj-work-full" value="full"><span>일한다<small>주 30시간 이상</small></span></label>
+      <label class="opt"><input type="radio" name="cj-work" id="cj-work-part" value="part"><span>일한다<small>주 30시간 미만</small></span></label>
+      <label class="opt"><input type="radio" name="cj-work" id="cj-work-seek" value="seek"><span>일하지 않는다<small>최근 6개월 안에 <span class="nw">일·교육·직업훈련을</span> 한 적 있다</small></span></label>
+      <label class="opt"><input type="radio" name="cj-work" id="cj-work-rest" value="rest"><span>일하지 않는다<small>최근 6개월 동안 <span class="nw">일·교육·직업훈련을</span> 한 적 없다</small></span></label>
     </fieldset>
 
     <fieldset id="cj-sme" style="display:none;margin:0 0 12px;padding:0;border:0">
-      <legend style="font-weight:600;padding:0">다니는 곳이 중소기업인가요?</legend>
-      <label style="display:inline-block;margin-right:12px"><input type="radio" name="cj-sme" id="cj-sme-y" value="y"> 예</label>
-      <label style="display:inline-block;margin-right:12px"><input type="radio" name="cj-sme" id="cj-sme-n" value="n"> 아니다</label>
-      <label style="display:inline-block"><input type="radio" name="cj-sme" id="cj-sme-u" value=""> 모름</label>
+      <legend class="q sub"><span>다니는 곳이 중소기업인가요?</span></legend>
+      <div class="rchips">
+      <label><input type="radio" name="cj-sme" id="cj-sme-y" value="y">예</label>
+      <label><input type="radio" name="cj-sme" id="cj-sme-n" value="n">아니다</label>
+      <label><input type="radio" name="cj-sme" id="cj-sme-u" value="">모름</label>
+      </div>
     </fieldset>
 
-    <label style="display:block;margin:0 0 12px"><input id="cj-ben" type="checkbox"> 지금 실업급여나 생계급여를 받고 있다</label>
+    <div id="cj-ben-row" style="margin:0 0 12px">
+      <div class="q"><span class="n">3</span><span>실업급여나 생계급여를 받고 있나요?</span></div>
+      <div class="chips" id="cj-benchips" role="group" aria-label="지금 실업급여나 생계급여를 받고 있다">
+      <button type="button" data-v="1" aria-pressed="false">지금 받고 있다</button>
+      <button type="button" data-v="0" aria-pressed="true" class="on">받지 않는다</button>
+      </div>
+      <input id="cj-ben" type="checkbox" hidden aria-hidden="true" tabindex="-1">
+    </div>
 
     <div id="cj-hh-row" style="margin:0 0 12px">
-      <label for="cj-hh" style="display:block;font-weight:600">가구 소득(기준 중위소득 대비)</label>
-      <select id="cj-hh" style="width:100%;padding:6px;font-size:15px;box-sizing:border-box"></select>
-      <div id="cj-hh-help" style="font-size:13px;color:#57606a">모르면 「모름」을 고르세요. 복지로(bokjiro.go.kr) 모의계산에서 가늠할 수 있습니다.</div>
+      <div class="q"><span class="n">4</span><label for="cj-hh">가구 소득은 어느 정도인가요? <small>(기준 중위소득 대비)</small></label></div>
+      <select id="cj-hh" style="width:100%;height:44px;padding:0 10px;font-size:16px;box-sizing:border-box"></select>
+      <div id="cj-hh-help" style="font-size:13px;color:#57606a;margin-top:6px">모르면 「모름」을 고르세요. 복지로(bokjiro.go.kr) 모의계산에서 가늠할 수 있습니다.</div>
     </div>
 
     <fieldset id="cj-pinc" style="margin:0 0 12px;padding:0;border:0">
-      <legend id="cj-pinc-label" style="font-weight:600;padding:0">본인 소득</legend>
+      <legend class="q"><span class="n">5</span><span><span id="cj-pinc-label">본인 소득은 어느 쪽이었나요?</span> <small id="cj-pinc-sub"></small></span></legend>
       <div id="cj-pinc-opts"></div>
     </fieldset>
 
-    <button id="cj-go" type="button" style="width:100%;padding:10px;font-size:16px;font-weight:700;border:0;border-radius:8px;background:#1f6feb;color:#fff;cursor:pointer">내 결과 보기</button>
+    <button id="cj-go" type="button" style="width:100%;margin-top:6px;padding:15px;font-size:16px;font-weight:700;border:0;border-radius:12px;background:var(--p);color:#fff;cursor:pointer">내 결과 보기</button>
   </div>
 
   <div id="cj-msg" role="alert" style="color:#cf222e;font-size:14px;margin-top:8px"></div>
@@ -630,11 +667,12 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 
     // 본인 소득 칸은 청년미래적금 심사 기준에서 만든다
     if (mp) {
-      $('cj-pinc-label').textContent = '본인 ' + mp.pinc.year + '년 소득(' + (mp.short || mp.name) + ' 심사 기준)';
+      $('cj-pinc-label').textContent = '본인의 ' + mp.pinc.year + '년 소득은 어느 쪽이었나요?';
+      $('cj-pinc-sub').textContent = '(' + (mp.short || mp.name) + ' 심사 기준)';
       var po = (mp.pinc.opts || [['in', '기준 안 — ' + mp.pinc.rule]]).concat([['over', '그보다 많았다(총급여 7,500만원·종합소득 6,300만원 초과)'], ['none', '그해 소득이 없었다'], ['u', '모름']]);
       h = '';
       for (i = 0; i < po.length; i++) {
-        h += '<label style="display:block"><input type="radio" name="cj-pinc" id="cj-pinc-' + po[i][0] + '" value="' + (po[i][0] === 'u' ? '' : po[i][0]) + '"> ' + esc(po[i][1]) + '</label>';
+        h += '<label class="opt"><input type="radio" name="cj-pinc" id="cj-pinc-' + po[i][0] + '" value="' + (po[i][0] === 'u' ? '' : po[i][0]) + '"><span>' + esc(po[i][1]) + '</span></label>';
       }
       $('cj-pinc-opts').innerHTML = h;
     } else {
@@ -678,6 +716,11 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
     }
 
     $('cj-go').addEventListener('click', render);
+    $('cj-go').addEventListener('click', function () { if (out.innerHTML && out.scrollIntoView) out.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    var ben = $('cj-ben'), benChips = document.querySelectorAll('#cj-benchips button');
+    var syncBen = function () { [].forEach.call(benChips, function (b) { var on = (b.getAttribute('data-v') === '1') === ben.checked; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); };
+    [].forEach.call(benChips, function (b) { b.addEventListener('click', function () { ben.checked = b.getAttribute('data-v') === '1'; ben.dispatchEvent(new Event('change', { bubbles: true })); }); });
+    ben.addEventListener('change', syncBen); window.addEventListener('pageshow', syncBen); syncBen();
     $('cj-form').addEventListener('change', function () {
       var w = read().input.work;
       $('cj-sme').style.display = (w === 'full' || w === 'part') ? 'block' : 'none';

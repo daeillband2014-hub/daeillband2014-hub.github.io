@@ -44,6 +44,25 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 .note b{color:var(--pd)}
 .bannerbox{margin:14px 0 4px;min-height:0}
 .foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.emoji{line-height:1.2}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.hint{font-size:12px;color:var(--mut);line-height:1.6;margin-top:6px;text-wrap:balance}
+.res{background:#fff;border:1.5px solid var(--lt);border-radius:16px;padding:18px 16px}
+.res .rl{font-size:13px;color:var(--mut)}
+.res .rv{font-size:30px;font-weight:800;color:var(--p);margin:2px 0 8px;white-space:nowrap;letter-spacing:-.5px}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.res .band{display:inline-block;background:#F3EAFB;color:var(--pd);font-size:13px;font-weight:700;border-radius:999px;padding:5px 11px;line-height:1.5}
+.basis{margin-top:8px;font-size:12.5px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:4px 0}
+.basis p{margin-top:6px}
+.basis b{color:var(--sub)}
+#out{scroll-margin-top:64px}
+#out table{box-shadow:none;border-radius:0;margin-bottom:0}
+#out td{word-break:keep-all}#out td:first-child{text-align:left}#out td+td{white-space:nowrap;padding-left:10px!important}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
 </style>
   <link rel="canonical" href="https://daeillband2014-hub.github.io/jadongchase-calc/">
 <style>
@@ -95,14 +114,16 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🚗</div>
 <h1>자동차세 계산기 2026</h1>
 <p class="desc">배기량과 연식을 넣으면 지방교육세까지 계산합니다</p>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">배기량 (cc)</label>
-<input id="cc" type="number" step="1" value="1598" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">차령 (년) — 올해 − 등록한 해 + 1</label>
-<input id="age" type="number" step="1" min="0" value="0" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<p style="font-size:12px;color:#8B95A1;margin-top:6px;line-height:1.6">비영업용 승용차 기준입니다. 전기차처럼 배기량이 없으면 0을 넣으십시오.<br><b>차령은 산 지 몇 년인가가 아닙니다.</b> 2024년 3월 등록차는 2026년에 3년입니다. 하반기(7~12월) 등록차는 1기분과 2기분이 1년 다릅니다.</p>
-<button id="go" style="width:100%;margin-top:14px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div class="q"><span class="n">1</span><label for="cc" style="all:unset">배기량이 몇 cc인가요?</label></div>
+<input id="cc" type="number" inputmode="numeric" step="1" value="1598" aria-label="배기량 (cc)" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p class="hint">비영업용 승용차 기준입니다. 전기차처럼 배기량이 없으면 0을 넣으십시오.</p>
+<div class="q"><span class="n">2</span><label for="age" style="all:unset">차령이 몇 년인가요?</label> <small>(년)</small></div>
+<input id="age" type="number" inputmode="numeric" step="1" min="0" value="0" aria-label="차령 (년) — 올해 − 등록한 해 + 1" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<details class="basis"><summary>차령 = 올해 − 등록한 해 + 1 (산 지 몇 년이 아님)</summary><p><b>차령은 산 지 몇 년인가가 아닙니다.</b> 2024년 3월 등록차는 2026년에 3년입니다. 하반기(7~12월) 등록차는 1기분과 2기분이 1년 다릅니다.</p></details>
+<button id="go" style="width:100%;margin-top:18px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 <p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">연납 공제는 넣지 않았습니다. 공제액이 고정된 비율이 아니라 <b>언제 내느냐에 따라</b> 달라지기 때문입니다. 1월에 내면 약 4.58%, 3월이면 약 3.77%, 6월이면 약 2.5%입니다.</p>
 </div>
@@ -120,9 +141,11 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   var tax=base, cut=0, n=0;
   if(cc>0 && age>=3){ n=Math.min(age,12); tax=(base/2-(base/2*5/100)*(n-2))*2; cut=base-tax; }
   var edu=tax*0.3;
-  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
-  h+='<div style="font-size:13px;color:#8B95A1">1년에 내는 돈 (지방교육세 포함)</div>';
-  h+='<div style="font-size:27px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(tax+edu)+'</div>';
+  var nt=note+(age>=12&&cc>0?' · 12년을 넘으면 더 깎이지 않습니다':'');
+  var h='<div class="res">';
+  h+='<div class="rl">1년에 내는 돈 (지방교육세 포함)</div>';
+  h+='<div class="rv">'+won(tax+edu)+'</div>';
+  if(cc>0) h+='<div class="bands"><span class="band">'+nt.split(' · ').join('</span><span class="band">')+'</span></div>';
   h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">기본 연세액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(base)+'</td></tr>';
   if(cut>0){
@@ -131,12 +154,13 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">자동차세</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(tax)+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968">지방교육세 (30%)</td><td style="padding:7px 0;text-align:right;font-weight:700">'+won(edu)+'</td></tr>';
   h+='</table>';
-  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">'+note+(age>=12&&cc>0?' · 12년을 넘으면 더 깎이지 않습니다':'')+'</p>';
-  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:4px">6월과 12월에 절반씩 나눠 고지됩니다.</p></div>';
+  if(!(cc>0)) h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">'+nt+'</p>';
+  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:'+(cc>0?10:4)+'px">6월과 12월에 절반씩 나눠 고지됩니다.</p></div>';
   document.getElementById('out').innerHTML=h;
  }
- document.getElementById('go').addEventListener('click',calc);
- ['cc','age'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')calc();});});
+ function go(){calc();var o=document.getElementById('out');if(o.innerHTML&&o.scrollIntoView)o.scrollIntoView({behavior:'smooth',block:'start'});}
+ document.getElementById('go').addEventListener('click',go);
+ ['cc','age'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')go();});});
  calc();
 })();
 </script>

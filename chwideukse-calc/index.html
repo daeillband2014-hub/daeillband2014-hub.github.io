@@ -44,6 +44,29 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 .note b{color:var(--pd)}
 .bannerbox{margin:14px 0 4px;min-height:0}
 .foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.emoji{line-height:1.2}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#F3EAFB;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+.krw{font-size:13px;color:var(--p);font-weight:700;text-align:right;margin-top:6px;min-height:18px}
+.res{background:#fff;border:1.5px solid var(--lt);border-radius:16px;padding:18px 16px}
+.res .rl{font-size:13px;color:var(--mut)}
+.res .rv{font-size:30px;font-weight:800;color:var(--p);margin:2px 0 8px;white-space:nowrap;letter-spacing:-.5px}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.res .band{display:inline-block;background:#F3EAFB;color:var(--pd);font-size:13px;font-weight:700;border-radius:999px;padding:5px 11px;line-height:1.5}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles div{background:var(--bg);border-radius:12px;padding:11px 10px}
+.tiles span{display:block;font-size:12px;color:var(--mut)}
+.tiles b{display:block;font-size:16px;color:var(--ink);margin-top:3px;white-space:nowrap}
+.tiles b small{font-size:12px;font-weight:600}
+#out{scroll-margin-top:64px}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
 </style>
   <link rel="canonical" href="https://daeillband2014-hub.github.io/chwideukse-calc/">
 <style>
@@ -95,16 +118,22 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🏠</div>
 <h1>취득세 계산기</h1>
 <p class="desc">집값을 넣으면 취득세와 지방교육세를 계산합니다</p>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">취득가액 (원)</label>
-<input id="price" type="number" step="10000000" value="600000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">전용면적</label>
-<select id="area" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
+<div class="q"><span class="n">1</span><label for="price" style="all:unset">집값(취득가액)이 얼마인가요?</label> <small>(원)</small></div>
+<input id="price" type="number" inputmode="numeric" step="10000000" value="600000000" aria-label="취득가액 (원)" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p class="krw" id="pricekr" aria-live="polite"></p>
+<div class="q"><span class="n">2</span>전용면적은 어느 쪽인가요?</div>
+<div class="chips" id="areachips" role="group" aria-label="전용면적">
+<button type="button" data-i="0">85제곱미터 이하<small>농어촌특별세 없음</small></button>
+<button type="button" data-i="1">85제곱미터 초과<small>농어촌특별세 0.2%</small></button>
+</div>
+<select id="area" hidden aria-hidden="true" tabindex="-1" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
 <option value="0" selected>85제곱미터 이하 (농어촌특별세 없음)</option>
 <option value="1">85제곱미터 초과 (농어촌특별세 0.2%)</option>
 </select>
-<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<button id="go" style="width:100%;margin-top:18px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 <p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">1주택자가 집을 사는 경우(유상거래) 기준입니다. 다주택자와 법인은 중과세율이 따로 있어 이 계산기로는 나오지 않습니다.</p>
 </div>
@@ -131,24 +160,30 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   var farm=big?p*0.002:0;
   var sum=acq+edu+farm;
   var band = p<=600000000 ? '6억원 이하 · 1%' : (p<=900000000 ? '6억 초과 9억 이하 · 구간 계산식' : '9억원 초과 · 3%');
-  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
-  h+='<div style="font-size:13px;color:#8B95A1">내야 할 세금 합계</div>';
-  h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(sum)+'</div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+band+'</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">취득세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+(r*100).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')+'%</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">취득세</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(acq)+'</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">지방교육세</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(edu)+'</td></tr>';
-  if(farm) h+='<tr><td style="padding:7px 0;color:#4E5968">농어촌특별세 0.2%</td><td style="padding:7px 0;text-align:right;font-weight:700">'+won(farm)+'</td></tr>';
-  else h+='<tr><td style="padding:7px 0;color:#4E5968">농어촌특별세</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673">없음 (85㎡ 이하)</td></tr>';
-  h+='</table>';
+  var bp=band.split(' · ');
+  var h='<div class="res">';
+  h+='<div class="rl">내야 할 세금 합계</div>';
+  h+='<div class="rv">'+won(sum)+'</div>';
+  h+='<div class="bands"><span class="band">적용 구간 '+bp[0]+'</span><span class="band">'+(/%$/.test(bp[1])?'세율 ':'')+bp[1]+'</span></div>';
+  h+='<div class="tiles"><div><span>취득세율</span><b>'+(r*100).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')+'%</b></div>';
+  h+='<div><span>취득세</span><b>'+won(acq)+'</b></div>';
+  h+='<div><span>지방교육세</span><b>'+won(edu)+'</b></div>';
+  if(farm) h+='<div><span>농어촌특별세 0.2%</span><b>'+won(farm)+'</b></div>';
+  else h+='<div><span>농어촌특별세</span><b style="color:#2bb673">없음 <small>(85㎡ 이하)</small></b></div>';
+  h+='</div>';
   h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">취득일부터 60일 이내에 신고·납부해야 합니다.</p></div>';
   document.getElementById('out').innerHTML=h;
  }
- document.getElementById('go').addEventListener('click',calc);
- document.getElementById('price').addEventListener('keydown',function(e){if(e.key==='Enter')calc();});
- document.getElementById('area').addEventListener('change',calc);
- calc();
+ function kr(n){n=Math.round(n);if(n<=0)return '';var e=Math.floor(n/100000000),m=Math.floor((n%100000000)/10000),w=n%10000,s='';if(e)s+=e.toLocaleString('ko-KR')+'억 ';if(m)s+=m.toLocaleString('ko-KR')+'만';if(w)s+=(m||e?' ':'')+w.toLocaleString('ko-KR');return '= '+s.trim()+'원';}
+ var priceEl=document.getElementById('price'), sel=document.getElementById('area');
+ function sync(){document.getElementById('pricekr').textContent=kr(Number(priceEl.value)||0);[].forEach.call(document.querySelectorAll('#areachips button'),function(b){var on=Number(b.getAttribute('data-i'))===sel.selectedIndex;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+ function go(){calc();sync();var o=document.getElementById('out');if(o.innerHTML&&o.scrollIntoView)o.scrollIntoView({behavior:'smooth',block:'start'});}
+ [].forEach.call(document.querySelectorAll('#areachips button'),function(b){b.addEventListener('click',function(){sel.selectedIndex=Number(b.getAttribute('data-i'));sel.dispatchEvent(new Event('change'));});});
+ document.getElementById('go').addEventListener('click',go);
+ priceEl.addEventListener('input',sync);
+ priceEl.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+ sel.addEventListener('change',function(){calc();sync();});
+ calc();sync();
 })();
 </script>
 

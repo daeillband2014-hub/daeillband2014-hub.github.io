@@ -55,6 +55,33 @@ input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);border-r
 label.chk{display:flex;align-items:center;gap:10px;margin:10px 0 0;font-size:14.5px;font-weight:500;color:var(--ink)}
 label.chk input{width:20px;height:20px;margin:0;flex:none;accent-color:var(--p)}
 .row .v{text-align:right}
+/* 2026-11-07 4팀 화면 손질 — 그림 hero · 질문 단계 · 단추형 선택 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+h1,.desc,.sub2{text-wrap:balance}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:22px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:12px 8px;border:1.5px solid var(--lt);border-radius:13px;background:#fff;font-size:15px;font-weight:700;color:var(--sub);font-family:inherit;line-height:1.35;word-break:keep-all;cursor:pointer}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:3px}
+.chips button.on{border-color:var(--p);background:#EEF0FA;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+#area{margin-top:8px}
+label.sublbl{display:block;font-size:12.5px;color:var(--mut);font-weight:600;margin:0 0 6px}
+.g2{row-gap:12px}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--lt);border-radius:12px;padding:12px 14px;margin:0 0 8px;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.45;cursor:pointer}
+.g2+.opt{margin-top:12px}
+.opt input{width:20px;height:20px;flex:0 0 20px;margin:0;accent-color:var(--p)}
+.opt small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.opt:has(input:checked){border-color:var(--p);background:#EEF0FA}
+.rcard .big:not(.no){white-space:nowrap;letter-spacing:-.3px}
+.row{flex-wrap:wrap;row-gap:2px}.row .k{white-space:nowrap}.row .v{min-width:0;margin-left:auto;text-align:right}
+.basis{margin-top:14px;background:#F7F8FC;border-radius:12px;padding:10px 12px}
+.basis summary{font-size:13px;font-weight:700;color:var(--pd);cursor:pointer}
+.basis .note{margin-top:8px}
+#out{scroll-margin-top:64px}
+.row .v{text-wrap:balance}.ok,.warn{text-wrap:pretty}
+#app{word-break:keep-all;overflow-wrap:break-word}
 </style>
 <!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
@@ -63,36 +90,41 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🧽</div>
 <h1>입주청소 비용 계산기</h1>
 <p class="desc">평수와 구조, 추가 작업을 넣으면 공개 시세 기준 참고 범위가 나옵니다</p>
 
-<label for="unit">면적 단위</label>
-<select id="unit">
+<label for="area" class="q"><span class="n">1</span>면적은 얼마인가요?</label>
+<div class="chips" data-for="unit" role="group" aria-label="면적 단위">
+<button type="button" data-i="0" class="on" aria-pressed="true">평<small>분양 평수</small></button>
+<button type="button" data-i="1" aria-pressed="false">㎡<small>제곱미터</small></button>
+</div>
+<select id="unit" hidden aria-label="면적 단위">
 <option value="py" selected>평 (분양 평수)</option>
 <option value="m2">㎡ (제곱미터)</option>
 </select>
 
-<label for="area">면적</label>
 <input id="area" type="number" inputmode="decimal" min="1" max="300" step="any" value="34">
 <p class="note" id="conv" style="margin-top:6px"></p>
 
+<p class="q"><span class="n">2</span>집 구조는 어떤가요?</p>
 <div class="g2">
-<div><label for="rooms">방</label>
+<div><label for="rooms" class="sublbl">방</label>
 <select id="rooms"><option value="1">1개</option><option value="2">2개</option><option value="3" selected>3개</option><option value="4">4개</option><option value="5">5개 이상</option></select></div>
-<div><label for="baths">화장실</label>
+<div><label for="baths" class="sublbl">화장실</label>
 <select id="baths"><option value="1">1개</option><option value="2" selected>2개</option><option value="3">3개 이상</option></select></div>
-<div><label for="ver">베란다</label>
+<div><label for="ver" class="sublbl">베란다</label>
 <select id="ver"><option value="0">없음</option><option value="1">1개</option><option value="2" selected>2개</option><option value="3">3개</option><option value="4">4개 이상</option></select></div>
-<div><label for="closet">붙박이장</label>
+<div><label for="closet" class="sublbl">붙박이장</label>
 <select id="closet"><option value="1" selected>안방 1세트 이하</option><option value="2">2세트</option><option value="3">3세트 이상</option></select></div>
 </div>
-<label class="chk"><input type="checkbox" id="dup"> 복층 구조입니다</label>
+<label class="opt"><input type="checkbox" id="dup"><span>복층 구조입니다</span></label>
 
-<label>추가 작업 (공개 단가가 있는 것만)</label>
-<label class="chk"><input type="checkbox" id="sick"> 새집증후군·연무소독 (평당 5천원)</label>
-<label class="chk"><input type="checkbox" id="dust"> 인테리어·공사 분진 (평당 3천원)</label>
+<p class="q"><span class="n">3</span>추가 작업이 있나요? <small>공개 단가가 있는 것만</small></p>
+<label class="opt"><input type="checkbox" id="sick"><span>새집증후군·연무소독<small>평당 5천원</small></span></label>
+<label class="opt"><input type="checkbox" id="dust"><span>인테리어·공사 분진<small>평당 3천원</small></span></label>
 
-<label for="moveday">입주 예정일 (정해지지 않았으면 비워 두세요)</label>
+<label for="moveday" class="q"><span class="n">4</span>언제 입주하나요? <small>안 정했으면 비워 두세요</small></label>
 <input id="moveday" type="date">
 
 <button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">참고 범위 보기</button>
@@ -121,7 +153,7 @@ font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
 </style>
 <!--/tenping-->
 
-<p class="note">공개된 평형별 평균 비용과 추가금 항목으로 잰 참고 범위입니다. 곰팡이·기름때 제거, 화장실 개수, 외창 청소와 폐기물 처리는 넣지 않았습니다. 넣은 값은 이 기기 안에서만 쓰고 저장하지 않습니다.</p>
+<details class="basis"><summary>계산 근거와 넣지 않은 항목 보기</summary><p class="note">공개된 평형별 평균 비용과 추가금 항목으로 잰 참고 범위입니다. 곰팡이·기름때 제거, 화장실 개수, 외창 청소와 폐기물 처리는 넣지 않았습니다. 넣은 값은 이 기기 안에서만 쓰고 저장하지 않습니다.</p></details>
 </div>
 
 <script>
@@ -235,7 +267,26 @@ font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
   if(v > 0) $('area').value = this.value === 'm2' ? Math.round(v * PY * 100) / 100 : toPy(v, 'm2');
   calc();
  });
- $('go').addEventListener('click', calc);
+ /* 단추형 선택(면적 단위) → 숨긴 select 의 selectedIndex 를 바꾸고 change 를 보낸다.
+    같은 단추를 다시 누르면 넣은 숫자가 다시 바뀌지 않도록 아무것도 하지 않는다 */
+ [].forEach.call(document.querySelectorAll('.chips[data-for]'), function(g){
+  var sel = $(g.getAttribute('data-for'));
+  function mark(){ [].forEach.call(g.querySelectorAll('button'), function(x){ var on = Number(x.getAttribute('data-i')) === sel.selectedIndex; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+  mark();
+  sel.addEventListener('change', mark);
+  g.addEventListener('click', function(ev){
+   var b = ev.target.closest('button'); if(!b) return;
+   var i = Number(b.getAttribute('data-i')); if(sel.selectedIndex === i) return;
+   sel.selectedIndex = i;
+   sel.dispatchEvent(new Event('change'));
+  });
+ });
+ /* 참고 범위 보기: 계산한 뒤 결과가 있으면 결과로 내려간다 */
+ $('go').addEventListener('click', function(){
+  calc();
+  var o = $('out');
+  if(o.innerHTML && o.scrollIntoView) o.scrollIntoView({behavior:'smooth', block:'start'});
+ });
  $('area').addEventListener('input', calc);
  $('moveday').addEventListener('input', calc);
  ['area','rooms','baths','ver','closet','dup','sick','dust','moveday'].forEach(function(id){

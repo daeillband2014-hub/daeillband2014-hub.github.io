@@ -52,7 +52,32 @@ table.plan td.n{text-align:right;font-weight:700;font-variant-numeric:tabular-nu
 input[type=number]{width:100%;padding:14px;border:1.5px solid var(--lt);border-radius:12px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit}
 .pair{display:flex;gap:8px}.pair input{flex:1 1 0;min-width:0}.pair select{flex:0 1 auto;width:auto;min-width:0}
 label.chk{display:flex;gap:8px;align-items:flex-start;line-height:1.5}label.chk input{width:18px;height:18px;margin-top:1px;flex:0 0 auto}
-.big.rng{font-size:24px;line-height:1.3;word-break:keep-all}.related{padding-left:18px;margin:0 0 10px}</style>
+.big.rng{font-size:24px;line-height:1.3;word-break:keep-all}.related{padding-left:18px;margin:0 0 10px}
+/* 2026-11-07 4팀 화면 손질 — 그림 hero · 질문 단계 · 단추형 선택 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+h1,.desc,.sub2{text-wrap:balance}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:22px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips.c3{grid-template-columns:repeat(3,1fr)}
+.pair+.chips{margin-top:8px}
+.chips button{padding:12px 8px;border:1.5px solid var(--lt);border-radius:13px;background:#fff;font-size:15px;font-weight:700;color:var(--sub);font-family:inherit;line-height:1.35;word-break:keep-all;cursor:pointer}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:3px}
+.chips button.on{border-color:var(--p);background:#EEF0FA;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--lt);border-radius:12px;padding:12px 14px;margin:0 0 8px;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.45;cursor:pointer}
+.opt input{width:20px;height:20px;flex:0 0 20px;margin:0;accent-color:var(--p)}
+.opt small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.opt:has(input:checked){border-color:var(--p);background:#EEF0FA}
+.big.rng{white-space:nowrap;letter-spacing:-.3px}
+.row{flex-wrap:wrap;row-gap:2px}.row .k{white-space:nowrap}.row .v{min-width:0;margin-left:auto;text-align:right}
+.basis{margin-top:14px;background:#F7F8FC;border-radius:12px;padding:10px 12px}
+.basis summary{font-size:13px;font-weight:700;color:var(--pd);cursor:pointer}
+.basis .note{margin-top:8px}
+#out{scroll-margin-top:64px}
+.row .v{text-wrap:balance}.ok,.warn{text-wrap:pretty}
+#app{word-break:keep-all;overflow-wrap:break-word}</style>
 <!--ga4--><script async src="https://www.googletagmanager.com/gtag/js?id=G-JGPX0P88ML"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
@@ -60,37 +85,56 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🚚</div>
 <h1>포장이사 비용 · 이사비용 계산기</h1>
 <p class="desc">평수와 짐 양, 층수, 이삿날을 넣으면 협회 전국평균으로 참고 범위가 나옵니다</p>
 
-<label for="size">집 크기</label>
+<label for="size" class="q"><span class="n">1</span>집 크기는 얼마인가요? <small>평 또는 ㎡</small></label>
 <div class="pair"><input id="size" type="number" inputmode="decimal" min="1" max="1000" step="0.1" value="24"><select id="unit" aria-label="집 크기 단위"><option value="py" selected>평</option><option value="m2">㎡</option></select></div>
 
-<label for="load">짐 양</label>
-<select id="load">
+<p class="q"><span class="n">2</span>짐은 얼마나 되나요?</p>
+<div class="chips c3" data-for="load">
+<button type="button" data-i="0" aria-pressed="false">적음<small>큰 가구 적음</small></button>
+<button type="button" data-i="1" class="on" aria-pressed="true">보통</button>
+<button type="button" data-i="2" aria-pressed="false">많음<small>가구·잔짐 많음</small></button>
+</div>
+<select id="load" hidden aria-label="짐 양">
 <option value="low">적음 (큰 가구 적음)</option>
 <option value="mid" selected>보통</option>
 <option value="high">많음 (가구·잔짐 많음)</option>
 </select>
 
-<label for="f1">출발지 층수</label>
-<div class="pair"><input id="f1" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e1" aria-label="출발지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+<label for="f1" class="q"><span class="n">3</span>출발지는 몇 층인가요?</label>
+<div class="pair"><input id="f1" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e1" hidden aria-label="출발지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+<div class="chips" data-for="e1">
+<button type="button" data-i="0" class="on" aria-pressed="true">엘리베이터 없음</button>
+<button type="button" data-i="1" aria-pressed="false">엘리베이터 있음</button>
+</div>
 
-<label for="f2">도착지 층수</label>
-<div class="pair"><input id="f2" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e2" aria-label="도착지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+<label for="f2" class="q"><span class="n">4</span>도착지는 몇 층인가요?</label>
+<div class="pair"><input id="f2" type="number" inputmode="numeric" min="1" max="80" step="1" value="1"><select id="e2" hidden aria-label="도착지 엘리베이터"><option value="0" selected>엘리베이터 없음</option><option value="1">엘리베이터 있음</option></select></div>
+<div class="chips" data-for="e2">
+<button type="button" data-i="0" class="on" aria-pressed="true">엘리베이터 없음</button>
+<button type="button" data-i="1" aria-pressed="false">엘리베이터 있음</button>
+</div>
 
-<label for="dist">이동 거리</label>
-<select id="dist">
+<p class="q"><span class="n">5</span>얼마나 멀리 가나요?</p>
+<div class="chips" data-for="dist">
+<button type="button" data-i="0" class="on" aria-pressed="true">10km 이내<small>시내</small></button>
+<button type="button" data-i="1" aria-pressed="false">10km 넘음</button>
+</div>
+<select id="dist" hidden aria-label="이동 거리">
 <option value="in" selected>10km 이내 (시내)</option>
 <option value="out">10km 넘음</option>
 </select>
 
-<label for="mdate">이사 예정일</label>
+<label for="mdate" class="q"><span class="n">6</span>언제 이사하나요? <small>이사 예정일 · 선택</small></label>
 <input id="mdate" type="date">
 
-<label class="chk" for="busy"><input id="busy" type="checkbox">이삿날이 손 없는 날이거나 월말입니다</label>
-<p class="note" style="margin-top:2px">손 없는 날인지는 <a href="/son-eopneun-nal/">손없는날 달력</a>에서 확인할 수 있습니다.</p>
-<label class="chk" for="spec"><input id="spec" type="checkbox">에어컨 설치·피아노 운반·가구 조립 같은 작업이 있습니다</label>
+<p class="q"><span class="n">7</span>해당하는 것이 있나요?</p>
+<label class="opt" for="busy"><input id="busy" type="checkbox"><span>이삿날이 손 없는 날이거나 월말입니다<small>약 10~30% 할증</small></span></label>
+<p class="note" style="margin:0 2px 10px">손 없는 날인지는 <a href="/son-eopneun-nal/">손없는날 달력</a>에서 확인할 수 있습니다.</p>
+<label class="opt" for="spec"><input id="spec" type="checkbox"><span>에어컨 설치·피아노 운반·가구 조립 같은 작업이 있습니다<small>특수작업비는 협회 평균에서 별도</small></span></label>
 
 <button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#4A5AA8;color:#fff;font-size:16px;font-weight:700">비용 범위 보기</button>
 <div id="out" style="margin-top:18px"></div>
@@ -118,7 +162,7 @@ font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
 </style>
 <!--/tenping-->
 
-<p class="note">허가이사종합정보 「이사비용 정보」의 2025년 12월 전국 평균 금액을 그대로 옮겨 계산합니다. 평수를 톤수로 바꾸는 공식 기준은 없어 이 계산기의 규칙을 아래 본문에 표로 공개했습니다. 입력값은 기기 안에서만 계산되며 어디에도 저장하지 않습니다.</p>
+<details class="basis"><summary>계산 근거 보기 · 협회 2025년 12월 전국평균</summary><p class="note">허가이사종합정보 「이사비용 정보」의 2025년 12월 전국 평균 금액을 그대로 옮겨 계산합니다. 평수를 톤수로 바꾸는 공식 기준은 없어 이 계산기의 규칙을 아래 본문에 표로 공개했습니다. 입력값은 기기 안에서만 계산되며 어디에도 저장하지 않습니다.</p></details>
 </div>
 
 <script>
@@ -274,7 +318,25 @@ font-size:15px;font-weight:700;padding:14px 0;border-radius:13px}
   var t = new Date(), m = ('0' + (t.getMonth()+1)).slice(-2), d = ('0' + t.getDate()).slice(-2);
   $('mdate').min = t.getFullYear() + '-' + m + '-' + d;
  })();
- $('go').addEventListener('click', calc);
+ /* 단추형 선택(짐 양·엘리베이터·거리) → 숨긴 select 의 selectedIndex 를 바꾸고 change 를 보낸다 */
+ [].forEach.call(document.querySelectorAll('.chips[data-for]'), function(g){
+  var sel = $(g.getAttribute('data-for'));
+  function mark(){ [].forEach.call(g.querySelectorAll('button'), function(x){ var on = Number(x.getAttribute('data-i')) === sel.selectedIndex; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
+  mark();
+  sel.addEventListener('change', mark);
+  g.addEventListener('click', function(ev){
+   var b = ev.target.closest('button'); if(!b) return;
+   var i = Number(b.getAttribute('data-i')); if(sel.selectedIndex === i) return;
+   sel.selectedIndex = i;
+   sel.dispatchEvent(new Event('change'));
+  });
+ });
+ /* 비용 범위 보기: 계산한 뒤 결과가 있으면 결과로 내려간다 */
+ $('go').addEventListener('click', function(){
+  calc();
+  var o = $('out');
+  if(o.innerHTML && o.scrollIntoView) o.scrollIntoView({behavior:'smooth', block:'start'});
+ });
  ['size','unit','load','f1','e1','f2','e2','dist','mdate','busy','spec'].forEach(function(id){
   $(id).addEventListener('change', calc);
   $(id).addEventListener('input', calc);

@@ -57,6 +57,32 @@ h1{font-size:24px;line-height:1.35;margin-bottom:8px;text-align:center}
 @media(min-width:768px){#webad{min-height:280px}}
 .adlabel{font-size:11px;color:#B0B8C1;text-align:center;margin:0 0 6px;letter-spacing:.5px}
 .webseo{min-width:0;width:100%}.webseo .tblx{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 14px}.webseo .tblx table{margin:0}
+/* 2026-11-07 4팀 화면 손질 — hero · 질문 단계 · 용도 단추 · 결과 줄바꿈 */
+.emoji{font-size:54px;line-height:1.2;margin-bottom:8px;text-align:center}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:18px 0 8px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.wt .q label{display:inline;margin:0;font-size:inherit;font-weight:inherit}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#EAF0FB;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+.basis{margin-top:12px;font-size:12.5px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:4px 0}
+.basis p{margin-top:6px}
+#jc-out{scroll-margin-top:64px}
+.wr .wr-l{font-size:13.5px;color:var(--mut);margin-top:12px}
+.wr .wr-big{font-size:28px;margin:2px 0 4px;white-space:nowrap;letter-spacing:-.3px}
+.wr-win{margin-top:6px;border-radius:10px;background:#fff;border:1px solid #E1E8EF}
+.wr-win div{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px}
+.wr-win div+div{border-top:1px solid #EEF2F6}
+.wr-win span{font-size:13.5px;color:var(--sub)}
+.wr-win b{white-space:nowrap;font-size:16px;color:var(--ink)}
+.wr td{word-break:keep-all}.wr td+td{white-space:nowrap}
+.wr td small{display:block;white-space:normal;font-size:12.5px;color:var(--mut)}
 </style>
 <!--adsense--><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782310558764343" crossorigin="anonymous"></script><!--/adsense-->
 <!--cpcss--><style>
@@ -82,24 +108,29 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🚗</div>
 <h1>자동차검사 기간 계산기</h1>
 <p class="desc">자동차등록증의 최초등록일로 다음 정기검사 만료일과 검사 받는 기간(만료일 전 90일 ~ 후 31일)을 계산합니다. 승용자동차 기준입니다.</p>
 <div class="tool">
 <div id="jc-tool" class="wt">
 <p class="wt-h">자동차 정기검사 기간 계산</p>
-<label for="jc-use">용도(승용자동차)</label>
-<select id="jc-use"><option value="">고르세요</option><option value="own">자가용(비사업용)</option><option value="biz">영업용(사업용)</option></select>
-<label for="jc-reg">최초등록일</label>
+<div class="q"><span class="n">1</span>어떤 용도의 승용차인가요?</div>
+<div class="chips" id="jc-usechips" role="group" aria-label="용도(승용자동차)">
+<button type="button" data-i="1" aria-pressed="false">자가용<small>비사업용</small></button>
+<button type="button" data-i="2" aria-pressed="false">영업용<small>사업용</small></button>
+</div>
+<select id="jc-use" hidden aria-hidden="true" tabindex="-1"><option value="">고르세요</option><option value="own">자가용(비사업용)</option><option value="biz">영업용(사업용)</option></select>
+<div class="q"><span class="n">2</span><label for="jc-reg">최초등록일이 언제인가요?</label></div>
 <input type="date" id="jc-reg">
 <p class="wt-s">자동차등록증에 적힌 최초등록일입니다.</p>
-<label for="jc-last">마지막 검사 받은 날(선택)</label>
+<div class="q"><span class="n">3</span><label for="jc-last">마지막 검사는 언제 받았나요?</label> <small>(선택)</small></div>
 <input type="date" id="jc-last">
 <p class="wt-s">비워 두면 매번 기간 안에 받았다고 보고 셉니다. 기간보다 일찍 또는 늦게 받은 적이 있으면 넣으세요.</p>
-<label for="jc-day">확인일</label>
+<div class="q"><span class="n">4</span><label for="jc-day">어느 날 기준으로 볼까요?</label> <small>(확인일)</small></div>
 <input type="date" id="jc-day">
 <button type="button" id="jc-go" class="wt-btn">계산하기</button>
 <div id="jc-out" aria-live="polite"></div>
-<p class="wt-s" style="margin-top:12px">자동차관리법 시행규칙 제74조·제77조·별표 15의2 기준으로 승용자동차만 계산합니다. 차량번호 조회나 검사 예약은 하지 않습니다. 입력값은 저장하지 않습니다.</p>
+<details class="basis"><summary>계산 기준 보기 · 승용자동차만</summary><p>자동차관리법 시행규칙 제74조·제77조·별표 15의2 기준으로 승용자동차만 계산합니다. 차량번호 조회나 검사 예약은 하지 않습니다. 입력값은 저장하지 않습니다.</p></details>
 </div>
 <script>
 (function(){
@@ -164,16 +195,16 @@ function run(){
   var r = jcJudge({ use: use, reg: reg }, last, T);
   var st = r.ph === 'late' ? ['no', '검사 기간이 지났습니다'] : (r.ph === 'in' ? ['mid', '지금 검사 받을 기간입니다'] : ['ok', '아직 검사 기간 전입니다']);
   var h = '<div class="wr"><p class="wr-st ' + st[0] + '">' + st[1] + '</p>';
-  h += '<p>' + (r.ph === 'late' ? '지난 검사 유효기간 만료일' : '다음 검사 유효기간 만료일') + '</p><p class="wr-big">' + fmt(r.E) + '</p>';
-  h += '<p>검사 받는 기간: <b>' + fmt(r.ws) + ' ~ ' + fmt(r.we) + '</b> (만료일 전 90일 ~ 후 31일)</p>';
+  h += '<p class="wr-l">' + (r.ph === 'late' ? '지난 검사 유효기간 만료일' : '다음 검사 유효기간 만료일') + '</p><p class="wr-big">' + fmt(r.E) + '</p>';
+  h += '<p class="wr-l">검사 받는 기간 (만료일 전 90일 ~ 후 31일)</p><div class="wr-win"><div><span>시작</span><b>' + fmt(r.ws) + '</b></div><div><span>마지막 날</span><b>' + fmt(r.we) + '</b></div></div>';
   if (r.ph === 'before') h += '<p>기간 시작까지 ' + r.dStart + '일 남았습니다.</p>';
   else if (r.ph === 'in') h += '<p>' + (r.dEnd === 0 ? '오늘이 검사 기간 마지막 날입니다.' : '검사 기간 마지막 날까지 ' + r.dEnd + '일 남았습니다.') + '</p>';
   else h += '<p>검사 기간이 끝난 지 ' + (-r.dEnd) + '일 지났습니다. 과태료 기준은 아래 본문 표를 보세요.</p>';
   h += '<table><tr><th>구분</th><th>값</th></tr>'
-    + '<tr><td>첫 유효기간</td><td>' + r.firstY + '년 (' + (r.biz ? '영업용 신조차' : (r.newReg ? '2025년 이후 신규등록 신조차' : '2024년까지 신규등록 신조차')) + ')</td></tr>'
+    + '<tr><td>첫 유효기간</td><td>' + r.firstY + '년 <small>(' + (r.biz ? '영업용 신조차' : (r.newReg ? '2025년 이후 신규등록 신조차' : '2024년까지 신규등록 신조차')) + ')</small></td></tr>'
     + '<tr><td>그 뒤</td><td>' + r.cyc + '년마다</td></tr>'
     + '<tr><td>첫 만료일</td><td>' + fmt(r.E1) + '</td></tr>'
-    + '<tr><td>앞으로의 만료일</td><td>' + fmt(r.seq[0]) + ' → ' + fmt(r.seq[1]) + ' → ' + fmt(r.seq[2]) + '</td></tr></table>';
+    + '<tr><td>앞으로의 만료일</td><td>' + fmt(r.seq[0]) + '<br>→ ' + fmt(r.seq[1]) + '<br>→ ' + fmt(r.seq[2]) + '</td></tr></table>';
   if (r.basis === 'chain') h += '<p>매번 검사 기간 안에 받았다고 보고 셌습니다. 기간보다 일찍 또는 늦게 받은 적이 있으면 「마지막 검사 받은 날」을 넣으세요.</p>';
   else if (r.basis === 'in') h += '<p>' + fmt(r.lastInfo.L) + ' 검사는 ' + fmt(r.lastInfo.prev) + ' 만료일의 검사 기간 안이었습니다. 그래서 다음 유효기간은 그 만료일 다음 날부터 셉니다(시행규칙 제74조제3항).</p>';
   else h += '<p>' + fmt(r.lastInfo.L) + ' 검사는 검사 기간 밖이었습니다. 그래서 다음 유효기간은 검사 받은 다음 날부터 셉니다(시행규칙 제74조제2항).</p>';
@@ -184,7 +215,11 @@ function run(){
 if (typeof document !== 'undefined' && document.getElementById('jc-go')) {
   var n = new Date(), p = function(x){ return (x < 10 ? '0' : '') + x; };
   document.getElementById('jc-day').value = n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate());
-  document.getElementById('jc-go').onclick = run;
+  document.getElementById('jc-go').onclick = function(){ run(); var o = document.getElementById('jc-out'); if (o.innerHTML && o.scrollIntoView) o.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  var sel = document.getElementById('jc-use'), chips = document.querySelectorAll('#jc-usechips button');
+  var syncUse = function(){ [].forEach.call(chips, function(b){ var on = Number(b.getAttribute('data-i')) === sel.selectedIndex; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); };
+  [].forEach.call(chips, function(b){ b.addEventListener('click', function(){ sel.selectedIndex = Number(b.getAttribute('data-i')); sel.dispatchEvent(new Event('change')); }); });
+  sel.addEventListener('change', syncUse); window.addEventListener('pageshow', syncUse); syncUse();
 }
 if (typeof module !== 'undefined') module.exports = { jcJudge: jcJudge, endOf: endOf, winOf: winOf, D: D, fmt: fmt, addDays: addDays };
 })();
