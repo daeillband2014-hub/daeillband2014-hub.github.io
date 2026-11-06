@@ -44,6 +44,38 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 .note b{color:var(--pd)}
 .bannerbox{margin:14px 0 4px;min-height:0}
 .foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.emoji{line-height:1.2}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#F3EAFB;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+.krw{font-size:13px;color:var(--p);font-weight:700;text-align:right;margin-top:6px;min-height:18px}
+.hint{font-size:12px;color:var(--mut);line-height:1.6;margin-top:6px}
+.res{background:#fff;border:1.5px solid var(--lt);border-radius:16px;padding:18px 16px}
+.res .rl{font-size:13px;color:var(--mut)}
+.res .rv{font-size:30px;font-weight:800;color:var(--p);margin:2px 0 8px;white-space:nowrap;letter-spacing:-.5px}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.res .band{display:inline-block;background:#F3EAFB;color:var(--pd);font-size:13px;font-weight:700;border-radius:999px;padding:5px 11px;line-height:1.5}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles div{background:var(--bg);border-radius:12px;padding:11px 10px}
+.tiles span{display:block;font-size:12px;color:var(--mut)}
+.tiles b{display:block;font-size:16px;color:var(--ink);margin-top:3px;white-space:nowrap}
+.tiles .wide{grid-column:1/-1}
+.basis{margin-top:12px;font-size:12.5px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:4px 0}
+.basis p{margin-top:6px}
+#out{scroll-margin-top:64px}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--lt);border-radius:12px;padding:12px 14px;margin:0 0 8px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer}
+.opt input{width:20px;height:20px;flex:0 0 20px;accent-color:var(--p)}
+.opt small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.opt:has(input:checked){border-color:var(--p);background:#F3EAFB}
+#out td{word-break:keep-all}#out td:first-child{text-align:left}#out td+td{white-space:nowrap;padding-left:10px!important}
 </style>
   <link rel="canonical" href="https://daeillband2014-hub.github.io/jeungyeose-calc/">
 <style>
@@ -95,12 +127,22 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🎁</div>
 <h1>증여세 계산기</h1>
 <p class="desc">받은 금액과 관계를 넣으면 공제까지 반영해 계산합니다</p>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">증여받은 금액 (원)</label>
-<input id="amt" type="number" step="10000000" value="100000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">누구에게 받았나</label>
-<select id="rel" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
+<div class="q"><span class="n">1</span><label for="amt" style="all:unset">얼마를 받았나요?</label> <small>(원)</small></div>
+<input id="amt" type="number" inputmode="numeric" step="10000000" value="100000000" aria-label="증여받은 금액 (원)" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p class="krw" id="amtkr" aria-live="polite"></p>
+<div class="q"><span class="n">2</span>누구에게 받았나요?</div>
+<div class="chips" id="relchips" role="group" aria-label="누구에게 받았나">
+<button type="button" data-i="0">배우자<small>6억원 공제</small></button>
+<button type="button" data-i="1">부모·조부모<small>5천만원 공제</small></button>
+<button type="button" data-i="2">부모·조부모<small>미성년자면 2천만원</small></button>
+<button type="button" data-i="3">자녀·손자녀<small>5천만원 공제</small></button>
+<button type="button" data-i="4">친척<small>4촌 혈족·3촌 인척 · 1천만원</small></button>
+<button type="button" data-i="5">그 밖의 사람<small>공제 없음</small></button>
+</div>
+<select id="rel" hidden aria-hidden="true" tabindex="-1" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:16px;background:#fff">
 <option value="600000000">배우자 — 6억원 공제</option>
 <option value="50000000" selected>부모·조부모 (직계존속) — 5천만원</option>
 <option value="20000000">부모·조부모에게 받는 미성년자 — 2천만원</option>
@@ -108,12 +150,14 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <option value="10000000">4촌 이내 혈족, 3촌 이내 인척 — 1천만원</option>
 <option value="0">그 밖의 사람 — 공제 없음</option>
 </select>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">10년 안에 같은 사람에게 이미 받은 금액 (원)</label>
-<p style="font-size:12px;color:#8B95A1;line-height:1.6;margin:0 0 6px">아버지에게 받는 경우 어머니에게 받은 것도 함께 넣으십시오. 직계존속은 그 배우자를 같은 사람으로 봅니다. 합계가 1천만원 이상이면 이번 증여와 합쳐 세율을 매깁니다.</p>
-<input id="prev" type="number" step="10000000" value="0" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:14px 0 0"><input type="checkbox" id="wed" style="width:18px;height:18px"> 혼인·출산 공제 대상 (직계존속에게 받은 경우, 최대 1억)</label>
-<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4E5968;margin:10px 0 0"><input type="checkbox" id="rep" checked style="width:18px;height:18px"> 기한 안에 신고 (산출세액 3% 공제)</label>
-<button id="go" style="width:100%;margin-top:16px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div class="q"><span class="n">3</span><label for="prev" style="all:unset">10년 안에 같은 사람에게 받은 적이 있나요?</label></div>
+<input id="prev" type="number" inputmode="numeric" step="10000000" value="0" aria-label="10년 안에 같은 사람에게 이미 받은 금액 (원)" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p class="krw" id="prevkr" aria-live="polite"></p>
+<details class="basis" style="margin-top:2px"><summary>없으면 0 · 아버지와 어머니는 한 사람으로 봅니다</summary><p>아버지에게 받는 경우 어머니에게 받은 것도 함께 넣으십시오. 직계존속은 그 배우자를 같은 사람으로 봅니다. 합계가 1천만원 이상이면 이번 증여와 합쳐 세율을 매깁니다.</p></details>
+<div class="q"><span class="n">4</span>해당하는 것을 고르세요</div>
+<label class="opt"><input type="checkbox" id="wed"><span>혼인·출산 공제 대상<small>직계존속에게 받은 경우, 최대 1억</small></span></label>
+<label class="opt"><input type="checkbox" id="rep" checked><span>기한 안에 신고<small>산출세액 3% 공제 · 받은 달 말일부터 3개월</small></span></label>
+<button id="go" style="width:100%;margin-top:18px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 <p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">부동산이나 주식은 평가 방법이 따로 있어 이 계산기로는 정확하지 않습니다. 현금 증여 기준으로 보십시오.</p>
 </div>
@@ -168,9 +212,10 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   var afterPaid=Math.max(0, gross-paidCredit);
   var credit=rep?afterPaid*0.03:0;
   var pay=afterPaid-credit;
-  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
-  h+='<div style="font-size:13px;color:#8B95A1">내야 할 증여세</div>';
-  h+='<div style="font-size:28px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(pay)+'</div>';
+  var h='<div class="res">';
+  h+='<div class="rl">내야 할 증여세</div>';
+  h+='<div class="rv">'+won(pay)+'</div>';
+  if(base>0) h+='<div class="bands"><span class="band">적용 구간 '+NM[i]+'</span><span class="band">세율 '+Math.round(r*100)+'%</span></div>';
   if(minFree){ h+='<div style="background:#F6F0FC;border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:13px;color:#4E5968;line-height:1.7">과세표준이 <b>50만원 미만</b>이라 증여세를 부과하지 않습니다. 상속세 및 증여세법 제55조제2항입니다.</div>'; }
   h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여받은 금액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(amt)+'</td></tr>';
@@ -178,7 +223,6 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">증여재산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(ded)+'</td></tr>';
   if(wedDed) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">혼인·출산 공제</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(wedDed)+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">과세표준</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(base)+'</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간 · 세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+(base>0?NM[i]+' · '+Math.round(r*100)+'%':'-')+'</td></tr>';
   h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">산출세액</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(gross)+'</td></tr>';
   if(paidCredit>0) h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">납부세액공제 (전에 낸 증여세)</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673;border-bottom:1px solid #F1EAF8">-'+won(paidCredit)+'</td></tr>';
   if(credit) h+='<tr><td style="padding:7px 0;color:#4E5968">신고세액공제 3%</td><td style="padding:7px 0;text-align:right;font-weight:700;color:#2bb673">-'+won(credit)+'</td></tr>';
@@ -188,10 +232,15 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">신고 기한은 증여받은 달의 말일부터 3개월입니다.</p></div>';
   document.getElementById('out').innerHTML=h;
  }
- document.getElementById('go').addEventListener('click',calc);
- ['amt','prev'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')calc();});});
- ['rel','wed','rep'].forEach(function(id){document.getElementById(id).addEventListener('change',calc);});
- calc();
+ function kr(n){n=Math.round(n);if(n<=0)return '';var e=Math.floor(n/100000000),m=Math.floor((n%100000000)/10000),w=n%10000,s='';if(e)s+=e.toLocaleString('ko-KR')+'억 ';if(m)s+=m.toLocaleString('ko-KR')+'만';if(w)s+=(m||e?' ':'')+w.toLocaleString('ko-KR');return '= '+s.trim()+'원';}
+ var sel=document.getElementById('rel');
+ function sync(){['amt','prev'].forEach(function(id){document.getElementById(id+'kr').textContent=kr(Number(document.getElementById(id).value)||0);});[].forEach.call(document.querySelectorAll('#relchips button'),function(b){var on=Number(b.getAttribute('data-i'))===sel.selectedIndex;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+ function go(){calc();sync();var o=document.getElementById('out');if(o.innerHTML&&o.scrollIntoView)o.scrollIntoView({behavior:'smooth',block:'start'});}
+ [].forEach.call(document.querySelectorAll('#relchips button'),function(b){b.addEventListener('click',function(){sel.selectedIndex=Number(b.getAttribute('data-i'));sel.dispatchEvent(new Event('change'));});});
+ document.getElementById('go').addEventListener('click',go);
+ ['amt','prev'].forEach(function(id){var el=document.getElementById(id);el.addEventListener('input',sync);el.addEventListener('keydown',function(e){if(e.key==='Enter')go();});});
+ ['rel','wed','rep'].forEach(function(id){document.getElementById(id).addEventListener('change',function(){calc();sync();});});
+ calc();sync();
 })();
 </script>
 

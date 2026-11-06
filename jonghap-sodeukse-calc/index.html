@@ -44,6 +44,33 @@ color:var(--sub);line-height:1.75;margin-bottom:12px;text-align:left}
 .note b{color:var(--pd)}
 .bannerbox{margin:14px 0 4px;min-height:0}
 .foot{font-size:12px;color:var(--mut);text-align:center;line-height:1.6;margin-top:10px}
+.emoji{line-height:1.2}
+.q{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink);margin:20px 0 9px}
+.q .n{flex:0 0 22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.q small{font-weight:500;color:var(--mut);font-size:12.5px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips button{padding:11px 8px;border:1.5px solid var(--lt);border-radius:12px;background:#fff;color:var(--sub);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.35;text-align:center}
+.chips button small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:2px}
+.chips button.on{border-color:var(--p);background:#F3EAFB;color:var(--pd)}
+.chips button.on small{color:var(--p)}
+.krw{font-size:13px;color:var(--p);font-weight:700;text-align:right;margin-top:6px;min-height:18px}
+.hint{font-size:12px;color:var(--mut);line-height:1.6;margin-top:6px}
+.res{background:#fff;border:1.5px solid var(--lt);border-radius:16px;padding:18px 16px}
+.res .rl{font-size:13px;color:var(--mut)}
+.res .rv{font-size:30px;font-weight:800;color:var(--p);margin:2px 0 8px;white-space:nowrap;letter-spacing:-.5px}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.res .band{display:inline-block;background:#F3EAFB;color:var(--pd);font-size:13px;font-weight:700;border-radius:999px;padding:5px 11px;line-height:1.5}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles div{background:var(--bg);border-radius:12px;padding:11px 10px}
+.tiles span{display:block;font-size:12px;color:var(--mut)}
+.tiles b{display:block;font-size:16px;color:var(--ink);margin-top:3px;white-space:nowrap}
+.tiles .wide{grid-column:1/-1}
+.basis{margin-top:12px;font-size:12.5px;color:var(--mut);line-height:1.65}
+.basis summary{cursor:pointer;color:var(--sub);font-weight:600;padding:4px 0}
+.basis p{margin-top:6px}
+#out{scroll-margin-top:64px}
+#app{word-break:keep-all;overflow-wrap:break-word}
+.desc{text-wrap:balance}
 </style>
   <link rel="canonical" href="https://daeillband2014-hub.github.io/jonghap-sodeukse-calc/">
 <style>
@@ -95,12 +122,21 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
 <body>
 <div class="webhdr"><a href="../">생활 계산기 · 운세 모음</a><a class="all" href="../">전체 보기 →</a></div>
 <div id="app">
+<div class="emoji" aria-hidden="true">🧾</div>
 <h1>종합소득세 계산기</h1>
 <p class="desc">과세표준을 넣으면 소득세법 제55조 세율로 계산합니다</p>
-<label style="display:block;font-size:13.5px;color:#4E5968;margin:14px 0 6px">종합소득 과세표준 (원)</label>
-<input id="base" type="number" step="1000000" value="30000000" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
-<p style="font-size:12px;color:#8B95A1;margin-top:6px;line-height:1.6">매출이 아니라 <b>필요경비와 소득공제를 뺀 뒤의 금액</b>입니다.</p>
-<button id="go" style="width:100%;margin-top:14px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
+<div class="q"><span class="n">1</span><label for="base" style="all:unset">과세표준이 얼마인가요?</label> <small>(원)</small></div>
+<input id="base" type="number" inputmode="numeric" step="1000000" value="30000000" aria-label="종합소득 과세표준 (원)" style="width:100%;padding:14px;border:1.5px solid #E2D3F2;border-radius:12px;font-size:17px;text-align:right;background:#fff">
+<p class="krw" id="basekr" aria-live="polite"></p>
+<p style="font-size:12px;color:#8B95A1;margin-top:2px;line-height:1.6">매출이 아니라 <b>필요경비와 소득공제를 뺀 뒤의 금액</b>입니다.</p>
+<div class="q"><span class="n">2</span>또는 가까운 금액을 고르세요</div>
+<div class="chips" id="quick" role="group" aria-label="자주 보는 과세표준">
+<button type="button" data-v="14000000">1,400만원<small>6% 구간 끝</small></button>
+<button type="button" data-v="30000000">3,000만원<small>15% 구간</small></button>
+<button type="button" data-v="50000000">5,000만원<small>15% 구간 끝</small></button>
+<button type="button" data-v="88000000">8,800만원<small>24% 구간 끝</small></button>
+</div>
+<button id="go" style="width:100%;margin-top:18px;padding:15px;border:none;border-radius:13px;background:#6E2CA8;color:#fff;font-size:16px;font-weight:700">계산하기</button>
 <div id="out" style="margin-top:18px"></div>
 <p style="font-size:12px;color:#8B95A1;line-height:1.7;margin-top:16px">여기 나오는 값은 산출세액입니다. 세액공제와 감면을 뺀 금액이 실제로 낼 세금이라 이 계산기 결과보다 적어질 수 있습니다.</p>
 </div>
@@ -115,21 +151,25 @@ gtag('js',new Date());gtag('config','G-JGPX0P88ML');</script><!--/ga4-->
   var i=0; for(i=0;i<B.length;i++){ if(x<=B[i][0]) break; }
   var r=B[i][1], d=B[i][2], t=x*r-d;
   var local=t*0.1;
-  var h='<div style="background:#fff;border:1.5px solid #E2D3F2;border-radius:14px;padding:16px">';
-  h+='<div style="font-size:13px;color:#8B95A1">산출세액 + 지방소득세</div>';
-  h+='<div style="font-size:27px;font-weight:800;color:#6E2CA8;margin:2px 0 12px">'+won(t+local)+'</div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">적용 구간</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+NM[i]+'</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">세율</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+Math.round(r*100)+'%</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968;border-bottom:1px solid #F1EAF8">소득세 (산출세액)</td><td style="padding:7px 0;text-align:right;font-weight:700;border-bottom:1px solid #F1EAF8">'+won(t)+'</td></tr>';
-  h+='<tr><td style="padding:7px 0;color:#4E5968">지방소득세 (소득세의 10%)</td><td style="padding:7px 0;text-align:right;font-weight:700">'+won(local)+'</td></tr>';
-  h+='</table>';
-  h+='<p style="font-size:12.5px;color:#8B95A1;line-height:1.6;margin-top:10px">계산식: '+won(x)+' × '+Math.round(r*100)+'% − '+won(d)+' = '+won(t)+'</p></div>';
+  var eff=(t+local)/x*100;
+  var h='<div class="res">';
+  h+='<div class="rl">산출세액 + 지방소득세</div>';
+  h+='<div class="rv">'+won(t+local)+'</div>';
+  h+='<div class="bands"><span class="band">적용 구간 '+NM[i]+'</span><span class="band">세율 '+Math.round(r*100)+'%</span></div>';
+  h+='<div class="tiles"><div><span>소득세 (산출세액)</span><b>'+won(t)+'</b></div><div><span>지방소득세 (10%)</span><b>'+won(local)+'</b></div>';
+  h+='<div class="wide"><span>과세표준 대비 실제 세율 (지방소득세 포함)</span><b>'+eff.toFixed(1)+'%</b></div></div>';
+  h+='<details class="basis"><summary>계산 근거 보기 (세율 − 누진공제)</summary><p>계산식: '+won(x)+' × '+Math.round(r*100)+'% − '+won(d)+' = '+won(t)+'</p><p>지방소득세는 소득세(산출세액)의 10%입니다. 구간이 올라가도 넘은 부분에만 높은 세율이 붙어서, 실제 세율은 구간 세율보다 낮게 나옵니다.</p></details></div>';
   document.getElementById('out').innerHTML=h;
  }
- document.getElementById('go').addEventListener('click',calc);
- document.getElementById('base').addEventListener('keydown',function(e){if(e.key==='Enter')calc();});
- calc();
+ function kr(n){n=Math.round(n);if(n<=0)return '';var e=Math.floor(n/100000000),m=Math.floor((n%100000000)/10000),w=n%10000,s='';if(e)s+=e.toLocaleString('ko-KR')+'억 ';if(m)s+=m.toLocaleString('ko-KR')+'만';if(w)s+=(m||e?' ':'')+w.toLocaleString('ko-KR');return '= '+s.trim()+'원';}
+ var baseEl=document.getElementById('base');
+ function sync(){document.getElementById('basekr').textContent=kr(Number(baseEl.value)||0);var v=String(Number(baseEl.value)||0);[].forEach.call(document.querySelectorAll('#quick button'),function(b){var on=b.getAttribute('data-v')===v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+ function go(){calc();sync();var o=document.getElementById('out');if(o.innerHTML&&o.scrollIntoView)o.scrollIntoView({behavior:'smooth',block:'start'});}
+ [].forEach.call(document.querySelectorAll('#quick button'),function(b){b.addEventListener('click',function(){baseEl.value=b.getAttribute('data-v');go();});});
+ document.getElementById('go').addEventListener('click',go);
+ baseEl.addEventListener('input',sync);
+ baseEl.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+ calc();sync();
 })();
 </script>
 
